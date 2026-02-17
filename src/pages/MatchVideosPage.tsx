@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./MatchVideosPage.module.css";
 
@@ -13,69 +13,57 @@ type VideoCategory =
 interface VideoItem {
   id: number;
   title: string;
-  duration: string;
-  views: string;
-  date: string;
+  duration?: string;
+  views?: string;
+  date?: string;
+  category?: string;
+  url?: string;
+  thumbnail?: string;
 }
 
-const categories: { id: VideoCategory; label: string; count: number }[] = [
-  { id: "highlights", label: "Match Highlights", count: 24 },
-  { id: "analysis", label: "Expert Analysis", count: 18 },
-  { id: "interviews", label: "Player Interviews", count: 12 },
-  { id: "behind-scenes", label: "Behind the Scenes", count: 8 },
+const categories: { id: VideoCategory; label: string }[] = [
+  { id: "highlights", label: "Match Highlights" },
+  { id: "analysis", label: "Expert Analysis" },
+  { id: "interviews", label: "Player Interviews" },
+  { id: "behind-scenes", label: "Behind the Scenes" },
 ];
-
-const videoLibrary: Record<VideoCategory, VideoItem[]> = {
-  highlights: [
-    {
-      id: 1,
-      title: "Ireland vs France — Full Highlights",
-      duration: "8:45",
-      views: "125K",
-      date: "2 days ago",
-    },
-    {
-      id: 2,
-      title: "England Comeback vs Scotland",
-      duration: "6:20",
-      views: "98K",
-      date: "1 week ago",
-    },
-  ],
-  analysis: [
-    {
-      id: 1,
-      title: "Tactical Breakdown: Defensive Systems",
-      duration: "15:30",
-      views: "45K",
-      date: "3 days ago",
-    },
-  ],
-  interviews: [
-    {
-      id: 1,
-      title: "Captain Interview: Leadership Insights",
-      duration: "7:15",
-      views: "67K",
-      date: "1 day ago",
-    },
-  ],
-  "behind-scenes": [
-    {
-      id: 1,
-      title: "Match Day Preparation",
-      duration: "6:50",
-      views: "89K",
-      date: "2 days ago",
-    },
-  ],
-};
 
 export default function MatchVideosPage() {
   const [activeCategory, setActiveCategory] =
     useState<VideoCategory>("highlights");
 
+  const [videos, setVideos] = useState<VideoItem[]>([]);
   const navigate = useNavigate();
+
+  // Fetch videos from backend
+  useEffect(() => {
+    fetch("http://localhost:4000/api/videos")
+      .then((res) => res.json())
+      .then((data) => {
+        setVideos(data);
+      })
+      .catch((err) => {
+        console.error("Failed to load videos:", err);
+      });
+  }, []);
+
+  // Filter by category
+const filteredVideos = videos.filter((video) => {
+  // Normalize category from backend
+  const backendCategory = video.category?.toLowerCase();
+
+  if (!backendCategory && activeCategory === "highlights") {
+    return true;
+  }
+
+  // Map singular to plural
+  if (backendCategory === "highlight" && activeCategory === "highlights") {
+    return true;
+  }
+
+  return backendCategory === activeCategory;
+});
+
 
   return (
     <div className={styles.page}>
@@ -103,21 +91,38 @@ export default function MatchVideosPage() {
         </button>
       </div>
 
-      {/* FEATURED */}
-      <section className={styles.featured}>
-        <div className={styles.featuredThumbnail}>
-          <span className={styles.featuredDuration}>52:10</span>
-        </div>
+{/* FEATURED */}
+<section className={styles.featured}>
+  <div
+    className={styles.featuredThumbnail}
+    onClick={() =>
+      window.open(
+        "https://www.youtube.com/watch?v=FykXCpCuhNM",
+        "_blank"
+      )
+    }
+    style={{
+      backgroundImage:
+        "url(https://img.youtube.com/vi/FykXCpCuhNM/hqdefault.jpg)",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      cursor: "pointer",
+    }}
+  >
+    <span className={styles.featuredDuration}>Final</span>
+  </div>
 
-        <div className={styles.featuredInfo}>
-          <span className={styles.featuredLabel}>Featured Match</span>
-          <h2>Rugby World Cup Final — Full Match Replay</h2>
-          <p>
-            Relive one of the defining moments in modern rugby history with
-            extended match coverage and post-match analysis.
-          </p>
-        </div>
-      </section>
+  <div className={styles.featuredInfo}>
+    <span className={styles.featuredLabel}>Featured Match</span>
+    <h2>Rugby World Cup 2023 Final — Highlights</h2>
+    <p>
+      Relive the epic clash between South Africa and New Zealand
+      in the 2023 Rugby World Cup Final.
+    </p>
+  </div>
+</section>
+
+
 
       {/* CATEGORY TABS */}
       <nav className={styles.tabs}>
@@ -130,24 +135,43 @@ export default function MatchVideosPage() {
             onClick={() => setActiveCategory(cat.id)}
           >
             <span>{cat.label}</span>
-            <small>{cat.count}</small>
           </button>
         ))}
       </nav>
 
       {/* VIDEO GRID */}
       <section className={styles.grid}>
-        {videoLibrary[activeCategory].map((video) => (
-          <div key={video.id} className={styles.card}>
-            <div className={styles.thumbnail}>
-              <span className={styles.duration}>{video.duration}</span>
+        {filteredVideos.map((video) => (
+          <div
+            key={video.id}
+            className={styles.card}
+            onClick={() => {
+              if (video.url) {
+                window.open(video.url, "_blank");
+              }
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <div
+              className={styles.thumbnail}
+              style={{
+                backgroundImage: video.thumbnail
+                  ? `url(${video.thumbnail})`
+                  : undefined,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <span className={styles.duration}>
+                {video.duration || ""}
+              </span>
             </div>
 
             <div className={styles.info}>
               <h3>{video.title}</h3>
               <div className={styles.meta}>
-                <span>{video.views} views</span>
-                <span>{video.date}</span>
+                <span>{video.views || ""}</span>
+                <span>{video.date || ""}</span>
               </div>
             </div>
           </div>

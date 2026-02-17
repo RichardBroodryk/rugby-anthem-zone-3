@@ -1,11 +1,106 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./FanComments.module.css";
 
 import { tournaments2026 } from "../data/tournamentMeta";
-import { tournamentCommentThreads } from "../data/tournamentComments";
+
+// ================= API TYPE =================
+type ApiComment = {
+  id: number;
+  tournament_id: string | null;
+  match_id: string | null;
+  video_id: number | null;
+  content: string;
+  match_phase: "pre" | "live" | "post" | null;
+  created_at: string;
+  email: string;
+};
+
+// ================= CANONICAL TYPES =================
+type CommentAuthor = {
+  displayName: string;
+  role?: "fan" | "verified";
+};
+
+type MatchPhase = "pre" | "live" | "post";
+
+type TournamentComment = {
+  id: string;
+  tournamentId: string;
+  text: string;
+  createdAt: string;
+  author: CommentAuthor;
+  matchPhase?: MatchPhase;
+};
+
+type TournamentCommentThread = {
+  tournamentId: string;
+  comments: TournamentComment[];
+  lastActivityAt: string;
+};
+
+const API_BASE =
+  process.env.REACT_APP_API_URL ||
+  "https://rugby-anthem-backend-production.up.railway.app";
 
 export default function FanComments() {
   const navigate = useNavigate();
+  const [threads, setThreads] = useState<TournamentCommentThread[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadComments() {
+      try {
+        const results: TournamentCommentThread[] = [];
+
+        for (const tournament of tournaments2026) {
+          const res = await fetch(
+            `${API_BASE}/api/comments?tournament_id=${tournament.conceptId}`
+          );
+
+          if (!res.ok) continue;
+
+          const apiComments: ApiComment[] = await res.json();
+
+          if (apiComments.length > 0) {
+            results.push({
+              tournamentId: tournament.conceptId,
+              comments: apiComments.map((c) => ({
+                id: String(c.id),
+                tournamentId: c.tournament_id || "",
+                text: c.content,
+                createdAt: c.created_at,
+                author: {
+                  displayName: c.email,
+                },
+                matchPhase: c.match_phase || undefined,
+              })),
+              lastActivityAt: apiComments[0].created_at,
+            });
+          }
+        }
+
+        // Remove duplicate tournament threads
+        const uniqueThreads = Array.from(
+          new Map(
+            results.map((t) => [t.tournamentId, t])
+          ).values()
+        );
+
+        setThreads(uniqueThreads);
+      } catch (err) {
+        console.error("Failed to load fan comments", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadComments();
+  }, []);
+
+  if (loading) {
+    return <p className={styles.page}>Loading fan comments…</p>;
+  }
 
   return (
     <main className={styles.page}>
@@ -15,7 +110,7 @@ export default function FanComments() {
       </header>
 
       <section className={styles.section}>
-        {tournamentCommentThreads.map((thread) => {
+        {threads.map((thread) => {
           const tournament = tournaments2026.find(
             (t) => t.conceptId === thread.tournamentId
           );

@@ -1,102 +1,87 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./GreatestHits.module.css";
 import hitsHero from "../assets/images/raz/Hitsmainpage.png";
 
-/* ================= TYPES ================= */
-
-type HitTag =
-  | "Collision"
-  | "Try Saver"
-  | "Game Changer"
-  | "Momentum Shift"
-  | "Silence the Crowd";
-
-type HitItem = {
+interface VideoItem {
   id: number;
   title: string;
-  tag: HitTag;
-  duration: string;
-  context?: string;
-};
-
-/* ================= DATA (IMPACT-FIRST) ================= */
-
-const hitsNow: HitItem[] = [
-  {
-    id: 1,
-    title: "Last-ditch tackle stops certain try",
-    tag: "Try Saver",
-    duration: "0:18",
-    context: "Ireland vs France",
-  },
-  {
-    id: 2,
-    title: "Midfield collision flips momentum",
-    tag: "Collision",
-    duration: "0:12",
-    context: "England vs South Africa",
-  },
-  {
-    id: 3,
-    title: "Turnover under pressure ignites crowd",
-    tag: "Momentum Shift",
-    duration: "0:20",
-    context: "New Zealand vs Australia",
-  },
-];
-
-const momentumShifters: HitItem[] = [
-  {
-    id: 4,
-    title: "Defensive stand on the goal line",
-    tag: "Game Changer",
-    duration: "0:25",
-    context: "World Cup Knockout",
-  },
-  {
-    id: 5,
-    title: "Breakdown steal changes territory",
-    tag: "Momentum Shift",
-    duration: "0:15",
-    context: "Six Nations",
-  },
-];
-
-const crowdMoments: HitItem[] = [
-  {
-    id: 6,
-    title: "Stadium erupts after crunching hit",
-    tag: "Collision",
-    duration: "0:14",
-  },
-  {
-    id: 7,
-    title: "Away crowd silenced in one moment",
-    tag: "Silence the Crowd",
-    duration: "0:19",
-  },
-];
-
-const stillHits: HitItem[] = [
-  {
-    id: 8,
-    title: "Try-saving tackle remembered for decades",
-    tag: "Try Saver",
-    duration: "0:22",
-  },
-  {
-    id: 9,
-    title: "Momentum swing that defined a final",
-    tag: "Game Changer",
-    duration: "0:30",
-  },
-];
-
-/* ================= PAGE ================= */
+  thumbnail?: string;
+  url?: string;
+  category?: string;
+}
 
 export default function GreatestHits() {
+  const [rightNow, setRightNow] = useState<VideoItem[]>([]);
+  const [momentum, setMomentum] = useState<VideoItem[]>([]);
+  const [crowd, setCrowd] = useState<VideoItem[]>([]);
+  const [still, setStill] = useState<VideoItem[]>([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/videos")
+      .then((res) => res.json())
+      .then((data) => {
+        let hitVideos: VideoItem[] = data.filter(
+          (video: VideoItem) =>
+            video.category &&
+            video.category.toLowerCase() === "hit"
+        );
+
+        // Fallback: if no hits, use highlights
+        if (hitVideos.length === 0) {
+          hitVideos = data
+            .filter(
+              (video: VideoItem) =>
+                video.category &&
+                video.category.toLowerCase() === "highlight"
+            )
+            .slice(0, 16);
+        }
+
+        // Distribute across sections
+        setRightNow(hitVideos.slice(0, 4));
+        setMomentum(hitVideos.slice(4, 8));
+        setCrowd(hitVideos.slice(8, 12));
+        setStill(hitVideos.slice(12, 16));
+      })
+      .catch((err) => {
+        console.error("Failed to load hit videos:", err);
+      });
+  }, []);
+
+  const renderCard = (video: VideoItem, large = false) => (
+    <div
+      key={video.id}
+      className={large ? styles.hitCardLarge : styles.hitCard}
+      onClick={() => {
+        if (video.url) {
+          window.open(video.url, "_blank");
+        }
+      }}
+      style={{ cursor: "pointer" }}
+    >
+      <div
+        className={large ? styles.thumbnailLarge : styles.thumbnail}
+        style={{
+          backgroundImage: video.thumbnail
+            ? `url(${video.thumbnail})`
+            : undefined,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+
+      <div className={styles.hitInfo}>
+        <strong>{video.title}</strong>
+      </div>
+    </div>
+  );
+
   return (
     <main className={styles.page}>
-      {/* ================= HERO ================= */}
+      {/* HERO */}
       <header className={styles.hero}>
         <img src={hitsHero} alt="" className={styles.heroImage} />
 
@@ -110,89 +95,45 @@ export default function GreatestHits() {
         </div>
       </header>
 
-      {/* ================= RIGHT NOW ================= */}
+      {/* BACK BUTTON */}
+      <div className={styles.backWrap}>
+        <button
+          className={styles.back}
+          onClick={() => navigate("/media")}
+        >
+          ← Back to The Rugby Studio
+        </button>
+      </div>
+
+      {/* RIGHT NOW */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Right Now</h2>
-
         <div className={styles.strip}>
-          {hitsNow.map((hit) => (
-            <div key={hit.id} className={styles.hitCard}>
-              <div className={styles.thumbnail}>
-                <span className={styles.duration}>{hit.duration}</span>
-                <span className={styles.tag}>{hit.tag}</span>
-              </div>
-
-              <div className={styles.hitInfo}>
-                <strong>{hit.title}</strong>
-                {hit.context && (
-                  <span className={styles.context}>{hit.context}</span>
-                )}
-              </div>
-            </div>
-          ))}
+          {rightNow.map((video) => renderCard(video))}
         </div>
       </section>
 
-      {/* ================= MOMENTUM SHIFTERS ================= */}
+      {/* MOMENTUM SHIFTERS */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Momentum Shifters</h2>
-
         <div className={styles.grid}>
-          {momentumShifters.map((hit) => (
-            <div key={hit.id} className={styles.hitCardLarge}>
-              <div className={styles.thumbnailLarge}>
-                <span className={styles.duration}>{hit.duration}</span>
-                <span className={styles.tag}>{hit.tag}</span>
-              </div>
-
-              <div className={styles.hitInfo}>
-                <strong>{hit.title}</strong>
-                {hit.context && (
-                  <span className={styles.context}>{hit.context}</span>
-                )}
-              </div>
-            </div>
-          ))}
+          {momentum.map((video) => renderCard(video, true))}
         </div>
       </section>
 
-      {/* ================= FEEL IT ================= */}
+      {/* FEEL IT */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Feel It</h2>
-
         <div className={styles.strip}>
-          {crowdMoments.map((hit) => (
-            <div key={hit.id} className={styles.hitCard}>
-              <div className={styles.thumbnail}>
-                <span className={styles.duration}>{hit.duration}</span>
-                <span className={styles.tag}>{hit.tag}</span>
-              </div>
-
-              <div className={styles.hitInfo}>
-                <strong>{hit.title}</strong>
-              </div>
-            </div>
-          ))}
+          {crowd.map((video) => renderCard(video))}
         </div>
       </section>
 
-      {/* ================= STILL HITS ================= */}
+      {/* STILL HITS */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Still Hits</h2>
-
         <div className={styles.grid}>
-          {stillHits.map((hit) => (
-            <div key={hit.id} className={styles.hitCardLarge}>
-              <div className={styles.thumbnailLarge}>
-                <span className={styles.duration}>{hit.duration}</span>
-                <span className={styles.tag}>{hit.tag}</span>
-              </div>
-
-              <div className={styles.hitInfo}>
-                <strong>{hit.title}</strong>
-              </div>
-            </div>
-          ))}
+          {still.map((video) => renderCard(video, true))}
         </div>
       </section>
     </main>

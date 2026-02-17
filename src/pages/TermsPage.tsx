@@ -3,10 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./TermsPage.module.css";
 
 /**
- * TERMS PAGE v3
- * Contract acknowledgment.
- * Tier-aware routing.
- * Demo-safe.
+ * TERMS PAGE — PRODUCTION ACCESS-PENDING MODE
+ * Freemium: immediate access
+ * Premium/Super: access pending
  */
 
 type Pricing = {
@@ -20,12 +19,6 @@ type TermsState = {
   country?: string;
   pricing?: Pricing;
 };
-
-/**
- * DEMO MODE
- * Set to false when payments & backend are live.
- */
-const DEMO_MODE = true;
 
 export default function TermsPage() {
   const navigate = useNavigate();
@@ -46,7 +39,7 @@ export default function TermsPage() {
   const acceptTerms = () => {
     const acceptedAt = new Date().toISOString();
 
-    // FREEMIUM: immediate access, no backend, no payment
+    // FREEMIUM: immediate access
     if (tier === "freemium") {
       navigate("/home-free", {
         replace: true,
@@ -55,26 +48,12 @@ export default function TermsPage() {
       return;
     }
 
-    // PAID TIERS: demo-safe handling
-    if (tier === "premium") {
-      navigate(
-        DEMO_MODE ? "/access-pending" : "/home",
-        {
-          replace: true,
-          state: { tier, country, pricing, acceptedAt },
-        }
-      );
-      return;
-    }
-
-    if (tier === "super") {
-      navigate(
-        DEMO_MODE ? "/access-pending" : "/home-super",
-        {
-          replace: true,
-          state: { tier, country, pricing, acceptedAt },
-        }
-      );
+    // PAID TIERS: access pending
+    if (tier === "premium" || tier === "super") {
+      navigate("/access-pending", {
+        replace: true,
+        state: { tier, country, pricing, acceptedAt },
+      });
     }
   };
 

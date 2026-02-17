@@ -1,7 +1,12 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PrimaryNav from "../components/nav/PrimaryNav";
-import AdBanner from "../components/homepage/AdBanner";
+import SponsorBar from "../components/sponsors/SponsorBar";
+import {
+  primarySponsors,
+  secondarySponsors,
+  utilitySponsors,
+} from "../data/sponsors";
 import styles from "./AppLayout.module.css";
 
 type TierVariant = "freemium" | "premium" | "super";
@@ -52,25 +57,48 @@ export default function AppLayout() {
   ============================================== */
   const shouldShowPrimaryNav = resolvedTier !== "freemium";
 
+  /* ================= UTILITY PAGE DETECTION ================= */
+  const utilityRoutes = [
+    "/tickets",
+    "/flights",
+    "/hotels",
+    "/transport",
+    "/merch",
+    "/matchday-planner",
+    "/matchday-journeys",
+  ];
+
+  const isUtilityPage = utilityRoutes.some((route) =>
+    location.pathname.startsWith(route)
+  );
+
   return (
     <div className={styles.app}>
       {/* PRIMARY NAV */}
       {shouldShowPrimaryNav && <PrimaryNav variant={resolvedTier} />}
 
-      {/* TOP AD */}
-      <div className={styles.adTop}>
-        <AdBanner text="🔥 Official Rugby Partners – Tickets, Travel & Merch" />
-      </div>
+      {/* TOP SPONSOR BAR (PREMIUM ONLY) */}
+      {resolvedTier === "premium" && (
+        <div className={styles.adTop}>
+          <SponsorBar sponsors={primarySponsors} />
+        </div>
+      )}
 
       {/* PAGE CONTENT */}
       <main className={styles.content}>
         <Outlet />
       </main>
 
-      {/* BOTTOM AD */}
-      <div className={styles.adBottom}>
-        <AdBanner text="🏉 Matchday Deals – Limited Offers This Week" />
-      </div>
+      {/* BOTTOM SPONSOR BAR (PREMIUM ONLY) */}
+      {resolvedTier === "premium" && (
+        <div className={styles.adBottom}>
+          {isUtilityPage ? (
+            <SponsorBar sponsors={utilitySponsors} />
+          ) : (
+            <SponsorBar sponsors={secondarySponsors} />
+          )}
+        </div>
+      )}
     </div>
   );
 }

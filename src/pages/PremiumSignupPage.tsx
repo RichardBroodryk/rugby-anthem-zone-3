@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./PremiumSignupPage.module.css";
+import { registerUser, loginUser } from "../services/auth";
 
 /**
  * PREMIUM COMMITMENT PAGE
  * Paid subscription — nation-aware pricing
- * No access granted here
+ * Auto-login after signup
  */
 
 type Pricing = {
@@ -64,24 +65,53 @@ const COUNTRIES = [
 
 export default function PremiumSignupPage() {
   const navigate = useNavigate();
+
   const [country, setCountry] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const pricing = country ? resolvePremiumPrice(country) : null;
 
-  const proceedToTerms = () => {
+  const handleSignup = async () => {
     if (!country) {
       setError("Please select your country to continue.");
       return;
     }
 
-    navigate("/terms", {
-      state: {
-        tier: "premium",
-        country,
-        pricing,
-      },
-    });
+    if (!email || !password) {
+      setError("Please enter email and password.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      // 1. Register user
+      await registerUser(email, password);
+
+      // 2. Auto-login to store token + userId
+      await loginUser(email, password);
+
+      // 3. Proceed to Terms
+      navigate("/terms", {
+        state: {
+          tier: "premium",
+          country,
+          pricing,
+          email,
+        },
+      });
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Signup failed";
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -114,6 +144,26 @@ export default function PremiumSignupPage() {
             <li>No free trial</li>
             <li>Cancel anytime before renewal</li>
           </ul>
+        </div>
+
+        <div className={styles.block}>
+          <label className={styles.label}>Email</label>
+          <input
+            type="email"
+            className={styles.select}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+          />
+
+          <label className={styles.label}>Password</label>
+          <input
+            type="password"
+            className={styles.select}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+          />
         </div>
 
         <div className={styles.block}>
@@ -156,9 +206,12 @@ export default function PremiumSignupPage() {
       <footer className={styles.footer}>
         <button
           className={styles.primaryButton}
-          onClick={proceedToTerms}
+          onClick={handleSignup}
+          disabled={loading}
         >
-          Proceed to Subscription Terms
+          {loading
+            ? "Creating account..."
+            : "Proceed to Subscription Terms"}
         </button>
 
         <p className={styles.superHint}>

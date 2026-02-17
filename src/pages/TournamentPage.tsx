@@ -1,15 +1,20 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./TournamentPage.module.css";
 
 import { tournaments2026 } from "../data/tournamentMeta";
 import { matches2026 } from "../data/matches2026";
-import { tournamentCommentThreads } from "../data/tournamentComments";
 import { getTournamentVisual } from "../data/tournamentVisuals";
 
 import MatchRow from "../components/match/MatchRow";
 import Flag from "../components/images/Flag";
 import MusicIcon from "../components/icons/MusicIcon";
+
+/* ================= API ================= */
+
+const API_BASE =
+  process.env.REACT_APP_API_URL ||
+  "https://rugby-anthem-backend-production.up.railway.app";
 
 /* ================= UTILS ================= */
 
@@ -24,6 +29,8 @@ export default function TournamentPage() {
   const navigate = useNavigate();
   const commentsRef = useRef<HTMLDivElement | null>(null);
 
+  const [comments, setComments] = useState<any[]>([]);
+
   const openComments = location.state?.openComments === true;
 
   const tournament = tournaments2026.find(
@@ -35,6 +42,27 @@ export default function TournamentPage() {
       commentsRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [openComments]);
+
+  useEffect(() => {
+    async function loadComments() {
+      if (!tournament) return;
+
+      try {
+        const res = await fetch(
+          `${API_BASE}/api/comments?tournament_id=${tournament.conceptId}`
+        );
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+        setComments(data);
+      } catch (err) {
+        console.error("Failed to load tournament comments", err);
+      }
+    }
+
+    loadComments();
+  }, [tournament]);
 
   if (!tournament) {
     return (
@@ -55,10 +83,6 @@ export default function TournamentPage() {
     (m) =>
       normalize(m.tournament) ===
       normalize(tournament.matchKey)
-  );
-
-  const commentThread = tournamentCommentThreads.find(
-    (c) => c.tournamentId === tournament.conceptId
   );
 
   const backToIndex =
@@ -231,9 +255,9 @@ export default function TournamentPage() {
         </header>
 
         <div className={styles.commentsPanel}>
-          {commentThread ? (
-            commentThread.comments.map((c) => (
-              <p key={c.id}>“{c.text}”</p>
+          {comments.length > 0 ? (
+            comments.map((c) => (
+              <p key={c.id}>“{c.content}”</p>
             ))
           ) : (
             <p>No discussion yet.</p>

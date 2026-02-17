@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./SuperPremiumSignupPage.module.css";
+import { registerUser } from "../services/auth";
 
 /**
  * SUPER PREMIUM COMMITMENT PAGE
  * Highest tier — ad-free, editorial-first access
- * No access granted here
  */
 
 type Pricing = {
@@ -64,24 +64,48 @@ const COUNTRIES = [
 
 export default function SuperPremiumSignupPage() {
   const navigate = useNavigate();
+
   const [country, setCountry] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const pricing = country ? resolveSuperPrice(country) : null;
 
-  const proceedToTerms = () => {
+  const handleSignup = async () => {
     if (!country) {
       setError("Please select your country to continue.");
       return;
     }
 
-    navigate("/terms", {
-      state: {
-        tier: "super",
-        country,
-        pricing,
-      },
-    });
+    if (!email || !password) {
+      setError("Please enter email and password.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      await registerUser(email, password);
+
+      navigate("/terms", {
+        state: {
+          tier: "super",
+          country,
+          pricing,
+          email,
+        },
+      });
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Signup failed";
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -114,6 +138,26 @@ export default function SuperPremiumSignupPage() {
             <li>No free trial</li>
             <li>Cancel anytime before renewal</li>
           </ul>
+        </div>
+
+        <div className={styles.block}>
+          <label className={styles.label}>Email</label>
+          <input
+            type="email"
+            className={styles.select}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+          />
+
+          <label className={styles.label}>Password</label>
+          <input
+            type="password"
+            className={styles.select}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+          />
         </div>
 
         <div className={styles.block}>
@@ -157,9 +201,12 @@ export default function SuperPremiumSignupPage() {
       <footer className={styles.footer}>
         <button
           className={styles.primaryButton}
-          onClick={proceedToTerms}
+          onClick={handleSignup}
+          disabled={loading}
         >
-          Proceed to Subscription Terms
+          {loading
+            ? "Creating account..."
+            : "Proceed to Subscription Terms"}
         </button>
 
         <p className={styles.premiumHint}>

@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./FreemiumSignupPage.module.css";
-
-/**
- * FREEMIUM COMMITMENT PAGE
- * Permanent free access — advertising supported
- * No access granted here
- */
+import { registerUser } from "../services/auth";
 
 const COUNTRIES = [
   "South Africa",
@@ -23,21 +18,44 @@ const COUNTRIES = [
 
 export default function FreemiumSignupPage() {
   const navigate = useNavigate();
-  const [country, setCountry] = useState("");
-  const [error, setError] = useState("");
 
-  const proceedToTerms = () => {
+  const [country, setCountry] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = async () => {
     if (!country) {
       setError("Please select your country to continue.");
       return;
     }
 
-    navigate("/terms", {
-      state: {
-        tier: "freemium",
-        country,
-      },
-    });
+    if (!email || !password) {
+      setError("Please enter email and password.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      await registerUser(email, password);
+
+      navigate("/terms", {
+        state: {
+          tier: "freemium",
+          country,
+          email,
+        },
+      });
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Signup failed";
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,6 +86,26 @@ export default function FreemiumSignupPage() {
             for casual and regular followers who want reliable access to
             match information without a subscription.
           </p>
+        </div>
+
+        <div className={styles.block}>
+          <label className={styles.label}>Email</label>
+          <input
+            type="email"
+            className={styles.select}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+          />
+
+          <label className={styles.label}>Password</label>
+          <input
+            type="password"
+            className={styles.select}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+          />
         </div>
 
         <div className={styles.block}>
@@ -105,9 +143,10 @@ export default function FreemiumSignupPage() {
       <footer className={styles.footer}>
         <button
           className={styles.primaryButton}
-          onClick={proceedToTerms}
+          onClick={handleSignup}
+          disabled={loading}
         >
-          Continue to Terms
+          {loading ? "Creating account..." : "Continue to Terms"}
         </button>
       </footer>
     </section>

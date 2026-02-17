@@ -1,64 +1,20 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
 import Flag from "../components/images/Flag";
 import { matches2026 } from "../data/matches2026";
 import { tournaments2026 } from "../data/tournamentMeta";
 import { stadiums } from "../data/stadiums";
 import styles from "./MatchPage.module.css";
 
+/* ================= API ================= */
+
+const API_BASE =
+  process.env.REACT_APP_API_URL ||
+  "https://rugby-anthem-backend-production.up.railway.app";
+
 /* ================= TYPES ================= */
 
 type MatchStatus = "upcoming" | "live" | "final";
-
-type TimelineEvent = {
-  minute: string;
-  label: string;
-};
-
-type Player = {
-  number: number;
-  name: string;
-  position: string;
-};
-
-type TeamLineup = {
-  starting: Player[];
-  bench: Player[];
-};
-
-/* ================= PLACEHOLDERS ================= */
-
-const timeline: TimelineEvent[] = [
-  { minute: "0'", label: "Kick-off" },
-  { minute: "40'", label: "Half-time" },
-  { minute: "80'", label: "Full-time" },
-];
-
-const demoLineups: Record<"home" | "away", TeamLineup> = {
-  home: {
-    starting: Array.from({ length: 15 }).map((_, i) => ({
-      number: i + 1,
-      name: `Starting Player ${i + 1}`,
-      position: "Position",
-    })),
-    bench: Array.from({ length: 8 }).map((_, i) => ({
-      number: i + 16,
-      name: `Bench Player ${i + 16}`,
-      position: "Position",
-    })),
-  },
-  away: {
-    starting: Array.from({ length: 15 }).map((_, i) => ({
-      number: i + 1,
-      name: `Starting Player ${i + 1}`,
-      position: "Position",
-    })),
-    bench: Array.from({ length: 8 }).map((_, i) => ({
-      number: i + 16,
-      name: `Bench Player ${i + 16}`,
-      position: "Position",
-    })),
-  },
-};
 
 /* ================= PAGE ================= */
 
@@ -66,8 +22,71 @@ export default function MatchPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
+  const [comments, setComments] = useState<any[]>([]);
+  const [text, setText] = useState("");
+
   const matchId = id ? Number(id) : NaN;
   const match = matches2026.find((m) => m.id === matchId);
+
+  /* ================= LOAD COMMENTS ================= */
+
+  const loadComments = useCallback(async () => {
+    if (!matchId) return;
+
+    try {
+      const res = await fetch(
+        `${API_BASE}/api/comments?match_id=${matchId}`
+      );
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+      setComments(data);
+    } catch (err) {
+      console.error("Failed to load match comments", err);
+    }
+  }, [matchId]);
+
+  useEffect(() => {
+    loadComments();
+  }, [loadComments]);
+
+  /* ================= POST COMMENT ================= */
+
+  async function postComment() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please log in to post a reaction.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/api/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          match_id: matchId,
+          content: text,
+        }),
+      });
+
+      if (!res.ok) {
+        alert("Failed to post reaction.");
+        return;
+      }
+
+      setText("");
+      loadComments();
+    } catch (err) {
+      console.error("Post comment error", err);
+    }
+  }
+
+  /* ================= MATCH LOOKUP ================= */
 
   if (!match) {
     return (
@@ -77,8 +96,6 @@ export default function MatchPage() {
     );
   }
 
-  /* ================= TOURNAMENT RESOLUTION ================= */
-
   const tournament = tournaments2026.find(
     (t) => t.matchKey === match.tournament
   );
@@ -86,8 +103,6 @@ export default function MatchPage() {
   const backToTournament = tournament
     ? tournament.route
     : "/tournaments";
-
-  /* ================= STATUS ================= */
 
   const { home, away, score, venue, date } = match;
 
@@ -97,15 +112,15 @@ export default function MatchPage() {
     ? "upcoming"
     : "live";
 
-  /* ================= STADIUM ================= */
-
   const stadium = stadiums.find(
     (s) => s.name === venue
   );
 
+  /* ================= RENDER ================= */
+
   return (
     <main className={styles.page}>
-      {/* ================= BACK ================= */}
+      {/* BACK */}
       <nav className={styles.backNav}>
         <button onClick={() => navigate(backToTournament)}>
           ← Back to{" "}
@@ -115,12 +130,12 @@ export default function MatchPage() {
         </button>
       </nav>
 
-      {/* ================= TOURNAMENT ================= */}
+      {/* HEADER */}
       <header className={styles.tournamentHeader}>
         <h1>{match.tournament}</h1>
       </header>
 
-      {/* ================= STATUS ================= */}
+      {/* STATUS */}
       <section className={styles.statusBar}>
         <span
           className={`${styles.status} ${
@@ -135,7 +150,7 @@ export default function MatchPage() {
         </span>
       </section>
 
-      {/* ================= SCORE / VS ================= */}
+      {/* TEAMS */}
       <section className={styles.vsSection}>
         <div className={styles.team}>
           <Flag country={home.country} size="large" />
@@ -168,7 +183,7 @@ export default function MatchPage() {
         </div>
       </section>
 
-      {/* ================= META ================= */}
+      {/* META */}
       <section className={styles.meta}>
         <span>📅 {date}</span>
 
@@ -188,79 +203,27 @@ export default function MatchPage() {
         <span>⏰ Kick-off TBC</span>
       </section>
 
-      {/* ================= TIMELINE ================= */}
-      <section className={styles.timeline}>
-        <h2>Match Timeline</h2>
-        <ul className={styles.timelineList}>
-          {timeline.map((event, idx) => (
-            <li
-              key={idx}
-              className={styles.timelineItem}
-            >
-              <span className={styles.minute}>
-                {event.minute}
-              </span>
-              <span className={styles.label}>
-                {event.label}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* FAN REACTIONS */}
+      <section className={styles.section}>
+        <h2>Fan Reactions</h2>
 
-      {/* ================= LINEUPS ================= */}
-      <section className={styles.lineups}>
-        <h2>Team Lineups</h2>
+        <div className={styles.commentsPanel}>
+          {comments.length > 0 ? (
+            comments.map((c) => (
+              <p key={c.id}>“{c.content}”</p>
+            ))
+          ) : (
+            <p>No reactions yet.</p>
+          )}
+        </div>
 
-        <div className={styles.lineupGrid}>
-          {[home, away].map((team, idx) => {
-            const data =
-              idx === 0
-                ? demoLineups.home
-                : demoLineups.away;
-
-            return (
-              <div
-                key={team.name}
-                className={styles.teamLineup}
-              >
-                <h3>{team.name}</h3>
-
-                {/* STARTING XV */}
-                <h4>Starting XV</h4>
-                <ol className={styles.starting}>
-                  {data.starting.map((p) => (
-                    <li key={p.number}>
-                      <span className={styles.number}>
-                        {p.number}
-                      </span>
-                      <span className={styles.player}>
-                        {p.name}
-                      </span>
-                      <span className={styles.position}>
-                        {p.position}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-
-                {/* RESERVES */}
-                <h4>Reserves</h4>
-                <ol className={styles.bench}>
-                  {data.bench.map((p) => (
-                    <li key={p.number}>
-                      <span className={styles.number}>
-                        {p.number}
-                      </span>
-                      <span className={styles.player}>
-                        {p.name}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            );
-          })}
+        <div className={styles.commentInput}>
+          <textarea
+            placeholder="Share your reaction…"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <button onClick={postComment}>Post</button>
         </div>
       </section>
     </main>
