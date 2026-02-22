@@ -5,7 +5,7 @@ import {
   Navigate,
   useSearchParams,
 } from "react-router-dom";
-import { ReactNode, useEffect } from "react";
+import type { ReactNode } from "react";
 
 import { getToken } from "./services/auth";
 
@@ -142,25 +142,12 @@ function DevHomeEntry() {
 export default function App() {
   const isDev = process.env.NODE_ENV === "development";
 
-  /* ✅ PADDLE AUTO-OPEN (RAZ) */
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const txn = params.get("_ptxn");
-
-    if (txn && (window as any).Paddle) {
-      (window as any).Paddle.Checkout.open({
-        transactionId: txn,
-      });
-    }
-  }, []);
-
   return (
     <Router>
       <Routes>
-        {/* DEV ROUTE */}
         {isDev && <Route path="/dev/home" element={<DevHomeEntry />} />}
 
-        {/* ================= FREEMIUM / ENTRY ================= */}
+        {/* ================= FREEMIUM ================= */}
         <Route element={<FreemiumLayout />}>
           <Route path="/" element={<SplashPage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -192,7 +179,116 @@ export default function App() {
           }
         >
           <Route path="/home" element={<HomePage />} />
-          {/* (rest of your routes unchanged) */}
+
+          <Route path="/anthems" element={<NationalAnthemsDirectory />} />
+          <Route path="/anthems/:nationId" element={<NationalAnthemPage />} />
+
+          {/* ✅ THESE ARE USED — DO NOT REMOVE */}
+          <Route path="/tournaments" element={<TournamentsHubPage />} />
+          <Route path="/tournaments/men" element={<MensTournamentsPage />} />
+          <Route
+            path="/tournaments/women"
+            element={<WomensTournamentsPage />}
+          />
+          <Route path="/tournaments/men/:slug" element={<TournamentPage />} />
+          <Route path="/tournaments/women/:slug" element={<TournamentPage />} />
+
+          <Route path="/match/:id" element={<MatchPage />} />
+
+          <Route path="/match-center" element={<MatchCenterPage />} />
+          <Route path="/live-scores" element={<LiveScoresPage />} />
+          <Route path="/fixtures" element={<FixturesPage />} />
+          <Route path="/results" element={<ResultsPage />} />
+          <Route path="/stats" element={<StatsPage />} />
+
+          <Route path="/stadiums" element={<StadiumHubPage />} />
+          <Route path="/stadium/:slug" element={<StadiumPage />} />
+          <Route
+            path="/stadium/:slug/matchday"
+            element={<StadiumMatchdayPage />}
+          />
+
+          <Route path="/media" element={<MediaHubPage />} />
+          <Route path="/videos" element={<MatchVideosPage />} />
+          <Route path="/podcasts" element={<PodcastsPage />} />
+          <Route path="/greatest-hits" element={<GreatestHits />} />
+          <Route path="/comments" element={<FanComments />} />
+
+          <Route path="/defining-moments" element={<DefiningMomentsPage />} />
+          <Route
+            path="/moments/world-cup-turning-points"
+            element={<WorldCupTurningPoints />}
+          />
+          <Route
+            path="/moments/tactical-shifts"
+            element={<TacticalShifts />}
+          />
+          <Route path="/moments/law-changes" element={<LawChanges />} />
+          <Route
+            path="/moments/calls-decisions"
+            element={<CallsAndDecisions />}
+          />
+          <Route
+            path="/moments/era-defining-rivalries"
+            element={<EraDefiningRivalries />}
+          />
+          <Route
+            path="/moments/cultural-moments"
+            element={<CulturalMoments />}
+          />
+
+          <Route path="/inside-the-game" element={<InsideTheGameHubPage />} />
+          <Route path="/inside-the-game/referees" element={<RefereeHub />} />
+          <Route
+            path="/inside-the-game/referees/breakdown"
+            element={<BreakdownRucksPage />}
+          />
+          <Route
+            path="/inside-the-game/referees/tmo"
+            element={<TMOReviewsPage />}
+          />
+          <Route
+            path="/inside-the-game/referees/law-updates"
+            element={<LawUpdatesPage />}
+          />
+          <Route
+            path="/inside-the-game/fantasy"
+            element={<FantasyLeagueHubPage />}
+          />
+
+          <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/merch" element={<MerchPage />} />
+
+          <Route path="/my-teams" element={<MyTeamsPage />} />
+          <Route path="/my-teams/manage" element={<MyTeamsManagePage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
+
+          <Route path="/news" element={<NewsHubPage />} />
+          <Route path="/news/feed" element={<MyFeedPage />} />
+
+          <Route path="/fanzone" element={<FanzoneHubPage />} />
+          <Route path="/fanzone/loyalty" element={<LoyaltyPage />} />
+          <Route path="/fanzone/audio" element={<LiveMatchAudioPage />} />
+          <Route path="/fanzone/ppv" element={<PPVPage />} />
+
+          <Route
+            path="/matchday-journeys"
+            element={<MatchdayJourneysPage />}
+          />
+          <Route
+            path="/matchday-planner"
+            element={<MatchdayPlannerPage />}
+          />
+
+          <Route path="/tickets" element={<TicketsPage />} />
+          <Route path="/flights" element={<FlightsPage />} />
+          <Route path="/hotels" element={<HotelsPage />} />
+          <Route path="/transport" element={<TransportPage />} />
+
+          <Route path="/heritage" element={<HeritageHub />} />
+          <Route path="/heritage/legends" element={<LegendsHub />} />
+          <Route path="/heritage/legends/men" element={<LegendsMen />} />
+          <Route path="/heritage/legends/women" element={<LegendsWomen />} />
         </Route>
 
         {/* ================= SUPER ================= */}
@@ -206,7 +302,6 @@ export default function App() {
           <Route path="/home-super" element={<SuperHomePage />} />
         </Route>
 
-        {/* ================= FALLBACK ================= */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
