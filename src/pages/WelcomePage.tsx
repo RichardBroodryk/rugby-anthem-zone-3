@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import styles from "./WelcomePage.module.css";
 
 /**
- * WELCOME PAGE v3 — FLOW CORRECTED
- * Adds login entry points per tier.
- * No pricing logic changed.
+ * WELCOME PAGE v4 — LOGIN INTENT WIRED
+ * Freemium login = normal
+ * Premium/Super login = checkout intent preserved
  */
 
 export default function WelcomePage() {
@@ -15,8 +15,18 @@ export default function WelcomePage() {
   const goPremium = () => navigate("/what-you-get/premium");
   const goSuper = () => navigate("/what-you-get/super");
 
-  // 🔐 Login routing (global)
-  const goLogin = () => navigate("/login");
+  // 🔐 Login routing (tier-aware)
+  const goLoginFree = () => navigate("/login");
+
+  const goLoginPremium = () =>
+    navigate("/login", {
+      state: { redirectAfterLogin: "checkout", tier: "premium" },
+    });
+
+  const goLoginSuper = () =>
+    navigate("/login", {
+      state: { redirectAfterLogin: "checkout", tier: "super" },
+    });
 
   return (
     <section className={styles.page}>
@@ -54,10 +64,9 @@ export default function WelcomePage() {
               Explore Free
             </button>
 
-            {/* ✅ NEW: Login */}
             <button
               className={styles.loginButton}
-              onClick={goLogin}
+              onClick={goLoginFree}
             >
               Login
             </button>
@@ -81,10 +90,9 @@ export default function WelcomePage() {
               View Premium Access
             </button>
 
-            {/* ✅ NEW: Login */}
             <button
               className={styles.loginButton}
-              onClick={goLogin}
+              onClick={goLoginPremium}
             >
               Login
             </button>
@@ -108,10 +116,9 @@ export default function WelcomePage() {
               View Super Premium Access
             </button>
 
-            {/* ✅ NEW: Login */}
             <button
               className={styles.loginButton}
-              onClick={goLogin}
+              onClick={goLoginSuper}
             >
               Login
             </button>
