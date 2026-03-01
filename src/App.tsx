@@ -154,17 +154,31 @@ function PaddleTxnListener() {
 
     if (!txn) return;
 
+    const PADDLE_CLIENT_TOKEN = "live_2bfb17d9fcf0a48f769b6021d1b";
+
     const openCheckout = () => {
       // @ts-ignore
-      if (window.Paddle) {
+      if (!window.Paddle) return;
+
+      try {
+        // ⭐ REQUIRED: initialize Paddle Billing
+        // @ts-ignore
+        window.Paddle.Initialize({token: live_2bfb17d9fcf0a48f769b6021d1b,
+        });
+
+        // ⭐ open checkout for the transaction
         // @ts-ignore
         window.Paddle.Checkout.open({
           transactionId: txn,
         });
+      } catch (err) {
+        console.error("Paddle init/open error:", err);
       }
     };
 
-    if (!(window as any).Paddle) {
+    // load script if needed
+    // @ts-ignore
+    if (!window.Paddle) {
       const script = document.createElement("script");
       script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
       script.async = true;
