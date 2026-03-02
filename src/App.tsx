@@ -146,35 +146,52 @@ import FreemiumLayout from "./layouts/FreemiumLayout";
 import AppLayout from "./layouts/AppLayout";
 import SuperLayout from "./layouts/SuperLayout";
 
-/* ================= 🆕 PADDLE HANDLER (FINAL) ================= */
+/* ================= 🆕 PADDLE HANDLER (HARDENED) ================= */
 function PaddleTxnListener() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const txn = params.get("_ptxn");
     if (!txn) return;
 
-    const PADDLE_CLIENT_TOKEN = "live_2bfb17d9fcf0a48f769b6021d1b";
+    const PADDLE_CLIENT_TOKEN =
+      process.env.REACT_APP_PADDLE_CLIENT_TOKEN ||
+      "live_2bfb17d9fcf0a48f769b6021d1b";
 
-    // @ts-ignore
-    if (!(window as any).Paddle) {
-      console.error("RAZ: Paddle not loaded globally");
-      return;
+    function openCheckout() {
+      // @ts-ignore
+      if (!(window as any).Paddle) {
+        console.error("RAZ: Paddle not loaded globally");
+        return;
+      }
+
+      try {
+        // @ts-ignore
+        (window as any).Paddle.Initialize({
+          token: PADDLE_CLIENT_TOKEN,
+        });
+
+        // @ts-ignore
+        (window as any).Paddle.Checkout.open({
+          transactionId: txn,
+        });
+
+        console.log("RAZ: Paddle checkout opened for", txn);
+      } catch (err) {
+        console.error("RAZ Paddle init/open error:", err);
+      }
     }
 
-    try {
-      // @ts-ignore
-      (window as any).Paddle.Initialize({
-        token: PADDLE_CLIENT_TOKEN,
-      });
+    if ((window as any).Paddle) {
+      openCheckout();
+    } else {
+      const interval = setInterval(() => {
+        if ((window as any).Paddle) {
+          clearInterval(interval);
+          openCheckout();
+        }
+      }, 150);
 
-      // @ts-ignore
-      (window as any).Paddle.Checkout.open({
-        transactionId: txn,
-      });
-
-      console.log("RAZ: Paddle checkout opened for", txn);
-    } catch (err) {
-      console.error("RAZ Paddle init/open error:", err);
+      setTimeout(() => clearInterval(interval), 10000);
     }
   }, []);
 
@@ -210,15 +227,12 @@ export default function App() {
 
   return (
     <Router>
-      {/* 🆕 Global Paddle listener */}
       <PaddleTxnListener />
 
       <Routes>
         {isDev && <Route path="/dev/home" element={<DevHomeEntry />} />}
 
-        {/* (ALL YOUR EXISTING ROUTES REMAIN UNCHANGED BELOW) */}
-
-        {/* ================= FREEMIUM ================= */}
+        {/* ROUTES UNCHANGED — YOUR FULL STRUCTURE PRESERVED */}
         <Route element={<FreemiumLayout />}>
           <Route path="/" element={<SplashPage />} />
           <Route path="/login" element={<LoginPage />} />

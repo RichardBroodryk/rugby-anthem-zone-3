@@ -4,9 +4,9 @@ import styles from "./TermsPage.module.css";
 import { getToken } from "../services/auth";
 
 /**
- * TERMS PAGE — CHECKOUT CONNECTED (HARDENED)
+ * TERMS PAGE — CHECKOUT CONNECTED (PRODUCTION-ALIGNED)
  * Freemium: immediate access
- * Premium/Super: create checkout if logged in
+ * Premium/Super: backend creates Paddle transaction
  */
 
 type Pricing = {
@@ -32,11 +32,11 @@ export default function TermsPage() {
 
   const [loading, setLoading] = useState(false);
 
-  // ✅ Safe API base (prevents undefined forever)
+  // ✅ Safe API base
   const API_BASE =
     process.env.REACT_APP_API_URL || "http://localhost:4000";
 
-  // Safety guard
+  // ✅ Safety guard
   useEffect(() => {
     if (!tier || !country) {
       navigate("/welcome", { replace: true });
@@ -88,9 +88,8 @@ export default function TermsPage() {
         return;
       }
 
-      // 🚀 Redirect to Paddle
-      // 🚀 Redirect to Paddle
-window.location.href = data.checkoutUrl;
+      // 🚀 Production path — redirect to Paddle-hosted URL
+      window.location.href = data.checkoutUrl;
     } catch (err) {
       console.error("Checkout error:", err);
       alert("Payment service unavailable. Please try again.");
