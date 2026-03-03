@@ -166,3 +166,13 @@
     height: 60%;
   }
 }
+.railSection {
+  margin: 32px 0;
+
+  /* breakout consistency */
+  width: calc(100% + 48px);
+  margin-left: -24px;
+  margin-right: -24px;
+
+  align-self: stretch;
+}

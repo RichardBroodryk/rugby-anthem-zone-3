@@ -2,6 +2,7 @@ import styles from "./SuperHomePage.module.css";
 
 import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";
+import AutoContentRail from "../components/ui/AutoContentRail";
 
 /* DATA */
 import { tournaments2026 } from "../data/tournamentMeta";
@@ -51,27 +52,30 @@ export default function SuperHomePage() {
     <main className={styles.page}>
       <HeroCard variant="super" />
 
-      {/* FEATURED ROW — TOURNAMENT + NOTIFICATIONS */}
-      {featuredTournament && (
-        <section className={styles.hubGrid}>
-          <HubCard
-            title={featuredTournament.name}
-            image={featuredTournamentImage}
-            to={featuredTournament.route}
-            features={[
-              {
-                label:
-                  featuredTournament.heroBadge || "FEATURED TOURNAMENT",
-                icon: <AwardIcon />,
-              },
-              {
-                label:
-                  featuredTournament.heroSubtitle ||
-                  "Current global focus",
-                icon: <StarIcon />,
-              },
-            ]}
-          />
+      {/* 🔥 SUPER MASTER RAIL */}
+      <section className={styles.railSection}>
+        <AutoContentRail autoAdvance>
+          {/* Featured */}
+          {featuredTournament && (
+            <HubCard
+              title={featuredTournament.name}
+              image={featuredTournamentImage}
+              to={featuredTournament.route}
+              features={[
+                {
+                  label:
+                    featuredTournament.heroBadge || "FEATURED TOURNAMENT",
+                  icon: <AwardIcon />,
+                },
+                {
+                  label:
+                    featuredTournament.heroSubtitle ||
+                    "Current global focus",
+                  icon: <StarIcon />,
+                },
+              ]}
+            />
+          )}
 
           <HubCard
             title="Notifications"
@@ -88,151 +92,137 @@ export default function SuperHomePage() {
               },
             ]}
           />
-        </section>
-      )}
 
-      {/* CORE IDENTITY */}
-      <section className={styles.hubGrid}>
-        <HubCard
-          title="Anthems"
-          image={anthemsImage}
-          to="/anthems"
-          features={[
-            { label: "National Anthems", icon: <MusicIcon /> },
-          ]}
-        />
+          {/* Core */}
+          <HubCard
+            title="Anthems"
+            image={anthemsImage}
+            to="/anthems"
+            features={[{ label: "National Anthems", icon: <MusicIcon /> }]}
+          />
 
-        <HubCard
-          title="Tournaments"
-          image={tournamentsImage}
-          to="/tournaments"
-          features={[
-            { label: "Men’s Tournaments", icon: <AwardIcon /> },
-            { label: "Women’s Tournaments", icon: <GridIcon /> },
-          ]}
-        />
-      </section>
+          <HubCard
+            title="Tournaments"
+            image={tournamentsImage}
+            to="/tournaments"
+            features={[
+              { label: "Men’s Tournaments", icon: <AwardIcon /> },
+              { label: "Women’s Tournaments", icon: <GridIcon /> },
+            ]}
+          />
 
-      {/* MATCHDAY CORE */}
-      <section className={styles.hubGrid}>
-        <HubCard
-          title="Match Center"
-          image={matchCenterImage}
-          to="/match-center"
-          features={[
-            { label: "Live Scores", icon: <LiveScoresIcon /> },
-            { label: "Fixtures", icon: <FixturesIcon /> },
-            { label: "Results", icon: <ResultsIcon /> },
-            { label: "Stats", icon: <StatsIcon /> },
-          ]}
-        />
+          {/* Matchday */}
+          <HubCard
+            title="Match Center"
+            image={matchCenterImage}
+            to="/match-center"
+            features={[
+              { label: "Live Scores", icon: <LiveScoresIcon /> },
+              { label: "Fixtures", icon: <FixturesIcon /> },
+              { label: "Results", icon: <ResultsIcon /> },
+              { label: "Stats", icon: <StatsIcon /> },
+            ]}
+          />
 
-        <HubCard
-          title="Matchday Journeys"
-          image={matchDayImage}
-          to="/matchday-journeys"
-          features={[
-            { label: "Flights", icon: <AirplaneIcon /> },
-            { label: "Tickets", icon: <TicketIcon /> },
-            { label: "Transport", icon: <TruckIcon /> },
-          ]}
-        />
-      </section>
+          <HubCard
+            title="Matchday Journeys"
+            image={matchDayImage}
+            to="/matchday-journeys"
+            features={[
+              { label: "Flights", icon: <AirplaneIcon /> },
+              { label: "Tickets", icon: <TicketIcon /> },
+              { label: "Transport", icon: <TruckIcon /> },
+            ]}
+          />
 
-      {/* EXPERIENCE & COMMUNITY */}
-      <section className={styles.hubGrid}>
-        <HubCard
-          title="The Rugby Studio"
-          image={rugbyStudioImage}
-          to="/media"
-          features={[
-            { label: "Match Videos", icon: <VideoIcon /> },
-            { label: "Podcasts & Audio", icon: <VideoIcon /> },
-          ]}
-        />
+          {/* Experience */}
+          <HubCard
+            title="The Rugby Studio"
+            image={rugbyStudioImage}
+            to="/media"
+            features={[
+              { label: "Match Videos", icon: <VideoIcon /> },
+              { label: "Podcasts & Audio", icon: <VideoIcon /> },
+            ]}
+          />
 
-        <HubCard
-          title="Fanzone"
-          image={fanzoneImage}
-          to="/fanzone"
-          features={[
-            { label: "Community & Loyalty", icon: <UsersIcon /> },
-          ]}
-        />
-      </section>
+          <HubCard
+            title="Fanzone"
+            image={fanzoneImage}
+            to="/fanzone"
+            features={[
+              { label: "Community & Loyalty", icon: <UsersIcon /> },
+            ]}
+          />
 
-      {/* INSIGHT & INFORMATION */}
-      <section className={styles.hubGrid}>
-        <HubCard
-          title="News"
-          image={newsImage}
-          to="/news"
-          features={[
-            { label: "Headlines & Analysis", icon: <FileTextIcon /> },
-          ]}
-        />
+          {/* Insight */}
+          <HubCard
+            title="News"
+            image={newsImage}
+            to="/news"
+            features={[
+              { label: "Headlines & Analysis", icon: <FileTextIcon /> },
+            ]}
+          />
 
-        <HubCard
-          title="Inside the Game"
-          image={insideTheGameImage}
-          to="/inside-the-game"
-          features={[
-            { label: "Laws & Referees", icon: <BookOpenIcon /> },
-            { label: "Fantasy & Analysis", icon: <StarIcon /> },
-          ]}
-        />
-      </section>
+          <HubCard
+            title="Inside the Game"
+            image={insideTheGameImage}
+            to="/inside-the-game"
+            features={[
+              { label: "Laws & Referees", icon: <BookOpenIcon /> },
+              { label: "Fantasy & Analysis", icon: <StarIcon /> },
+            ]}
+          />
 
-      {/* PLANNING & COMMERCE */}
-      <section className={styles.hubGrid}>
-        <HubCard
-          title="Calendar"
-          image={calendarImage}
-          to="/calendar"
-          features={[
-            {
-              label:
-                "Global fixtures, key dates & iconic stadiums",
-              icon: <CalendarIcon />,
-            },
-          ]}
-        />
+          {/* Commerce */}
+          <HubCard
+            title="Calendar"
+            image={calendarImage}
+            to="/calendar"
+            features={[
+              {
+                label:
+                  "Global fixtures, key dates & iconic stadiums",
+                icon: <CalendarIcon />,
+              },
+            ]}
+          />
 
-        <HubCard
-          title="Merch"
-          image={merchImage}
-          to="/merch"
-          features={[
-            { label: "Official Team Gear", icon: <ShoppingBagIcon /> },
-          ]}
-        />
-      </section>
+          <HubCard
+            title="Merch"
+            image={merchImage}
+            to="/merch"
+            features={[
+              { label: "Official Team Gear", icon: <ShoppingBagIcon /> },
+            ]}
+          />
 
-      {/* HERITAGE & LEGACY (SUPER ONLY) */}
-      <section className={styles.hubGrid}>
-        <HubCard
-          title="Heritage"
-          image={heritageImage}
-          to="/heritage"
-          features={[
-            {
-              label: "Legends, Squads & Champions",
-              icon: <ArchiveIcon />,
-            },
-          ]}
-        />
+          {/* Super exclusive */}
+          <HubCard
+            title="Heritage"
+            image={heritageImage}
+            to="/heritage"
+            features={[
+              {
+                label: "Legends, Squads & Champions",
+                icon: <ArchiveIcon />,
+              },
+            ]}
+          />
 
-        <HubCard
-          title="Defining Rugby Moments"
-          image={definingMomentsImage}
-          to="/defining-moments"
-          features={[
-            {
-              label: "The moments that shaped the game",
-              icon: <ArchiveIcon />,
-            },
-          ]}
-        />
+          <HubCard
+            title="Defining Rugby Moments"
+            image={definingMomentsImage}
+            to="/defining-moments"
+            features={[
+              {
+                label: "The moments that shaped the game",
+                icon: <ArchiveIcon />,
+              },
+            ]}
+          />
+        </AutoContentRail>
       </section>
     </main>
   );

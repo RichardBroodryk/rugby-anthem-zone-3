@@ -4,6 +4,8 @@ import styles from "./MerchPage.module.css";
 /* LOYALTY — NON VISUAL */
 import { recordLoyaltyAction } from "../utils/loyaltyHooks";
 
+import AutoContentRail from "../components/ui/AutoContentRail";
+
 import merchHero from "../assets/images/raz/Merch.png";
 
 /* SOLID LOGOS */
@@ -57,23 +59,85 @@ export default function MerchPage() {
         </div>
       </section>
 
-      {/* OFFICIAL STORES */}
+      {/* 🔥 OFFICIAL STORES RAIL */}
       <section className={styles.section}>
         <h2>Official Team Stores</h2>
 
-        <div className={styles.grid}>
-          <MerchStoreTile name="South Africa" logo={southAfrica} to="/merch/south-africa" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="New Zealand" logo={newZealand} to="/merch/new-zealand" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="England" logo={england} to="/merch/england" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="France" logo={france} to="/merch/france" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="Wales" logo={wales} to="/merch/wales" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="Ireland" logo={ireland} to="/merch/ireland" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="Scotland" logo={scotland} to="/merch/scotland" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="Italy" logo={italy} to="/merch/italy" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="Australia" logo={australia} to="/merch/australia" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="Japan" logo={japan} to="/merch/japan" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="Fiji" logo={fiji} to="/merch/fiji" onVisit={() => recordLoyaltyAction("merch_purchase")} />
-          <MerchStoreTile name="Argentina" logo={argentina} to="/merch/argentina" onVisit={() => recordLoyaltyAction("merch_purchase")} />
+        <div className={styles.railSection}>
+          <AutoContentRail autoAdvance>
+            <MerchStoreTile
+              name="South Africa"
+              logo={southAfrica}
+              to="/merch/south-africa"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="New Zealand"
+              logo={newZealand}
+              to="/merch/new-zealand"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="England"
+              logo={england}
+              to="/merch/england"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="France"
+              logo={france}
+              to="/merch/france"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="Wales"
+              logo={wales}
+              to="/merch/wales"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="Ireland"
+              logo={ireland}
+              to="/merch/ireland"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="Scotland"
+              logo={scotland}
+              to="/merch/scotland"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="Italy"
+              logo={italy}
+              to="/merch/italy"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="Australia"
+              logo={australia}
+              to="/merch/australia"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="Japan"
+              logo={japan}
+              to="/merch/japan"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="Fiji"
+              logo={fiji}
+              to="/merch/fiji"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+            <MerchStoreTile
+              name="Argentina"
+              logo={argentina}
+              to="/merch/argentina"
+              onVisit={() => recordLoyaltyAction("merch_purchase")}
+            />
+          </AutoContentRail>
         </div>
       </section>
     </main>

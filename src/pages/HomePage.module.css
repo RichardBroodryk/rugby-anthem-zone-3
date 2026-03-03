@@ -30,3 +30,14 @@
     max-width: none;
   }
 }
+.railSection {
+  margin: 24px 0;
+
+  /* 🔥 BREAK OUT OF PAGE PADDING */
+  width: calc(100% + 48px);
+  margin-left: -24px;
+  margin-right: -24px;
+
+  /* keep vertical flow stable */
+  align-self: stretch;
+}

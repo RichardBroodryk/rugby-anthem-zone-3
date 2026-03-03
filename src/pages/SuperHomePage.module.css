@@ -30,3 +30,13 @@
     max-width: none;
   }
 }
+.railSection {
+  margin: 24px 0;
+
+  /* breakout to match other tiers */
+  width: calc(100% + 48px);
+  margin-left: -24px;
+  margin-right: -24px;
+
+  align-self: stretch;
+}

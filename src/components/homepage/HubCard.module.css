@@ -4,7 +4,12 @@
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
+
+  /* 🔥 CRITICAL FIX */
   width: 100%;
+  max-width: 100%;
+  display: block;
+  box-sizing: border-box;
 }
 
 /* IMAGE */

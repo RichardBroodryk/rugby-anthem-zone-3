@@ -118,3 +118,13 @@
     grid-template-columns: 1fr;
   }
 }
+.railSection {
+  margin: 32px 0;
+
+  /* breakout to match homepage rails */
+  width: calc(100% + 48px);
+  margin-left: -24px;
+  margin-right: -24px;
+
+  align-self: stretch;
+}

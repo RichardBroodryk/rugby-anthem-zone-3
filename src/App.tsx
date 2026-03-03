@@ -146,7 +146,7 @@ import FreemiumLayout from "./layouts/FreemiumLayout";
 import AppLayout from "./layouts/AppLayout";
 import SuperLayout from "./layouts/SuperLayout";
 
-/* ================= 🆕 PADDLE HANDLER (HARDENED) ================= */
+/* ================= 🆕 PADDLE HANDLER ================= */
 function PaddleTxnListener() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -154,44 +154,25 @@ function PaddleTxnListener() {
     if (!txn) return;
 
     const PADDLE_CLIENT_TOKEN =
-      process.env.REACT_APP_PADDLE_CLIENT_TOKEN ||
-      "live_2bfb17d9fcf0a48f769b6021d1b";
+      process.env.REACT_APP_PADDLE_CLIENT_TOKEN;
 
-    function openCheckout() {
-      // @ts-ignore
-      if (!(window as any).Paddle) {
-        console.error("RAZ: Paddle not loaded globally");
-        return;
-      }
-
-      try {
-        // @ts-ignore
-        (window as any).Paddle.Initialize({
-          token: PADDLE_CLIENT_TOKEN,
-        });
-
-        // @ts-ignore
-        (window as any).Paddle.Checkout.open({
-          transactionId: txn,
-        });
-
-        console.log("RAZ: Paddle checkout opened for", txn);
-      } catch (err) {
-        console.error("RAZ Paddle init/open error:", err);
-      }
+    if (!(window as any).Paddle) {
+      console.error("RAZ: Paddle not loaded globally");
+      return;
     }
 
-    if ((window as any).Paddle) {
-      openCheckout();
-    } else {
-      const interval = setInterval(() => {
-        if ((window as any).Paddle) {
-          clearInterval(interval);
-          openCheckout();
-        }
-      }, 150);
+    try {
+      (window as any).Paddle.Initialize({
+        token: PADDLE_CLIENT_TOKEN,
+      });
 
-      setTimeout(() => clearInterval(interval), 10000);
+      (window as any).Paddle.Checkout.open({
+        transactionId: txn,
+      });
+
+      console.log("RAZ: Paddle checkout opened for", txn);
+    } catch (err) {
+      console.error("RAZ Paddle init/open error:", err);
     }
   }, []);
 
@@ -225,6 +206,17 @@ function DevHomeEntry() {
 export default function App() {
   const isDev = process.env.NODE_ENV === "development";
 
+  // 🌐 Canonical redirect to www
+  useEffect(() => {
+    if (window.location.hostname === "rugbyanthemzone.com") {
+      window.location.replace(
+        "https://www.rugbyanthemzone.com" +
+          window.location.pathname +
+          window.location.search
+      );
+    }
+  }, []);
+
   return (
     <Router>
       <PaddleTxnListener />
@@ -232,7 +224,7 @@ export default function App() {
       <Routes>
         {isDev && <Route path="/dev/home" element={<DevHomeEntry />} />}
 
-        {/* ROUTES UNCHANGED — YOUR FULL STRUCTURE PRESERVED */}
+        {/* ================= FREEMIUM ================= */}
         <Route element={<FreemiumLayout />}>
           <Route path="/" element={<SplashPage />} />
           <Route path="/login" element={<LoginPage />} />

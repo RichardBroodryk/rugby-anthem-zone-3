@@ -80,3 +80,13 @@
   text-decoration: none;
   color: inherit;
 }
+.railSection {
+  margin-top: 16px;
+
+  /* breakout consistency */
+  width: calc(100% + 48px);
+  margin-left: -24px;
+  margin-right: -24px;
+
+  align-self: stretch;
+}

@@ -2,6 +2,7 @@ import styles from "./HomePage.module.css";
 
 import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";
+import AutoContentRail from "../components/ui/AutoContentRail";
 
 import { tournaments2026 } from "../data/tournamentMeta";
 
@@ -44,12 +45,14 @@ export default function HomePage() {
     tournaments2026[0];
 
   return (
-    <main className={styles.page}>
-      <HeroCard variant="premium" />
+  <main className={styles.page}>
+    <HeroCard variant="premium" />
 
-      {/* FEATURED ROW — TOURNAMENT + NOTIFICATIONS */}
-      {featuredTournament && (
-        <section className={styles.hubGrid}>
+    {/* 🔥 PRIMARY CONTENT RAIL — ALL HUBS */}
+    <section className={styles.railSection}>
+      <AutoContentRail autoAdvance>
+        {/* Featured */}
+        {featuredTournament && (
           <HubCard
             title={featuredTournament.name}
             image={featuredTournamentImage}
@@ -57,42 +60,44 @@ export default function HomePage() {
             features={[
               {
                 label:
-                  featuredTournament.heroBadge || "FEATURED TOURNAMENT",
+                  featuredTournament.heroBadge ||
+                  "FEATURED TOURNAMENT",
                 icon: <AwardIcon />,
               },
               {
                 label:
-                  featuredTournament.heroSubtitle || "Global focus",
+                  featuredTournament.heroSubtitle ||
+                  "Global focus",
                 icon: <StarIcon />,
               },
             ]}
           />
+        )}
 
-          <HubCard
-            title="Notifications"
-            image={newsImage}
-            to="/notifications"
-            features={[
-              {
-                label: "Match alerts & key rugby moments",
-                icon: <CalendarIcon />,
-              },
-              {
-                label: "Tournament updates you opt into",
-                icon: <StarIcon />,
-              },
-            ]}
-          />
-        </section>
-      )}
+        <HubCard
+          title="Notifications"
+          image={newsImage}
+          to="/notifications"
+          features={[
+            {
+              label: "Match alerts & key rugby moments",
+              icon: <CalendarIcon />,
+            },
+            {
+              label: "Tournament updates you opt into",
+              icon: <StarIcon />,
+            },
+          ]}
+        />
 
-      {/* CORE IDENTITY */}
-      <section className={styles.hubGrid}>
+        {/* Core */}
         <HubCard
           title="Anthems"
           image={anthemsImage}
-          to="/app/anthems"
-          features={[{ label: "National Anthems", icon: <MusicIcon /> }]}
+          to="/anthems"
+          features={[
+            { label: "National Anthems", icon: <MusicIcon /> },
+          ]}
         />
 
         <HubCard
@@ -104,10 +109,8 @@ export default function HomePage() {
             { label: "Women’s Tournaments", icon: <GridIcon /> },
           ]}
         />
-      </section>
 
-      {/* MATCHDAY CORE */}
-      <section className={styles.hubGrid}>
+        {/* Matchday */}
         <HubCard
           title="Match Center"
           image={matchCenterImage}
@@ -130,10 +133,8 @@ export default function HomePage() {
             { label: "Transport", icon: <TruckIcon /> },
           ]}
         />
-      </section>
 
-      {/* EXPERIENCE & COMMUNITY */}
-      <section className={styles.hubGrid}>
+        {/* Experience */}
         <HubCard
           title="The Rugby Studio"
           image={rugbyStudioImage}
@@ -148,12 +149,12 @@ export default function HomePage() {
           title="Fanzone"
           image={fanzoneImage}
           to="/fanzone"
-          features={[{ label: "Community & Loyalty", icon: <UsersIcon /> }]}
+          features={[
+            { label: "Community & Loyalty", icon: <UsersIcon /> },
+          ]}
         />
-      </section>
 
-      {/* INSIGHT & INFORMATION */}
-      <section className={styles.hubGrid}>
+        {/* Insight */}
         <HubCard
           title="News"
           image={newsImage}
@@ -172,17 +173,16 @@ export default function HomePage() {
             { label: "Fantasy & Analysis", icon: <StarIcon /> },
           ]}
         />
-      </section>
 
-      {/* PLANNING & COMMERCE */}
-      <section className={styles.hubGrid}>
+        {/* Commerce */}
         <HubCard
           title="Calendar"
           image={calendarImage}
           to="/calendar"
           features={[
             {
-              label: "Global fixtures, key dates & iconic stadiums",
+              label:
+                "Global fixtures, key dates & iconic stadiums",
               icon: <CalendarIcon />,
             },
           ]}
@@ -196,7 +196,8 @@ export default function HomePage() {
             { label: "Official Team Gear", icon: <ShoppingBagIcon /> },
           ]}
         />
-      </section>
-    </main>
-  );
+      </AutoContentRail>
+    </section>
+  </main>
+)
 }

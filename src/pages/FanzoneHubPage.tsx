@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./FanzoneHubPage.module.css";
 
+import AutoContentRail from "../components/ui/AutoContentRail";
+
 import heroImage from "../assets/images/raz/fanzone-hub.png";
 
 import loyaltyImg from "../assets/images/raz/fanzone-loyalty.png";
@@ -33,7 +35,7 @@ export default function FanzoneHubPage() {
         </div>
       </header>
 
-      {/* ================= INTRO ================= */}
+      {/* ================= INTRO (STATIC) ================= */}
       <section className={styles.intro}>
         <p>
           Fanzone is designed for committed supporters. It prioritises
@@ -42,53 +44,55 @@ export default function FanzoneHubPage() {
         </p>
       </section>
 
-      {/* ================= FEATURES ================= */}
-      <section className={styles.features}>
-        {/* Loyalty */}
-        <div
-          className={styles.featureCard}
-          style={{ backgroundImage: `url(${loyaltyImg})` }}
-          onClick={() => navigate("/fanzone/loyalty")}
-        >
-          <div className={styles.featureOverlay} />
-          <h2>Loyalty Card Program</h2>
-        </div>
-
-        {/* Live Match Audio — IMAGE INSIDE CARD */}
-        <div
-          className={styles.audioCard}
-          onClick={() => navigate("/fanzone/audio")}
-        >
-          <img
-            src={audioImg}
-            alt="Live Match Audio"
-            className={styles.audioImage}
-          />
-
-          <div className={styles.audioText}>
-            <h2>Live Match Audio</h2>
+      {/* 🔥 FANZONE RAIL */}
+      <section className={styles.railSection}>
+        <AutoContentRail autoAdvance>
+          {/* Loyalty */}
+          <div
+            className={styles.featureCard}
+            style={{ backgroundImage: `url(${loyaltyImg})` }}
+            onClick={() => navigate("/fanzone/loyalty")}
+          >
+            <div className={styles.featureOverlay} />
+            <h2>Loyalty Card Program</h2>
           </div>
-        </div>
 
-        {/* Pay Per View */}
-        <div
-          className={styles.featureCard}
-          style={{ backgroundImage: `url(${ppvImg})` }}
-          onClick={() => navigate("/fanzone/ppv")}
-        >
-          <div className={styles.featureOverlay} />
-          <h2>Pay Per View</h2>
-        </div>
+          {/* Live Match Audio */}
+          <div
+            className={styles.audioCard}
+            onClick={() => navigate("/fanzone/audio")}
+          >
+            <img
+              src={audioImg}
+              alt="Live Match Audio"
+              className={styles.audioImage}
+            />
 
-        {/* My Teams — PREFERENCE LAYER */}
-        <div
-          className={styles.featureCard}
-          style={{ backgroundImage: `url(${myTeamsImg})` }}
-          onClick={() => navigate("/my-teams")}
-        >
-          <div className={styles.featureOverlay} />
-          <h2>My Teams</h2>
-        </div>
+            <div className={styles.audioText}>
+              <h2>Live Match Audio</h2>
+            </div>
+          </div>
+
+          {/* Pay Per View */}
+          <div
+            className={styles.featureCard}
+            style={{ backgroundImage: `url(${ppvImg})` }}
+            onClick={() => navigate("/fanzone/ppv")}
+          >
+            <div className={styles.featureOverlay} />
+            <h2>Pay Per View</h2>
+          </div>
+
+          {/* My Teams */}
+          <div
+            className={styles.featureCard}
+            style={{ backgroundImage: `url(${myTeamsImg})` }}
+            onClick={() => navigate("/my-teams")}
+          >
+            <div className={styles.featureOverlay} />
+            <h2>My Teams</h2>
+          </div>
+        </AutoContentRail>
       </section>
     </main>
   );

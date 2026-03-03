@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./FreemiumHomePage.module.css";
 
 import HubCard from "../components/homepage/HubCard";
+import AutoContentRail from "../components/ui/AutoContentRail";
 
 import AwardIcon from "../components/icons/AwardIcon";
 import GridIcon from "../components/icons/GridIcon";
@@ -25,34 +26,35 @@ export default function FreemiumHomePage() {
         </p>
       </header>
 
-      <section className={styles.primaryRow}>
-        <HubCard
-          title="Anthems"
-          image={anthemsImage}
-          to="/free/anthems"
-          features={[{ label: "National Anthems", icon: <MusicIcon /> }]}
-        />
+      {/* 🔥 FREEMIUM CONTENT RAIL */}
+      <section className={styles.railSection}>
+        <AutoContentRail autoAdvance>
+          <HubCard
+            title="Anthems"
+            image={anthemsImage}
+            to="/free/anthems"
+            features={[{ label: "National Anthems", icon: <MusicIcon /> }]}
+          />
 
-        <HubCard
-          title="Tournaments"
-          image={tournamentsImage}
-          to="/what-you-get/premium"
-          features={[
-            { label: "Men’s Tournaments", icon: <AwardIcon /> },
-            { label: "Women’s Tournaments", icon: <GridIcon /> },
-          ]}
-        />
-      </section>
+          <HubCard
+            title="Tournaments"
+            image={tournamentsImage}
+            to="/what-you-get/premium"
+            features={[
+              { label: "Men’s Tournaments", icon: <AwardIcon /> },
+              { label: "Women’s Tournaments", icon: <GridIcon /> },
+            ]}
+          />
 
-      <section className={styles.secondaryRow}>
-        <HubCard
-          title="Calendar"
-          image={calendarImage}
-          to="/what-you-get/premium"
-          features={[
-            { label: "Global Match Calendar", icon: <CalendarIcon /> },
-          ]}
-        />
+          <HubCard
+            title="Calendar"
+            image={calendarImage}
+            to="/what-you-get/premium"
+            features={[
+              { label: "Global Match Calendar", icon: <CalendarIcon /> },
+            ]}
+          />
+        </AutoContentRail>
       </section>
 
       <section className={styles.teaser}>

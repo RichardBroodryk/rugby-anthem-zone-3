@@ -1,6 +1,8 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import styles from "./MatchdayJourneysPage.module.css";
 
+import AutoContentRail from "../components/ui/AutoContentRail";
+
 import heroImage from "../assets/images/raz/match-day-journey.png";
 
 /* CARD IMAGES */
@@ -44,7 +46,7 @@ export default function MatchdayJourneysPage() {
         </div>
       </header>
 
-      {/* ================= PRIMARY ================= */}
+      {/* ================= PRIMARY (STATIC — DO NOT RAIL) ================= */}
       <section className={styles.primary}>
         <div
           className={styles.primaryCard}
@@ -62,55 +64,57 @@ export default function MatchdayJourneysPage() {
         </div>
       </section>
 
-      {/* ================= SECONDARY ================= */}
-      <section className={styles.secondary}>
-        <div
-          className={styles.hubCard}
-          style={{ backgroundImage: `url(${ticketsImg})` }}
-          onClick={() => go("/tickets")}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardGlass}>
-            <h4>Tickets</h4>
-            <p>Official match access and seating.</p>
+      {/* 🔥 SECONDARY RAIL (ONLY THESE MOVE) */}
+      <section className={styles.railSection}>
+        <AutoContentRail autoAdvance>
+          <div
+            className={styles.hubCard}
+            style={{ backgroundImage: `url(${ticketsImg})` }}
+            onClick={() => go("/tickets")}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardGlass}>
+              <h4>Tickets</h4>
+              <p>Official match access and seating.</p>
+            </div>
           </div>
-        </div>
 
-        <div
-          className={styles.hubCard}
-          style={{ backgroundImage: `url(${flightsImg})` }}
-          onClick={() => go("/flights")}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardGlass}>
-            <h4>Flights</h4>
-            <p>International and domestic travel.</p>
+          <div
+            className={styles.hubCard}
+            style={{ backgroundImage: `url(${flightsImg})` }}
+            onClick={() => go("/flights")}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardGlass}>
+              <h4>Flights</h4>
+              <p>International and domestic travel.</p>
+            </div>
           </div>
-        </div>
 
-        <div
-          className={styles.hubCard}
-          style={{ backgroundImage: `url(${hotelsImg})` }}
-          onClick={() => go("/hotels")}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardGlass}>
-            <h4>Hotels</h4>
-            <p>Accommodation near the stadium.</p>
+          <div
+            className={styles.hubCard}
+            style={{ backgroundImage: `url(${hotelsImg})` }}
+            onClick={() => go("/hotels")}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardGlass}>
+              <h4>Hotels</h4>
+              <p>Accommodation near the stadium.</p>
+            </div>
           </div>
-        </div>
 
-        <div
-          className={styles.hubCard}
-          style={{ backgroundImage: `url(${transportImg})` }}
-          onClick={() => go("/transport")}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardGlass}>
-            <h4>Local Transport</h4>
-            <p>Getting to and from the venue.</p>
+          <div
+            className={styles.hubCard}
+            style={{ backgroundImage: `url(${transportImg})` }}
+            onClick={() => go("/transport")}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardGlass}>
+              <h4>Local Transport</h4>
+              <p>Getting to and from the venue.</p>
+            </div>
           </div>
-        </div>
+        </AutoContentRail>
       </section>
 
       {/* ================= CONTEXT ================= */}

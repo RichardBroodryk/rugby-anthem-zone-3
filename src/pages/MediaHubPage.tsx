@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import styles from "./MediaHubPage.module.css";
 
+import AutoContentRail from "../components/ui/AutoContentRail";
+
 import mediaHero from "../assets/images/raz/Mediahub.jpg";
 
 /* STUDIO CARD IMAGES */
@@ -14,11 +16,7 @@ export default function MediaHubPage() {
     <main className={styles.page}>
       {/* ================= HERO ================= */}
       <header className={styles.hero}>
-        <img
-          src={mediaHero}
-          alt=""
-          className={styles.heroImage}
-        />
+        <img src={mediaHero} alt="" className={styles.heroImage} />
 
         <div className={styles.heroText}>
           <h1>The Rugby Studio</h1>
@@ -26,7 +24,7 @@ export default function MediaHubPage() {
         </div>
       </header>
 
-      {/* ================= FEATURED EDITORIAL ================= */}
+      {/* ================= FEATURED EDITORIAL (STATIC) ================= */}
       <section className={styles.featured}>
         <div className={styles.featuredContent}>
           <span className={styles.featuredLabel}>Featured</span>
@@ -42,75 +40,77 @@ export default function MediaHubPage() {
         </div>
       </section>
 
-      {/* ================= STUDIO EXPERIENCES ================= */}
-      <section className={styles.studioGrid}>
-        <Link
-          to="/videos"
-          className={styles.studioCard}
-          style={{
-            backgroundImage: `url(${matchHighlightsImg})`,
-          }}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardContent}>
-            <h3>Match Highlights</h3>
-            <p>
-              Highlights, key moments, and full-match action from
-              across the rugby world.
-            </p>
-          </div>
-        </Link>
+      {/* 🔥 STUDIO RAIL (ONLY THESE MOVE) */}
+      <section className={styles.railSection}>
+        <AutoContentRail autoAdvance>
+          <Link
+            to="/videos"
+            className={styles.studioCard}
+            style={{
+              backgroundImage: `url(${matchHighlightsImg})`,
+            }}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardContent}>
+              <h3>Match Highlights</h3>
+              <p>
+                Highlights, key moments, and full-match action from
+                across the rugby world.
+              </p>
+            </div>
+          </Link>
 
-        <Link
-          to="/podcasts"
-          className={styles.studioCard}
-          style={{
-            backgroundImage: `url(${podcastsImg})`,
-          }}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardContent}>
-            <h3>Podcasts</h3>
-            <p>
-              Analysis, interviews, and long-form rugby
-              conversations.
-            </p>
-          </div>
-        </Link>
+          <Link
+            to="/podcasts"
+            className={styles.studioCard}
+            style={{
+              backgroundImage: `url(${podcastsImg})`,
+            }}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardContent}>
+              <h3>Podcasts</h3>
+              <p>
+                Analysis, interviews, and long-form rugby
+                conversations.
+              </p>
+            </div>
+          </Link>
 
-        <Link
-          to="/greatest-hits"
-          className={styles.studioCard}
-          style={{
-            backgroundImage: `url(${greatestHitsImg})`,
-          }}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardContent}>
-            <h3>Greatest Hits</h3>
-            <p>
-              Iconic tries, legendary matches, and unforgettable
-              moments.
-            </p>
-          </div>
-        </Link>
+          <Link
+            to="/greatest-hits"
+            className={styles.studioCard}
+            style={{
+              backgroundImage: `url(${greatestHitsImg})`,
+            }}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardContent}>
+              <h3>Greatest Hits</h3>
+              <p>
+                Iconic tries, legendary matches, and unforgettable
+                moments.
+              </p>
+            </div>
+          </Link>
 
-        <Link
-          to="/comments"
-          className={styles.studioCard}
-          style={{
-            backgroundImage: `url(${commentsImg})`,
-          }}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardContent}>
-            <h3>Fan Comments</h3>
-            <p>
-              The global rugby conversation — reactions, debate,
-              and opinion.
-            </p>
-          </div>
-        </Link>
+          <Link
+            to="/comments"
+            className={styles.studioCard}
+            style={{
+              backgroundImage: `url(${commentsImg})`,
+            }}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardContent}>
+              <h3>Fan Comments</h3>
+              <p>
+                The global rugby conversation — reactions, debate,
+                and opinion.
+              </p>
+            </div>
+          </Link>
+        </AutoContentRail>
       </section>
     </main>
   );

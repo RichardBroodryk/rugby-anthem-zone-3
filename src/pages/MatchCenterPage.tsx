@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./MatchCenterPage.module.css";
 
+import AutoContentRail from "../components/ui/AutoContentRail";
+
 import heroBg from "../assets/images/raz/Match-center.png";
 
 /* CARD IMAGES */
@@ -30,55 +32,57 @@ export default function MatchCenterPage() {
         </div>
       </header>
 
-      {/* ================= PRIMARY HUB ================= */}
-      <section className={styles.hubGrid}>
-        <div
-          className={styles.hubCard}
-          style={{ backgroundImage: `url(${liveScoresImg})` }}
-          onClick={() => navigate("/live-scores")}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardPlate}>
-            <h3>Live Scores</h3>
-            <p>Follow matches in real time as they unfold.</p>
+      {/* 🔥 MATCH CENTER RAIL */}
+      <section className={styles.railSection}>
+        <AutoContentRail autoAdvance>
+          <div
+            className={styles.hubCard}
+            style={{ backgroundImage: `url(${liveScoresImg})` }}
+            onClick={() => navigate("/live-scores")}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardPlate}>
+              <h3>Live Scores</h3>
+              <p>Follow matches in real time as they unfold.</p>
+            </div>
           </div>
-        </div>
 
-        <div
-          className={styles.hubCard}
-          style={{ backgroundImage: `url(${fixturesImg})` }}
-          onClick={() => navigate("/fixtures")}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardPlate}>
-            <h3>Fixtures</h3>
-            <p>Upcoming international rugby matches.</p>
+          <div
+            className={styles.hubCard}
+            style={{ backgroundImage: `url(${fixturesImg})` }}
+            onClick={() => navigate("/fixtures")}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardPlate}>
+              <h3>Fixtures</h3>
+              <p>Upcoming international rugby matches.</p>
+            </div>
           </div>
-        </div>
 
-        <div
-          className={styles.hubCard}
-          style={{ backgroundImage: `url(${resultsImg})` }}
-          onClick={() => navigate("/results")}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardPlate}>
-            <h3>Results</h3>
-            <p>Final scores and completed fixtures.</p>
+          <div
+            className={styles.hubCard}
+            style={{ backgroundImage: `url(${resultsImg})` }}
+            onClick={() => navigate("/results")}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardPlate}>
+              <h3>Results</h3>
+              <p>Final scores and completed fixtures.</p>
+            </div>
           </div>
-        </div>
 
-        <div
-          className={styles.hubCard}
-          style={{ backgroundImage: `url(${statsImg})` }}
-          onClick={() => navigate("/stats")}
-        >
-          <div className={styles.cardOverlay} />
-          <div className={styles.cardPlate}>
-            <h3>Stats</h3>
-            <p>Team, tournament and venue statistics.</p>
+          <div
+            className={styles.hubCard}
+            style={{ backgroundImage: `url(${statsImg})` }}
+            onClick={() => navigate("/stats")}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardPlate}>
+              <h3>Stats</h3>
+              <p>Team, tournament and venue statistics.</p>
+            </div>
           </div>
-        </div>
+        </AutoContentRail>
       </section>
     </main>
   );
