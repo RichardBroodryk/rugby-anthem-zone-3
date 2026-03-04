@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./StatsPage.module.css";
 
-import { matches2026 } from "../data/matches2026";
+import { fetchEvents } from "../services/statscoreApi";
+
 import TeamComparisonTable from "../components/stats/TeamComparisonTable";
 import KeyPlayerStats from "../components/stats/KeyPlayerStats";
 import Flag from "../components/images/Flag";
@@ -21,109 +23,92 @@ type TeamStats = {
   difference: number;
 };
 
-/* ================= UTIL ================= */
-
-function buildTeamStats(): TeamStats[] {
-  const map = new Map<string, TeamStats>();
-
-  matches2026.forEach((match) => {
-    if (!match.score) return;
-
-    const { home, away, score } = match;
-
-    const ensure = (name: string, country: string) => {
-      if (!map.has(name)) {
-        map.set(name, {
-          team: name,
-          country,
-          played: 0,
-          won: 0,
-          lost: 0,
-          pointsFor: 0,
-          pointsAgainst: 0,
-          difference: 0,
-        });
-      }
-      return map.get(name)!;
-    };
-
-    const homeTeam = ensure(home.name, home.country);
-    const awayTeam = ensure(away.name, away.country);
-
-    homeTeam.played += 1;
-    awayTeam.played += 1;
-
-    homeTeam.pointsFor += score.home;
-    homeTeam.pointsAgainst += score.away;
-    awayTeam.pointsFor += score.away;
-    awayTeam.pointsAgainst += score.home;
-
-    if (score.home > score.away) {
-      homeTeam.won += 1;
-      awayTeam.lost += 1;
-    } else {
-      awayTeam.won += 1;
-      homeTeam.lost += 1;
-    }
-  });
-
-  map.forEach((t) => {
-    t.difference = t.pointsFor - t.pointsAgainst;
-  });
-
-  return Array.from(map.values()).sort(
-    (a, b) => b.difference - a.difference
-  );
-}
-
 /* ================= PAGE ================= */
 
 export default function StatsPage() {
   const navigate = useNavigate();
 
-  const teamStats = buildTeamStats();
+  const [teamStats, setTeamStats] = useState<TeamStats[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const match = matches2026.find((m) => m.score);
-  if (!match || !match.score) {
-    return <div className={styles.page}>No stats available.</div>;
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        const events = await fetchEvents();
+
+        const map = new Map<string, TeamStats>();
+
+        events.forEach((event: any) => {
+          if (!event.participants || event.participants.length < 2) return;
+
+          const home = event.participants[0];
+          const away = event.participants[1];
+
+          const homeName = home.name;
+          const awayName = away.name;
+
+          const ensure = (name: string) => {
+            if (!map.has(name)) {
+              map.set(name, {
+                team: name,
+                country: name.toLowerCase(),
+                played: 0,
+                won: 0,
+                lost: 0,
+                pointsFor: 0,
+                pointsAgainst: 0,
+                difference: 0,
+              });
+            }
+            return map.get(name)!;
+          };
+
+          const homeTeam = ensure(homeName);
+          const awayTeam = ensure(awayName);
+
+          const homeScore = event.home_score ?? 0;
+          const awayScore = event.away_score ?? 0;
+
+          homeTeam.played += 1;
+          awayTeam.played += 1;
+
+          homeTeam.pointsFor += homeScore;
+          homeTeam.pointsAgainst += awayScore;
+
+          awayTeam.pointsFor += awayScore;
+          awayTeam.pointsAgainst += homeScore;
+
+          if (homeScore > awayScore) {
+            homeTeam.won += 1;
+            awayTeam.lost += 1;
+          } else if (awayScore > homeScore) {
+            awayTeam.won += 1;
+            homeTeam.lost += 1;
+          }
+        });
+
+        map.forEach((t) => {
+          t.difference = t.pointsFor - t.pointsAgainst;
+        });
+
+        const sorted = Array.from(map.values()).sort(
+          (a, b) => b.difference - a.difference
+        );
+
+        setTeamStats(sorted);
+      } catch (err) {
+        console.error("Stats loading failed:", err);
+      }
+
+      setLoading(false);
+    }
+
+    loadStats();
+  }, []);
+
+  if (loading) {
+    return <div className={styles.page}>Loading stats...</div>;
   }
-
-  const { home, away, score } = match;
-
-  const teamComparisonStats = [
-    { label: "Tries", home: 4, away: 2 },
-    { label: "Conversions", home: 3, away: 2 },
-    { label: "Penalties", home: 2, away: 1 },
-    { label: "Meters Made", home: 542, away: 398 },
-    { label: "Tackles Made", home: 112, away: 138 },
-    { label: "Turnovers Won", home: 9, away: 6 },
-    { label: "Yellow Cards", home: 1, away: 2 },
-    { label: "Red Cards", home: 0, away: 1 },
-  ];
-
-  const keyPlayerCategories = [
-    {
-      title: "Top Tries",
-      items: [
-        { name: "Kolbe", team: home.name, value: 2 },
-        { name: "Arendse", team: home.name, value: 1 },
-      ],
-    },
-    {
-      title: "Top Meters Made",
-      items: [
-        { name: "Kolbe", team: home.name, value: "128m" },
-        { name: "Ringrose", team: away.name, value: "104m" },
-      ],
-    },
-    {
-      title: "Top Tackles",
-      items: [
-        { name: "Itoje", team: away.name, value: 18 },
-        { name: "Curry", team: away.name, value: 16 },
-      ],
-    },
-  ];
 
   return (
     <main className={styles.page}>
@@ -143,7 +128,7 @@ export default function StatsPage() {
         </div>
       </header>
 
-      {/* ================= BACK (CANONICAL) ================= */}
+      {/* BACK */}
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -153,7 +138,7 @@ export default function StatsPage() {
         </button>
       </div>
 
-      {/* INTERNATIONAL STANDINGS */}
+      {/* STANDINGS */}
       <section className={styles.section}>
         <h2 className={`${styles.sectionTitle} ${styles.centered}`}>
           International Standings
@@ -172,6 +157,7 @@ export default function StatsPage() {
                 <th>+/-</th>
               </tr>
             </thead>
+
             <tbody>
               {teamStats.map((t) => (
                 <tr key={t.team}>
@@ -192,44 +178,36 @@ export default function StatsPage() {
         </div>
       </section>
 
-      {/* MATCH SNAPSHOT */}
-      <section className={styles.snapshot}>
-        <div className={styles.teams}>
-          <span className={styles.team}>
-            <Flag country={home.country} size="small" />
-            {home.name}
-          </span>
+      {/* EXISTING COMPONENTS */}
 
-          <span className={styles.score}>
-            {score.home} – {score.away}
-          </span>
-
-          <span className={styles.team}>
-            {away.name}
-            <Flag country={away.country} size="small" />
-          </span>
-        </div>
-        <div className={styles.meta}>
-          {match.tournament} · {match.venue}
-        </div>
-      </section>
-
-      {/* MATCH COMPARISON */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Match Comparison</h2>
 
         <TeamComparisonTable
-          home={home}
-          away={away}
-          stats={teamComparisonStats}
+          home={{ name: "France", country: "france" }}
+          away={{ name: "Ireland", country: "ireland" }}
+          stats={[
+            { label: "Tries", home: 4, away: 2 },
+            { label: "Conversions", home: 3, away: 2 },
+            { label: "Penalties", home: 2, away: 1 },
+          ]}
         />
       </section>
 
-      {/* KEY PLAYER STATS */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Key Player Stats</h2>
 
-        <KeyPlayerStats categories={keyPlayerCategories} />
+        <KeyPlayerStats
+          categories={[
+            {
+              title: "Top Tries",
+              items: [
+                { name: "Player A", team: "France", value: 2 },
+                { name: "Player B", team: "Ireland", value: 1 },
+              ],
+            },
+          ]}
+        />
       </section>
     </main>
   );
