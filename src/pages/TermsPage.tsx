@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./TermsPage.module.css";
 import { getToken } from "../services/auth";
+import { API_BASE_URL } from "../config/api";
 
 /**
- * TERMS PAGE — CHECKOUT CONNECTED (PRODUCTION-ALIGNED)
- * Freemium: immediate access
- * Premium/Super: backend creates Paddle transaction
+ * TERMS PAGE — CHECKOUT CONNECTED (PRODUCTION SAFE)
  */
 
 type Pricing = {
@@ -32,11 +31,7 @@ export default function TermsPage() {
 
   const [loading, setLoading] = useState(false);
 
-  // ✅ Safe API base
-  const API_BASE =
-    process.env.REACT_APP_API_URL || "http://localhost:4000";
-
-  // ✅ Safety guard
+  // Safety guard
   useEffect(() => {
     if (!tier || !country) {
       navigate("/welcome", { replace: true });
@@ -46,7 +41,7 @@ export default function TermsPage() {
   const acceptTerms = async () => {
     const acceptedAt = new Date().toISOString();
 
-    // ✅ FREEMIUM — immediate access
+    // Freemium → immediate access
     if (tier === "freemium") {
       navigate("/home-free", {
         replace: true,
@@ -55,7 +50,6 @@ export default function TermsPage() {
       return;
     }
 
-    // 🔐 Check auth
     const token = getToken();
 
     if (!token) {
@@ -63,12 +57,11 @@ export default function TermsPage() {
       return;
     }
 
-    // 💳 Create Paddle checkout
     try {
       setLoading(true);
 
       const res = await fetch(
-        `${API_BASE}/api/payments/create-checkout`,
+        `${API_BASE_URL}/api/payments/create-checkout`,
         {
           method: "POST",
           headers: {
@@ -88,8 +81,9 @@ export default function TermsPage() {
         return;
       }
 
-      // 🚀 Production path — redirect to Paddle-hosted URL
+      // Redirect to Paddle checkout
       window.location.href = data.checkoutUrl;
+
     } catch (err) {
       console.error("Checkout error:", err);
       alert("Payment service unavailable. Please try again.");
@@ -105,6 +99,7 @@ export default function TermsPage() {
     <section className={styles.page}>
       <header className={styles.header}>
         <h1>Terms & Conditions</h1>
+
         <p className={styles.context}>
           You are about to access Rugby Anthem Zone as a{" "}
           <strong>
@@ -114,6 +109,7 @@ export default function TermsPage() {
               ? "Premium"
               : "Super Premium"}
           </strong>
+
           {country && (
             <>
               {" "}
@@ -129,6 +125,7 @@ export default function TermsPage() {
           <div className={styles.summaryBox}>
             <h2>Subscription Summary</h2>
             <p className={styles.price}>{pricing.label}</p>
+
             {pricing.currencyNote && (
               <p className={styles.note}>{pricing.currencyNote}</p>
             )}
@@ -137,6 +134,7 @@ export default function TermsPage() {
 
         <div className={styles.block}>
           <h2>Access & Billing</h2>
+
           <ul>
             {isFreemium && (
               <>
@@ -151,8 +149,8 @@ export default function TermsPage() {
                 <li>Subscription is billed monthly.</li>
                 <li>No free trial is offered.</li>
                 <li>
-                  Cancellation is effective only after a full billing month has
-                  elapsed.
+                  Cancellation is effective only after a full billing month
+                  has elapsed.
                 </li>
               </>
             )}
@@ -172,8 +170,8 @@ export default function TermsPage() {
         </button>
 
         <p className={styles.notice}>
-          By continuing, you confirm that you understand and accept the terms
-          above.
+          By continuing, you confirm that you understand and accept the
+          terms above.
         </p>
       </footer>
     </section>
