@@ -5,7 +5,8 @@ import { getToken } from "../services/auth";
 import { API_BASE_URL } from "../config/api";
 
 /**
- * TERMS PAGE — CHECKOUT CONNECTED (PRODUCTION SAFE)
+ * TERMS PAGE — CHECKOUT BRIDGE
+ * Handles freemium access and paid checkout creation
  */
 
 type Pricing = {
@@ -21,8 +22,10 @@ type TermsState = {
 };
 
 export default function TermsPage() {
+
   const navigate = useNavigate();
   const location = useLocation();
+
   const state = location.state as TermsState | null;
 
   const tier = state?.tier;
@@ -31,22 +34,34 @@ export default function TermsPage() {
 
   const [loading, setLoading] = useState(false);
 
-  // Safety guard
+  // ---------------------------------------------------
+  // SAFETY GUARD
+  // ---------------------------------------------------
+
   useEffect(() => {
     if (!tier || !country) {
       navigate("/welcome", { replace: true });
     }
   }, [tier, country, navigate]);
 
+
+
+  // ---------------------------------------------------
+  // ACCEPT TERMS
+  // ---------------------------------------------------
+
   const acceptTerms = async () => {
+
     const acceptedAt = new Date().toISOString();
 
-    // Freemium → immediate access
+    // Freemium users skip checkout
     if (tier === "freemium") {
+
       navigate("/home-free", {
         replace: true,
-        state: { acceptedAt },
+        state: { acceptedAt }
       });
+
       return;
     }
 
@@ -58,6 +73,7 @@ export default function TermsPage() {
     }
 
     try {
+
       setLoading(true);
 
       const res = await fetch(
@@ -66,38 +82,49 @@ export default function TermsPage() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
-          body: JSON.stringify({ tier }),
+          body: JSON.stringify({ tier })
         }
       );
 
       const data = await res.json();
 
       if (!res.ok || !data.checkoutUrl) {
+
         console.error("Checkout creation failed:", data);
+
         alert("Unable to start payment. Please try again.");
+
         setLoading(false);
+
         return;
       }
 
-      // Redirect to Paddle checkout
+      // Redirect to /terms?_ptxn=transaction
       window.location.href = data.checkoutUrl;
 
     } catch (err) {
+
       console.error("Checkout error:", err);
+
       alert("Payment service unavailable. Please try again.");
+
       setLoading(false);
     }
   };
+
 
   const isFreemium = tier === "freemium";
   const isPremium = tier === "premium";
   const isSuper = tier === "super";
 
+
   return (
     <section className={styles.page}>
+
       <header className={styles.header}>
+
         <h1>Terms & Conditions</h1>
 
         <p className={styles.context}>
@@ -118,24 +145,37 @@ export default function TermsPage() {
           )}
           .
         </p>
+
       </header>
 
+
+
       <section className={styles.content}>
+
         {(isPremium || isSuper) && pricing && (
           <div className={styles.summaryBox}>
             <h2>Subscription Summary</h2>
-            <p className={styles.price}>{pricing.label}</p>
+
+            <p className={styles.price}>
+              {pricing.label}
+            </p>
 
             {pricing.currencyNote && (
-              <p className={styles.note}>{pricing.currencyNote}</p>
+              <p className={styles.note}>
+                {pricing.currencyNote}
+              </p>
             )}
           </div>
         )}
 
+
+
         <div className={styles.block}>
+
           <h2>Access & Billing</h2>
 
           <ul>
+
             {isFreemium && (
               <>
                 <li>Freemium access is free and permanently limited.</li>
@@ -154,26 +194,36 @@ export default function TermsPage() {
                 </li>
               </>
             )}
+
           </ul>
+
         </div>
+
       </section>
 
+
+
       <footer className={styles.footer}>
+
         <button
           className={styles.primaryButton}
           onClick={acceptTerms}
           disabled={loading}
         >
+
           {loading
             ? "Starting secure checkout…"
             : "Accept Terms & Continue"}
+
         </button>
 
         <p className={styles.notice}>
           By continuing, you confirm that you understand and accept the
           terms above.
         </p>
+
       </footer>
+
     </section>
   );
 }
