@@ -1,13 +1,24 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import styles from "./TermsPage.module.css";
 import { getToken } from "../services/auth";
 import { API_BASE_URL } from "../config/api";
 
-/**
- * TERMS PAGE — CHECKOUT BRIDGE
- * Handles freemium access and paid checkout creation
- */
+/*
+TERMS PAGE — CHECKOUT BRIDGE
+
+Handles two flows:
+
+1️⃣ User reads terms and starts checkout
+2️⃣ User is redirected back with ?_ptxn=transactionId
+   and Paddle checkout launches automatically
+*/
+
+declare global {
+  interface Window {
+    Paddle: any;
+  }
+}
 
 type Pricing = {
   label: string;
@@ -25,6 +36,7 @@ export default function TermsPage() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   const state = location.state as TermsState | null;
 
@@ -34,15 +46,77 @@ export default function TermsPage() {
 
   const [loading, setLoading] = useState(false);
 
+  // Paddle transaction id from redirect
+  const transactionId = searchParams.get("_ptxn");
+
+
+
+  // ---------------------------------------------------
+  // LOAD PADDLE CHECKOUT IF TRANSACTION EXISTS
+  // ---------------------------------------------------
+
+  useEffect(() => {
+
+    if (!transactionId) return;
+
+    const loadPaddleCheckout = () => {
+
+      const openCheckout = () => {
+
+        window.Paddle.Initialize({
+  environment: "production",
+  token: process.env.REACT_APP_PADDLE_CLIENT_TOKEN,
+  eventCallback: function(data:any){
+    console.log("Paddle Event:", data);
+  }
+});
+
+        window.Paddle.Checkout.open({
+  transactionId: transactionId,
+  settings: {
+    displayMode: "overlay",
+    theme: "light",
+    locale: "en"
+  }
+});
+
+      };
+
+      if (!window.Paddle) {
+
+        const script = document.createElement("script");
+        script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
+        script.onload = openCheckout;
+
+        document.body.appendChild(script);
+
+      } else {
+
+        openCheckout();
+
+      }
+
+    };
+
+    loadPaddleCheckout();
+
+  }, [transactionId]);
+
+
+
   // ---------------------------------------------------
   // SAFETY GUARD
   // ---------------------------------------------------
 
   useEffect(() => {
+
+    if (transactionId) return;
+
     if (!tier || !country) {
       navigate("/welcome", { replace: true });
     }
-  }, [tier, country, navigate]);
+
+  }, [tier, country, navigate, transactionId]);
 
 
 
@@ -54,7 +128,6 @@ export default function TermsPage() {
 
     const acceptedAt = new Date().toISOString();
 
-    // Freemium users skip checkout
     if (tier === "freemium") {
 
       navigate("/home-free", {
@@ -84,7 +157,10 @@ export default function TermsPage() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
           },
-          body: JSON.stringify({ tier })
+          body: JSON.stringify({
+            provider: "paddle",
+            tier
+          })
         }
       );
 
@@ -101,7 +177,6 @@ export default function TermsPage() {
         return;
       }
 
-      // Redirect to /terms?_ptxn=transaction
       window.location.href = data.checkoutUrl;
 
     } catch (err) {
@@ -111,13 +186,17 @@ export default function TermsPage() {
       alert("Payment service unavailable. Please try again.");
 
       setLoading(false);
+
     }
+
   };
+
 
 
   const isFreemium = tier === "freemium";
   const isPremium = tier === "premium";
   const isSuper = tier === "super";
+
 
 
   return (
@@ -154,6 +233,7 @@ export default function TermsPage() {
 
         {(isPremium || isSuper) && pricing && (
           <div className={styles.summaryBox}>
+
             <h2>Subscription Summary</h2>
 
             <p className={styles.price}>
@@ -165,6 +245,7 @@ export default function TermsPage() {
                 {pricing.currencyNote}
               </p>
             )}
+
           </div>
         )}
 
@@ -226,4 +307,5 @@ export default function TermsPage() {
 
     </section>
   );
+
 }
