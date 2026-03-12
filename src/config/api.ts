@@ -1,7 +1,7 @@
 // src/config/api.ts
 
 // Production backend
-const PROD_API = "https://rugby-anthem-backend-production.up.railway.app";
+const PROD_API = "https://rugby-anthem-backend.fly.dev";
 
 // Local development backend
 const DEV_API = "http://localhost:4000";

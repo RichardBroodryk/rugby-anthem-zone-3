@@ -2,7 +2,7 @@ import { matches2026 } from "./matches2026";
 
 const API_BASE =
   process.env.REACT_APP_API_URL ||
-  "https://rugby-anthem-backend-production.up.railway.app";
+  "https://rugby-anthem-backend.fly.dev";
 
 export async function getMatches() {
 
