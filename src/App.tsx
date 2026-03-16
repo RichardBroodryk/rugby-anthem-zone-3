@@ -148,6 +148,8 @@ import SuperLayout from "./layouts/SuperLayout";
 
 import StatsApiDebugPage from "./pages/StatsApiDebugPage";
 
+import CheckoutPage from "./pages/CheckoutPage";
+
 /* ================= 🆕 PADDLE HANDLER ================= */
 function PaddleTxnListener() {
   useEffect(() => {
@@ -347,6 +349,8 @@ export default function App() {
         <Route path="/heritage/officials/women/eras" element={<OfficialsWomenEras />} />
 
         <Route path="/stats-debug" element={<StatsApiDebugPage />} />
+
+        <Route path="/checkout" element={<CheckoutPage />} />
 
         {/* SUPER */}
         <Route element={<RequireAuth><SuperLayout /></RequireAuth>}>
