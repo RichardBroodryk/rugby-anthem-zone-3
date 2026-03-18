@@ -18,7 +18,6 @@ export interface MatchData {
     country: string;
   };
 
-  // Present only once match is complete
   score?: {
     home: number;
     away: number;
@@ -30,8 +29,9 @@ export interface MatchData {
 // --------------------------------------------------
 
 export const matches2026: MatchData[] = [
+
   // ==================================================
-  // SIX NATIONS 2026 — MEN
+  // SIX NATIONS 2026
   // ==================================================
 
   {
@@ -41,7 +41,7 @@ export const matches2026: MatchData[] = [
     venue: "Stade de France",
     home: { name: "France", country: "france" },
     away: { name: "Ireland", country: "ireland" },
-    score: { home: 24, away: 21 },
+    score: { home: 36, away: 14 },
   },
   {
     id: 102,
@@ -50,7 +50,7 @@ export const matches2026: MatchData[] = [
     venue: "Stadio Olimpico",
     home: { name: "Italy", country: "italy" },
     away: { name: "Scotland", country: "scotland" },
-    score: { home: 17, away: 27 },
+    score: { home: 18, away: 15 },
   },
   {
     id: 103,
@@ -59,8 +59,9 @@ export const matches2026: MatchData[] = [
     venue: "Twickenham",
     home: { name: "England", country: "england" },
     away: { name: "Wales", country: "wales" },
-    score: { home: 31, away: 19 },
+    score: { home: 48, away: 7 },
   },
+
   {
     id: 104,
     tournament: "Six Nations 2026",
@@ -68,7 +69,7 @@ export const matches2026: MatchData[] = [
     venue: "Aviva Stadium",
     home: { name: "Ireland", country: "ireland" },
     away: { name: "Italy", country: "italy" },
-    score: { home: 38, away: 14 },
+    score: { home: 20, away: 13 },
   },
   {
     id: 105,
@@ -77,7 +78,7 @@ export const matches2026: MatchData[] = [
     venue: "Murrayfield",
     home: { name: "Scotland", country: "scotland" },
     away: { name: "England", country: "england" },
-    score: { home: 22, away: 20 },
+    score: { home: 31, away: 20 },
   },
   {
     id: 106,
@@ -86,8 +87,9 @@ export const matches2026: MatchData[] = [
     venue: "Principality Stadium",
     home: { name: "Wales", country: "wales" },
     away: { name: "France", country: "france" },
-    score: { home: 18, away: 26 },
+    score: { home: 12, away: 54 },
   },
+
   {
     id: 107,
     tournament: "Six Nations 2026",
@@ -95,7 +97,7 @@ export const matches2026: MatchData[] = [
     venue: "Twickenham",
     home: { name: "England", country: "england" },
     away: { name: "Ireland", country: "ireland" },
-    score: { home: 27, away: 30 },
+    score: { home: 21, away: 42 },
   },
   {
     id: 108,
@@ -104,17 +106,18 @@ export const matches2026: MatchData[] = [
     venue: "Principality Stadium",
     home: { name: "Wales", country: "wales" },
     away: { name: "Scotland", country: "scotland" },
-    score: { home: 20, away: 23 },
+    score: { home: 23, away: 26 },
   },
   {
     id: 109,
     tournament: "Six Nations 2026",
     date: "2026-02-22",
-    venue: "Stade de France",
+    venue: "Stade Pierre-Mauroy",
     home: { name: "France", country: "france" },
     away: { name: "Italy", country: "italy" },
-    score: { home: 42, away: 16 },
+    score: { home: 33, away: 8 },
   },
+
   {
     id: 110,
     tournament: "Six Nations 2026",
@@ -122,7 +125,7 @@ export const matches2026: MatchData[] = [
     venue: "Aviva Stadium",
     home: { name: "Ireland", country: "ireland" },
     away: { name: "Wales", country: "wales" },
-    score: { home: 35, away: 17 },
+    score: { home: 27, away: 17 },
   },
   {
     id: 111,
@@ -131,7 +134,7 @@ export const matches2026: MatchData[] = [
     venue: "Murrayfield",
     home: { name: "Scotland", country: "scotland" },
     away: { name: "France", country: "france" },
-    score: { home: 19, away: 28 },
+    score: { home: 50, away: 40 },
   },
   {
     id: 112,
@@ -140,8 +143,9 @@ export const matches2026: MatchData[] = [
     venue: "Stadio Olimpico",
     home: { name: "Italy", country: "italy" },
     away: { name: "England", country: "england" },
-    score: { home: 15, away: 34 },
+    score: { home: 23, away: 18 },
   },
+
   {
     id: 113,
     tournament: "Six Nations 2026",
@@ -149,7 +153,7 @@ export const matches2026: MatchData[] = [
     venue: "Aviva Stadium",
     home: { name: "Ireland", country: "ireland" },
     away: { name: "Scotland", country: "scotland" },
-    score: { home: 29, away: 22 },
+    score: { home: 43, away: 21 },
   },
   {
     id: 114,
@@ -158,7 +162,7 @@ export const matches2026: MatchData[] = [
     venue: "Principality Stadium",
     home: { name: "Wales", country: "wales" },
     away: { name: "Italy", country: "italy" },
-    score: { home: 26, away: 18 },
+    score: { home: 31, away: 17 },
   },
   {
     id: 115,
@@ -167,63 +171,84 @@ export const matches2026: MatchData[] = [
     venue: "Stade de France",
     home: { name: "France", country: "france" },
     away: { name: "England", country: "england" },
-    score: { home: 33, away: 27 },
+    score: { home: 48, away: 46 },
   },
 
   // ==================================================
-  // MEN — INTERNATIONAL TESTS (STANDALONE)
+  // NATIONS CHAMPIONSHIP 2026 — JULY WINDOW
   // ==================================================
 
-  {
-    id: 200,
-    tournament: "Men's International Tests 2026",
-    date: "2026-07-04",
-    venue: "TBC",
-    home: { name: "Australia", country: "australia" },
-    away: { name: "Ireland", country: "ireland" },
-  },
   {
     id: 201,
-    tournament: "Men's International Tests 2026",
-    date: "2026-07-11",
-    venue: "TBC",
-    home: { name: "Australia", country: "australia" },
+    tournament: "Nations Championship 2026",
+    date: "2026-07-03",
+    venue: "Christchurch",
+    home: { name: "New Zealand", country: "new-zealand" },
     away: { name: "France", country: "france" },
   },
   {
     id: 202,
-    tournament: "Men's International Tests 2026",
-    date: "2026-07-18",
-    venue: "TBC",
+    tournament: "Nations Championship 2026",
+    date: "2026-07-03",
+    venue: "Sydney",
     home: { name: "Australia", country: "australia" },
-    away: { name: "Italy", country: "italy" },
+    away: { name: "Ireland", country: "ireland" },
   },
   {
     id: 203,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-03",
+    venue: "Johannesburg",
+    home: { name: "South Africa", country: "south-africa" },
+    away: { name: "England", country: "england" },
+  },
+  {
+    id: 204,
+    tournament: "Nations Championship 2026",
+    date: "2026-07-03",
+    venue: "Cordoba",
+    home: { name: "Argentina", country: "argentina" },
+    away: { name: "Scotland", country: "scotland" },
+  },
+
+  // ==================================================
+  // INTERNATIONAL TESTS
+  // ==================================================
+
+  {
+    id: 301,
     tournament: "Men's International Tests 2026",
     date: "2026-08-08",
     venue: "Hanazono Rugby Stadium",
     home: { name: "Japan", country: "japan" },
     away: { name: "Australia", country: "australia" },
   },
+  {
+    id: 302,
+    tournament: "Men's International Tests 2026",
+    date: "2026-10-10",
+    venue: "Eden Park",
+    home: { name: "New Zealand", country: "new-zealand" },
+    away: { name: "Australia", country: "australia" },
+  },
 
   // ==================================================
-  // MEN — SA vs NZ RIVAL TOUR
+  // RIVAL TOUR — SOUTH AFRICA vs NEW ZEALAND
   // ==================================================
 
   {
-    id: 301,
+    id: 401,
     tournament: "Men's SA vs NZ Rival Tour 2026",
     date: "2026-08-22",
-    venue: "Ellis Park",
+    venue: "Loftus Versfeld",
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "New Zealand", country: "new-zealand" },
   },
   {
-    id: 302,
+    id: 402,
     tournament: "Men's SA vs NZ Rival Tour 2026",
     date: "2026-09-12",
-    venue: "TBC",
+    venue: "M&T Bank Stadium",
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "New Zealand", country: "new-zealand" },
   },
@@ -233,24 +258,25 @@ export const matches2026: MatchData[] = [
   // ==================================================
 
   {
-    id: 401,
+    id: 501,
     tournament: "Women's International Tests 2026",
     date: "2026-03-27",
-    venue: "GIO Stadium",
+    venue: "Canberra",
     home: { name: "Australia", country: "australia" },
     away: { name: "Fiji", country: "fiji" },
   },
 
   // ==================================================
-  // WOMEN — SA vs NZ RIVAL TOUR
+  // WOMEN — SA vs NZ TOUR
   // ==================================================
 
   {
-    id: 501,
+    id: 601,
     tournament: "Women's SA vs NZ Rival Tour 2026",
     date: "2026-09-05",
-    venue: "FNB Stadium",
+    venue: "Johannesburg",
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "New Zealand", country: "new-zealand" },
   },
+
 ];

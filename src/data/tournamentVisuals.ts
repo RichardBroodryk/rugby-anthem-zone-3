@@ -19,6 +19,8 @@ import greatestRivalry from "../assets/images/tournaments/greatest-rivalry-2026.
 import internationalTestsMen from "../assets/images/tournaments/international-tests-men-hero.jpg";
 import internationalTestsWomen from "../assets/images/tournaments/international-tests-women-hero.jpg";
 
+import fallbackHero from "../assets/images/tournaments/default-tournament.jpg";
+
 /* ================= TYPES ================= */
 
 export type HeroLayout =
@@ -111,8 +113,20 @@ export const tournamentVisuals: TournamentVisual[] = [
    RESOLVERS (SAFE HELPERS)
    ================================================== */
 
-export function getTournamentVisual(conceptId: string) {
-  return tournamentVisuals.find(
+export function getTournamentVisual(conceptId: string): TournamentVisual {
+  const visual = tournamentVisuals.find(
     (v) => v.conceptId === conceptId
   );
+
+  if (visual) return visual;
+
+  /* SAFE FALLBACK */
+  return {
+    conceptId: "fallback",
+    heroImageMen: fallbackHero,
+    heroImageWomen: fallbackHero,
+    logo: fallbackHero,
+    heroLayout: "default",
+    anthemMode: "standard",
+  };
 }

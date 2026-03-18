@@ -164,3 +164,14 @@
   padding: 64px;
   text-align: center;
 }
+.statusBadge {
+  margin-top: 10px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  background: #111827;
+  color: #ffffff;
+  display: inline-block;
+}

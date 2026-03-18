@@ -1,9 +1,3 @@
-/* UPDATED:
-   - Fixed match filtering so standalone tests always appear
-   - Added safe matching fallback using tournament name + year
-   - No logic removed
-*/
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import styles from "./TournamentPage.module.css";
@@ -15,8 +9,6 @@ import { getTournamentVisual } from "../data/tournamentVisuals";
 import MatchRow from "../components/match/MatchRow";
 import Flag from "../components/images/Flag";
 import MusicIcon from "../components/icons/MusicIcon";
-
-/* ================= API ================= */
 
 import { API_BASE_URL } from "../config/api";
 
@@ -31,6 +23,7 @@ function groupMatchesByMonth(matches: any[]) {
 
   matches.forEach((m) => {
     const date = new Date(m.date);
+
     const label = date.toLocaleString("en-GB", {
       month: "long",
       year: "numeric",
@@ -39,6 +32,7 @@ function groupMatchesByMonth(matches: any[]) {
     if (!map.has(label)) {
       map.set(label, []);
     }
+
     map.get(label)!.push(m);
   });
 
@@ -65,7 +59,9 @@ export default function TournamentPage() {
 
   useEffect(() => {
     if (openComments && commentsRef.current) {
-      commentsRef.current.scrollIntoView({ behavior: "smooth" });
+      commentsRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
     }
   }, [openComments]);
 
@@ -105,17 +101,28 @@ export default function TournamentPage() {
       ? visual?.heroImageWomen
       : visual?.heroImageMen;
 
-  /* ================= FIXED MATCH FILTER ================= */
+  /* ================= MATCH FILTER + SORT ================= */
 
-  const tournamentMatches = matches2026.filter((m) => {
-    const matchTournament = normalize(m.tournament);
-    const key = normalize(tournament.matchKey);
-    const fallback = normalize(
-      `${tournament.name} ${tournament.year}`
+  const tournamentMatches = matches2026
+    .filter((m) => {
+      const matchTournament = normalize(m.tournament);
+      const key = normalize(tournament.matchKey);
+      const fallback = normalize(
+        `${tournament.name} ${tournament.year}`
+      );
+
+      return (
+        matchTournament === key ||
+        matchTournament === fallback
+      );
+    })
+    .sort(
+      (a, b) =>
+        new Date(a.date).getTime() -
+        new Date(b.date).getTime()
     );
 
-    return matchTournament === key || matchTournament === fallback;
-  });
+  /* ================= BACK ROUTE ================= */
 
   const backToIndex =
     tournament.gender === "women"
@@ -133,7 +140,7 @@ export default function TournamentPage() {
     )
   ).sort();
 
-  /* ================= MONTH GROUPING ================= */
+  /* ================= INTERNATIONAL TEST GROUPING ================= */
 
   const isInternationalTests =
     tournament.conceptId === "international-tests";
@@ -141,6 +148,8 @@ export default function TournamentPage() {
   const groupedMatches = isInternationalTests
     ? groupMatchesByMonth(tournamentMatches)
     : [];
+
+  /* ================= HERO LAYOUT ================= */
 
   const isTopText =
     visual?.heroLayout === "top" ||
@@ -153,6 +162,7 @@ export default function TournamentPage() {
   return (
     <main className={styles.page}>
       {/* ================= HERO ================= */}
+
       <section
         className={[
           styles.hero,
@@ -177,12 +187,19 @@ export default function TournamentPage() {
           className={[
             styles.heroContent,
             isTopText ? styles.heroTop : "",
-            shouldBiasHero ? styles.heroContentLeft : "",
+            shouldBiasHero
+              ? styles.heroContentLeft
+              : "",
           ].join(" ")}
         >
           <h1>
             {tournament.name} {tournament.year}
           </h1>
+
+          <div className={styles.statusBadge}>
+            {tournament.status.toUpperCase()}
+          </div>
+
           {tournament.heroSubtitle && (
             <p>{tournament.heroSubtitle}</p>
           )}
@@ -190,6 +207,7 @@ export default function TournamentPage() {
       </section>
 
       {/* ================= BACK ================= */}
+
       <nav className={styles.backNav}>
         <button onClick={() => navigate(backToIndex)}>
           ← Back to{" "}
@@ -201,6 +219,7 @@ export default function TournamentPage() {
       </nav>
 
       {/* ================= ANTHEMS ================= */}
+
       <section className={styles.section}>
         <div className={styles.anthemsRow}>
           <button
@@ -208,9 +227,12 @@ export default function TournamentPage() {
             onClick={() => navigate("/anthems")}
           >
             <MusicIcon />
+
             <div>
               <strong>Anthems</strong>
-              <span>The ritual before every contest</span>
+              <span>
+                The ritual before every contest
+              </span>
             </div>
           </button>
 
@@ -220,7 +242,9 @@ export default function TournamentPage() {
                 <button
                   key={c}
                   className={styles.flagSlot}
-                  onClick={() => navigate(`/anthems/${c}`)}
+                  onClick={() =>
+                    navigate(`/anthems/${c}`)
+                  }
                 >
                   <Flag country={c} />
                 </button>
@@ -231,16 +255,20 @@ export default function TournamentPage() {
       </section>
 
       {/* ================= FIXTURES ================= */}
+
       <section className={styles.section}>
         <header className={styles.sectionHeader}>
           <h2>Fixtures</h2>
-          <p>Confirmed matches in this tournament.</p>
+          <p>
+            Confirmed matches in this tournament.
+          </p>
         </header>
 
         {isInternationalTests ? (
           groupedMatches.map((group) => (
             <div key={group.label}>
               <h3>{group.label}</h3>
+
               {group.matches.map((match: any) => (
                 <MatchRow
                   key={match.id}
@@ -248,7 +276,11 @@ export default function TournamentPage() {
                   away={match.away}
                   metaLeft={match.date}
                   metaRight={match.venue}
-                  state={match.score ? "final" : "upcoming"}
+                  state={
+                    match.score
+                      ? "final"
+                      : "upcoming"
+                  }
                   onClick={() =>
                     navigate(`/match/${match.id}`)
                   }
@@ -264,7 +296,9 @@ export default function TournamentPage() {
               away={match.away}
               metaLeft={match.date}
               metaRight={match.venue}
-              state={match.score ? "final" : "upcoming"}
+              state={
+                match.score ? "final" : "upcoming"
+              }
               onClick={() =>
                 navigate(`/match/${match.id}`)
               }
@@ -278,7 +312,11 @@ export default function TournamentPage() {
       </section>
 
       {/* ================= DISCUSSION ================= */}
-      <section ref={commentsRef} className={styles.section}>
+
+      <section
+        ref={commentsRef}
+        className={styles.section}
+      >
         <header className={styles.sectionHeader}>
           <h2>Fan Discussion</h2>
         </header>

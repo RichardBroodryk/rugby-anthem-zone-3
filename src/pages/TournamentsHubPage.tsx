@@ -92,7 +92,7 @@ export default function TournamentsHubPage() {
         <div className={styles.list}>
           {mensTournaments.map((t) => (
             <div
-              key={t.name}
+              key={`${t.name}-${t.year}`}
               className={styles.row}
               onClick={() => navigate(t.route)}
               style={{ cursor: "pointer" }}
@@ -135,7 +135,7 @@ export default function TournamentsHubPage() {
         <div className={styles.list}>
           {womensTournaments.map((t) => (
             <div
-              key={t.name}
+              key={`${t.name}-${t.year}`}
               className={styles.row}
               onClick={() => navigate(t.route)}
               style={{ cursor: "pointer" }}

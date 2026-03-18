@@ -37,7 +37,7 @@ export interface TournamentMeta {
   year: number;
   gender: Gender;
   type: TournamentType;
-  status: "active" | "upcoming" | "planned";
+  status: "active" | "upcoming" | "planned" | "completed";
 
   /* ================= MATCH BINDING ================= */
 
@@ -73,7 +73,7 @@ export const tournaments2026: TournamentMeta[] = [
     year: 2026,
     gender: "men",
     type: "annual",
-    status: "active",
+    status: "completed",
     matchKey: "Six Nations 2026",
     heroBadge: "ANNUAL CHAMPIONSHIP",
     heroSubtitle:
@@ -121,7 +121,7 @@ export const tournaments2026: TournamentMeta[] = [
     year: 2026,
     gender: "men",
     type: "sevens",
-    status: "active",
+    status: "completed",
     matchKey: "SVNS Series 2026",
     heroBadge: "SEVENS SERIES",
     heroSubtitle:
@@ -218,7 +218,7 @@ export const tournaments2026: TournamentMeta[] = [
     year: 2026,
     gender: "women",
     type: "sevens",
-    status: "active",
+    status: "completed",
     matchKey: "SVNS Series 2026",
     heroBadge: "SEVENS SERIES",
     heroSubtitle:
