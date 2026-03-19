@@ -6,38 +6,34 @@ type FlagProps = {
 };
 
 export default function Flag({ country, size = "medium" }: FlagProps) {
-  const fileName = country.toLowerCase().trim();
+  const fileName = country.toLowerCase().trim().replace(/\s+/g, "-");
 
-  const tryLoad = (ext: string) => {
-    try {
-      return require(`../assets/images/flags/${fileName}.${ext}`);
-    } catch {
-      return null;
-    }
-  };
+  const flagPath = `/assets/images/flags/${fileName}.png`;
 
-  const flagImage =
-    tryLoad("png") || tryLoad("jpg") || tryLoad("jpeg") || tryLoad("svg");
-
-  if (!flagImage) {
-    return (
-      <div className={`flag-fallback flag-${size}`}>
-        {country
-          .split(" ")
-          .map((w) => w[0])
-          .join("")
-          .toUpperCase()}
-      </div>
-    );
-  }
+  const fallback = country
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
 
   return (
     <img
-      src={flagImage}
+      src={flagPath}
       className={`flag flag-${size}`}
       alt={`${country} flag`}
       loading="lazy"
+      onError={(e) => {
+        const target = e.currentTarget;
+        target.style.display = "none";
+        const parent = target.parentElement;
+
+        if (parent) {
+          const fallbackEl = document.createElement("div");
+          fallbackEl.className = `flag-fallback flag-${size}`;
+          fallbackEl.innerText = fallback;
+          parent.appendChild(fallbackEl);
+        }
+      }}
     />
   );
 }
-

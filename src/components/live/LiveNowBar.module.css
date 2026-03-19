@@ -1,0 +1,154 @@
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+
+  padding: 14px 18px;
+  border-radius: 14px;
+
+  margin: 20px auto;
+
+  max-width: 1200px;
+}
+
+/* ================= LIVE BADGE ================= */
+
+.liveBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+
+  color: #dc2626;
+}
+
+/* pulsing live indicator */
+
+.liveBadge::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+
+  background: #dc2626;
+  border-radius: 50%;
+
+  animation: livePulse 1.2s infinite;
+}
+
+@keyframes livePulse {
+
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(1.4);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+
+/* ================= MATCH INFO ================= */
+
+.matchInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.teams {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.tournament {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.actionBtn {
+  border: none;
+
+  background: #0f172a;
+  color: white;
+
+  font-size: 0.8rem;
+
+  padding: 6px 10px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+.actionBtn:hover {
+  background: #1e293b;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  .bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .actions {
+    margin-left: 0;
+  }
+
+}
+.teams {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vs {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+.flag {
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.score {
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 6px;
+}

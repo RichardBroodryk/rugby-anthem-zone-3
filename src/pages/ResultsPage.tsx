@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+
 import styles from "./ResultsPage.module.css";
 
-import { matches2026 } from "../data/matches2026";
+import { getMatches } from "../data/matchesAdapter";
+import { MatchData } from "../data/matches2026";
+
 import MatchRow from "../components/match/MatchRow";
 
 import heroBg from "../assets/images/raz/Results.png";
@@ -17,15 +21,16 @@ function formatDate(dateStr: string) {
   });
 }
 
-function groupByTournament() {
-  const map = new Map<string, typeof matches2026>();
+function groupByTournament(matches: MatchData[]) {
+  const map = new Map<string, MatchData[]>();
 
-  matches2026
-    .filter((m) => m.score) // 🔒 RESULTS ONLY
+  matches
+    .filter((m) => m.score) // RESULTS ONLY
     .forEach((match) => {
       if (!map.has(match.tournament)) {
         map.set(match.tournament, []);
       }
+
       map.get(match.tournament)!.push(match);
     });
 
@@ -36,18 +41,34 @@ function groupByTournament() {
 
 export default function ResultsPage() {
   const navigate = useNavigate();
-  const grouped = groupByTournament();
+
+  const [matches, setMatches] = useState<MatchData[]>([]);
+
+  /* ================= FETCH MATCHES ================= */
+
+  useEffect(() => {
+    getMatches().then(setMatches);
+  }, []);
+
+  /* ================= GROUP RESULTS ================= */
+
+  const grouped = useMemo(() => {
+    return groupByTournament(matches);
+  }, [matches]);
 
   return (
     <main className={styles.page}>
       {/* ================= HERO ================= */}
+
       <header
         className={styles.hero}
         style={{ backgroundImage: `url(${heroBg})` }}
       >
         <div className={styles.heroOverlay} />
+
         <div className={styles.heroContent}>
           <h1>Results</h1>
+
           <p>
             Completed international fixtures
             <br />
@@ -56,7 +77,8 @@ export default function ResultsPage() {
         </div>
       </header>
 
-      {/* ================= BACK (CANONICAL) ================= */}
+      {/* ================= BACK ================= */}
+
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -67,6 +89,7 @@ export default function ResultsPage() {
       </div>
 
       {/* ================= RESULTS ================= */}
+
       {grouped.map(([tournament, matches]) => (
         <section key={tournament} className={styles.section}>
           <h2 className={styles.sectionTitle}>{tournament}</h2>
@@ -77,7 +100,7 @@ export default function ResultsPage() {
               home={match.home}
               away={match.away}
               metaLeft={match.venue}
-              metaRight={formatDate(match.date)} // 🔒 ABSOLUTE ONLY
+              metaRight={formatDate(match.date)}
               state="final"
               score={match.score}
             />

@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import styles from "./FixturesPage.module.css";
 
-import { matches2026 } from "../data/matches2026";
+import { getMatches } from "../data/matchesAdapter";
+import { MatchData } from "../data/matches2026";
 
 import FixtureRow from "../components/fixtures/FixtureRow";
 import FixturesSectionHero from "../components/fixtures/FixturesSectionHero";
@@ -31,7 +34,17 @@ function formatDate(dateStr: string) {
 export default function FixturesPage() {
   const navigate = useNavigate();
 
-  const upcoming = matches2026.filter((m) => !m.score);
+  const [matches, setMatches] = useState<MatchData[]>([]);
+
+  /* ================= FETCH MATCHES ================= */
+
+  useEffect(() => {
+    getMatches().then(setMatches);
+  }, []);
+
+  /* ================= UPCOMING ================= */
+
+  const upcoming = matches.filter((m) => !m.score);
 
   const mensFixtures = upcoming.filter(
     (m) => !isWomenTournament(m.tournament)
@@ -44,11 +57,13 @@ export default function FixturesPage() {
   return (
     <main className={styles.page}>
       {/* ================= MAIN HERO ================= */}
+
       <header
         className={styles.hero}
         style={{ backgroundImage: `url(${heroBg})` }}
       >
         <div className={styles.heroOverlay} />
+
         <div className={styles.heroContent}>
           <h1>Fixtures</h1>
           <p>
@@ -59,7 +74,8 @@ export default function FixturesPage() {
         </div>
       </header>
 
-      {/* ================= BACK (CANONICAL) ================= */}
+      {/* ================= BACK ================= */}
+
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -70,6 +86,7 @@ export default function FixturesPage() {
       </div>
 
       {/* ================= MEN ================= */}
+
       <section className={styles.section}>
         <FixturesSectionHero
           title="Men’s International Fixtures"
@@ -77,7 +94,9 @@ export default function FixturesPage() {
         />
 
         {mensFixtures.length === 0 && (
-          <div className={styles.empty}>No upcoming men’s fixtures.</div>
+          <div className={styles.empty}>
+            No upcoming men’s fixtures.
+          </div>
         )}
 
         {mensFixtures.map((m) => (
@@ -96,15 +115,18 @@ export default function FixturesPage() {
       </section>
 
       {/* ================= WOMEN ================= */}
+
       <section className={styles.section}>
         <FixturesSectionHero
           title="Women’s International Fixtures"
           backgroundImage={womensHero}
-          position="top" /* 🔒 face-safe */
+          position="top"
         />
 
         {womensFixtures.length === 0 && (
-          <div className={styles.empty}>No upcoming women’s fixtures.</div>
+          <div className={styles.empty}>
+            No upcoming women’s fixtures.
+          </div>
         )}
 
         {womensFixtures.map((m) => (

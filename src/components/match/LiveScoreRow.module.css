@@ -4,6 +4,12 @@
   padding: 16px 18px;
   margin-bottom: 14px;
   box-shadow: inset 6px 0 0 #111827;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.row:hover {
+  transform: translateY(-1px);
+  box-shadow: inset 6px 0 0 #111827, 0 6px 18px rgba(0,0,0,0.08);
 }
 
 /* =================
@@ -37,6 +43,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
+  font-size: 0.95rem;
 }
 
 /* =================
@@ -57,7 +64,7 @@
 }
 
 .score {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #6b7280;
 }
@@ -73,8 +80,9 @@
 }
 
 .vsStatic {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 800;
+  letter-spacing: 0.04em;
   color: #000000;
 }
 
@@ -82,7 +90,14 @@
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: #6b7280;
+}
+
+/* LIVE phase indicator */
+
+.phaseLive {
+  color: #dc2626;
 }
 
 /* =================
@@ -108,7 +123,7 @@
    ================= */
 
 .meta {
-  margin-top: 6px;
+  margin-top: 8px;
   display: flex;
   justify-content: space-between;
   font-size: 0.75rem;
@@ -126,5 +141,22 @@
 .tryEvent {
   margin-top: 6px;
   font-size: 0.75rem;
+  font-weight: 600;
   color: #374151;
+}
+
+/* =================
+   MOBILE
+   ================= */
+
+@media (max-width: 700px) {
+
+  .teamsGrid {
+    grid-template-columns: 1fr 80px 1fr;
+  }
+
+  .score {
+    font-size: 1.15rem;
+  }
+
 }

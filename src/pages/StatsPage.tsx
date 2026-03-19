@@ -9,17 +9,9 @@ import Flag from "../components/images/Flag";
 import heroBg from "../assets/images/raz/Stats3.png";
 
 import { getMatches } from "../data/matchesAdapter";
+import { MatchData } from "../data/matches2026";
 
 /* ================= TYPES ================= */
-
-type MatchData = {
-  tournament: string;
-  date: string;
-  venue: string;
-  home: { name: string; country: string };
-  away: { name: string; country: string };
-  score?: { home: number; away: number };
-};
 
 type TeamStats = {
   team: string;
@@ -65,6 +57,7 @@ export default function StatsPage() {
                 difference: 0,
               });
             }
+
             return map.get(name)!;
           };
 
@@ -108,20 +101,19 @@ export default function StatsPage() {
     loadStats();
   }, []);
 
-  if (loading) {
-    return <div className={styles.page}>Loading stats...</div>;
-  }
-
   return (
     <main className={styles.page}>
       {/* HERO */}
+
       <header
         className={styles.hero}
         style={{ backgroundImage: `url(${heroBg})` }}
       >
         <div className={styles.heroOverlay} />
+
         <div className={styles.heroContent}>
           <h1>Stats</h1>
+
           <p>
             International comparison, match dominance,
             <br />
@@ -131,6 +123,7 @@ export default function StatsPage() {
       </header>
 
       {/* BACK */}
+
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -141,46 +134,55 @@ export default function StatsPage() {
       </div>
 
       {/* STANDINGS */}
+
       <section className={styles.section}>
         <h2 className={`${styles.sectionTitle} ${styles.centered}`}>
           International Standings
         </h2>
 
-        <div className={styles.tableWrap}>
-          <table className={styles.statsTable}>
-            <thead>
-              <tr>
-                <th className={styles.left}>Team</th>
-                <th>P</th>
-                <th>W</th>
-                <th>L</th>
-                <th>PF</th>
-                <th>PA</th>
-                <th>+/-</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {teamStats.map((t) => (
-                <tr key={t.team}>
-                  <td className={`${styles.teamCell} ${styles.left}`}>
-                    <Flag country={t.country} size="small" />
-                    {t.team}
-                  </td>
-                  <td>{t.played}</td>
-                  <td>{t.won}</td>
-                  <td>{t.lost}</td>
-                  <td>{t.pointsFor}</td>
-                  <td>{t.pointsAgainst}</td>
-                  <td>{t.difference}</td>
+        {loading ? (
+          <div style={{ textAlign: "center", padding: 40 }}>
+            Loading standings...
+          </div>
+        ) : (
+          <div className={styles.tableWrap}>
+            <table className={styles.statsTable}>
+              <thead>
+                <tr>
+                  <th className={styles.left}>Team</th>
+                  <th>P</th>
+                  <th>W</th>
+                  <th>L</th>
+                  <th>PF</th>
+                  <th>PA</th>
+                  <th>+/-</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+
+              <tbody>
+                {teamStats.map((t) => (
+                  <tr key={t.team}>
+                    <td className={`${styles.teamCell} ${styles.left}`}>
+                      <Flag country={t.country} size="small" />
+                      {t.team}
+                    </td>
+
+                    <td>{t.played}</td>
+                    <td>{t.won}</td>
+                    <td>{t.lost}</td>
+                    <td>{t.pointsFor}</td>
+                    <td>{t.pointsAgainst}</td>
+                    <td>{t.difference}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
 
-      {/* MATCH COMPARISON */}
+      {/* MATCH COMPARISON (PLACEHOLDER UNTIL LIVE MATCH STATS) */}
+
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Match Comparison</h2>
 
@@ -195,7 +197,8 @@ export default function StatsPage() {
         />
       </section>
 
-      {/* KEY PLAYER STATS */}
+      {/* KEY PLAYER STATS (PLACEHOLDER UNTIL PLAYER API) */}
+
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Key Player Stats</h2>
 

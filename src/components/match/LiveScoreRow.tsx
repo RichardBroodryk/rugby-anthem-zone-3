@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./LiveScoreRow.module.css";
 import Flag from "../images/Flag";
 
@@ -14,10 +15,15 @@ type TryEvent = {
 };
 
 type LiveScoreRowProps = {
+  matchId?: number;
+
   home: Team;
   away: Team;
+
   score?: { home: number; away: number };
+
   phase: "1st Half" | "2nd Half" | "HT" | "ET" | "Final" | "Upcoming";
+
   tournament: string;
   venue?: string;
 
@@ -30,6 +36,7 @@ type LiveScoreRowProps = {
 };
 
 export default function LiveScoreRow({
+  matchId,
   home,
   away,
   score,
@@ -41,17 +48,29 @@ export default function LiveScoreRow({
   lastTry,
   anthemStatus,
 }: LiveScoreRowProps) {
+
+  const navigate = useNavigate();
+
   const homeLeading = score && score.home > score.away;
   const awayLeading = score && score.away > score.home;
 
+  const handleClick = () => {
+    if (matchId) {
+      navigate(`/match/${matchId}`);
+    }
+  };
+
   return (
-    <div className={styles.row}>
+    <div className={styles.row} onClick={handleClick}>
       {/* TEAMS + SCORE */}
+
       <div className={styles.teamsGrid}>
         {/* HOME */}
+
         <div className={styles.teamLeft}>
           <Flag country={home.country} size="small" />
           <span className={styles.teamName}>{home.name}</span>
+
           {homeCard && (
             <span
               className={`${styles.card} ${
@@ -62,6 +81,7 @@ export default function LiveScoreRow({
         </div>
 
         {/* CENTER */}
+
         <div className={styles.center}>
           {score ? (
             <div className={styles.scoreBlock}>
@@ -72,7 +92,9 @@ export default function LiveScoreRow({
               >
                 {score.home}
               </span>
+
               <span className={styles.vs}>–</span>
+
               <span
                 className={`${styles.score} ${
                   awayLeading ? styles.leading : ""
@@ -84,10 +106,12 @@ export default function LiveScoreRow({
           ) : (
             <span className={styles.vsStatic}>VS</span>
           )}
+
           <span className={styles.phase}>{phase}</span>
         </div>
 
         {/* AWAY */}
+
         <div className={styles.teamRight}>
           {awayCard && (
             <span
@@ -96,12 +120,15 @@ export default function LiveScoreRow({
               }`}
             />
           )}
+
           <span className={styles.teamName}>{away.name}</span>
+
           <Flag country={away.country} size="small" />
         </div>
       </div>
 
       {/* META */}
+
       <div className={styles.meta}>
         <span>
           {tournament}
@@ -116,6 +143,7 @@ export default function LiveScoreRow({
       </div>
 
       {/* LAST TRY */}
+
       {lastTry && (
         <div className={styles.tryEvent}>
           TRY — {lastTry.scorer} {lastTry.minute}

@@ -4,10 +4,14 @@ import Flag from "../images/Flag";
 type MatchRowProps = {
   home: { name: string; country: string };
   away: { name: string; country: string };
+
   metaLeft: string;
   metaRight: string;
+
   state: "live" | "upcoming" | "final" | "stats";
+
   score?: { home: number; away: number };
+
   onClick?: () => void;
 };
 
@@ -22,14 +26,20 @@ export default function MatchRow({
 }: MatchRowProps) {
   return (
     <div
-      className={`${styles.row} ${styles[state]}`}
+      className={`${styles.row} ${styles[state]} ${
+        onClick ? styles.clickable : ""
+      }`}
       onClick={onClick}
     >
+      {/* TEAMS */}
+
       <div className={styles.teamsGrid}>
         <div className={styles.teamLeft}>
           <Flag country={home.country} size="small" />
           <span className={styles.teamName}>{home.name}</span>
         </div>
+
+        {/* CENTER */}
 
         <div className={styles.center}>
           {state === "live" ? (
@@ -48,11 +58,15 @@ export default function MatchRow({
           )}
         </div>
 
+        {/* AWAY */}
+
         <div className={styles.teamRight}>
           <span className={styles.teamName}>{away.name}</span>
           <Flag country={away.country} size="small" />
         </div>
       </div>
+
+      {/* META */}
 
       <div className={styles.meta}>
         <span>{metaLeft}</span>

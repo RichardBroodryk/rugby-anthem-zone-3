@@ -4,7 +4,8 @@ import styles from "./PodcastsPage.module.css";
 
 import podcastsHero from "../assets/images/raz/Podcastsmainpage.png";
 
-/* PODCAST IMAGES — AUTHORITATIVE PATHS */
+/* PODCAST IMAGES */
+import devlinImg from "../assets/images/podcasts/devlin.jpg";
 import eggchasersImg from "../assets/images/podcasts/eggchasers.jpg";
 import gbrImg from "../assets/images/podcasts/the-gbr.jpg";
 import aotearoaImg from "../assets/images/podcasts/aotearoa.jpg";
@@ -37,14 +38,15 @@ type Podcast = {
   url: string;
   image: string;
   episodes: Episode[];
-  isPartner?: boolean; // NEW: optional partner flag
+  isPartner?: boolean;
 };
 
 /* ================= PAGE ================= */
 
 export default function PodcastsPage() {
-  const [activeTournament, setActiveTournament] = useState<string>("all");
+
   const navigate = useNavigate();
+  const [activeTournament, setActiveTournament] = useState("all");
 
   const tournaments = [
     { id: "all", label: "All" },
@@ -52,12 +54,29 @@ export default function PodcastsPage() {
     { id: "rugby-world-cup", label: "World Cup" },
     { id: "rugby-championship", label: "Rugby Championship" },
     { id: "premiership", label: "Premiership" },
-    { id: "womens-rugby", label: "Women’s Rugby" },
+    { id: "womens-rugby", label: "Women’s Rugby" }
   ];
 
   const podcasts: Podcast[] = [
+
+    /* FEATURED PARTNER */
+
     {
       id: 1,
+      name: "DSPN — Devlin Sports Podcast Network",
+      region: "New Zealand",
+      language: "English",
+      focus: ["Rugby Championship", "World Cup"],
+      url: "https://www.youtube.com/@DevlinSportsPodcastNetwork",
+      image: devlinImg,
+      description:
+        "DSPN (Devlin Sports Podcast Network) delivers rugby conversations, match insights, and global rugby discussion across digital platforms.",
+      episodes: [],
+      isPartner: true
+    },
+
+    {
+      id: 2,
       name: "The Eggchasers Podcast",
       region: "United Kingdom",
       language: "English",
@@ -66,11 +85,10 @@ export default function PodcastsPage() {
       image: eggchasersImg,
       description:
         "One of the world’s most listened-to rugby podcasts, mixing opinion, humour, and sharp analysis.",
-      episodes: [],
-      // isPartner: true, // activate when they become a partner
+      episodes: []
     },
     {
-      id: 2,
+      id: 3,
       name: "The Good, The Bad & The Rugby",
       region: "United Kingdom",
       language: "English",
@@ -79,10 +97,10 @@ export default function PodcastsPage() {
       image: gbrImg,
       description:
         "Hosted by James Haskell, Mike Tindall, and Alex Payne — insight with personality and insider access.",
-      episodes: [],
+      episodes: []
     },
     {
-      id: 3,
+      id: 4,
       name: "Aotearoa Rugby Pod",
       region: "New Zealand",
       language: "English",
@@ -91,10 +109,10 @@ export default function PodcastsPage() {
       image: aotearoaImg,
       description:
         "Deep analysis of New Zealand rugby, All Blacks pathways, and Super Rugby dynamics.",
-      episodes: [],
+      episodes: []
     },
     {
-      id: 4,
+      id: 5,
       name: "Two Cents Rugby",
       region: "New Zealand",
       language: "English",
@@ -103,10 +121,10 @@ export default function PodcastsPage() {
       image: twoCentsImg,
       description:
         "Popular fan-led rugby breakdowns with clear tactical explanation and global reach.",
-      episodes: [],
+      episodes: []
     },
     {
-      id: 5,
+      id: 6,
       name: "Rugby Australia Podcast",
       region: "Australia",
       language: "English",
@@ -115,10 +133,10 @@ export default function PodcastsPage() {
       image: ausRugbyImg,
       description:
         "Official Rugby Australia podcast covering Wallabies, pathways, and domestic rugby.",
-      episodes: [],
+      episodes: []
     },
     {
-      id: 6,
+      id: 7,
       name: "Brenden Nel Rugby",
       region: "South Africa",
       language: "English",
@@ -127,10 +145,10 @@ export default function PodcastsPage() {
       image: brendenNelImg,
       description:
         "South African rugby insights from one of the country’s most respected rugby journalists.",
-      episodes: [],
+      episodes: []
     },
     {
-      id: 7,
+      id: 8,
       name: "Keo & Zels",
       region: "South Africa",
       language: "English",
@@ -139,10 +157,10 @@ export default function PodcastsPage() {
       image: keoZelsImg,
       description:
         "Former internationals Keo and Zels deliver candid discussion, humour, and modern player insight.",
-      episodes: [],
+      episodes: []
     },
     {
-      id: 8,
+      id: 9,
       name: "The Scrum Queens",
       region: "Global",
       language: "English",
@@ -151,10 +169,10 @@ export default function PodcastsPage() {
       image: scrumQueensImg,
       description:
         "The leading women’s rugby platform covering international tests, World Cups, and the growth of the women’s game.",
-      episodes: [],
+      episodes: []
     },
     {
-      id: 9,
+      id: 10,
       name: "The Women’s Rugby Podcast",
       region: "Ireland",
       language: "English",
@@ -163,33 +181,37 @@ export default function PodcastsPage() {
       image: womensRugbyPodImg,
       description:
         "Ireland-focused women’s rugby coverage, discussing players, performance, and the international game.",
-      episodes: [],
-    },
+      episodes: []
+    }
   ];
 
-  /* FILTER */
-  const filtered =
+  /* SPLIT FEATURE + GRID */
+
+  const featuredPodcast = podcasts.find(p => p.isPartner);
+  const otherPodcasts = podcasts.filter(p => !p.isPartner);
+
+  /* FILTER GRID */
+
+  const filteredOther =
     activeTournament === "all"
-      ? podcasts
-      : podcasts.filter((p) =>
+      ? otherPodcasts
+      : otherPodcasts.filter(p =>
           p.focus.some(
-            (f) =>
-              f.toLowerCase().replace(/\s+/g, "-") === activeTournament
+            f => f.toLowerCase().replace(/\s+/g, "-") === activeTournament
           )
         );
 
-  /* SORT: partners first */
-  const filteredPodcasts = [...filtered].sort((a, b) => {
-    const aPartner = a.isPartner ? 1 : 0;
-    const bPartner = b.isPartner ? 1 : 0;
-    return bPartner - aPartner;
-  });
-
   return (
     <div className={styles.page}>
+
       {/* HERO */}
+
       <header className={styles.hero}>
-        <img src={podcastsHero} alt="" className={styles.heroImage} />
+        <img
+  src={podcastsHero}
+  alt="Rugby podcast studio banner"
+  className={styles.heroImage}
+/>
         <div className={styles.heroText}>
           <h1>Rugby Podcasts</h1>
           <p>
@@ -200,19 +222,18 @@ export default function PodcastsPage() {
         </div>
       </header>
 
-      {/* BACK TO STUDIO */}
+      {/* BACK */}
+
       <div className={styles.backWrap}>
-        <button
-          className={styles.back}
-          onClick={() => navigate("/media")}
-        >
+        <button className={styles.back} onClick={() => navigate("/media")}>
           ← Back to The Rugby Studio
         </button>
       </div>
 
       {/* FILTERS */}
+
       <nav className={styles.filters}>
-        {tournaments.map((t) => (
+        {tournaments.map(t => (
           <button
             key={t.id}
             className={`${styles.filterBtn} ${
@@ -225,22 +246,71 @@ export default function PodcastsPage() {
         ))}
       </nav>
 
-      {/* PODCAST GRID */}
+      {/* FEATURED DSPN */}
+
+      {featuredPodcast && (
+        <section className={styles.featuredWrap}>
+
+          <h2 className={styles.featuredHeading}>
+            RAZ Featuring Martin Devlin Podcasts
+          </h2>
+
+          <article className={styles.featuredCard}>
+
+            <img
+              src={featuredPodcast.image}
+              className={styles.featuredImage}
+              alt={featuredPodcast.name}
+            />
+
+            <div className={styles.featuredContent}>
+
+              <div className={styles.no1Badge}>#1</div>
+
+              <h3>{featuredPodcast.name}</h3>
+
+              <span className={styles.meta}>
+                {featuredPodcast.region} • {featuredPodcast.language}
+              </span>
+
+              <p>{featuredPodcast.description}</p>
+
+              <a
+                href={featuredPodcast.url}
+                target="_blank"
+                rel="noreferrer"
+                className={styles.externalLink}
+              >
+                Visit Podcast →
+              </a>
+
+            </div>
+          </article>
+
+        </section>
+      )}
+
+      {/* OTHER PODCASTS */}
+
       <section className={styles.grid}>
-        {filteredPodcasts.map((podcast) => (
+        {filteredOther.map(podcast => (
           <article key={podcast.id} className={styles.card}>
+
             <header className={styles.cardHeader}>
+
               <img
                 src={podcast.image}
-                alt={`${podcast.name} logo`}
+                alt={podcast.name}
                 className={styles.podcastImage}
               />
+
               <div>
                 <h3>{podcast.name}</h3>
                 <span className={styles.meta}>
                   {podcast.region} • {podcast.language}
                 </span>
               </div>
+
             </header>
 
             <p className={styles.description}>{podcast.description}</p>
@@ -253,19 +323,22 @@ export default function PodcastsPage() {
             >
               Visit Podcast →
             </a>
+
           </article>
         ))}
       </section>
 
-      {/* JOIN */}
+      {/* JOIN CTA */}
+
       <section className={styles.join}>
         <h3>Have a Rugby Podcast?</h3>
         <p>
-          Join the Rugby Studio to reach a global rugby audience. Listing,
-          discovery, and monetisation opportunities available.
+          Join the Rugby Studio to reach a global rugby audience.
+          Listing, discovery, and monetisation opportunities available.
         </p>
         <button className={styles.joinBtn}>Apply to Join</button>
       </section>
+
     </div>
   );
 }

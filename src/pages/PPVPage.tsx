@@ -5,33 +5,85 @@ import styles from "./PPVPage.module.css";
 import { recordLoyaltyAction } from "../utils/loyaltyHooks";
 import heroImage from "../assets/images/raz/fanzone-ppv.png";
 
+import LiveNowBar from "../components/live/LiveNowBar";
+
+import { broadcasters } from "../data/broadcasters";
+
+/* ================= TV LOGOS ================= */
+
+import canal from "../assets/images/broadcaster-tv/canal.jpg";
+import dazn from "../assets/images/broadcaster-tv/dazn.jpg";
+import espn from "../assets/images/broadcaster-tv/espn.jpg";
+import flo from "../assets/images/broadcaster-tv/flo.jpg";
+import peacock from "../assets/images/broadcaster-tv/peacocktv.jpg";
+import premier from "../assets/images/broadcaster-tv/premier.jpg";
+import rugbypass from "../assets/images/broadcaster-tv/rugbypass.jpg";
+import skyFiji from "../assets/images/broadcaster-tv/sky-fiji.jpg";
+import skyNow from "../assets/images/broadcaster-tv/skynow.jpg";
+import skyItalia from "../assets/images/broadcaster-tv/skysport-italia.jpg";
+import skySport from "../assets/images/broadcaster-tv/skysport.jpg";
+import stan from "../assets/images/broadcaster-tv/stan.jpg";
+import supersport from "../assets/images/broadcaster-tv/supersport.jpg";
+import tnt from "../assets/images/broadcaster-tv/tnt.jpg";
+import virgin from "../assets/images/broadcaster-tv/virgin.jpg";
+import wowow from "../assets/images/broadcaster-tv/wowow.jpg";
+
+const tvLogos: Record<string, string> = {
+  canalplus: canal,
+  dazn,
+  espn,
+  florugby: flo,
+  peacock,
+  premiersports: premier,
+  rugbypass,
+  skypacific: skyFiji,
+  skysportnow: skyNow,
+  skyitalia: skyItalia,
+  skysportnz: skySport,
+  stansport: stan,
+  supersport,
+  tntsports: tnt,
+  virgin_media: virgin,
+  wowow,
+};
+
 export default function PPVPage() {
   const navigate = useNavigate();
 
-  /* ================= LOYALTY: PAGE VIEW ================= */
+  const tvBroadcasters = broadcasters.filter((b) => b.type === "tv");
+
+  const grouped = tvBroadcasters.reduce((acc: any, b: any) => {
+    if (!acc[b.country]) acc[b.country] = [];
+    acc[b.country].push(b);
+    return acc;
+  }, {});
+
   useEffect(() => {
     recordLoyaltyAction("ppv_view");
   }, []);
 
   return (
     <main className={styles.page}>
-      {/* ================= HERO ================= */}
+      {/* HERO */}
+
       <section
         className={styles.hero}
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className={styles.heroOverlay} />
+
         <div className={styles.heroContent}>
-          <h1>Pay-Per-View</h1>
+          <h1>Pay-Per-View Access</h1>
+
           <p>
-            One-off access to selected matches through connection
-            <br />
-            to premium broadcast coverage.
+            Premium international match coverage through authorised broadcast
+            partners across global territories.
           </p>
         </div>
       </section>
 
-      {/* ================= BACK ================= */}
+      {/* BACK */}
+
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -41,111 +93,56 @@ export default function PPVPage() {
         </button>
       </div>
 
-      {/* ================= OVERVIEW ================= */}
+      {/* LIVE MATCH BAR */}
+
+      <LiveNowBar />
+
+      {/* EDITORIAL */}
+
       <section className={styles.section}>
         <p className={styles.bodyText}>
-          Pay-Per-View provides direct access to selected matches and special
-          broadcasts that sit outside standard subscription coverage. Events are
-          offered individually, without requiring an ongoing commitment.
+          Certain international fixtures, touring series and special
+          competitions are occasionally made available through Pay-Per-View
+          access. Rugby Anthem Zone does not host streams directly. Instead,
+          supporters are connected to the authorised broadcast partners
+          responsible for coverage in their region.
         </p>
       </section>
 
-      {/* ================= WHEN PPV APPLIES ================= */}
+      {/* BROADCASTERS */}
+
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>When PPV Is Used</h2>
+        <h2 className={styles.sectionTitle}>
+          Official Broadcast Partners
+        </h2>
 
-        <div className={styles.cards}>
-          <div className={styles.card}>
-            <h3>Exclusive Fixtures</h3>
-            <p>
-              Certain high-value matches or one-off events may be made available
-              via PPV due to broadcast rights or production scope.
-            </p>
+        {Object.entries(grouped).map(([country, list]: any) => (
+          <div key={country} className={styles.countryBlock}>
+            <h3 className={styles.countryTitle}>{country}</h3>
+
+            <div className={styles.grid}>
+              {list.map((b: any) => (
+                <a
+                  key={b.id}
+                  className={styles.row}
+                  href={b.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    recordLoyaltyAction("ppv_provider_click")
+                  }
+                >
+                  <img src={tvLogos[b.id]} alt={b.name} />
+
+                  <div>
+                    <strong>{b.name}</strong>
+                    <span>{b.country}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
-
-          <div className={styles.card}>
-            <h3>Enhanced Coverage</h3>
-            <p>
-              PPV events may include higher production quality, extended camera
-              angles, or additional broadcast layers not available elsewhere.
-            </p>
-          </div>
-
-          <div className={styles.card}>
-            <h3>Regional Availability</h3>
-            <p>
-              PPV is used where standard broadcast access differs by territory,
-              allowing supporters to access events otherwise unavailable locally.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= ACCESS MODEL ================= */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Access Model</h2>
-
-        <div className={styles.cards}>
-          <div className={styles.card}>
-            <h3>Single-Event Purchase</h3>
-            <p>
-              Each PPV event is purchased individually. There are no bundles,
-              subscriptions, or recurring charges tied to PPV access.
-            </p>
-          </div>
-
-          <div className={styles.card}>
-            <h3>Defined Access Window</h3>
-            <p>
-              Access duration is specified per event and may include live
-              viewing, limited replay windows, or both.
-            </p>
-          </div>
-
-          <div className={styles.card}>
-            <h3>Transparent Pricing</h3>
-            <p>
-              Pricing and access terms are shown clearly before purchase, with
-              no hidden fees or automatic renewals.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= OFFICIAL ACCESS ================= */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Official PPV Access</h2>
-
-        <p className={styles.bodyText}>
-          PPV access is provided through authorised broadcast partners. Rugby
-          Anthem Zone does not host streams, payments, or DRM-controlled
-          content.
-        </p>
-
-        <button
-          className={styles.outbound}
-          onClick={() => recordLoyaltyAction("ppv_purchase")}
-        >
-          Proceed to Official PPV Provider
-        </button>
-      </section>
-
-      {/* ================= NOTICE ================= */}
-      <section className={styles.section}>
-        <p className={styles.notice}>
-          Availability, pricing, and replay options vary by event and region.
-          Full details are presented before purchase, in line with local
-          broadcast agreements.
-        </p>
-      </section>
-
-      {/* ================= FORWARD VIEW ================= */}
-      <section className={styles.section}>
-        <p className={styles.bodyText}>
-          PPV is designed as an access mechanism, not a content feed. Events are
-          offered selectively to preserve clarity, value, and respect for the
-          match itself.
-        </p>
+        ))}
       </section>
     </main>
   );

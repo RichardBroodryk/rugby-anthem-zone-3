@@ -1,8 +1,10 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./LiveScoresPage.module.css";
 
-import { matches2026 } from "../data/matches2026";
+import { getMatches } from "../data/matchesAdapter";
+import { MatchData } from "../data/matches2026";
+
 import LiveScoreRow from "../components/match/LiveScoreRow";
 
 import heroBg from "../assets/images/raz/Livescores.png";
@@ -12,6 +14,7 @@ import heroBg from "../assets/images/raz/Livescores.png";
 const isToday = (dateStr: string) => {
   const d = new Date(dateStr);
   const now = new Date();
+
   return (
     d.getFullYear() === now.getFullYear() &&
     d.getMonth() === now.getMonth() &&
@@ -27,18 +30,28 @@ const isLive = (_matchId: number) => false;
 export default function LiveScoresPage() {
   const navigate = useNavigate();
 
-  const { live, recentFinals, today, upcoming } = useMemo(() => {
-    const liveMatches = matches2026.filter((m) => isLive(m.id));
+  const [matches, setMatches] = useState<MatchData[]>([]);
 
-    const recentFinals = matches2026.filter(
+  /* ================= FETCH MATCHES ================= */
+
+  useEffect(() => {
+    getMatches().then(setMatches);
+  }, []);
+
+  /* ================= GROUP MATCHES ================= */
+
+  const { live, recentFinals, today, upcoming } = useMemo(() => {
+    const liveMatches = matches.filter((m) => isLive(m.id));
+
+    const recentFinals = matches.filter(
       (m) => m.score && !isLive(m.id)
     );
 
-    const todayMatches = matches2026.filter(
+    const todayMatches = matches.filter(
       (m) => !m.score && isToday(m.date)
     );
 
-    const upcomingMatches = matches2026.filter(
+    const upcomingMatches = matches.filter(
       (m) => !m.score && !isToday(m.date)
     );
 
@@ -48,7 +61,7 @@ export default function LiveScoresPage() {
       today: todayMatches,
       upcoming: upcomingMatches,
     };
-  }, []);
+  }, [matches]);
 
   return (
     <main className={styles.page}>
@@ -68,7 +81,7 @@ export default function LiveScoresPage() {
         </div>
       </header>
 
-      {/* ================= BACK (CANONICAL PATTERN) ================= */}
+      {/* ================= BACK ================= */}
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -88,6 +101,7 @@ export default function LiveScoresPage() {
           live.map((m) => (
             <LiveScoreRow
               key={m.id}
+              matchId={m.id}
               home={m.home}
               away={m.away}
               score={m.score}
@@ -100,13 +114,14 @@ export default function LiveScoresPage() {
         )}
       </section>
 
-      {/* ================= RECENT FINALS ================= */}
+      {/* ================= RECENT RESULTS ================= */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Recent Results</h2>
 
         {recentFinals.map((m) => (
           <LiveScoreRow
             key={m.id}
+            matchId={m.id}
             home={m.home}
             away={m.away}
             score={m.score}
@@ -124,6 +139,7 @@ export default function LiveScoresPage() {
         {today.map((m) => (
           <LiveScoreRow
             key={m.id}
+            matchId={m.id}
             home={m.home}
             away={m.away}
             phase="Upcoming"
@@ -142,6 +158,7 @@ export default function LiveScoresPage() {
           {upcoming.slice(0, 8).map((m) => (
             <LiveScoreRow
               key={m.id}
+              matchId={m.id}
               home={m.home}
               away={m.away}
               phase="Upcoming"
