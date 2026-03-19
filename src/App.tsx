@@ -143,6 +143,8 @@ import OfficialsWomen from "./pages/heritage/OfficialsWomen";
 import OfficialsMenEras from "./pages/heritage/OfficialsMenEras";
 import OfficialsWomenEras from "./pages/heritage/OfficialsWomenEras";
 
+import SquadNation2026 from "./pages/heritage/squads/SquadNation2026";
+
 /* ================= LAYOUTS ================= */
 import FreemiumLayout from "./layouts/FreemiumLayout";
 import AppLayout from "./layouts/AppLayout";
@@ -342,6 +344,8 @@ export default function App() {
         {/* Deep Heritage */}
         <Route path="/heritage/squads/men" element={<SquadsMen />} />
         <Route path="/heritage/squads/women" element={<SquadsWomen />} />
+        <Route path="/heritage/squads/men/:nation" element={<SquadNation2026 />} />
+        <Route path="/heritage/squads/women/:nation" element={<SquadNation2026 />} />
         <Route path="/heritage/champions/men" element={<ChampionsMen />} />
         <Route path="/heritage/champions/women" element={<ChampionsWomen />} />
         <Route path="/heritage/coaches/head-coaches" element={<HeadCoaches />} />

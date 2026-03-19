@@ -5,9 +5,10 @@
   padding-bottom: 80px;
 }
 
-/* HERO — COLOUR FROM SQUADS HUB (WOMEN) */
+/* HERO */
+
 .hero {
-  background: #f3f1ed; /* soft pearl stone */
+  background: #f3f1ed; /* women's tone */
 }
 
 .heroContent {
@@ -30,7 +31,8 @@
   color: #475569;
 }
 
-/* BACK LINK */
+/* BACK */
+
 .backWrap {
   display: flex;
   justify-content: center;
@@ -49,7 +51,8 @@
   text-decoration: underline;
 }
 
-/* PAGE INTRO */
+/* INTRO */
+
 .pageIntro {
   max-width: 760px;
   margin: 48px auto 0;
@@ -71,9 +74,10 @@
   color: #475569;
 }
 
-/* SECTIONS */
+/* SECTION */
+
 .section {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 64px auto 0;
   padding: 0 24px;
 }
@@ -97,18 +101,48 @@
 }
 
 /* GRID */
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 24px;
   margin-top: 32px;
 }
 
+/* Desktop */
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Laptop */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet */
+@media (min-width: 600px) and (max-width: 899px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 599px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* CARD */
+
 .card {
   background: #ffffff;
   border-radius: 18px;
   padding: 24px;
+  text-align: center;
 
   box-shadow:
     inset 6px 0 0 currentColor,
@@ -123,22 +157,47 @@
   font-weight: 800;
 }
 
-.description {
-  margin-top: 8px;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  opacity: 0.85;
+/* FLAG */
+
+.flagWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
 }
 
-.meta {
-  margin-top: 12px;
-  display: flex;
-  gap: 16px;
+.flag {
+  width: 64px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* NICKNAME */
+
+.nickname {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+/* ACTION */
+
+.action {
+  margin-top: 14px;
   font-size: 0.85rem;
-  opacity: 0.7;
+  background: none;
+  border: none;
+  color: #1e3a8a;
+  cursor: pointer;
+}
+
+.action:hover {
+  text-decoration: underline;
 }
 
 /* INFO */
+
 .info {
   max-width: 760px;
   display: flex;
@@ -147,7 +206,8 @@
   opacity: 0.8;
 }
 
-/* MOBILE */
+/* MOBILE HERO */
+
 @media (max-width: 640px) {
   .heroContent {
     padding: 56px 20px 40px;

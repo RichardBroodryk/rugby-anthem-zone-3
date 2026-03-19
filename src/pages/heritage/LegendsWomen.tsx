@@ -8,6 +8,12 @@ import coughlanImg from "../../assets/images/legends/women/fiona-coughlan.jpg";
 import pyrsImg from "../../assets/images/legends/women/gwenllian-pyrs.jpg";
 import soonImg from "../../assets/images/legends/women/cheryl-soon.jpg";
 
+import kennedyImg from "../../assets/images/legends/women/donna-kennedy.jpg";
+import harveyImg from "../../assets/images/legends/women/harvey-magali.jpg";
+import knightImg from "../../assets/images/legends/women/phaidra-knight.jpeg";
+import barattinImg from "../../assets/images/legends/women/sara-barattin.jpg";
+import jordaanImg from "../../assets/images/legends/women/zenay-jordaan.jpg";
+
 type Legend = {
   nation: string;
   name: string;
@@ -24,7 +30,7 @@ const legends: Legend[] = [
     era: "2013–Present",
     position: "Wing",
     bio:
-      "A transformative force in women’s rugby, whose power and speed redefined the modern winger and inspired a global generation.",
+      "One of the most electrifying players in the history of women’s rugby, Portia Woodman combined extraordinary pace, strength, and finishing ability to dominate international competitions and inspire a new global audience for the sport.",
     image: woodmanImg,
   },
   {
@@ -33,7 +39,7 @@ const legends: Legend[] = [
     era: "2003–2012",
     position: "Flanker",
     bio:
-      "A trailblazer whose leadership and dominance helped establish England as a powerhouse in the women’s international game.",
+      "A fearless flanker and inspirational leader, Maggie Alphonsi was a driving force behind England’s rise in the modern women’s game and a key figure in their 2010 Rugby World Cup triumph.",
     image: alphonsiImg,
   },
   {
@@ -42,7 +48,7 @@ const legends: Legend[] = [
     era: "2005–2018",
     position: "Scrum-half",
     bio:
-      "An intelligent and influential scrum-half who guided France through a formative era of growth and competitiveness.",
+      "A tactically astute scrum-half who orchestrated the French attack with intelligence and composure, Marie-Alice Yahé helped guide France through a transformative period in women’s international rugby.",
     image: yaheImg,
   },
   {
@@ -51,7 +57,7 @@ const legends: Legend[] = [
     era: "2003–2018",
     position: "Centre",
     bio:
-      "A central figure in Ireland’s rise, captaining historic victories and setting standards for professionalism and belief.",
+      "An influential leader during Ireland’s rise in the global game, Fiona Coghlan captained the national side through historic victories and helped establish a culture of belief and professionalism.",
     image: coughlanImg,
   },
   {
@@ -60,7 +66,7 @@ const legends: Legend[] = [
     era: "2014–Present",
     position: "Prop",
     bio:
-      "A cornerstone of the Welsh pack, respected for her physicality, consistency, and leadership in the front row.",
+      "A powerful presence in the Welsh front row, Gwenllian Pyrs has been central to Wales’ competitive resurgence and represents the strength and resilience of modern Welsh women’s rugby.",
     image: pyrsImg,
   },
   {
@@ -69,8 +75,53 @@ const legends: Legend[] = [
     era: "1996–2007",
     position: "Back row",
     bio:
-      "One of the pioneers of Australian women’s rugby, whose longevity and influence shaped the sport’s early international years.",
+      "A pioneer of Australian women’s rugby, Cheryl Soon captained the Wallaroos and played a key role in shaping the early international identity of the sport in Australia.",
     image: soonImg,
+  },
+  {
+    nation: "Scotland",
+    name: "Donna Kennedy",
+    era: "1993–2010",
+    position: "Number 8",
+    bio:
+      "One of the great pioneers of women’s international rugby, Donna Kennedy earned over 100 caps for Scotland and became a symbol of dedication and leadership in the sport’s formative professional era.",
+    image: kennedyImg,
+  },
+  {
+    nation: "Canada",
+    name: "Magali Harvey",
+    era: "2013–Present",
+    position: "Wing / Fullback",
+    bio:
+      "A dynamic attacking talent, Magali Harvey became the first Canadian to win World Rugby Women’s Player of the Year and remains one of the most influential figures in Canadian rugby.",
+    image: harveyImg,
+  },
+  {
+    nation: "United States",
+    name: "Phaidra Knight",
+    era: "1997–2017",
+    position: "Back Row",
+    bio:
+      "A global ambassador for the women’s game, Phaidra Knight captained the USA Eagles and inspired a generation of players through her athleticism, leadership, and advocacy for rugby worldwide.",
+    image: knightImg,
+  },
+  {
+    nation: "Italy",
+    name: "Sara Barattin",
+    era: "2005–Present",
+    position: "Scrum-half",
+    bio:
+      "A long-time captain and leader of the Italian national side, Sara Barattin has been instrumental in raising the competitiveness and professionalism of Italy’s women’s rugby program.",
+    image: barattinImg,
+  },
+  {
+    nation: "South Africa",
+    name: "Zenay Jordaan",
+    era: "2010–Present",
+    position: "Centre",
+    bio:
+      "A respected leader of the Springbok Women, Zenay Jordaan has played a crucial role in the growth of women’s rugby in South Africa and remains one of the country’s most influential players.",
+    image: jordaanImg,
   },
 ];
 
@@ -98,12 +149,15 @@ export default function LegendsWomen() {
         </button>
       </div>
 
-      {/* CONTEXT FIRST */}
+      {/* CONTEXT */}
       <section className={styles.sectionMuted}>
         <h2>Shaping the Modern Game</h2>
         <p>
-          These players didn’t just win matches — they expanded visibility,
-          professionalism, and opportunity across women’s rugby worldwide.
+          Women’s rugby has grown from a pioneering amateur movement into one
+          of the fastest-growing global sports. The players honoured here helped
+          drive that transformation through leadership, performance, and
+          advocacy, inspiring generations of athletes and supporters around the
+          world.
         </p>
       </section>
 

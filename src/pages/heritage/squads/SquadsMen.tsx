@@ -1,42 +1,41 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./SquadsMen.module.css";
 
-type Tournament = {
+/* FLAGS */
+
+import nzFlag from "../../../assets/images/flags/new-zealand.jpg";
+import saFlag from "../../../assets/images/flags/south-africa.jpg";
+import engFlag from "../../../assets/images/flags/england.png";
+import ireFlag from "../../../assets/images/flags/ireland.jpg";
+import fraFlag from "../../../assets/images/flags/france.jpg";
+import ausFlag from "../../../assets/images/flags/australia.jpg";
+import walFlag from "../../../assets/images/flags/wales.jpg";
+import scoFlag from "../../../assets/images/flags/scotland.jpg";
+import itaFlag from "../../../assets/images/flags/italy.jpg";
+import argFlag from "../../../assets/images/flags/argentina.jpg";
+import japFlag from "../../../assets/images/flags/japan.jpg";
+import fijFlag from "../../../assets/images/flags/fiji.jpg";
+
+type Nation = {
   name: string;
-  region: string;
-  nations: number;
-  description: string;
+  nickname: string;
+  flag: string;
+  route: string;
 };
 
-const tournaments: Tournament[] = [
-  {
-    name: "Six Nations Championship",
-    region: "Europe",
-    nations: 6,
-    description:
-      "Europe’s premier annual international championship featuring the Home Nations and Italy.",
-  },
-  {
-    name: "Rugby Championship",
-    region: "Southern Hemisphere",
-    nations: 4,
-    description:
-      "Elite southern hemisphere competition contested by the world’s leading rugby nations.",
-  },
-  {
-    name: "Pacific Nations Cup",
-    region: "Pacific",
-    nations: 6,
-    description:
-      "An international tournament showcasing Pacific and emerging rugby nations.",
-  },
-  {
-    name: "Autumn Internationals",
-    region: "Global",
-    nations: 10,
-    description:
-      "End-of-year international fixtures bringing together northern and southern hemisphere teams.",
-  },
+const nations: Nation[] = [
+  { name: "New Zealand", nickname: "All Blacks", flag: nzFlag, route: "new-zealand" },
+  { name: "South Africa", nickname: "Springboks", flag: saFlag, route: "south-africa" },
+  { name: "England", nickname: "England", flag: engFlag, route: "england" },
+  { name: "Ireland", nickname: "Ireland", flag: ireFlag, route: "ireland" },
+  { name: "France", nickname: "Les Bleus", flag: fraFlag, route: "france" },
+  { name: "Australia", nickname: "Wallabies", flag: ausFlag, route: "australia" },
+  { name: "Wales", nickname: "Wales", flag: walFlag, route: "wales" },
+  { name: "Scotland", nickname: "Scotland", flag: scoFlag, route: "scotland" },
+  { name: "Italy", nickname: "Azzurri", flag: itaFlag, route: "italy" },
+  { name: "Argentina", nickname: "Los Pumas", flag: argFlag, route: "argentina" },
+  { name: "Japan", nickname: "Brave Blossoms", flag: japFlag, route: "japan" },
+  { name: "Fiji", nickname: "Flying Fijians", flag: fijFlag, route: "fiji" },
 ];
 
 export default function SquadsMen() {
@@ -44,18 +43,20 @@ export default function SquadsMen() {
 
   return (
     <main className={styles.page}>
-      {/* HERO — TITLE LIVES HERE */}
+
+      {/* HERO */}
+
       <header className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1>Men’s Squads</h1>
+          <h1>Men’s National Squads</h1>
           <p>
-            Official international men’s squads across major tournaments and
-            international windows.
+            Official international squads of the world’s leading rugby nations.
           </p>
         </div>
       </header>
 
-      {/* BACK TO SQUADS HUB */}
+      {/* BACK */}
+
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -65,61 +66,80 @@ export default function SquadsMen() {
         </button>
       </div>
 
-      {/* EDITORIAL FRAMING — THIS WAS THE MISSING PIECE */}
+      {/* INTRO */}
+
       <section className={styles.pageIntro}>
-        <h2>Where Selection Becomes Identity</h2>
+        <h2>Select a Nation</h2>
         <p>
-          When squads are named, seasons take shape and national intent becomes
-          clear.
+          Explore the current international squad and coaching staff of each nation.
         </p>
       </section>
 
-      {/* TOURNAMENTS */}
+      {/* GRID */}
+
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>International Tournaments</h2>
-
         <div className={styles.grid}>
-          {tournaments.map((tournament) => (
-            <article key={tournament.name} className={styles.card}>
-              <h3>{tournament.name}</h3>
 
-              <p className={styles.description}>
-                {tournament.description}
-              </p>
+          {nations.map((nation) => (
 
-              <div className={styles.meta}>
-                <span>{tournament.region}</span>
-                <span>{tournament.nations} Nations</span>
+            <article key={nation.name} className={styles.card}>
+
+              <div className={styles.flagWrap}>
+                <img
+                  src={nation.flag}
+                  alt={`${nation.name} flag`}
+                  className={styles.flag}
+                />
               </div>
+
+              <h3>{nation.name}</h3>
+
+              <span className={styles.nickname}>
+                {nation.nickname}
+              </span>
+
+              <button
+                className={styles.action}
+                onClick={() =>
+                  navigate(`/heritage/squads/men/${nation.route}`)
+                }
+              >
+                View Squad →
+              </button>
+
             </article>
+
           ))}
+
         </div>
       </section>
 
       {/* CONTEXT */}
+
       <section className={styles.sectionMuted}>
-        <h2>How Squads Are Selected</h2>
+        <h2>International Selection</h2>
         <p>
-          Men’s international squads are selected by national coaching teams and
-          announced ahead of major competitions in accordance with tournament
-          regulations.
+          National squads are selected by coaching teams and announced ahead of
+          international competitions throughout the season.
         </p>
       </section>
 
       {/* INFO */}
+
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Coverage Notes</h2>
+
         <div className={styles.info}>
           <p>
-            This section reflects officially confirmed squads only. Matchday
-            selections and injury updates are covered elsewhere.
+            Squad listings reflect official announcements made by national unions.
           </p>
           <p>
-            Tournament listings may expand as additional competitions are
-            scheduled.
+            Some nations may publish extended squads of up to 36 players during
+            international windows.
           </p>
         </div>
       </section>
+
     </main>
   );
 }
