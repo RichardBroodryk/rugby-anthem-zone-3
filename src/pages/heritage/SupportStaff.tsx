@@ -13,6 +13,7 @@ import scotland from "../../assets/images/flags/scotland.jpg";
 import argentina from "../../assets/images/flags/argentina.jpg";
 import italy from "../../assets/images/flags/italy.jpg";
 import japan from "../../assets/images/flags/japan.jpg";
+import fiji from "../../assets/images/flags/fiji.jpg";
 
 type StaffMember = {
   name: string;
@@ -33,18 +34,18 @@ const groups: NationGroup[] = [
     flag: southAfrica,
     staff: [
       {
-        name: "Aled Walters",
+        name: "Andy Edwards",
         role: "Head of Athletic Performance",
-        era: "2018–2023",
+        era: "2020–Present",
         bio:
-          "A central figure in South Africa’s World Cup–winning preparation, Walters helped establish conditioning standards that supported durability and late-game dominance.",
+          "Leads South Africa’s high-performance systems, underpinning physical dominance and durability across global campaigns.",
       },
       {
-        name: "Dr Craig Roberts",
-        role: "Team Doctor",
-        era: "2016–2023",
+        name: "Medical Team",
+        role: "Performance & Medical Unit",
+        era: "2018–Present",
         bio:
-          "Oversaw medical operations across multiple international campaigns, ensuring player welfare during sustained high-intensity competition.",
+          "Integrated medical and conditioning team ensuring player welfare and recovery across extended international cycles.",
       },
     ],
   },
@@ -55,9 +56,9 @@ const groups: NationGroup[] = [
       {
         name: "Matt Cross",
         role: "Head of Athletic Performance",
-        era: "2016–2023",
+        era: "2016–Present",
         bio:
-          "Long-serving performance lead whose work helped maintain All Blacks conditioning standards across multiple World Cup cycles.",
+          "Central to maintaining the All Blacks’ conditioning standards across multiple international cycles.",
       },
     ],
   },
@@ -66,11 +67,11 @@ const groups: NationGroup[] = [
     flag: ireland,
     staff: [
       {
-        name: "John Pryor",
-        role: "Head of Athletic Performance",
-        era: "2016–2023",
+        name: "Performance Unit",
+        role: "S&C & Analytics",
+        era: "2018–Present",
         bio:
-          "A key contributor to Ireland’s conditioning evolution, supporting consistency, resilience, and sustained competitiveness.",
+          "A highly integrated system supporting Ireland’s consistency through conditioning, data, and preparation.",
       },
     ],
   },
@@ -79,11 +80,11 @@ const groups: NationGroup[] = [
     flag: england,
     staff: [
       {
-        name: "Andy Mitchell",
-        role: "Performance Director",
-        era: "2000–2003",
+        name: "RFU Performance Group",
+        role: "High Performance Unit",
+        era: "2018–Present",
         bio:
-          "Instrumental in integrating preparation, logistics, and performance planning during England’s build-up to Rugby World Cup success.",
+          "Supports England through structured performance systems including S&C, analytics, and medical operations.",
       },
     ],
   },
@@ -92,11 +93,11 @@ const groups: NationGroup[] = [
     flag: france,
     staff: [
       {
-        name: "Vincent Ducasse",
-        role: "Head Analyst",
-        era: "2019–2023",
+        name: "FFR Analytics Team",
+        role: "Performance Analysis",
+        era: "2019–Present",
         bio:
-          "Part of France’s modern high-performance structure, contributing analysis and strategic insight during a period of resurgence.",
+          "Provides detailed tactical analysis and opposition insight within France’s modern system.",
       },
     ],
   },
@@ -105,18 +106,11 @@ const groups: NationGroup[] = [
     flag: wales,
     staff: [
       {
-        name: "Geraint John",
-        role: "Head Analyst",
-        era: "2011–2019",
+        name: "WRU Performance Unit",
+        role: "Performance & Medical",
+        era: "2018–Present",
         bio:
-          "A long-serving analyst whose work supported Wales across multiple Six Nations and World Cup campaigns.",
-      },
-      {
-        name: "Dr Craig Roberts",
-        role: "Team Doctor",
-        era: "2015–2019",
-        bio:
-          "Provided senior medical leadership during Wales’ sustained period of international competitiveness.",
+          "Supports Wales through conditioning, analytics, and player welfare systems.",
       },
     ],
   },
@@ -125,11 +119,11 @@ const groups: NationGroup[] = [
     flag: scotland,
     staff: [
       {
-        name: "Matt Taylor",
-        role: "Defensive & Performance Strategy",
-        era: "2018–2023",
+        name: "SRU Performance Team",
+        role: "S&C & Analysis",
+        era: "2018–Present",
         bio:
-          "Contributed to Scotland’s tactical preparation and defensive organisation during recent international cycles.",
+          "Drives Scotland’s preparation and conditioning within an evolving high-performance structure.",
       },
     ],
   },
@@ -138,11 +132,11 @@ const groups: NationGroup[] = [
     flag: australia,
     staff: [
       {
-        name: "Simon Thomas",
-        role: "Head of Performance",
-        era: "2015–2019",
+        name: "Rugby Australia Performance Group",
+        role: "High Performance",
+        era: "2018–Present",
         bio:
-          "Oversaw athletic preparation through demanding international campaigns and World Cup competition.",
+          "Supports national teams through conditioning, analytics, and medical systems.",
       },
     ],
   },
@@ -151,11 +145,11 @@ const groups: NationGroup[] = [
     flag: argentina,
     staff: [
       {
-        name: "Guillermo Marino",
-        role: "Head Analyst",
-        era: "2019–2023",
+        name: "UAR Performance Unit",
+        role: "Performance & Medical",
+        era: "2019–Present",
         bio:
-          "Supported Argentina’s tactical planning and opposition analysis during their strongest modern-era performances.",
+          "Provides structural support to Argentina’s international programme across analysis and conditioning.",
       },
     ],
   },
@@ -164,11 +158,11 @@ const groups: NationGroup[] = [
     flag: italy,
     staff: [
       {
-        name: "Gianni Vio",
-        role: "Set-Piece & Performance Consultant",
-        era: "2019–2023",
+        name: "FIR Performance Group",
+        role: "High Performance",
+        era: "2018–Present",
         bio:
-          "An influential specialist contributing strategic insight to Italy and multiple international programmes.",
+          "Supports Italy’s development through structured performance and analytics systems.",
       },
     ],
   },
@@ -177,11 +171,24 @@ const groups: NationGroup[] = [
     flag: japan,
     staff: [
       {
-        name: "Keita Yamaguchi",
-        role: "Head of Athletic Performance",
-        era: "2019–2023",
+        name: "JRFU High Performance Team",
+        role: "Performance & Conditioning",
+        era: "2019–Present",
         bio:
-          "Part of Japan’s high-performance framework supporting conditioning and preparation at World Cup level.",
+          "Supports Japan’s structured and disciplined approach to international rugby.",
+      },
+    ],
+  },
+  {
+    nation: "Fiji",
+    flag: fiji,
+    staff: [
+      {
+        name: "Fiji Rugby Performance Unit",
+        role: "Development & Conditioning",
+        era: "2018–Present",
+        bio:
+          "Supports Fiji’s international programme with growing investment in conditioning and analytics.",
       },
     ],
   },
@@ -194,7 +201,7 @@ export default function SupportStaff() {
     <main className={styles.page}>
       {/* HERO */}
       <section className={styles.hero}>
-        <h1>Support Staff</h1>
+        <h1>Support Staff — Men’s Game</h1>
         <p className={styles.heroSub}>
           Performance, medical, and analytical leaders whose expertise underpinned
           sustained international success.
@@ -211,14 +218,14 @@ export default function SupportStaff() {
         </button>
       </div>
 
-      {/* DESCRIPTIVE CONTEXT */}
+      {/* INTRO */}
       <section className={styles.intro}>
-        <h2>The Hidden Infrastructure of Elite Performance</h2>
+        <h2>The Infrastructure of Elite Performance</h2>
         <p>
-          Support staff create the conditions in which teams can perform at the
-          highest level. Through medical oversight, performance science, analysis,
-          and operational continuity, these specialists protect players, extend
-          careers, and turn preparation into competitive advantage.
+          Modern international rugby is built on high-performance systems. From
+          conditioning and recovery to analytics and medical oversight, support
+          staff create the environment in which elite performance becomes
+          sustainable.
         </p>
       </section>
 

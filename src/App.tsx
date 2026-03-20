@@ -135,9 +135,20 @@ import SquadsMen from "./pages/heritage/squads/SquadsMen";
 import SquadsWomen from "./pages/heritage/squads/SquadsWomen";
 import ChampionsMen from "./pages/heritage/ChampionsMen";
 import ChampionsWomen from "./pages/heritage/ChampionsWomen";
+
+/* HEAD COACHES */
 import HeadCoaches from "./pages/heritage/HeadCoaches";
+import HeadCoachesWomen from "./pages/heritage/HeadCoachesWomen";
+
+/* ASSISTANT COACHES */
 import AssistantCoaches from "./pages/heritage/AssistantCoaches";
+import AssistantCoachesWomen from "./pages/heritage/AssistantCoachesWomen";
+
+/* SUPPORT STAFF */
 import SupportStaff from "./pages/heritage/SupportStaff";
+import SupportStaffWomen from "./pages/heritage/SupportStaffWomen";
+
+/* OFFICIALS */
 import OfficialsMen from "./pages/heritage/OfficialsMen";
 import OfficialsWomen from "./pages/heritage/OfficialsWomen";
 import OfficialsMenEras from "./pages/heritage/OfficialsMenEras";
@@ -351,6 +362,38 @@ export default function App() {
         <Route path="/heritage/coaches/head-coaches" element={<HeadCoaches />} />
         <Route path="/heritage/coaches/assistant-coaches" element={<AssistantCoaches />} />
         <Route path="/heritage/coaches/support-staff" element={<SupportStaff />} />
+        {/* COACHES HUB */}
+<Route path="/heritage/coaches" element={<CoachesSupportHub />} />
+
+{/* HEAD COACHES */}
+<Route
+  path="/heritage/coaches/head-coaches-men"
+  element={<HeadCoaches />}
+/>
+<Route
+  path="/heritage/coaches/head-coaches-women"
+  element={<HeadCoachesWomen />}
+/>
+
+{/* ASSISTANT COACHES */}
+<Route
+  path="/heritage/coaches/assistant-coaches-men"
+  element={<AssistantCoaches />}
+/>
+<Route
+  path="/heritage/coaches/assistant-coaches-women"
+  element={<AssistantCoachesWomen />}
+/>
+
+{/* SUPPORT STAFF */}
+<Route
+  path="/heritage/coaches/support-staff-men"
+  element={<SupportStaff />}
+/>
+<Route
+  path="/heritage/coaches/support-staff-women"
+  element={<SupportStaffWomen />}
+/>
         <Route path="/heritage/officials/men" element={<OfficialsMen />} />
         <Route path="/heritage/officials/men/eras" element={<OfficialsMenEras />} />
         <Route path="/heritage/officials/women" element={<OfficialsWomen />} />

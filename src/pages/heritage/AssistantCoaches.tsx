@@ -12,6 +12,8 @@ import scotland from "../../assets/images/flags/scotland.jpg";
 import argentina from "../../assets/images/flags/argentina.jpg";
 import italy from "../../assets/images/flags/italy.jpg";
 import japan from "../../assets/images/flags/japan.jpg";
+import wales from "../../assets/images/flags/wales.jpg";
+import fiji from "../../assets/images/flags/fiji.jpg";
 
 type AssistantCoach = {
   name: string;
@@ -27,14 +29,54 @@ type NationGroup = {
 
 const groups: NationGroup[] = [
   {
+    nation: "South Africa",
+    flag: southAfrica,
+    coaches: [
+      {
+        name: "Mzwandile Stick",
+        role: "Attack & Backs Coach",
+        bio: "Central to South Africa’s attacking structure and continuity across multiple World Cup cycles.",
+      },
+      {
+        name: "Deon Davids",
+        role: "Forwards Coach",
+        bio: "Responsible for forward systems, maul dominance, and pack cohesion.",
+      },
+      {
+        name: "Daan Human",
+        role: "Scrum Coach",
+        bio: "One of the leading scrum specialists in the modern international game.",
+      },
+      {
+        name: "Jerry Flannery",
+        role: "Defence Coach",
+        bio: "Driving defensive organisation and breakdown efficiency.",
+      },
+    ],
+  },
+  {
     nation: "Ireland",
     flag: ireland,
     coaches: [
       {
-        name: "Mike Catt",
+        name: "Simon Easterby",
+        role: "Defence Coach",
+        bio: "Architect of Ireland’s structured and aggressive defensive systems.",
+      },
+      {
+        name: "Andrew Goodman",
         role: "Attack Coach",
-        bio:
-          "A key figure in Ireland’s attacking evolution, contributing structure and clarity across recent international campaigns.",
+        bio: "Leads Ireland’s attacking framework and backline development.",
+      },
+      {
+        name: "Paul O'Connell",
+        role: "Forwards Coach",
+        bio: "Former captain bringing leadership and set-piece expertise.",
+      },
+      {
+        name: "John Fogarty",
+        role: "Scrum Coach",
+        bio: "Specialist in scrum stability and technical precision.",
       },
     ],
   },
@@ -45,14 +87,17 @@ const groups: NationGroup[] = [
       {
         name: "Shaun Edwards",
         role: "Defence Coach",
-        bio:
-          "Widely regarded as the leading defensive coach of the modern era, underpinning France’s resurgence through organisation and intensity.",
+        bio: "Widely regarded as the leading defensive coach in world rugby.",
       },
       {
-        name: "Laurent Labit",
-        role: "Attack Coach",
-        bio:
-          "Part of France’s modern coaching core, responsible for attacking identity and backline development.",
+        name: "William Servat",
+        role: "Forwards Coach",
+        bio: "Oversees France’s powerful forward unit and set-piece.",
+      },
+      {
+        name: "Laurent Sempéré",
+        role: "Set-Piece Coach",
+        bio: "Supports scrum and lineout structure within the French system.",
       },
     ],
   },
@@ -61,10 +106,19 @@ const groups: NationGroup[] = [
     flag: england,
     coaches: [
       {
-        name: "Kevin Sinfield",
+        name: "Richard Wigglesworth",
+        role: "Attack Coach",
+        bio: "Driving England’s attacking clarity and tactical structure.",
+      },
+      {
+        name: "Joe El-Abd",
         role: "Defence Coach",
-        bio:
-          "A central figure in England’s defensive systems, valued for leadership, clarity, and competitive edge.",
+        bio: "Responsible for England’s defensive organisation.",
+      },
+      {
+        name: "Andrew Strawbridge",
+        role: "Forwards Coach",
+        bio: "Focuses on set-piece and forward platform.",
       },
     ],
   },
@@ -73,10 +127,9 @@ const groups: NationGroup[] = [
     flag: scotland,
     coaches: [
       {
-        name: "Steve Tandy",
+        name: "Lee Radford",
         role: "Defence Coach",
-        bio:
-          "Oversaw Scotland’s defensive organisation through multiple international cycles and British & Irish Lions involvement.",
+        bio: "Leads Scotland’s defensive systems and organisation.",
       },
     ],
   },
@@ -85,10 +138,14 @@ const groups: NationGroup[] = [
     flag: newZealand,
     coaches: [
       {
-        name: "John Plumtree",
+        name: "Jason Ryan",
         role: "Forwards Coach",
-        bio:
-          "Responsible for forward play and breakdown strategy within the All Blacks’ modern coaching structure.",
+        bio: "Key figure in forward development and physical dominance.",
+      },
+      {
+        name: "Attack & Defence Unit",
+        role: "Staff Transition Phase",
+        bio: "Coaching structure evolving under the 2026 appointment cycle.",
       },
     ],
   },
@@ -97,22 +154,14 @@ const groups: NationGroup[] = [
     flag: australia,
     coaches: [
       {
-        name: "Mike Cron",
-        role: "Scrum Consultant",
-        bio:
-          "One of the most respected scrum specialists in international rugby, providing technical expertise at Test level.",
+        name: "Laurie Fisher",
+        role: "Forwards Coach",
+        bio: "Highly experienced forwards specialist in international rugby.",
       },
-    ],
-  },
-  {
-    nation: "South Africa",
-    flag: southAfrica,
-    coaches: [
       {
-        name: "Felix Jones",
-        role: "Defence & Strategy",
-        bio:
-          "A trusted lieutenant in South Africa’s World Cup–winning setup, contributing analysis, defence, and tactical planning.",
+        name: "Mike Cron",
+        role: "Scrum Coach",
+        bio: "Renowned scrum expert with global coaching experience.",
       },
     ],
   },
@@ -123,8 +172,7 @@ const groups: NationGroup[] = [
       {
         name: "Andrés Bordoy",
         role: "Scrum Coach",
-        bio:
-          "A technical specialist responsible for Argentina’s scrum development at international level.",
+        bio: "Leads Argentina’s scrum and forward technical systems.",
       },
     ],
   },
@@ -133,10 +181,36 @@ const groups: NationGroup[] = [
     flag: italy,
     coaches: [
       {
-        name: "Alberto De Marchi",
-        role: "Defence Coach",
-        bio:
-          "Part of Italy’s modern coaching group, focused on defensive structure and competitiveness.",
+        name: "Germán Fernández",
+        role: "Assistant Coach",
+        bio: "Supports Italy’s tactical development and team structure.",
+      },
+    ],
+  },
+  {
+    nation: "Wales",
+    flag: wales,
+    coaches: [
+      {
+        name: "Danny Wilson",
+        role: "Forwards Coach",
+        bio: "Responsible for pack development and set-piece structure.",
+      },
+      {
+        name: "Matt Sherratt",
+        role: "Attack Coach",
+        bio: "Leads attacking systems and backline organisation.",
+      },
+    ],
+  },
+  {
+    nation: "Fiji",
+    flag: fiji,
+    coaches: [
+      {
+        name: "Ifereimi Rawaqa",
+        role: "Forwards Coach",
+        bio: "Focuses on physicality and contact area performance.",
       },
     ],
   },
@@ -145,10 +219,9 @@ const groups: NationGroup[] = [
     flag: japan,
     coaches: [
       {
-        name: "Scott Wisemantel",
-        role: "Attack Coach",
-        bio:
-          "A creative attacking mind whose influence has spanned hemispheres and international systems.",
+        name: "Attack & Development Unit",
+        role: "Assistant Structure",
+        bio: "Japan’s coaching system emphasises development and tactical cohesion.",
       },
     ],
   },
@@ -161,7 +234,7 @@ export default function AssistantCoaches() {
     <main className={styles.page}>
       {/* HERO */}
       <section className={styles.hero}>
-        <h1>Assistant Coaches</h1>
+        <h1>Assistant Coaches — Men’s Game</h1>
         <p className={styles.heroSub}>
           Specialist coaches responsible for defence, attack, set-piece, and
           tactical execution at international level.
@@ -178,7 +251,7 @@ export default function AssistantCoaches() {
         </button>
       </div>
 
-      {/* DESCRIPTIVE CONTEXT */}
+      {/* INTRO */}
       <section className={styles.intro}>
         <h2>The Engine Room of Modern Teams</h2>
         <p>

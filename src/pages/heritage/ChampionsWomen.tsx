@@ -15,16 +15,15 @@ import australiaFlag from "../../assets/images/flags/australia.jpg";
 /* USA — SOLID LOGO (FIX) */
 import unitedStatesLogo from "../../assets/images/logos/solid/united-states-of-america.jpg";
 
-/* MASCOT LOGOS (WORLD CUP ONLY — WHERE AVAILABLE) */
+/* MASCOT LOGOS */
 import newZealandMascot from "../../assets/images/logos/solid/new-zealand.png";
 import englandMascot from "../../assets/images/logos/solid/england.jpg";
-
 
 type WorldCupEntry = {
   year: string;
   nation: string;
   mascot: string;
-  image: string; // mascot logo OR flag
+  image: string;
   venue: string;
   headCoach: string;
 };
@@ -42,7 +41,7 @@ const worldCups: WorldCupEntry[] = [
     year: "1991",
     nation: "United States",
     mascot: "Eagles",
-    image: unitedStatesLogo, // ✅ SOLID LOGO (FIXED)
+    image: unitedStatesLogo,
     venue: "Twickenham, London",
     headCoach: "Unknown",
   },
@@ -121,6 +120,37 @@ const sixNations: Tally[] = [
   { nation: "Scotland", titles: 1, flag: scotlandFlag },
 ];
 
+/* ========== HSBC SVNS WORLD SERIES (WOMEN) ========= */
+
+const sevensSeries: Tally[] = [
+  { nation: "New Zealand", titles: 7, flag: newZealandFlag },
+  { nation: "Australia", titles: 3, flag: australiaFlag },
+  { nation: "France", titles: 1, flag: franceFlag },
+];
+
+/* ========== OLYMPIC RUGBY SEVENS (WOMEN) ========= */
+
+const olympicSevensWomen = [
+  {
+    year: "2016 Rio",
+    nation: "Australia",
+    note: "Defeated New Zealand 24–17",
+    flag: australiaFlag,
+  },
+  {
+    year: "2020 Tokyo (2021)",
+    nation: "New Zealand",
+    note: "Defeated France in the final",
+    flag: newZealandFlag,
+  },
+  {
+    year: "2024 Paris",
+    nation: "New Zealand",
+    note: "Defeated Canada — retained Olympic title",
+    flag: newZealandFlag,
+  },
+];
+
 /* ================= WOMEN’S WORLD CUP SEVENS ================= */
 
 const sevensWorldCup: Tally[] = [
@@ -197,6 +227,63 @@ export default function ChampionsWomen() {
           ))}
         </div>
       </section>
+
+      {/* HSBC SVNS WORLD SERIES */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>HSBC SVNS World Series</h2>
+        <p className={styles.bodyText}>
+          The annual global sevens circuit showcasing the elite of the women’s
+          international game across multiple world venues.
+        </p>
+        <div className={styles.grid}>
+          {sevensSeries.map((row) => (
+            <div key={row.nation} className={styles.row}>
+              <img src={row.flag} alt={row.nation} />
+              <div>
+                <strong>
+                  {row.nation}
+                  {row.nation === "New Zealand" && (
+                    <span className={styles.championBadge}>
+                      2026 Champions
+                    </span>
+                  )}
+                </strong>
+                <span>{row.titles} titles</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* OLYMPIC SEVENS */}
+<section className={styles.section}>
+  <h2 className={styles.sectionTitle}>Olympic Rugby Sevens</h2>
+
+  <p className={styles.bodyText}>
+    Reintroduced at the 2016 Olympic Games, rugby sevens has become one of the
+    sport’s most dynamic global stages. The women’s competition has seen
+    sustained excellence from New Zealand, alongside landmark victories that
+    have shaped the modern era.
+  </p>
+
+  <div className={styles.worldCupList}>
+    {olympicSevensWomen.map((entry) => (
+      <article key={entry.year} className={styles.worldCupRow}>
+        <div className={styles.worldCupHeader}>
+          <span className={styles.year}>{entry.year}</span>
+          <div className={styles.mascotBlock}>
+            <img src={entry.flag} alt={entry.nation} />
+            <strong>{entry.nation}</strong>
+          </div>
+        </div>
+
+        <div className={styles.worldCupMeta}>
+          <span>{entry.note}</span>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
 
       {/* SEVENS */}
       <section className={styles.section}>

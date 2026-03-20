@@ -136,7 +136,7 @@ const worldCups: WorldCupEntry[] = [
 const sixNations: Tally[] = [
   { nation: "England", titles: 29, flag: englandFlag },
   { nation: "Wales", titles: 28, flag: walesFlag },
-  { nation: "France", titles: 26, flag: franceFlag },
+  { nation: "France", titles: 27, flag: franceFlag }, // UPDATED
   { nation: "Ireland", titles: 15, flag: irelandFlag },
   { nation: "Scotland", titles: 15, flag: scotlandFlag },
 ];
@@ -147,6 +147,37 @@ const rugbyChampionship: Tally[] = [
   { nation: "New Zealand", titles: 20, flag: newZealandFlag },
   { nation: "South Africa", titles: 6, flag: southAfricaFlag },
   { nation: "Australia", titles: 4, flag: australiaFlag },
+];
+
+/* ========== HSBC SVNS WORLD SERIES ========= */
+
+const sevensSeries: Tally[] = [
+  { nation: "New Zealand", titles: 14, flag: newZealandFlag },
+  { nation: "South Africa", titles: 5, flag: southAfricaFlag }, // 2026 champions
+  { nation: "Fiji", titles: 4, flag: fijiFlag },
+];
+
+/* ========== OLYMPIC RUGBY SEVENS (MEN) ========= */
+
+const olympicSevensMen = [
+  {
+    year: "2016 Rio",
+    nation: "Fiji",
+    note: "Defeated Great Britain 43–7",
+    flag: fijiFlag,
+  },
+  {
+    year: "2020 Tokyo (2021)",
+    nation: "Fiji",
+    note: "Defeated New Zealand 27–12",
+    flag: fijiFlag,
+  },
+  {
+    year: "2024 Paris",
+    nation: "France",
+    note: "Defeated Fiji — first Olympic rugby gold",
+    flag: franceFlag,
+  },
 ];
 
 /* ================= SEVENS WORLD CUP ================= */
@@ -252,7 +283,64 @@ export default function ChampionsMen() {
         </div>
       </section>
 
-      {/* SEVENS */}
+      {/* HSBC SVNS WORLD SERIES */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>HSBC SVNS World Series</h2>
+        <p className={styles.bodyText}>
+          The annual global sevens circuit, bringing together the world’s
+          leading rugby nations across multiple international stages.
+        </p>
+        <div className={styles.grid}>
+          {sevensSeries.map((row) => (
+            <div key={row.nation} className={styles.row}>
+              <img src={row.flag} alt={row.nation} />
+              <div>
+                <strong>
+                  {row.nation}
+                  {row.nation === "South Africa" && (
+                    <span className={styles.championBadge}>
+                      2026 Champions
+                    </span>
+                  )}
+                </strong>
+                <span>{row.titles} titles</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* OLYMPIC SEVENS */}
+<section className={styles.section}>
+  <h2 className={styles.sectionTitle}>Olympic Rugby Sevens</h2>
+
+  <p className={styles.bodyText}>
+    Rugby sevens returned to the Olympic programme in 2016, marking the sport’s
+    first appearance since 1924. The modern format has produced defining
+    moments, with Fiji establishing early dominance and new contenders emerging
+    on rugby’s global stage.
+  </p>
+
+  <div className={styles.worldCupList}>
+    {olympicSevensMen.map((entry) => (
+      <article key={entry.year} className={styles.worldCupRow}>
+        <div className={styles.worldCupHeader}>
+          <span className={styles.year}>{entry.year}</span>
+          <div className={styles.mascotBlock}>
+            <img src={entry.flag} alt={entry.nation} />
+            <strong>{entry.nation}</strong>
+          </div>
+        </div>
+
+        <div className={styles.worldCupMeta}>
+          <span>{entry.note}</span>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+      {/* SEVENS WORLD CUP */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Rugby World Cup Sevens</h2>
         <div className={styles.grid}>
