@@ -1,21 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./MyTeamsPage.module.css";
 
 import myRugbyHero from "../assets/images/raz/my-rugby-hero.png";
 import { teamsMeta, TeamMeta } from "../data/teamsMeta";
 import { loadMyTeams } from "../utils/myTeamsStorage";
-import { newsData, NewsItem } from "../data/newsData";
 
-function normalize(value: string) {
-  return value.toLowerCase().replace(/\s+/g, "-");
-}
+import { getMatches } from "../data/matchesAdapter";
+import { MatchData } from "../data/matches2026";
 
 export default function MyTeamsPage() {
   const navigate = useNavigate();
 
-  const [view, setView] = useState<"teams" | "feed">("teams");
   const [selectedTeams, setSelectedTeams] = useState<TeamMeta[]>([]);
+  const [matches, setMatches] = useState<MatchData[]>([]);
+  const [loadingMatches, setLoadingMatches] = useState(true);
+
+  /* ================= LOAD TEAMS ================= */
 
   useEffect(() => {
     const stored = loadMyTeams();
@@ -24,29 +25,57 @@ export default function MyTeamsPage() {
     setSelectedTeams(teams);
   }, []);
 
-  /* ================= MY FEED DERIVATION ================= */
+  /* ================= LOAD MATCHES ================= */
 
-  const teamTags = selectedTeams.map((t) => normalize(t.name));
+  useEffect(() => {
+    async function fetchMatches() {
+      try {
+        const data = await getMatches();
+        setMatches(data);
+      } catch {
+        console.warn("MyTeams: match fetch failed");
+      } finally {
+        setLoadingMatches(false);
+      }
+    }
 
-  const myFeed: NewsItem[] = newsData.filter((item) =>
-    item.tags.some((tag) => teamTags.includes(normalize(tag)))
+    fetchMatches();
+  }, []);
+
+  /* ================= FILTER MATCHES ================= */
+
+  const teamNames = useMemo(
+    () => selectedTeams.map((t) => t.name),
+    [selectedTeams]
   );
+
+  const myMatches = useMemo(() => {
+    return matches.filter(
+      (m) =>
+        teamNames.includes(m.home.name) ||
+        teamNames.includes(m.away.name)
+    );
+  }, [matches, teamNames]);
+
+  const upcomingMatches = myMatches
+    .filter((m) => !m.score)
+    .slice(0, 5);
+
+  const recentResults = myMatches
+    .filter((m) => m.score)
+    .slice(0, 5);
 
   return (
     <main className={styles.page}>
       {/* ================= HERO ================= */}
       <header className={styles.hero}>
-        <img
-          src={myRugbyHero}
-          alt=""
-          className={styles.heroImage}
-        />
+        <img src={myRugbyHero} alt="" className={styles.heroImage} />
         <div className={styles.heroText}>
           <h1>My Teams</h1>
           <p>
-            Your teams, your tournaments,
+            Your teams, your matches,
             <br />
-            and the moments that matter to you.
+            and what’s coming next.
           </p>
         </div>
       </header>
@@ -62,88 +91,81 @@ export default function MyTeamsPage() {
       </div>
 
       <div className={styles.container}>
-        {/* ================= TOGGLE ================= */}
-        <nav className={styles.toggle}>
-          <button
-            className={view === "teams" ? styles.active : ""}
-            onClick={() => setView("teams")}
-          >
-            My Teams
-          </button>
-
-          <button
-            className={view === "feed" ? styles.active : ""}
-            onClick={() => setView("feed")}
-            disabled={selectedTeams.length === 0}
-          >
-            My Feed
-          </button>
-        </nav>
-
         {/* ================= TEAMS ================= */}
-        {view === "teams" && (
-          <>
-            <section className={styles.grid}>
-              {selectedTeams.map((team) => (
-                <article key={team.id} className={styles.teamCard}>
-                  <img
-                    src={team.feather}
-                    alt=""
-                    className={styles.feather}
-                  />
+        <section className={styles.grid}>
+          {selectedTeams.map((team) => (
+            <article key={team.id} className={styles.teamCard}>
+              <img src={team.feather} alt="" className={styles.feather} />
 
-                  <div className={styles.teamContent}>
-                    <img
-                      src={team.flag}
-                      alt={`${team.name} flag`}
-                      className={styles.flag}
-                    />
-                    <h3>{team.name}</h3>
-                    <p>
-                      {team.gender === "men"
-                        ? "Men’s International"
-                        : "Women’s International"}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </section>
-
-            <div className={styles.manage}>
-              <button
-                className={styles.manageButton}
-                onClick={() => navigate("/my-teams/manage")}
-              >
-                Manage Teams
-              </button>
-            </div>
-          </>
-        )}
-
-        {/* ================= MY FEED ================= */}
-        {view === "feed" && (
-          <section className={styles.feed}>
-            {myFeed.length === 0 && (
-              <div className={styles.empty}>
-                <h3>No stories yet</h3>
+              <div className={styles.teamContent}>
+                <img
+                  src={team.flag}
+                  alt={`${team.name} flag`}
+                  className={styles.flag}
+                />
+                <h3>{team.name}</h3>
                 <p>
-                  We’ll surface news here as it relates
-                  to your selected teams.
+                  {team.gender === "men"
+                    ? "Men’s International"
+                    : "Women’s International"}
                 </p>
               </div>
-            )}
+            </article>
+          ))}
+        </section>
 
-            {myFeed.map((item) => (
-              <article key={item.id} className={styles.feedItem}>
-                <span className={styles.feedMeta}>
-                  {item.source} • {item.time}
-                </span>
-                <h4>{item.title}</h4>
-                <p>{item.excerpt}</p>
-              </article>
-            ))}
-          </section>
-        )}
+        {/* ================= UPCOMING ================= */}
+        <section className={styles.section}>
+          <h2>Upcoming Matches</h2>
+
+          {loadingMatches ? (
+            <div className={styles.empty}>Loading matches...</div>
+          ) : upcomingMatches.length === 0 ? (
+            <div className={styles.empty}>
+              No upcoming matches for your teams.
+            </div>
+          ) : (
+            upcomingMatches.map((m) => (
+              <div key={m.id} className={styles.matchItem}>
+                <strong>
+                  {m.home.name} vs {m.away.name}
+                </strong>
+                <div>{m.tournament}</div>
+              </div>
+            ))
+          )}
+        </section>
+
+        {/* ================= RESULTS ================= */}
+        <section className={styles.section}>
+          <h2>Recent Results</h2>
+
+          {recentResults.length === 0 ? (
+            <div className={styles.empty}>
+              No recent results.
+            </div>
+          ) : (
+            recentResults.map((m) => (
+              <div key={m.id} className={styles.matchItem}>
+                <strong>
+                  {m.home.name} {m.score?.home} - {m.score?.away}{" "}
+                  {m.away.name}
+                </strong>
+                <div>{m.tournament}</div>
+              </div>
+            ))
+          )}
+        </section>
+
+        {/* ================= MANAGE ================= */}
+        <div className={styles.manage}>
+          <button
+            className={styles.manageButton}
+            onClick={() => navigate("/my-teams/manage")}
+          >
+            Manage Teams
+          </button>
+        </div>
       </div>
     </main>
   );

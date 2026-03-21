@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CalendarPage.module.css";
 
@@ -7,6 +7,9 @@ import calendarBg from "../assets/images/raz/calendar-hero.jpg";
 import { resolveCalendarMatches } from "../utils/calendar/resolveCalendarMatches";
 import { groupMatchesByMonth } from "../utils/calendar/groupMatchesByMonth";
 import { groupMatchesBySeason } from "../utils/calendar/groupMatchesBySeason";
+
+import { getMatches } from "../data/matchesAdapter";
+import { MatchData } from "../data/matches2026";
 
 import CalendarMonth from "../components/calendar/CalendarMonth";
 
@@ -18,10 +21,37 @@ export default function CalendarPage() {
   const [gender, setGender] = useState<GenderFilter>("all");
   const [tournamentId, setTournamentId] = useState<string>("all");
 
+  const [matches, setMatches] = useState<MatchData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  /* ================= FETCH ================= */
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function fetchData() {
+      try {
+        const data = await getMatches();
+        if (mounted) setMatches(data);
+      } catch {
+        if (mounted) setError("Failed to load calendar");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   /** ================= RESOLVE ================= */
   const calendarMatches = useMemo(() => {
-    return resolveCalendarMatches();
-  }, []);
+    return resolveCalendarMatches(matches);
+  }, [matches]);
 
   /** ================= TOURNAMENT FILTER OPTIONS ================= */
   const tournamentOptions = useMemo(() => {
@@ -54,9 +84,16 @@ export default function CalendarPage() {
     navigate(`/match/${id}`, { state: { from: "calendar" } });
   };
 
+  if (loading) {
+    return <div className={styles.empty}>Loading calendar...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.empty}>{error}</div>;
+  }
+
   return (
     <main className={styles.page}>
-      {/* ================= HERO ================= */}
       <header
         className={styles.hero}
         style={{ backgroundImage: `url(${calendarBg})` }}
@@ -71,7 +108,6 @@ export default function CalendarPage() {
         </div>
       </header>
 
-      {/* ================= CONTENT ================= */}
       <section className={styles.section}>
         <h2>Confirmed Fixtures</h2>
 
@@ -81,7 +117,6 @@ export default function CalendarPage() {
           <strong>Coming soon</strong>.
         </p>
 
-        {/* ================= FILTERS ================= */}
         <div className={styles.filters}>
           <div className={styles.filterGroup}>
             <button
@@ -118,7 +153,6 @@ export default function CalendarPage() {
           </select>
         </div>
 
-        {/* ================= SEASONS ================= */}
         {seasonGroups.length === 0 ? (
           <p>No fixtures match the selected filters.</p>
         ) : (

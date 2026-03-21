@@ -35,12 +35,41 @@ export default function FixturesPage() {
   const navigate = useNavigate();
 
   const [matches, setMatches] = useState<MatchData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   /* ================= FETCH MATCHES ================= */
 
   useEffect(() => {
-    getMatches().then(setMatches);
+    let mounted = true;
+
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const data = await getMatches();
+
+        if (mounted) setMatches(data);
+      } catch {
+        if (mounted) setError("Failed to load fixtures");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
+
+  if (loading) {
+    return <div className={styles.empty}>Loading fixtures...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.empty}>{error}</div>;
+  }
 
   /* ================= UPCOMING ================= */
 

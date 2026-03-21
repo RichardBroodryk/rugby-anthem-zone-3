@@ -1,17 +1,44 @@
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./MyFeedPage.module.css";
 
-import { newsData } from "../data/newsData";
+import { loadMyTeams } from "../utils/myTeamsStorage";
+import { teamsMeta } from "../data/teamsMeta";
+import { newsData, NewsItem } from "../data/newsData";
+
+function normalize(value: string) {
+  return value.toLowerCase().replace(/\s+/g, "-");
+}
 
 export default function MyFeedPage() {
   const navigate = useNavigate();
 
-  // TEMP v1 — replace later with real user preferences
-  const followedTeams = ["New Zealand", "South Africa"];
+  const [teamNames, setTeamNames] = useState<string[]>([]);
 
-  const feed = newsData.filter((item) =>
-    item.tags.some((tag) => followedTeams.includes(tag))
-  );
+  /* ================= LOAD USER TEAMS ================= */
+
+  useEffect(() => {
+    const stored = loadMyTeams();
+    const ids = [...stored.men, ...stored.women];
+
+    const teams = teamsMeta
+      .filter((t) => ids.includes(t.id))
+      .map((t) => t.name);
+
+    setTeamNames(teams);
+  }, []);
+
+  /* ================= DERIVE FEED ================= */
+
+  const myFeed: NewsItem[] = useMemo(() => {
+    const tags = teamNames.map(normalize);
+
+    return newsData.filter((item) =>
+      item.tags.some((tag) =>
+        tags.includes(normalize(tag))
+      )
+    );
+  }, [teamNames]);
 
   return (
     <main className={styles.page}>
@@ -31,8 +58,16 @@ export default function MyFeedPage() {
       </div>
 
       <section className={styles.feed}>
-        {feed.length > 0 ? (
-          feed.map((item) => (
+        {teamNames.length === 0 ? (
+          <div className={styles.empty}>
+            <p>Select teams to personalise your feed.</p>
+          </div>
+        ) : myFeed.length === 0 ? (
+          <div className={styles.empty}>
+            <p>No stories yet for your teams.</p>
+          </div>
+        ) : (
+          myFeed.map((item) => (
             <article key={item.id} className={styles.feedItem}>
               <div className={styles.meta}>
                 <span>{item.source}</span>
@@ -43,12 +78,6 @@ export default function MyFeedPage() {
               <p>{item.excerpt}</p>
             </article>
           ))
-        ) : (
-          <div className={styles.empty}>
-            <p>
-              Your feed will populate as you follow teams and tournaments.
-            </p>
-          </div>
         )}
       </section>
     </main>

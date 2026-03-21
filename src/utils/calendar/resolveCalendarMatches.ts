@@ -18,12 +18,14 @@ function normalize(value: string) {
   return value.toLowerCase().trim();
 }
 
-export function resolveCalendarMatches(): CalendarMatch[] {
+/* 🔥 UPDATED SIGNATURE */
+export function resolveCalendarMatches(
+  inputMatches = matches2026
+): CalendarMatch[] {
   const resolved: CalendarMatch[] = [];
 
-  for (const match of matches2026) {
+  for (const match of inputMatches) {
     try {
-      /** ================= TOURNAMENT ================= */
       const tournament = tournaments2026.find(
         (t) =>
           normalize(t.matchKey) ===
@@ -37,14 +39,12 @@ export function resolveCalendarMatches(): CalendarMatch[] {
         continue;
       }
 
-      /** ================= STADIUM ================= */
       const stadium = stadiums.find(
         (s) =>
           normalize(s.slug) === normalize(match.venue) ||
           normalize(s.name) === normalize(match.venue)
       );
 
-      /** ================= DATE ================= */
       const dateObj = new Date(match.date);
       if (isNaN(dateObj.getTime())) {
         console.warn(
@@ -53,16 +53,8 @@ export function resolveCalendarMatches(): CalendarMatch[] {
         continue;
       }
 
-      /** ================= SAFE STADIUM FALLBACK ================= */
-      const stadiumSlug = stadium?.slug ?? "unknown";
-      const stadiumName = stadium?.name ?? match.venue;
-      const city = stadium?.city;
-      const country = stadium?.country;
-
-      /** ================= PUSH ================= */
       resolved.push({
         id: match.id,
-
         date: dateObj,
         isoDate: match.date,
 
@@ -73,10 +65,10 @@ export function resolveCalendarMatches(): CalendarMatch[] {
         home: match.home,
         away: match.away,
 
-        stadiumSlug,
-        stadiumName,
-        city,
-        country,
+        stadiumSlug: stadium?.slug ?? "unknown",
+        stadiumName: stadium?.name ?? match.venue,
+        city: stadium?.city,
+        country: stadium?.country,
 
         status: resolveStatus(
           dateObj,
@@ -93,7 +85,6 @@ export function resolveCalendarMatches(): CalendarMatch[] {
     }
   }
 
-  /** ================= SORT (GLOBAL) ================= */
   return resolved.sort(
     (a, b) => a.date.getTime() - b.date.getTime()
   );

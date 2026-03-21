@@ -25,7 +25,7 @@ function groupByTournament(matches: MatchData[]) {
   const map = new Map<string, MatchData[]>();
 
   matches
-    .filter((m) => m.score) // RESULTS ONLY
+    .filter((m) => m.score)
     .forEach((match) => {
       if (!map.has(match.tournament)) {
         map.set(match.tournament, []);
@@ -43,11 +43,32 @@ export default function ResultsPage() {
   const navigate = useNavigate();
 
   const [matches, setMatches] = useState<MatchData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   /* ================= FETCH MATCHES ================= */
 
   useEffect(() => {
-    getMatches().then(setMatches);
+    let mounted = true;
+
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const data = await getMatches();
+
+        if (mounted) setMatches(data);
+      } catch {
+        if (mounted) setError("Failed to load results");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   /* ================= GROUP RESULTS ================= */
@@ -55,6 +76,24 @@ export default function ResultsPage() {
   const grouped = useMemo(() => {
     return groupByTournament(matches);
   }, [matches]);
+
+  /* ================= STATES ================= */
+
+  if (loading) {
+    return (
+      <main className={styles.page}>
+        <div className={styles.empty}>Loading results...</div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className={styles.page}>
+        <div className={styles.empty}>{error}</div>
+      </main>
+    );
+  }
 
   return (
     <main className={styles.page}>
@@ -90,23 +129,27 @@ export default function ResultsPage() {
 
       {/* ================= RESULTS ================= */}
 
-      {grouped.map(([tournament, matches]) => (
-        <section key={tournament} className={styles.section}>
-          <h2 className={styles.sectionTitle}>{tournament}</h2>
+      {grouped.length === 0 ? (
+        <div className={styles.empty}>No results available.</div>
+      ) : (
+        grouped.map(([tournament, matches]) => (
+          <section key={tournament} className={styles.section}>
+            <h2 className={styles.sectionTitle}>{tournament}</h2>
 
-          {matches.map((match) => (
-            <MatchRow
-              key={match.id}
-              home={match.home}
-              away={match.away}
-              metaLeft={match.venue}
-              metaRight={formatDate(match.date)}
-              state="final"
-              score={match.score}
-            />
-          ))}
-        </section>
-      ))}
+            {matches.map((match) => (
+              <MatchRow
+                key={match.id}
+                home={match.home}
+                away={match.away}
+                metaLeft={match.venue}
+                metaRight={formatDate(match.date)}
+                state="final"
+                score={match.score}
+              />
+            ))}
+          </section>
+        ))
+      )}
     </main>
   );
 }

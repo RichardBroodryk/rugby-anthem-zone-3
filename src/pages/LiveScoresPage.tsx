@@ -31,11 +31,38 @@ export default function LiveScoresPage() {
   const navigate = useNavigate();
 
   const [matches, setMatches] = useState<MatchData[]>([]);
+  const [loading, setLoading] = useState(true);        // ✅ ADDED
+  const [error, setError] = useState<string | null>(null); // ✅ ADDED
 
   /* ================= FETCH MATCHES ================= */
 
   useEffect(() => {
-    getMatches().then(setMatches);
+    let mounted = true;
+
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const data = await getMatches();
+
+        if (mounted) {
+          setMatches(data);
+        }
+      } catch (err) {
+        if (mounted) {
+          setError("Failed to load matches");
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   /* ================= GROUP MATCHES ================= */
@@ -62,6 +89,24 @@ export default function LiveScoresPage() {
       upcoming: upcomingMatches,
     };
   }, [matches]);
+
+  /* ================= STATES ================= */
+
+  if (loading) {
+    return (
+      <main className={styles.page}>
+        <div className={styles.empty}>Loading live matches...</div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className={styles.page}>
+        <div className={styles.empty}>{error}</div>
+      </main>
+    );
+  }
 
   return (
     <main className={styles.page}>
@@ -96,7 +141,9 @@ export default function LiveScoresPage() {
         <h2 className={styles.sectionTitle}>Live Now</h2>
 
         {live.length === 0 ? (
-          <div className={styles.empty}>No matches live right now.</div>
+          <div className={styles.empty}>
+            No matches live right now.
+          </div>
         ) : (
           live.map((m) => (
             <LiveScoreRow
@@ -118,44 +165,34 @@ export default function LiveScoresPage() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Recent Results</h2>
 
-        {recentFinals.map((m) => (
-          <LiveScoreRow
-            key={m.id}
-            matchId={m.id}
-            home={m.home}
-            away={m.away}
-            score={m.score}
-            phase="Final"
-            tournament={m.tournament}
-            venue={m.venue}
-          />
-        ))}
+        {recentFinals.length === 0 ? (
+          <div className={styles.empty}>
+            No completed matches available.
+          </div>
+        ) : (
+          recentFinals.map((m) => (
+            <LiveScoreRow
+              key={m.id}
+              matchId={m.id}
+              home={m.home}
+              away={m.away}
+              score={m.score}
+              phase="Final"
+              tournament={m.tournament}
+              venue={m.venue}
+            />
+          ))
+        )}
       </section>
 
       {/* ================= TODAY ================= */}
       <section className={styles.sectionMuted}>
         <h2 className={styles.sectionTitleMuted}>Today</h2>
 
-        {today.map((m) => (
-          <LiveScoreRow
-            key={m.id}
-            matchId={m.id}
-            home={m.home}
-            away={m.away}
-            phase="Upcoming"
-            tournament={m.tournament}
-            venue={m.venue}
-            anthemStatus="pending"
-          />
-        ))}
-      </section>
-
-      {/* ================= UPCOMING ================= */}
-      <section className={styles.sectionMuted}>
-        <h2 className={styles.sectionTitleMuted}>Upcoming</h2>
-
-        <div className={styles.upcomingGrid}>
-          {upcoming.slice(0, 8).map((m) => (
+        {today.length === 0 ? (
+          <div className={styles.empty}>No matches today.</div>
+        ) : (
+          today.map((m) => (
             <LiveScoreRow
               key={m.id}
               matchId={m.id}
@@ -163,9 +200,35 @@ export default function LiveScoresPage() {
               away={m.away}
               phase="Upcoming"
               tournament={m.tournament}
+              venue={m.venue}
+              anthemStatus="pending"
             />
-          ))}
-        </div>
+          ))
+        )}
+      </section>
+
+      {/* ================= UPCOMING ================= */}
+      <section className={styles.sectionMuted}>
+        <h2 className={styles.sectionTitleMuted}>Upcoming</h2>
+
+        {upcoming.length === 0 ? (
+          <div className={styles.empty}>
+            No upcoming matches available.
+          </div>
+        ) : (
+          <div className={styles.upcomingGrid}>
+            {upcoming.slice(0, 8).map((m) => (
+              <LiveScoreRow
+                key={m.id}
+                matchId={m.id}
+                home={m.home}
+                away={m.away}
+                phase="Upcoming"
+                tournament={m.tournament}
+              />
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );

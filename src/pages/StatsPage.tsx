@@ -31,6 +31,7 @@ export default function StatsPage() {
 
   const [teamStats, setTeamStats] = useState<TeamStats[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadStats() {
@@ -92,7 +93,7 @@ export default function StatsPage() {
 
         setTeamStats(sorted);
       } catch (err) {
-        console.error("Stats loading failed:", err);
+        setError("Failed to load stats");
       }
 
       setLoading(false);
@@ -103,8 +104,6 @@ export default function StatsPage() {
 
   return (
     <main className={styles.page}>
-      {/* HERO */}
-
       <header
         className={styles.hero}
         style={{ backgroundImage: `url(${heroBg})` }}
@@ -122,8 +121,6 @@ export default function StatsPage() {
         </div>
       </header>
 
-      {/* BACK */}
-
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -133,8 +130,6 @@ export default function StatsPage() {
         </button>
       </div>
 
-      {/* STANDINGS */}
-
       <section className={styles.section}>
         <h2 className={`${styles.sectionTitle} ${styles.centered}`}>
           International Standings
@@ -143,6 +138,14 @@ export default function StatsPage() {
         {loading ? (
           <div style={{ textAlign: "center", padding: 40 }}>
             Loading standings...
+          </div>
+        ) : error ? (
+          <div style={{ textAlign: "center", padding: 40 }}>
+            {error}
+          </div>
+        ) : teamStats.length === 0 ? (
+          <div style={{ textAlign: "center", padding: 40 }}>
+            No stats available.
           </div>
         ) : (
           <div className={styles.tableWrap}>
@@ -181,8 +184,6 @@ export default function StatsPage() {
         )}
       </section>
 
-      {/* MATCH COMPARISON (PLACEHOLDER UNTIL LIVE MATCH STATS) */}
-
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Match Comparison</h2>
 
@@ -196,8 +197,6 @@ export default function StatsPage() {
           ]}
         />
       </section>
-
-      {/* KEY PLAYER STATS (PLACEHOLDER UNTIL PLAYER API) */}
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Key Player Stats</h2>
