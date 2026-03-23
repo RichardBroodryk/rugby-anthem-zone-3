@@ -1,4 +1,9 @@
-export type CalendarStatus = "upcoming" | "live" | "final";
+export type CalendarStatus =
+  | "live"
+  | "starting"
+  | "today"
+  | "upcoming"
+  | "final";
 
 export type TeamRef = {
   name: string;

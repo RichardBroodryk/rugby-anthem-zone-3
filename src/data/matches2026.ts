@@ -1,6 +1,16 @@
-// --------------------------------------------------
-// Standardized match format for 2026 (AUTHORITATIVE)
-// --------------------------------------------------
+// ==================================================
+// MATCHES 2026 — AUTHORITATIVE DATASET + TYPES
+// Rugby Anthem Zone
+// ==================================================
+
+/* ================= TYPES ================= */
+
+export type MatchState =
+  | "live"
+  | "starting"
+  | "today"
+  | "upcoming"
+  | "final";
 
 export interface MatchData {
   id: number;
@@ -22,14 +32,15 @@ export interface MatchData {
     home: number;
     away: number;
   };
+
+  // 🔥 SYSTEM INTELLIGENCE (ADAPTER FILLS THESE)
+  state?: MatchState;
+  importance?: number;
 }
 
-// --------------------------------------------------
-// 2026 MATCHES — CANONICAL DATASET
-// --------------------------------------------------
+/* ================= DATA ================= */
 
 export const matches2026: MatchData[] = [
-
   // ==================================================
   // SIX NATIONS 2026
   // ==================================================
@@ -175,7 +186,7 @@ export const matches2026: MatchData[] = [
   },
 
   // ==================================================
-  // NATIONS CHAMPIONSHIP 2026 — JULY WINDOW
+  // NATIONS CHAMPIONSHIP 2026 — JULY
   // ==================================================
 
   {
@@ -233,7 +244,7 @@ export const matches2026: MatchData[] = [
   },
 
   // ==================================================
-  // RIVAL TOUR — SOUTH AFRICA vs NEW ZEALAND
+  // RIVAL TOUR — SA vs NZ
   // ==================================================
 
   {
@@ -254,7 +265,7 @@ export const matches2026: MatchData[] = [
   },
 
   // ==================================================
-  // WOMEN — INTERNATIONAL TESTS
+  // WOMEN
   // ==================================================
 
   {
@@ -265,11 +276,6 @@ export const matches2026: MatchData[] = [
     home: { name: "Australia", country: "australia" },
     away: { name: "Fiji", country: "fiji" },
   },
-
-  // ==================================================
-  // WOMEN — SA vs NZ TOUR
-  // ==================================================
-
   {
     id: 601,
     tournament: "Women's SA vs NZ Rival Tour 2026",
@@ -278,5 +284,4 @@ export const matches2026: MatchData[] = [
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "New Zealand", country: "new-zealand" },
   },
-
 ];

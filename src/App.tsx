@@ -48,6 +48,8 @@ import FixturesPage from "./pages/FixturesPage";
 import ResultsPage from "./pages/ResultsPage";
 import StatsPage from "./pages/StatsPage";
 import MatchPage from "./pages/MatchPage";
+import DomesticTablesPage from "./pages/match-center/DomesticTablesPage";
+import LeagueTablePage from "./pages/match-center/LeagueTablePage";
 
 /* ================= STADIUMS ================= */
 import StadiumHubPage from "./pages/StadiumHubPage";
@@ -279,6 +281,8 @@ export default function App() {
           <Route path="/fixtures" element={<FixturesPage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/stats" element={<StatsPage />} />
+          <Route path="/match-center/domestic" element={<DomesticTablesPage />} />
+          <Route path="/match-center/domestic/:leagueId" element={<LeagueTablePage />} />
 
           <Route path="/stadiums" element={<StadiumHubPage />} />
           <Route path="/stadium/:slug" element={<StadiumPage />} />

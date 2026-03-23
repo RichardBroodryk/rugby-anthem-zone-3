@@ -1,77 +1,96 @@
 import styles from "./MatchRow.module.css";
-import Flag from "../images/Flag";
 
-type MatchRowProps = {
-  home: { name: string; country: string };
-  away: { name: string; country: string };
+/* ================= TYPES ================= */
 
-  metaLeft: string;
-  metaRight: string;
+type TeamRef = {
+  name: string;
+  country: string;
+};
 
-  state: "live" | "upcoming" | "final" | "stats";
+type MatchState =
+  | "live"
+  | "starting"
+  | "today"
+  | "upcoming"
+  | "final";
 
-  score?: { home: number; away: number };
-
+type Props = {
+  home: TeamRef;
+  away: TeamRef;
+  state: MatchState;
+  score?: {
+    home: number;
+    away: number;
+  };
+  metaLeft?: string;
+  metaRight?: string;
   onClick?: () => void;
 };
+
+/* ================= HELPERS ================= */
+
+function getRowClass(state: MatchState) {
+  if (state === "live") return styles.live;
+  if (state === "final") return styles.final;
+
+  // treat starting + today as upcoming visually
+  return styles.upcoming;
+}
+
+/* ================= COMPONENT ================= */
 
 export default function MatchRow({
   home,
   away,
-  metaLeft,
-  metaRight,
   state,
   score,
+  metaLeft,
+  metaRight,
   onClick,
-}: MatchRowProps) {
+}: Props) {
+  const isLive = state === "live";
+  const isFinal = state === "final";
+
   return (
     <div
-      className={`${styles.row} ${styles[state]} ${
+      className={`${styles.row} ${getRowClass(state)} ${
         onClick ? styles.clickable : ""
       }`}
       onClick={onClick}
     >
-      {/* TEAMS */}
-
+      {/* ===== TEAMS ===== */}
       <div className={styles.teamsGrid}>
         <div className={styles.teamLeft}>
-          <Flag country={home.country} size="small" />
           <span className={styles.teamName}>{home.name}</span>
         </div>
 
-        {/* CENTER */}
-
         <div className={styles.center}>
-          {state === "live" ? (
+          {isLive ? (
             <div className={styles.livePulse}>
               <span className={styles.pulseDot} />
-              <span className={styles.liveText}>LIVE</span>
+              LIVE
             </div>
-          ) : state === "final" && score ? (
-            <span className={styles.score}>
-              {score.home} – {score.away}
-            </span>
-          ) : state === "final" ? (
-            <span className={styles.score}>—</span>
+          ) : isFinal && score ? (
+            <div className={styles.score}>
+              {score.home} - {score.away}
+            </div>
           ) : (
             <span className={styles.vs}>vs</span>
           )}
         </div>
 
-        {/* AWAY */}
-
         <div className={styles.teamRight}>
           <span className={styles.teamName}>{away.name}</span>
-          <Flag country={away.country} size="small" />
         </div>
       </div>
 
-      {/* META */}
-
-      <div className={styles.meta}>
-        <span>{metaLeft}</span>
-        <span className={styles.tag}>{metaRight}</span>
-      </div>
+      {/* ===== META ===== */}
+      {(metaLeft || metaRight) && (
+        <div className={styles.meta}>
+          <span>{metaLeft}</span>
+          <span className={styles.tag}>{metaRight}</span>
+        </div>
+      )}
     </div>
   );
 }

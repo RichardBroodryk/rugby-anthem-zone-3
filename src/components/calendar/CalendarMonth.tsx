@@ -1,3 +1,5 @@
+// src/components/calendar/CalendarMonth.tsx
+
 import styles from "./CalendarMonth.module.css";
 import MatchRow from "../match/MatchRow";
 import { CalendarMonthGroup } from "../../utils/calendar/groupMatchesByMonth";
@@ -25,7 +27,7 @@ export default function CalendarMonth({
   group,
   onMatchSelect,
 }: CalendarMonthProps) {
-  // Group matches by calendar day (YYYY-MM-DD)
+  // Group matches by day
   const dayMap = new Map<string, typeof group.matches>();
 
   group.matches.forEach((match) => {
@@ -34,6 +36,7 @@ export default function CalendarMonth({
     if (!dayMap.has(dayKey)) {
       dayMap.set(dayKey, []);
     }
+
     dayMap.get(dayKey)!.push(match);
   });
 

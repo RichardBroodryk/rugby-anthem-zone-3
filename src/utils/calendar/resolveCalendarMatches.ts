@@ -1,91 +1,91 @@
-import { matches2026 } from "../../data/matches2026";
-import { tournaments2026 } from "../../data/tournamentMeta";
-import { stadiums } from "../../data/stadiums";
+// ==================================================
+// CALENDAR RESOLVER — INTELLIGENCE + LEAGUE FILTER
+// ==================================================
+
+import { getMatches } from "../../data/matchesAdapter";
 import { CalendarMatch } from "./calendarTypes";
 
-type CalendarStatus = "upcoming" | "live" | "final";
+/* ================= TYPES ================= */
 
-function resolveStatus(
-  date: Date,
-  hasScore: boolean
-): CalendarStatus {
-  if (hasScore) return "final";
-  if (date.getTime() < Date.now()) return "live";
-  return "upcoming";
+type ResolveOptions = {
+  leagueId?: string;
+};
+
+/* ================= HELPERS ================= */
+
+function getGender(tournament: string): "men" | "women" {
+  return tournament.toLowerCase().includes("women")
+    ? "women"
+    : "men";
 }
 
-function normalize(value: string) {
-  return value.toLowerCase().trim();
+function getTournamentId(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }
 
-/* 🔥 UPDATED SIGNATURE */
-export function resolveCalendarMatches(
-  inputMatches = matches2026
-): CalendarMatch[] {
-  const resolved: CalendarMatch[] = [];
+function getStadiumSlug(venue: string): string {
+  return venue
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
 
-  for (const match of inputMatches) {
-    try {
-      const tournament = tournaments2026.find(
-        (t) =>
-          normalize(t.matchKey) ===
-          normalize(match.tournament)
-      );
+/* ================= RESOLVER ================= */
 
-      if (!tournament) {
-        console.warn(
-          `[Calendar] Skipped match ${match.id}: unknown tournament "${match.tournament}"`
-        );
-        continue;
-      }
+export async function resolveCalendarMatches(
+  options?: ResolveOptions
+): Promise<CalendarMatch[]> {
+  try {
+    const matches = await getMatches({
+      leagueId: options?.leagueId,
+    });
 
-      const stadium = stadiums.find(
-        (s) =>
-          normalize(s.slug) === normalize(match.venue) ||
-          normalize(s.name) === normalize(match.venue)
-      );
+    return matches.map((m) => {
+      const dateObj = new Date(m.date);
 
-      const dateObj = new Date(match.date);
-      if (isNaN(dateObj.getTime())) {
-        console.warn(
-          `[Calendar] Skipped match ${match.id}: invalid date "${match.date}"`
-        );
-        continue;
-      }
+      return {
+        id: m.id,
 
-      resolved.push({
-        id: match.id,
         date: dateObj,
-        isoDate: match.date,
+        isoDate: m.date,
 
-        tournamentId: tournament.instanceId,
-        tournamentName: tournament.name,
-        gender: tournament.gender,
+        tournamentName: m.tournament,
+        tournamentId: getTournamentId(m.tournament),
 
-        home: match.home,
-        away: match.away,
+        gender: getGender(m.tournament),
 
-        stadiumSlug: stadium?.slug ?? "unknown",
-        stadiumName: stadium?.name ?? match.venue,
-        city: stadium?.city,
-        country: stadium?.country,
+        home: {
+          name: m.home.name,
+          country: m.home.country,
+        },
 
-        status: resolveStatus(
-          dateObj,
-          Boolean(match.score)
-        ),
+        away: {
+          name: m.away.name,
+          country: m.away.country,
+        },
 
-        score: match.score,
-      });
-    } catch (err) {
-      console.error(
-        `[Calendar] Unexpected resolver error for match ${match.id}`,
-        err
-      );
-    }
+        stadiumName: m.venue,
+        stadiumSlug: getStadiumSlug(m.venue),
+
+        city: undefined,
+        country: undefined,
+
+        // 🔥 unified system
+        status: m.state || "upcoming",
+
+        score: m.score,
+
+        // 🔥 intelligence
+        importance: m.importance,
+        isFeatured:
+          m.state === "live" ||
+          (m.importance ?? 0) >= 80,
+      };
+    });
+  } catch {
+    return [];
   }
-
-  return resolved.sort(
-    (a, b) => a.date.getTime() - b.date.getTime()
-  );
 }

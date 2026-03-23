@@ -11,6 +11,9 @@ import fixturesImg from "../assets/images/raz/Fixtures.jpg";
 import resultsImg from "../assets/images/raz/Results.png";
 import statsImg from "../assets/images/raz/Stats3.png";
 
+/* NEW */
+import domesticImg from "../assets/images/domestic/domestic-hero.jpg";
+
 export default function MatchCenterPage() {
   const navigate = useNavigate();
 
@@ -32,9 +35,10 @@ export default function MatchCenterPage() {
         </div>
       </header>
 
-      {/* 🔥 MATCH CENTER RAIL */}
+      {/* ================= RAIL ================= */}
       <section className={styles.railSection}>
         <AutoContentRail autoAdvance>
+          {/* LIVE SCORES */}
           <div
             className={styles.hubCard}
             style={{ backgroundImage: `url(${liveScoresImg})` }}
@@ -47,6 +51,7 @@ export default function MatchCenterPage() {
             </div>
           </div>
 
+          {/* FIXTURES */}
           <div
             className={styles.hubCard}
             style={{ backgroundImage: `url(${fixturesImg})` }}
@@ -59,6 +64,7 @@ export default function MatchCenterPage() {
             </div>
           </div>
 
+          {/* RESULTS */}
           <div
             className={styles.hubCard}
             style={{ backgroundImage: `url(${resultsImg})` }}
@@ -71,6 +77,7 @@ export default function MatchCenterPage() {
             </div>
           </div>
 
+          {/* STATS */}
           <div
             className={styles.hubCard}
             style={{ backgroundImage: `url(${statsImg})` }}
@@ -80,6 +87,21 @@ export default function MatchCenterPage() {
             <div className={styles.cardPlate}>
               <h3>Stats</h3>
               <p>Team, tournament and venue statistics.</p>
+            </div>
+          </div>
+
+          {/* 🔥 DOMESTIC TABLES (CORRECTLY PLACED) */}
+          <div
+            className={styles.hubCard}
+            style={{ backgroundImage: `url(${domesticImg})` }}
+            onClick={() => navigate("/match-center/domestic")}
+          >
+            <div className={styles.cardOverlay} />
+            <div className={styles.cardPlate}>
+              <h3>Domestic Tables</h3>
+              <p>
+                Explore standings across URC, Premiership, Top 14 and more.
+              </p>
             </div>
           </div>
         </AutoContentRail>

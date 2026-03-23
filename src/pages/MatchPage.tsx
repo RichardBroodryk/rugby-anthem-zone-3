@@ -134,9 +134,10 @@ export default function MatchPage() {
     );
   }
 
-  const tournament = tournaments2026.find(
-    (t) => t.matchKey === match.tournament
-  );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const tournament = tournaments2026.find(
+  (t) => t.matchKey === match.tournament
+);
 
   const stadium = stadiums.find(
     (s) => s.name === match.venue

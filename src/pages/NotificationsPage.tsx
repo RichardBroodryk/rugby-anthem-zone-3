@@ -1,3 +1,7 @@
+// ==================================================
+// NOTIFICATIONS PAGE — CLEAN + INTELLIGENT
+// ==================================================
+
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./NotificationsPage.module.css";
@@ -22,6 +26,7 @@ type GeneratedNotification = {
   id: number;
   text: string;
   sub: string;
+  importance: number;
 };
 
 /* ================= STORAGE ================= */
@@ -41,22 +46,17 @@ function saveSent(ids: number[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
 }
 
-/* ================= LIVE DETECTION ================= */
+/* ================= INTELLIGENT FILTER ================= */
 
-function getMatchState(dateStr: string, hasScore: boolean) {
-  const now = new Date();
-  const matchDate = new Date(dateStr);
+function shouldNotify(match: MatchData) {
+  const state = match.state;
+  const importance = match.importance || 0;
 
-  if (hasScore) return "final";
+  if (state === "live") return true;
+  if (state === "starting" && importance >= 70) return true;
+  if (importance >= 85) return true;
 
-  const diffMs = matchDate.getTime() - now.getTime();
-  const diffMinutes = diffMs / (1000 * 60);
-
-  if (diffMinutes < 0 && diffMinutes > -120) return "live"; // last 2h
-  if (diffMinutes >= 0 && diffMinutes <= 60) return "starting";
-  if (matchDate.toDateString() === now.toDateString()) return "today";
-
-  return "upcoming";
+  return false;
 }
 
 /* ================= PAGE ================= */
@@ -123,7 +123,8 @@ export default function NotificationsPage() {
     const stored = loadMyTeams();
     const selected = teamsMeta.filter(
       (t) =>
-        stored.men.includes(t.id) || stored.women.includes(t.id)
+        stored.men.includes(t.id) ||
+        stored.women.includes(t.id)
     );
     setTeams(selected);
   }, []);
@@ -131,6 +132,7 @@ export default function NotificationsPage() {
   /* ================= LOAD MATCHES ================= */
 
   useEffect(() => {
+    // 🔥 INTERNATIONAL ONLY (DEFAULT)
     getMatches().then(setMatches);
   }, []);
 
@@ -144,53 +146,34 @@ export default function NotificationsPage() {
   const generatedNotifications: GeneratedNotification[] =
     useMemo(() => {
       return matches
-        .filter(
-          (m) =>
+        .filter((m) => {
+          // 🔥 MUST INVOLVE USER TEAM
+          const involvesTeam =
             teamNames.includes(m.home.name) ||
-            teamNames.includes(m.away.name)
-        )
-        .map((m) => {
-          const state = getMatchState(
-            m.date,
-            Boolean(m.score)
-          );
+            teamNames.includes(m.away.name);
 
-          if (state === "final" && m.score) {
-            return {
-              id: m.id,
-              text: `FINAL: ${m.home.name} ${m.score.home} - ${m.score.away} ${m.away.name}`,
-              sub: m.tournament,
-            };
-          }
+          if (!involvesTeam) return false;
 
-          if (state === "live") {
-            return {
-              id: m.id,
-              text: `LIVE NOW: ${m.home.name} vs ${m.away.name}`,
-              sub: m.tournament,
-            };
-          }
-
-          if (state === "starting") {
-            return {
-              id: m.id,
-              text: `Starting Soon: ${m.home.name} vs ${m.away.name}`,
-              sub: m.tournament,
-            };
-          }
-
-          if (state === "today") {
-            return {
-              id: m.id,
-              text: `Today: ${m.home.name} vs ${m.away.name}`,
-              sub: m.tournament,
-            };
-          }
-
-          return null;
+          // 🔥 INTELLIGENCE FILTER
+          return shouldNotify(m);
         })
-        .filter(Boolean)
-        .slice(0, 10) as GeneratedNotification[];
+        .map((m) => ({
+          id: m.id,
+          importance: m.importance || 0,
+
+          text:
+            m.state === "final" && m.score
+              ? `FINAL: ${m.home.name} ${m.score.home} - ${m.score.away} ${m.away.name}`
+              : m.state === "live"
+              ? `LIVE NOW: ${m.home.name} vs ${m.away.name}`
+              : m.state === "starting"
+              ? `Starting Soon: ${m.home.name} vs ${m.away.name}`
+              : `Today: ${m.home.name} vs ${m.away.name}`,
+
+          sub: m.tournament,
+        }))
+        .sort((a, b) => b.importance - a.importance)
+        .slice(0, 8); // 🔥 tighter list
     }, [matches, teamNames]);
 
   /* ================= PUSH ================= */
@@ -216,6 +199,8 @@ export default function NotificationsPage() {
 
     setSentIds(updated);
     saveSent(updated);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [generatedNotifications, permission, items]);
 
   /* ================= TOGGLE ================= */
@@ -230,6 +215,12 @@ export default function NotificationsPage() {
     );
   };
 
+  /* ================= NAVIGATION ================= */
+
+  const handleNotificationClick = () => {
+    navigate("/match-center");
+  };
+
   /* ================= UI ================= */
 
   return (
@@ -237,9 +228,7 @@ export default function NotificationsPage() {
       <section className={styles.hero}>
         <div className={styles.heroContent}>
           <h1>Notifications</h1>
-          <p>
-            Live alerts powered by your selected teams and match timing.
-          </p>
+          <p>Live alerts powered by your selected teams.</p>
         </div>
       </section>
 
@@ -269,13 +258,15 @@ export default function NotificationsPage() {
 
               {generatedNotifications.length === 0 ? (
                 <div className={styles.emptyState}>
-                  No live alerts right now.
+                  No high-priority alerts.
                 </div>
               ) : (
                 generatedNotifications.map((n) => (
                   <div
                     key={n.id}
                     className={styles.notificationItem}
+                    onClick={handleNotificationClick}
+                    style={{ cursor: "pointer" }}
                   >
                     <strong>{n.text}</strong>
                     <p className={styles.message}>{n.sub}</p>
