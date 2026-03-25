@@ -86,13 +86,20 @@ async function fetchFromBackend(
       return null;
     }
 
-    const BASE = process.env.REACT_APP_API_BASE;
+    const BASE =
+  process.env.REACT_APP_API_BASE ||
+  process.env.REACT_APP_API_URL ||
+  "https://rugby-anthem-backend.fly.dev/api/rugby";
 
     const res = await fetch(
       `${BASE}/fixtures?league=${entry.id}&season=2026`
     );
 
-    if (!res.ok) throw new Error("Backend failed");
+    if (!res.ok) {
+  const text = await res.text();
+  console.error("RAZ BACKEND ERROR:", res.status, text);
+  throw new Error(`Backend failed: ${res.status}`);
+}
 
     const apiData = await res.json();
 
