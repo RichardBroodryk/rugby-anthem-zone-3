@@ -1,26 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { anthemNations } from "../data/anthemNations";
 import styles from "./NationalAnthemPage.module.css";
 import AnthemPlayer from "../components/AnthemPlayer/AnthemPlayer";
 
-const MASCOTS: Record<string, string> = {
-  "south-africa": "Springboks",
-  "new-zealand": "All Blacks",
-  australia: "Wallabies",
-  england: "Red Roses",
-  wales: "Red Dragons",
-  scotland: "Thistle",
-  ireland: "Shamrock",
-  france: "Les Bleus",
-  italy: "Azzurri",
-  japan: "Brave Blossoms",
-  argentina: "Los Pumas",
-  fiji: "Flying Fijians",
-};
-
 export default function NationalAnthemPage() {
   const { nationId } = useParams<{ nationId: string }>();
+  const navigate = useNavigate();
+
   const nation = anthemNations.find((n) => n.id === nationId);
+
+  const [expanded, setExpanded] = useState(false);
 
   if (!nation) {
     return (
@@ -31,12 +21,13 @@ export default function NationalAnthemPage() {
   }
 
   const accentColor = nation.colors[0];
-  const mascot = MASCOTS[nation.id];
   const haka = nation.anthem.haka;
 
   const renderLyrics = (text: string) => {
     return text.split("\n").map((line, i) => {
       const trimmed = line.trim();
+
+      if (!trimmed) return <div key={i} className={styles.spacer} />;
 
       if (trimmed.startsWith("---") && trimmed.endsWith("---")) {
         return (
@@ -46,10 +37,6 @@ export default function NationalAnthemPage() {
         );
       }
 
-      if (!trimmed) {
-        return <div key={i} className={styles.spacer} />;
-      }
-
       return (
         <span key={i} className={styles.line}>
           {line}
@@ -57,6 +44,14 @@ export default function NationalAnthemPage() {
       );
     });
   };
+
+  const displayedOriginal = expanded
+  ? nation.anthem.lyrics.original
+  : nation.anthem.lyrics.original.split("\n").slice(0, 12).join("\n");
+
+const displayedEnglish = expanded
+  ? nation.anthem.lyrics.english
+  : nation.anthem.lyrics.english.split("\n").slice(0, 8).join("\n");
 
   return (
     <main className={styles.page}>
@@ -73,15 +68,21 @@ export default function NationalAnthemPage() {
             className={styles.flag}
           />
 
-          {mascot && (
-            <span className={styles.titleText} style={{ color: accentColor }}>
-              {mascot}
-            </span>
-          )}
+          <span className={styles.titleTextSecondary}>
+            {nation.anthem.title}
+          </span>
         </div>
-
-        <h2 className={styles.subtitle}>{nation.anthem.title}</h2>
       </header>
+
+      {/* BACK BUTTON */}
+      <div className={styles.backWrapper}>
+        <button
+          className={styles.backButton}
+          onClick={() => navigate("/anthems")}
+        >
+          ← Back to All Anthems
+        </button>
+      </div>
 
       {/* GRID */}
       <section className={styles.mainGrid}>
@@ -92,25 +93,13 @@ export default function NationalAnthemPage() {
             style={{ borderColor: accentColor }}
           >
             <h3>🏉 National Identity</h3>
-            <ul>
-              <li>
-                <strong>Nation:</strong> {nation.name}
-              </li>
-              <li>
-                <strong>Anthem:</strong> {nation.anthem.title}
-              </li>
-            </ul>
+            <p><strong>{nation.name}</strong></p>
+            <p>{nation.anthem.title}</p>
           </div>
 
-          <div
-            className={styles.audioPlaceholder}
-            style={{ borderColor: accentColor }}
-          >
+          <div className={styles.audioCard}>
             <AnthemPlayer
-              src={
-                nation.anthem.audioUrl ||
-                "/audio/neutral-anthem-test.mp3"
-              }
+              src={nation.anthem.audioUrl || "/audio/neutral-anthem-test.mp3"}
               accentColor={accentColor}
             />
           </div>
@@ -118,38 +107,33 @@ export default function NationalAnthemPage() {
 
         {/* RIGHT */}
         <article className={styles.rightColumn}>
-          {/* ORIGINAL */}
+          {/* LYRICS */}
           <section
             className={styles.contentSection}
             style={{ borderColor: accentColor }}
           >
-            <div
-              className={styles.sectionHeader}
-              style={{ backgroundColor: `${accentColor}14` }}
+            <div className={styles.sectionHeader}>
+              📜 Lyrics
+            </div>
+
+           {/* ORIGINAL */}
+<div className={styles.lyricsBlock}>
+  {renderLyrics(displayedOriginal)}
+</div>
+
+{/* ENGLISH */}
+{nation.anthem.lyrics.english && (
+  <div className={styles.lyricsBlockSecondary}>
+    {renderLyrics(displayedEnglish)}
+  </div>
+)}
+
+            <button
+              className={styles.expandButton}
+              onClick={() => setExpanded(!expanded)}
             >
-              📜 Lyrics (Original)
-            </div>
-
-            <div className={styles.lyricsBlock}>
-              {renderLyrics(nation.anthem.lyrics.original)}
-            </div>
-          </section>
-
-          {/* ENGLISH */}
-          <section
-            className={styles.contentSection}
-            style={{ borderColor: accentColor }}
-          >
-            <div
-              className={styles.sectionHeader}
-              style={{ backgroundColor: `${accentColor}14` }}
-            >
-              🌍 English Translation
-            </div>
-
-            <div className={styles.lyricsBlock}>
-              {renderLyrics(nation.anthem.lyrics.english)}
-            </div>
+              {expanded ? "Collapse Lyrics" : "Expand Full Lyrics"}
+            </button>
           </section>
 
           {/* HISTORY */}
@@ -157,10 +141,7 @@ export default function NationalAnthemPage() {
             className={styles.contentSection}
             style={{ borderColor: accentColor }}
           >
-            <div
-              className={styles.sectionHeader}
-              style={{ backgroundColor: `${accentColor}14` }}
-            >
+            <div className={styles.sectionHeader}>
               📖 History & Rugby Context
             </div>
 
@@ -176,10 +157,7 @@ export default function NationalAnthemPage() {
             className={styles.contentSection}
             style={{ borderColor: accentColor }}
           >
-            <div
-              className={styles.sectionHeader}
-              style={{ backgroundColor: `${accentColor}14` }}
-            >
+            <div className={styles.sectionHeader}>
               💡 Key Facts
             </div>
 
@@ -193,13 +171,10 @@ export default function NationalAnthemPage() {
           {/* HAKA */}
           {haka && (
             <section
-              className={styles.contentSection}
+              className={styles.hakaSection}
               style={{ borderColor: accentColor }}
             >
-              <div
-                className={styles.sectionHeader}
-                style={{ backgroundColor: `${accentColor}14` }}
-              >
+              <div className={styles.sectionHeader}>
                 🖤 Haka
               </div>
 
@@ -213,17 +188,6 @@ export default function NationalAnthemPage() {
 
                 <p className={styles.translation}>
                   {haka.kaMate.english}
-                </p>
-
-                <h4>{haka.kapaOPango.title}</h4>
-                <p>{haka.kapaOPango.description}</p>
-
-                <div className={styles.lyricsBlock}>
-                  {renderLyrics(haka.kapaOPango.original)}
-                </div>
-
-                <p className={styles.translation}>
-                  {haka.kapaOPango.english}
                 </p>
               </div>
             </section>

@@ -1,49 +1,184 @@
-.sectionDivider {
-  font-weight: 700;
-  margin: 18px 0 8px;
-  letter-spacing: 0.08em;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  color: #333;
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+  color: #111;
 }
 
-.spacer {
-  height: 10px;
+/* HEADER */
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.titleText {
+  font-size: 2.8rem;
+  font-weight: 800;
+}
+
+.titleTextSecondary {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.flag {
+  width: 80px;
+  border-radius: 8px;
+}
+
+/* BACK BUTTON */
+.backWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.backButton {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.backButton:hover {
+  background: #111;
+  color: white;
+}
+
+/* GRID */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+}
+
+/* LEFT */
+.leftColumn {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.identityBlock {
+  border-left: 4px solid;
+  padding-left: 16px;
+}
+
+.audioCard {
+  padding: 16px;
+  border-radius: 16px;
+  background: #f8f8f8;
+}
+
+/* RIGHT */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* SECTION */
+.contentSection {
+  border-left: 4px solid;
+  padding-left: 20px;
+}
+
+.sectionHeader {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+/* LYRICS */
+.lyricsBlock {
+  background: #f5f5f5;
+  padding: 28px;
+  border-radius: 16px;
+  font-family: Georgia, serif;
+  line-height: 1.9;
 }
 
 .line {
   display: block;
 }
 
-.lyricsBlock {
-  background: #f6f6f6;
-  padding: 28px 32px;
-  border-radius: 18px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.05rem;
-  line-height: 1.9;
-  display: flex;
-  flex-direction: column;
+.sectionDivider {
+  margin: 18px 0 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
 }
 
+/* EXPAND BUTTON */
+.expandButton {
+  margin-top: 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  color: #444;
+}
+
+.expandButton:hover {
+  text-decoration: underline;
+}
+
+/* TEXT */
 .textBlock {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  max-width: 760px;
+  gap: 12px;
 }
 
+/* FACTS */
 .factsList {
   padding-left: 18px;
 }
 
-.hakaBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+/* HAKA */
+.hakaSection {
+  border-left: 4px solid;
+  padding-left: 20px;
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 20px;
 }
 
 .translation {
   font-style: italic;
-  color: #555;
+  color: #666;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .leftColumn {
+    position: relative;
+  }
+}
+.lyricsBlockSecondary {
+  margin-top: 20px;
+  background: #fafafa;
+  padding: 24px;
+  border-radius: 14px;
+  font-family: Georgia, serif;
+  line-height: 1.8;
+  opacity: 0.9;
 }
