@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { anthemNations } from "../data/anthemNations";
 import styles from "./NationalAnthemPage.module.css";
-
 import AnthemPlayer from "../components/AnthemPlayer/AnthemPlayer";
 
 const MASCOTS: Record<string, string> = {
@@ -35,13 +34,28 @@ export default function NationalAnthemPage() {
   const mascot = MASCOTS[nation.id];
   const haka = nation.anthem.haka;
 
-  // 🔥 SPLIT HELPERS FOR CLEAN DISPLAY
-  const formatLyrics = (text: string) => {
-    return text.split("\n").map((line, i) => (
-      <span key={i} className={styles.line}>
-        {line || "\u00A0"}
-      </span>
-    ));
+  const renderLyrics = (text: string) => {
+    return text.split("\n").map((line, i) => {
+      const trimmed = line.trim();
+
+      if (trimmed.startsWith("---") && trimmed.endsWith("---")) {
+        return (
+          <div key={i} className={styles.sectionDivider}>
+            {trimmed.replace(/---/g, "").trim()}
+          </div>
+        );
+      }
+
+      if (!trimmed) {
+        return <div key={i} className={styles.spacer} />;
+      }
+
+      return (
+        <span key={i} className={styles.line}>
+          {line}
+        </span>
+      );
+    });
   };
 
   return (
@@ -69,7 +83,7 @@ export default function NationalAnthemPage() {
         <h2 className={styles.subtitle}>{nation.anthem.title}</h2>
       </header>
 
-      {/* MAIN GRID */}
+      {/* GRID */}
       <section className={styles.mainGrid}>
         {/* LEFT */}
         <aside className={styles.leftColumn}>
@@ -117,7 +131,7 @@ export default function NationalAnthemPage() {
             </div>
 
             <div className={styles.lyricsBlock}>
-              {formatLyrics(nation.anthem.lyrics.original)}
+              {renderLyrics(nation.anthem.lyrics.original)}
             </div>
           </section>
 
@@ -134,7 +148,7 @@ export default function NationalAnthemPage() {
             </div>
 
             <div className={styles.lyricsBlock}>
-              {formatLyrics(nation.anthem.lyrics.english)}
+              {renderLyrics(nation.anthem.lyrics.english)}
             </div>
           </section>
 
@@ -192,16 +206,22 @@ export default function NationalAnthemPage() {
               <div className={styles.hakaBlock}>
                 <h4>{haka.kaMate.title}</h4>
                 <p>{haka.kaMate.description}</p>
+
                 <div className={styles.lyricsBlock}>
-                  {formatLyrics(haka.kaMate.original)}
+                  {renderLyrics(haka.kaMate.original)}
                 </div>
-                <p className={styles.translation}>{haka.kaMate.english}</p>
+
+                <p className={styles.translation}>
+                  {haka.kaMate.english}
+                </p>
 
                 <h4>{haka.kapaOPango.title}</h4>
                 <p>{haka.kapaOPango.description}</p>
+
                 <div className={styles.lyricsBlock}>
-                  {formatLyrics(haka.kapaOPango.original)}
+                  {renderLyrics(haka.kapaOPango.original)}
                 </div>
+
                 <p className={styles.translation}>
                   {haka.kapaOPango.english}
                 </p>
