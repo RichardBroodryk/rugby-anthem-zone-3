@@ -1,29 +1,36 @@
-import React from "react";
 import "./Flag.css";
+import { FLAG_MAP } from "../../utils/flagMap"; // adjust path if needed
 
-// Country names MUST match your folder structure exactly.
-export const Flag: React.FC<{ country: string; size?: string }> = ({
-  country,
-  size = "medium",
-}) => {
-  const fileName = country.toLowerCase().trim(); // ex: "south-africa"
-
-  let imageSrc;
-  try {
-    imageSrc = require(`../../assets/images/flags/${fileName}.png`);
-  } catch {
-    try {
-      imageSrc = require(`../../assets/images/flags/${fileName}.jpg`);
-    } catch {
-      return (
-        <div className={`flag-fallback flag-${size}`}>
-          {country.substring(0, 3).toUpperCase()}
-        </div>
-      );
-    }
-  }
-
-  return <img src={imageSrc} alt={`${country} flag`} className={`flag flag-${size}`} />;
+type FlagProps = {
+  country: string;
+  size?: "small" | "medium" | "large" | "xlarge";
 };
 
-export default Flag;
+export default function Flag({ country, size = "medium" }: FlagProps) {
+  const key = country.toLowerCase().replace(/\s+/g, "-");
+
+  const src = FLAG_MAP[key];
+
+  const fallback = country
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+
+  if (!src) {
+    return (
+      <div className={`flag-fallback flag-${size}`}>
+        {fallback}
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      className={`flag flag-${size}`}
+      alt={`${country} flag`}
+      loading="lazy"
+    />
+  );
+}

@@ -1,7 +1,7 @@
 /* =========================================================
    RUGBY ANTHEM ZONE
-   FLIGHT PARTNERS BY NATION — CANONICAL DATASET (v1)
-   Status: Draft / To Be Locked
+   FLIGHT PARTNERS BY NATION — CANONICAL DATASET (v1.1)
+   Status: Updated (Fiji, Samoa, Tonga LOCKED)
    Rule: No airlines or platforms added without review
    ========================================================= */
 
@@ -15,7 +15,7 @@ export type FlightPartner = {
   name: string;
   url: string;
   type: FlightPartnerType;
-  logo?: string; // optional — added later if/when assets are supplied
+  logo?: string;
 };
 
 export type NationFlights = {
@@ -221,26 +221,44 @@ export const flightPartnersByNation: NationFlights[] = [
     notes: "Connections via Europe common.",
   },
 
-  /* =========================================================
-     PLACEHOLDERS — TO BE VERIFIED
-     ========================================================= */
+  /* ================= PACIFIC NATIONS — LOCKED ================= */
 
   {
     nation: "Fiji",
     tier: 2,
-    partners: [],
-    notes: "Official flight partners to be confirmed.",
+    partners: [
+      {
+        name: "Fiji Airways",
+        url: "https://www.fijiairways.com/",
+        type: "national-carrier",
+      },
+    ],
+    notes: "Primary international carrier connecting Pacific routes.",
   },
+
   {
     nation: "Samoa",
     tier: 2,
-    partners: [],
-    notes: "Official flight partners to be confirmed.",
+    partners: [
+      {
+        name: "Samoa Airways",
+        url: "https://samoaairways.com/",
+        type: "national-carrier",
+      },
+    ],
+    notes: "Regional and international Pacific connections.",
   },
+
   {
     nation: "Tonga",
     tier: 2,
-    partners: [],
-    notes: "Official flight partners to be confirmed.",
+    partners: [
+      {
+        name: "Lulutai Airlines",
+        url: "https://www.lulutai-airlines.to/",
+        type: "national-carrier",
+      },
+    ],
+    notes: "Domestic and limited regional services within Tonga.",
   },
 ];

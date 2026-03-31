@@ -1,3 +1,4 @@
+import React from "react";
 import "./Flag.css";
 
 type FlagProps = {
@@ -5,35 +6,32 @@ type FlagProps = {
   size?: "small" | "medium" | "large" | "xlarge";
 };
 
-export default function Flag({ country, size = "medium" }: FlagProps) {
+const Flag: React.FC<FlagProps> = ({ country, size = "medium" }) => {
   const fileName = country.toLowerCase().trim().replace(/\s+/g, "-");
 
-  const flagPath = `/assets/images/flags/${fileName}.png`;
+  let imageSrc;
 
-  const fallback = country
-    .split(" ")
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
+  try {
+    imageSrc = require(`../../assets/images/flags/${fileName}.png`);
+  } catch {
+    try {
+      imageSrc = require(`../../assets/images/flags/${fileName}.jpg`);
+    } catch {
+      return (
+        <div className={`flag-fallback flag-${size}`}>
+          {country.substring(0, 3).toUpperCase()}
+        </div>
+      );
+    }
+  }
 
   return (
     <img
-      src={flagPath}
-      className={`flag flag-${size}`}
+      src={imageSrc}
       alt={`${country} flag`}
-      loading="lazy"
-      onError={(e) => {
-        const target = e.currentTarget;
-        target.style.display = "none";
-        const parent = target.parentElement;
-
-        if (parent) {
-          const fallbackEl = document.createElement("div");
-          fallbackEl.className = `flag-fallback flag-${size}`;
-          fallbackEl.innerText = fallback;
-          parent.appendChild(fallbackEl);
-        }
-      }}
+      className={`flag flag-${size}`}
     />
   );
-}
+};
+
+export default Flag;

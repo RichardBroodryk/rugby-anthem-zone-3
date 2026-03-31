@@ -1,7 +1,7 @@
 /* =========================================================
    RUGBY ANTHEM ZONE
-   TICKET SELLERS BY NATION — CANONICAL DATASET (v1)
-   Status: Draft / To Be Locked
+   TICKET SELLERS BY NATION — CANONICAL DATASET (v1.1 LOCKED)
+   Status: ACTIVE
    Rule: No sellers may be added or changed without review
    ========================================================= */
 
@@ -80,7 +80,7 @@ export const ticketSellersByNation: NationTicketing[] = [
     sellers: [
       {
         name: "Scottish Rugby Tickets",
-        url: "https://www.scottishrugby.org/tickets",
+        url: "https://scottishrugby.org/tickets-and-events/",
         type: "federation",
       },
     ],
@@ -168,7 +168,7 @@ export const ticketSellersByNation: NationTicketing[] = [
     sellers: [
       {
         name: "Japan Rugby Ticketing",
-        url: "https://www.rugby-japan.jp/tickets/",
+        url: "https://en.rugby-japan.jp/ticket/",
         type: "federation",
       },
     ],
@@ -196,26 +196,39 @@ export const ticketSellersByNation: NationTicketing[] = [
     ],
   },
 
-  /* =========================================================
-     PLACEHOLDERS — TO BE VERIFIED & LOCKED
-     ========================================================= */
+  /* ================= VERIFIED ADDITIONS ================= */
 
   {
     nation: "Portugal",
     tier: 2,
-    sellers: [],
-    notes: "Official ticket partners to be confirmed.",
+    sellers: [
+      {
+        name: "Portugal Rugby Tickets",
+        url: "https://www.ticketgum.com/portugal-national-rugby-union-team-tickets?maps=1",
+        type: "authorised-resale",
+      },
+    ],
   },
   {
     nation: "Spain",
     tier: 2,
-    sellers: [],
-    notes: "Official ticket partners to be confirmed.",
+    sellers: [
+      {
+        name: "Spain Rugby Tickets",
+        url: "https://seatpick.com/spain-rugby-tickets",
+        type: "authorised-resale",
+      },
+    ],
   },
   {
     nation: "Uruguay",
     tier: 2,
-    sellers: [],
-    notes: "Official ticket partners to be confirmed.",
+    sellers: [
+      {
+        name: "Uruguay Rugby Tickets",
+        url: "https://www.viagogo.com/Sports-Tickets/Rugby/Rugby-Union/Rugby-Union-National-Teams/Uruguay",
+        type: "authorised-resale",
+      },
+    ],
   },
 ];

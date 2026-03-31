@@ -24,6 +24,7 @@ export default function HotelsPage() {
   const navigate = useNavigate();
 
   const stadiumSlug = searchParams.get("stadium");
+
   const stadium = stadiumSlug
     ? stadiums.find((s) => s.slug === stadiumSlug)
     : null;
@@ -55,7 +56,7 @@ export default function HotelsPage() {
         </div>
       </header>
 
-      {/* ================= BACK (MATCHDAY PLANNER) ================= */}
+      {/* ================= BACK ================= */}
       <div className={styles.backWrap}>
         <button className={styles.back} onClick={backToPlanner}>
           ← Back to Matchday Planner
@@ -88,7 +89,7 @@ export default function HotelsPage() {
           <p>
             This guide highlights accommodation near Tier-1 rugby
             stadiums — prioritising walkability, transport access,
-            and matchday atmosphere.
+            and matchday atmosphere-most bookings done through Bookings.com.
           </p>
         </div>
       </section>
@@ -107,6 +108,7 @@ export default function HotelsPage() {
               key={stadiumGroup.stadiumSlug}
               className={styles.card}
             >
+              {/* HEADER */}
               <div className={styles.cardHeader}>
                 <div className={styles.stadium}>
                   <Flag
@@ -120,6 +122,7 @@ export default function HotelsPage() {
                     </span>
                   </div>
                 </div>
+
                 <span className={styles.count}>
                   {stadiumGroup.hotels.length > 0
                     ? `${stadiumGroup.hotels.length} option${
@@ -131,31 +134,37 @@ export default function HotelsPage() {
                 </span>
               </div>
 
+              {/* NOTES */}
               {stadiumGroup.notes && (
                 <p className={styles.notes}>
                   {stadiumGroup.notes}
                 </p>
               )}
 
+              {/* HOTELS LIST */}
               <ul className={styles.hotels}>
                 {stadiumGroup.hotels.length > 0 ? (
                   stadiumGroup.hotels.map((hotel: Hotel) => (
                     <li key={hotel.name}>
                       <strong>{hotel.name}</strong>
+
                       <span className={styles.meta}>
                         {hotel.distanceNote}
                       </span>
+
                       {hotel.fanNote && (
                         <span className={styles.fanNote}>
                           {hotel.fanNote}
                         </span>
                       )}
+
                       <button
                         className={styles.action}
                         onClick={() => {
                           const url = hotel.affiliate
                             ? `${hotel.bookingUrl}?aid=rugbyanthem`
                             : hotel.bookingUrl;
+
                           window.open(
                             url,
                             "_blank",

@@ -49,7 +49,7 @@ export const transportProvidersByNation: NationTransport[] = [
     nation: "Wales",
     tier: 1,
     providers: [
-      { name: "Local Taxis", url: "https://www.gov.wales/taxis-and-private-hire", type: "taxi", note: "Licensed local operators" },
+      { name: "Veezu", url: "https://www.veezu.co.uk/", type: "taxi", note: "Licensed local taxi network" },
       { name: "Rail & Bus", url: "https://tfw.wales/", type: "public", note: "Strong match-day services" },
     ],
   },
@@ -58,7 +58,7 @@ export const transportProvidersByNation: NationTransport[] = [
     tier: 1,
     providers: [
       { name: "Uber", url: "https://www.uber.com/gb/en/", type: "ride-hailing", note: "Major cities only" },
-      { name: "Local Taxis", url: "https://www.mygov.scot/taxis-private-hire", type: "taxi", note: "Pre-booking advised" },
+      { name: "Central Taxis", url: "https://www.taxis-edinburgh.co.uk/", type: "taxi", note: "Primary local taxi operator in Edinburgh" },
     ],
   },
   {
@@ -91,7 +91,7 @@ export const transportProvidersByNation: NationTransport[] = [
     tier: 1,
     providers: [
       { name: "Uber", url: "https://www.uber.com/nz/en/", type: "ride-hailing", note: "Reliable in major centres" },
-      { name: "Ola", url: "https://ola.nz/", type: "ride-hailing", note: "Local ride alternative" },
+      { name: "Blue Bubble Taxis", url: "https://bluebubbletaxi.co.nz/", type: "taxi", note: "Established nationwide taxi service" },
     ],
   },
   {
