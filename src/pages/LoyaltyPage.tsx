@@ -1,18 +1,60 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./LoyaltyPage.module.css";
 
 import LoyaltyCard from "./LoyaltyCard";
-import { mockLoyaltyData } from "../data/mockLoyaltyData";
-
 import heroImage from "../assets/images/raz/fanzone-loyalty.png";
+
+import { buildEngagement } from "../utils/engagementEngine";
+
+type TierKey = "bronze" | "silver" | "gold" | "platinum";
 
 export default function LoyaltyPage() {
   const navigate = useNavigate();
-  const { tier, points, engagement, history } = mockLoyaltyData;
+
+  const [tier, setTier] = useState<TierKey>("bronze");
+  const [points, setPoints] = useState(0);
+  const [engagement, setEngagement] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  /* ================= FETCH ================= */
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/loyalty/test-user")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && typeof data.points === "number") {
+          setPoints(data.points);
+          setTier(data.tier || "bronze");
+        }
+
+        /* 🔥 REAL-READY INPUT (EMPTY NOW = NO SNAPSHOT) */
+        const userActivity = {
+          matches: [],
+          videos: [],
+          purchases: [],
+          comments: [],
+        };
+
+        const built = buildEngagement(userActivity);
+        setEngagement(built);
+      })
+      .catch(() => {
+        console.warn("Loyalty fallback active");
+        setPoints(0);
+        setTier("bronze");
+        setEngagement(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  /* ================= RENDER ================= */
 
   return (
     <main className={styles.page}>
-      {/* ================= HERO ================= */}
+      {/* HERO */}
       <section
         className={styles.hero}
         style={{ backgroundImage: `url(${heroImage})` }}
@@ -28,7 +70,7 @@ export default function LoyaltyPage() {
         </div>
       </section>
 
-      {/* ================= BACK ================= */}
+      {/* BACK */}
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -38,52 +80,57 @@ export default function LoyaltyPage() {
         </button>
       </div>
 
-      {/* ================= CURRENT STANDING ================= */}
+      {/* CURRENT STANDING */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Your Current Standing</h2>
+
         <div className={styles.cardWrap}>
-          <LoyaltyCard userTier={tier} points={points} />
+          {loading ? (
+            <p className={styles.notice}>Loading your standing...</p>
+          ) : (
+            <LoyaltyCard userTier={tier} points={points} />
+          )}
         </div>
       </section>
 
-      {/* ================= CONTRIBUTION SNAPSHOT ================= */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Contribution Snapshot</h2>
+      {/* SNAPSHOT (ONLY IF REAL DATA EXISTS) */}
+      {engagement && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Contribution Snapshot</h2>
 
-        <div className={styles.snapshot}>
-          <div>
-            <strong>Matches Followed</strong>
-            <span>{engagement.matchesFollowedSeason} this season</span>
+          <div className={styles.snapshot}>
+            <div>
+              <strong>Matches Followed</strong>
+              <span>{engagement.matchesFollowedSeason} this season</span>
+            </div>
+
+            <div>
+              <strong>Tournaments Engaged</strong>
+              <span>
+                {engagement.tournaments.length
+                  ? engagement.tournaments.join(", ")
+                  : "—"}
+              </span>
+            </div>
+
+            <div>
+              <strong>Official Features Used</strong>
+              <span>
+                {engagement.featuresUsed.length
+                  ? engagement.featuresUsed.join(", ")
+                  : "—"}
+              </span>
+            </div>
+
+            <div>
+              <strong>Verified Purchases</strong>
+              <span>{engagement.merchPurchases}</span>
+            </div>
           </div>
+        </section>
+      )}
 
-          <div>
-            <strong>Tournaments Engaged</strong>
-            <span>{engagement.tournaments.join(", ")}</span>
-          </div>
-
-          <div>
-            <strong>Official Features Used</strong>
-            <span>{engagement.featuresUsed.join(", ")}</span>
-          </div>
-
-          <div>
-            <strong>Verified Purchases</strong>
-            <span>{engagement.merchPurchases} partner transaction</span>
-          </div>
-
-          <div>
-            <strong>Seasons Active</strong>
-            <span>{history.seasonsActive} seasons</span>
-          </div>
-
-          <div>
-            <strong>Last Active</strong>
-            <span>{history.lastActive}</span>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= PLATINUM EXPERIENCE ================= */}
+      {/* PLATINUM EXPERIENCE */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Platinum Experience</h2>
 
@@ -128,7 +175,7 @@ export default function LoyaltyPage() {
         )}
       </section>
 
-      {/* ================= LONG VIEW ================= */}
+      {/* LONG VIEW */}
       <section className={styles.section}>
         <p className={styles.notice}>
           Loyalty standing reflects sustained engagement across seasons.

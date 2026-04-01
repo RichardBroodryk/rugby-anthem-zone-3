@@ -42,7 +42,7 @@
   display: block;
   margin-top: 0.5rem;
   font-size: 0.8rem;
-  color: #666;
+  color: #64748b;
 }
 
 /* TIER COLORS */
@@ -61,4 +61,38 @@
 
 .card[data-tier="platinum"] {
   color: #2563eb;
+}
+.rules {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.rules span {
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.remaining {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.rewards {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+}
+
+.rewards ul {
+  margin-top: 6px;
+  padding-left: 16px;
+}
+
+.rewards li {
+  margin-bottom: 4px;
 }
