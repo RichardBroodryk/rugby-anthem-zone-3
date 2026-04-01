@@ -5,7 +5,7 @@
   padding-bottom: 6rem;
 }
 
-/* ================= HERO ================= */
+/* HERO */
 
 .hero {
   position: relative;
@@ -41,14 +41,12 @@
   color: #e5e7eb;
 }
 
-/* ================= BACK ================= */
+/* BACK */
 
 .backWrap {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-
-  /* CENTER THE BACK BUTTON */
   display: flex;
   justify-content: center;
 }
@@ -61,11 +59,7 @@
   cursor: pointer;
 }
 
-.backWrap button:hover {
-  text-decoration: underline;
-}
-
-/* ================= CONTENT ================= */
+/* CONTENT */
 
 .section {
   max-width: 1200px;
@@ -76,10 +70,50 @@
 .section h2 {
   font-size: 1.6rem;
   margin-bottom: 1rem;
+  color: #111827;
 }
 
 .section p {
   max-width: 760px;
   line-height: 1.7;
   color: #374151;
+  margin-bottom: 1rem;
+}
+
+.section ul {
+  max-width: 760px;
+  padding-left: 1.2rem;
+}
+
+.section li {
+  margin-bottom: 0.4rem;
+}
+
+/* IMAGES */
+
+.imageWrap {
+  margin: 2rem 0;
+}
+
+.imageWrap img {
+  width: 100%;
+  max-width: 760px;
+  border-radius: 12px;
+  display: block;
+}
+
+/* CALL BOX */
+
+.callBox {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  max-width: 760px;
+}
+
+.callBox h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
 }

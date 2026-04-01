@@ -77,3 +77,48 @@
   line-height: 1.7;
   color: #374151;
 }
+/* ================= IMAGES ================= */
+
+.imageWrap {
+  margin: 2rem 0;
+}
+
+.imageWrap img {
+  width: 100%;
+  max-width: 760px;
+  border-radius: 12px;
+  display: block;
+}
+/* ================= REFEREE CALL BOX ================= */
+
+.callBox {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+.callBox h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.callOutcome {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* ================= FLOW LIST ================= */
+
+.flowList {
+  margin-top: 1rem;
+  padding-left: 1.2rem;
+}
+
+.flowList li {
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}

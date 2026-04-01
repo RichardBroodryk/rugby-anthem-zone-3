@@ -79,6 +79,7 @@ import FantasyLeagueHubPage from "./pages/FantasyLeagueHubPage";
 import BreakdownRucksPage from "./pages/inside-the-game/referees/BreakdownRucksPage";
 import TMOReviewsPage from "./pages/inside-the-game/referees/TMOReviewsPage";
 import LawUpdatesPage from "./pages/inside-the-game/referees/LawUpdatesPage";
+import PlayingCharterPage from "./pages/PlayingCharterPage";
 
 /* ================= FANZONE ================= */
 import FanzoneHubPage from "./pages/FanzoneHubPage";
@@ -308,6 +309,7 @@ export default function App() {
           <Route path="/inside-the-game/referees/tmo" element={<TMOReviewsPage />} />
           <Route path="/inside-the-game/referees/law-updates" element={<LawUpdatesPage />} />
           <Route path="/inside-the-game/fantasy" element={<FantasyLeagueHubPage />} />
+          <Route path="/inside-the-game/playing-charter" element={<PlayingCharterPage />} />
 
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/merch" element={<MerchPage />} />
