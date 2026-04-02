@@ -3,9 +3,18 @@ import styles from "./StadiumMatchdayPage.module.css";
 
 import { stadiums } from "../data/stadiums";
 
-/* ================= HERO IMAGE ================= */
+/* ================= HERO IMAGES (MUST BE AT TOP) ================= */
 
-import heroImage from "../assets/images/raz/stadium-match-hero.jpg";
+import aviva from "../assets/images/stadiums/aviva.jpg";
+import capetown from "../assets/images/stadiums/capetown-stadium.jpg";
+import eden from "../assets/images/stadiums/eden-park.jpg";
+import ellis from "../assets/images/stadiums/ellis-park.jpg";
+import fnb from "../assets/images/stadiums/fnb-stadium.jpg";
+import murrayfield from "../assets/images/stadiums/murrayfield.jpg";
+import paris from "../assets/images/stadiums/paris-stade-de-france.jpg";
+import principality from "../assets/images/stadiums/principality-stadium.jpg";
+import olimpico from "../assets/images/stadiums/stadio-olimpico.jpg";
+import twickenham from "../assets/images/stadiums/twickenham.jpg";
 
 /* ================= CARD IMAGES ================= */
 
@@ -14,7 +23,20 @@ import flightsImg from "../assets/images/raz/flights-page.png";
 import hotelsImg from "../assets/images/raz/hotels-page.png";
 import transportImg from "../assets/images/raz/transport-page.png";
 
-/* ================= PAGE ================= */
+/* ================= HERO MAP ================= */
+
+const HERO_MAP: Record<string, string> = {
+  aviva,
+  capetown,
+  "eden-park": eden,
+  "ellis-park": ellis,
+  "fnb-stadium": fnb,
+  murrayfield,
+  "stade-de-france": paris,
+  principality,
+  "stadio-olimpico": olimpico,
+  twickenham,
+};
 
 export default function StadiumMatchdayPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -37,6 +59,8 @@ export default function StadiumMatchdayPage() {
     );
   }
 
+  const hero = HERO_MAP[stadium.slug] || capetown;
+
   const go = (path: string) =>
     navigate(`${path}?stadium=${stadium.slug}`);
 
@@ -45,7 +69,7 @@ export default function StadiumMatchdayPage() {
       {/* ================= HERO ================= */}
       <header
         className={styles.hero}
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{ backgroundImage: `url(${hero})` }}
       >
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>

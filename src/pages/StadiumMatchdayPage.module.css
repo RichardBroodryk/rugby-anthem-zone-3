@@ -9,6 +9,7 @@
   height: 300px;
   background-size: cover;
   background-position: center;
+
   position: relative;
   display: flex;
   align-items: center;
@@ -39,57 +40,67 @@
   line-height: 1.55;
 }
 
-/* ================= GRID ================= */
+/* ================= GRID (REAL FIX) ================= */
 
 .grid {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1400px; /* 🔥 EXPANDS PAGE */
   margin: 0 auto;
   padding: 3rem 2rem 4rem;
+
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 2.5rem;
 }
+
+/* ================= CARD ================= */
 
 .card {
   position: relative;
-  height: 260px;
+
+  height: 360px; /* 🔥 BIGGER = VISIBLE CHANGE */
+
   background-size: cover;
   background-position: center;
+
   cursor: pointer;
   display: flex;
   align-items: flex-end;
+
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .overlay {
   position: absolute;
   inset: 0;
+
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.65),
-    rgba(0, 0, 0, 0.15)
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0.2)
   );
 }
 
 .cardContent {
   position: relative;
-  padding: 1.75rem;
+  padding: 2rem;
   color: #ffffff;
-  max-width: 90%;
+  max-width: 80%;
 }
 
 .cardContent h3 {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   margin-bottom: 0.4rem;
 }
 
 .cardContent p {
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin-bottom: 0.8rem;
-  opacity: 0.9;
 }
 
 .cta {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-decoration: underline;
 }
@@ -103,8 +114,27 @@
 
 /* ================= RESPONSIVE ================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 1000px;
+  }
+
+  .card {
+    height: 280px;
+  }
+}
+
+@media (max-width: 600px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .card {
+    height: 240px;
+  }
+
+  .hero {
+    height: 260px;
   }
 }

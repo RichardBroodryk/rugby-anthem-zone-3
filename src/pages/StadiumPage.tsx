@@ -6,40 +6,23 @@ import { stadiums } from "../data/stadiums";
 
 import MatchRow from "../components/match/MatchRow";
 
-/* ================= STADIUM IMAGE REGISTRY ================= */
+/* 🧠 ENGINE */
+import {
+  getStadiumHero,
+  getStadiumGallery,
+  getStadiumSeating,
+  getStadiumMeta,
+  getStadiumExperience,
+} from "../engine/stadiumEngine";
 
-import twickenham from "../assets/images/stadiums/twickenham.jpg";
-import murrayfield from "../assets/images/stadiums/murrayfield.jpg";
-import aviva from "../assets/images/stadiums/aviva.jpg";
-import principality from "../assets/images/stadiums/principality-stadium.jpg";
-import stadeDeFrance from "../assets/images/stadiums/paris-stade-de-france.jpg";
-import olimpico from "../assets/images/stadiums/stadio-olimpico.jpg";
-import edenPark from "../assets/images/stadiums/eden-park.jpg";
-import ellisPark from "../assets/images/stadiums/ellis-park.jpg";
-import fnbStadium from "../assets/images/stadiums/fnb-stadium.jpg";
-
-/* 🔒 Keys must match stadium.slug exactly */
-const stadiumImages: Record<string, string> = {
-  "twickenham": twickenham,
-  "murrayfield": murrayfield,
-  "aviva-stadium": aviva,
-  "principality-stadium": principality,
-  "stade-de-france": stadeDeFrance,
-  "stadio-olimpico": olimpico,
-  "eden-park": edenPark,
-  "ellis-park": ellisPark,
-  "fnb-stadium": fnbStadium,
-};
-
-/* ================= PAGE ================= */
+/* fallback */
+import fallbackHero from "../assets/images/stadiums/capetown-stadium.jpg";
 
 export default function StadiumPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
-  if (!slug) {
-    return <div className={styles.error}>Invalid stadium reference</div>;
-  }
+  if (!slug) return <div className={styles.error}>Invalid stadium reference</div>;
 
   const stadium = stadiums.find((s) => s.slug === slug);
 
@@ -54,31 +37,31 @@ export default function StadiumPage() {
     );
   }
 
-  const heroImage = stadiumImages[stadium.slug];
+  /* DATA */
+  const heroImage = getStadiumHero(slug, fallbackHero);
+  const gallery = getStadiumGallery(slug);
+  const seating = getStadiumSeating(slug);
+  const meta = getStadiumMeta(slug);
+  const experience = getStadiumExperience(slug);
+
+  const galleryImages = [
+    gallery?.inside,
+    gallery?.outside,
+    gallery?.crowds,
+    gallery?.aerial,
+  ].filter(Boolean);
 
   const now = new Date();
   const upcomingMatches = matches2026
-    .filter(
-      (m) =>
-        m.venue === stadium.name &&
-        new Date(m.date) >= now
-    )
-    .sort(
-      (a, b) =>
-        new Date(a.date).getTime() -
-        new Date(b.date).getTime()
-    );
+    .filter((m) => m.venue === stadium.name && new Date(m.date) >= now)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   return (
     <main className={styles.page}>
-      {/* ================= HERO ================= */}
+      {/* HERO */}
       <header
         className={styles.hero}
-        style={{
-          backgroundImage: heroImage
-            ? `url(${heroImage})`
-            : undefined,
-        }}
+        style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
@@ -90,9 +73,9 @@ export default function StadiumPage() {
         </div>
       </header>
 
-      {/* ================= UPCOMING MATCHES ================= */}
+      {/* MATCHES */}
       <section className={styles.section}>
-        <h2>Upcoming matches at this stadium</h2>
+        <h2 className={styles.sectionTitle}>Upcoming matches</h2>
 
         {upcomingMatches.length > 0 ? (
           <div className={styles.matches}>
@@ -109,22 +92,62 @@ export default function StadiumPage() {
             ))}
           </div>
         ) : (
-          <p className={styles.placeholder}>
-            No upcoming fixtures are currently scheduled at this venue.
-          </p>
+          <p>No upcoming fixtures.</p>
+        )}
+
+        <div className={styles.ctaWrap}>
+          <button
+            className={styles.primary}
+            onClick={() => navigate(`/stadium/${stadium.slug}/matchday`)}
+          >
+            Plan your matchday
+          </button>
+        </div>
+      </section>
+
+      {/* INTELLIGENCE */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Stadium intelligence</h2>
+
+        <div className={styles.intelGrid}>
+          {meta.capacity && <div className={styles.intelCard}>Capacity: {meta.capacity}</div>}
+          {meta.altitude && <div className={styles.intelCard}>Altitude: {meta.altitude}m</div>}
+          {meta.pitch && <div className={styles.intelCard}>Pitch: {meta.pitch}</div>}
+          {meta.roof && <div className={styles.intelCard}>Roof: {meta.roof}</div>}
+        </div>
+
+        {experience.arrivalTip && (
+          <div className={styles.tip}>
+            <strong>Tip:</strong> {experience.arrivalTip}
+          </div>
         )}
       </section>
 
-      {/* ================= FORWARD ACTION ================= */}
-      <section className={styles.actions}>
-        <button
-          className={styles.primary}
-          onClick={() =>
-            navigate(`/stadium/${stadium.slug}/matchday`)
-          }
-        >
-          Plan your matchday
-        </button>
+      {/* GALLERY */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Inside the stadium</h2>
+
+        <div className={styles.gallery}>
+          {galleryImages.map((img, i) => (
+            <div key={i} className={styles.galleryItem}>
+              <img src={img} alt="stadium" />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SEATING */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Seating</h2>
+
+        <div className={styles.seatingGrid}>
+          {seating.map((zone, i) => (
+            <div key={i} className={styles.seatCard}>
+              <h3>{zone.name}</h3>
+              <p>{zone.type} · {zone.view}</p>
+            </div>
+          ))}
+        </div>
       </section>
     </main>
   );

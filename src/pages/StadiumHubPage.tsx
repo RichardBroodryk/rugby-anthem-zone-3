@@ -1,14 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./StadiumHubPage.module.css";
-
 import { stadiums } from "../data/stadiums";
 
-/* ================= HERO IMAGE ================= */
-
-import heroImage from "../assets/images/stadiums/capetown-stadium.jpg";
+/* ================= HERO ================= */
+import fallbackHero from "../assets/images/stadiums/capetown-stadium.jpg";
 
 /* ================= STADIUM IMAGES ================= */
-
 import twickenham from "../assets/images/stadiums/twickenham.jpg";
 import murrayfield from "../assets/images/stadiums/murrayfield.jpg";
 import aviva from "../assets/images/stadiums/aviva.jpg";
@@ -18,8 +15,8 @@ import olimpico from "../assets/images/stadiums/stadio-olimpico.jpg";
 import edenPark from "../assets/images/stadiums/eden-park.jpg";
 import ellisPark from "../assets/images/stadiums/ellis-park.jpg";
 import fnbStadium from "../assets/images/stadiums/fnb-stadium.jpg";
+import capetown from "../assets/images/stadiums/capetown-stadium.jpg";
 
-/* 🔒 Keys must match stadium.slug exactly */
 const stadiumImages: Record<string, string> = {
   "twickenham": twickenham,
   "murrayfield": murrayfield,
@@ -30,19 +27,17 @@ const stadiumImages: Record<string, string> = {
   "eden-park": edenPark,
   "ellis-park": ellisPark,
   "fnb-stadium": fnbStadium,
+  "capetown": capetown,
 };
-
-/* ================= PAGE ================= */
 
 export default function StadiumHubPage() {
   const navigate = useNavigate();
 
   return (
     <main className={styles.page}>
-      {/* ================= HERO ================= */}
       <header
         className={styles.hero}
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{ backgroundImage: `url(${fallbackHero})` }}
       >
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
@@ -55,7 +50,6 @@ export default function StadiumHubPage() {
         </div>
       </header>
 
-      {/* ================= GRID ================= */}
       <section className={styles.grid}>
         {stadiums.map((stadium) => {
           const image = stadiumImages[stadium.slug];
@@ -67,17 +61,13 @@ export default function StadiumHubPage() {
               style={{
                 backgroundImage: image ? `url(${image})` : undefined,
               }}
-              onClick={() =>
-                navigate(`/stadium/${stadium.slug}`)
-              }
+              onClick={() => navigate(`/stadium/${stadium.slug}`)}
             >
               <div className={styles.overlay} />
               <div className={styles.cardContent}>
                 <h3>{stadium.name}</h3>
                 <p>
-                  {stadium.city
-                    ? `${stadium.city}, `
-                    : ""}
+                  {stadium.city ? `${stadium.city}, ` : ""}
                   {stadium.country}
                 </p>
               </div>
