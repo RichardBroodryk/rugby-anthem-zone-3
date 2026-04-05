@@ -70,22 +70,23 @@ type Player = {
 };
 
 type MatchStats = {
-  timeline: {
+  timeline?: {
     minute: string;
     label: string;
   }[];
 
-  lineups: {
+  lineups?: {
     homeStarting: Player[];
     homeBench: Player[];
     awayStarting: Player[];
     awayBench: Player[];
   };
+
+  // dynamic stats from backend
+  [key: string]: any;
 };
 
-/* ==================================================
-   🔥 STATE RESOLVER (GLOBAL — NO FAKE LIVE)
-   ================================================== */
+/* ================= STATE ================= */
 
 function resolveState(match: MatchData): "final" | "upcoming" {
   if (match.score) return "final";
@@ -105,13 +106,7 @@ export default function MatchPage() {
   const [comments, setComments] = useState<any[]>([]);
   const [text, setText] = useState("");
 
-  /* ==================================================
-     🔒 SINGLE SOURCE OF TRUTH
-     ================================================== */
-
-  const match = matches2026.find(
-    (m: MatchData) => m.id === matchId
-  );
+  const match = matches2026.find((m: MatchData) => m.id === matchId);
 
   /* ================= LOAD STATS ================= */
 
@@ -174,36 +169,63 @@ export default function MatchPage() {
     );
   }
 
-  /* ==================================================
-     🔒 TOURNAMENT RESOLUTION (INSTANCE ONLY)
-     ================================================== */
-
-  const instanceId =
-    (match as { tournamentInstanceId?: string }).tournamentInstanceId;
+  const instanceId = (match as { tournamentInstanceId?: string }).tournamentInstanceId;
 
   const tournament = tournaments2026.find(
     (t) => t.instanceId === instanceId
   );
 
-  const backToTournament = tournament
-    ? tournament.route
-    : "/tournaments";
+  const backToTournament = tournament ? tournament.route : "/tournaments";
 
   const { home, away, score, venue, date } = match;
 
   const stadium = stadiums.find((s) => s.name === venue);
 
-  /* 🔒 FIXED STATUS */
   const status = resolveState(match);
 
-  const matchStats = [
-    { label: "Possession", home: "58%", away: "42%" },
-    { label: "Territory", home: "61%", away: "39%" },
-    { label: "Tries", home: score ? score.home : 0, away: score ? score.away : 0 },
-    { label: "Tackles Made", home: 142, away: 167 },
-    { label: "Missed Tackles", home: 9, away: 21 },
-    { label: "Penalties Conceded", home: 8, away: 11 },
-  ];
+  /* ================= STATS MAPPING ================= */
+
+  const matchStats = stats
+    ? [
+        {
+          label: "Possession",
+          home: stats.possession?.home ?? "—",
+          away: stats.possession?.away ?? "—",
+        },
+        {
+          label: "Territory",
+          home: stats.territory?.home ?? "—",
+          away: stats.territory?.away ?? "—",
+        },
+        {
+          label: "Tries",
+          home: stats.tries?.home ?? score?.home ?? "—",
+          away: stats.tries?.away ?? score?.away ?? "—",
+        },
+        {
+          label: "Tackles Made",
+          home: stats.tacklesMade?.home ?? "—",
+          away: stats.tacklesMade?.away ?? "—",
+        },
+        {
+          label: "Missed Tackles",
+          home: stats.missedTackles?.home ?? "—",
+          away: stats.missedTackles?.away ?? "—",
+        },
+        {
+          label: "Penalties Conceded",
+          home: stats.penalties?.home ?? "—",
+          away: stats.penalties?.away ?? "—",
+        },
+      ]
+    : [
+        { label: "Possession", home: "—", away: "—" },
+        { label: "Territory", home: "—", away: "—" },
+        { label: "Tries", home: "—", away: "—" },
+        { label: "Tackles Made", home: "—", away: "—" },
+        { label: "Missed Tackles", home: "—", away: "—" },
+        { label: "Penalties Conceded", home: "—", away: "—" },
+      ];
 
   return (
     <main className={styles.page}>
@@ -259,9 +281,9 @@ export default function MatchPage() {
       </section>
 
       {/* TIMELINE */}
-      {stats?.timeline && (
-        <section className={styles.timeline}>
-          <h2>Match Timeline</h2>
+      <section className={styles.timeline}>
+        <h2>Match Timeline</h2>
+        {stats?.timeline ? (
           <ul className={styles.timelineList}>
             {stats.timeline.map((e, i) => (
               <li key={i} className={styles.timelineItem}>
@@ -273,13 +295,16 @@ export default function MatchPage() {
               </li>
             ))}
           </ul>
-        </section>
-      )}
+        ) : (
+          <p className={styles.emptyState}>Timeline will appear when match begins</p>
+        )}
+      </section>
 
       {/* LINEUPS */}
-      {stats?.lineups && (
-        <section className={styles.lineups}>
-          <h2>Lineups</h2>
+      <section className={styles.lineups}>
+        <h2>Lineups</h2>
+
+        {stats?.lineups ? (
           <div className={styles.lineupGrid}>
             <div className={styles.teamLineup}>
               <h3>{home.name}</h3>
@@ -299,12 +324,39 @@ export default function MatchPage() {
               </ul>
             </div>
           </div>
-        </section>
-      )}
+        ) : (
+          <div className={styles.lineupGrid}>
+            <div className={styles.teamLineup}>
+              <h3>{home.name}</h3>
+              <ul>
+                {Array.from({ length: 15 }).map((_, i) => (
+                  <li key={i}>Player {i + 1}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={styles.teamLineup}>
+              <h3>{away.name}</h3>
+              <ul>
+                {Array.from({ length: 15 }).map((_, i) => (
+                  <li key={i}>Player {i + 1}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </section>
 
       {/* TEAM STATS */}
       <section className={styles.section}>
         <h2>Team Stats</h2>
+
+        {!stats && (
+          <p className={styles.emptyState}>
+            Stats will appear when match data becomes available
+          </p>
+        )}
+
         <TeamComparisonTable
           home={{ name: home.name, country: home.country }}
           away={{ name: away.name, country: away.country }}

@@ -1,23 +1,25 @@
 /* ==================================================
-   TOURNAMENT VISUALS — AUTHORITATIVE
-   Rugby Anthem Zone
-   Purpose:
-     - Centralize ALL tournament visual identity
-     - Prevent image / logo / flag loss during refactors
-   Bound by:
-     - TournamentMeta.conceptId
+   TOURNAMENT VISUALS — AUTHORITATIVE (ABSOLUTE FINAL)
    ================================================== */
 
 import sixNationsMen from "../assets/images/tournaments/six-nations-men-2026.jpg";
 import sixNationsWomen from "../assets/images/tournaments/six-nations-women-2026.jpg";
+
 import nationsChampionship from "../assets/images/tournaments/nations-championship-2026.jpg";
-import pacificNationsCup from "../assets/images/tournaments/nations-cup-2026.jpg";
+
+import pacificMen from "../assets/images/tournaments/pacific-men.jpg";
+import pacificFour from "../assets/images/tournaments/pacific-four.jpg";
+
+import bledisloe from "../assets/images/tournaments/bledisloe.jpg";
+
 import svns from "../assets/images/tournaments/svns-2026.jpg";
 import greatestRivalry from "../assets/images/tournaments/greatest-rivalry-2026.jpg";
 
-/* NEW: International Tests heroes */
 import internationalTestsMen from "../assets/images/tournaments/international-tests-men-hero.jpg";
 import internationalTestsWomen from "../assets/images/tournaments/international-tests-women-hero.jpg";
+
+/* 🔥 ADD WXV (YOU CALLED THIS OUT) */
+import wxvHero from "../assets/images/tournaments/nations-championship-2026.jpg";
 
 import fallbackHero from "../assets/images/tournaments/default-tournament.jpg";
 
@@ -25,8 +27,8 @@ import fallbackHero from "../assets/images/tournaments/default-tournament.jpg";
 
 export type HeroLayout =
   | "default"
-  | "contained"   // logos / wide art → avoid blur
-  | "top";        // image requires heading higher
+  | "contained"
+  | "top";
 
 export type AnthemMode =
   | "standard"
@@ -37,58 +39,86 @@ export type AnthemMode =
 export interface TournamentVisual {
   conceptId: string;
 
-  /* HERO */
   heroImageMen?: string;
   heroImageWomen?: string;
   heroLayout?: HeroLayout;
 
-  /* LIST / HUB */
   logo?: string;
 
-  /* ANTHEMS */
   anthemMode?: AnthemMode;
 }
 
 /* ==================================================
-   CANONICAL VISUAL MAP
+   VISUAL MAP — COMPLETE
    ================================================== */
 
 export const tournamentVisuals: TournamentVisual[] = [
+
+  // ================= SIX NATIONS =================
   {
     conceptId: "six-nations",
     heroImageMen: sixNationsMen,
-    heroImageWomen: sixNationsWomen,
+    heroImageWomen: sixNationsWomen, // ✅ EXPLICIT
     logo: sixNationsMen,
     anthemMode: "six-nations",
   },
 
+  // ================= WOMEN SIX NATIONS (FIX) =================
+{
+  conceptId: "six-nations-women",
+  heroImageWomen: sixNationsWomen,
+  logo: sixNationsWomen,
+  anthemMode: "six-nations",
+},
+
+  // ================= NATIONS CHAMPIONSHIP =================
   {
     conceptId: "nations-championship",
     heroImageMen: nationsChampionship,
     heroImageWomen: nationsChampionship,
     logo: nationsChampionship,
-    heroLayout: "contained", // prevents blur
+    heroLayout: "contained",
     anthemMode: "global",
   },
 
+  // ================= PACIFIC (MEN) =================
   {
-    conceptId: "pacific-nations-cup",
-    heroImageMen: pacificNationsCup,
-    heroImageWomen: pacificNationsCup,
-    logo: pacificNationsCup,
-    heroLayout: "contained", // prevents blur
+    conceptId: "pacific-nations",
+    heroImageMen: pacificMen,
+    logo: pacificMen,
+    heroLayout: "contained",
     anthemMode: "global",
   },
 
+  // ================= PACIFIC FOUR (WOMEN) =================
+  {
+    conceptId: "pacific-four",
+    heroImageWomen: pacificFour,
+    logo: pacificFour,
+    heroLayout: "contained",
+    anthemMode: "global",
+  },
+
+  // ================= BLEDISLOE =================
+  {
+    conceptId: "bledisloe-cup",
+    heroImageMen: bledisloe,
+    logo: bledisloe,
+    heroLayout: "contained",
+    anthemMode: "rivalry",
+  },
+
+  // ================= SVNS =================
   {
     conceptId: "svns-series",
     heroImageMen: svns,
     heroImageWomen: svns,
     logo: svns,
-    heroLayout: "contained",     // text must sit higher
+    heroLayout: "contained",
     anthemMode: "global",
   },
 
+  // ================= RIVALRY TOUR =================
   {
     conceptId: "sa-nz-rival-tour",
     heroImageMen: greatestRivalry,
@@ -98,19 +128,36 @@ export const tournamentVisuals: TournamentVisual[] = [
     anthemMode: "rivalry",
   },
 
-  /* ================= NEW: INTERNATIONAL TESTS ================= */
-
+  // ================= INTERNATIONAL TESTS =================
   {
-  conceptId: "international-tests",
-  heroImageMen: internationalTestsMen,
-  heroImageWomen: internationalTestsWomen,
-  heroLayout: "contained",
-  anthemMode: "global",
-},
+    conceptId: "international-tests",
+    heroImageMen: internationalTestsMen,
+    heroImageWomen: internationalTestsWomen,
+    heroLayout: "contained",
+    anthemMode: "global",
+  },
+
+  // ================= WOMEN TESTS (EXPLICIT) =================
+  {
+    conceptId: "womens-tests",
+    heroImageWomen: internationalTestsWomen,
+    logo: internationalTestsWomen,
+    heroLayout: "contained",
+    anthemMode: "global",
+  },
+
+  // ================= WXV (FIXED — YOU CALLED THIS OUT) =================
+  {
+    conceptId: "wxv1",
+    heroImageWomen: wxvHero, // ✅ YOUR INSTRUCTION (reuse nations image)
+    logo: wxvHero,
+    heroLayout: "contained",
+    anthemMode: "global",
+  },
 ];
 
 /* ==================================================
-   RESOLVERS (SAFE HELPERS)
+   RESOLVER
    ================================================== */
 
 export function getTournamentVisual(conceptId: string): TournamentVisual {
@@ -120,7 +167,6 @@ export function getTournamentVisual(conceptId: string): TournamentVisual {
 
   if (visual) return visual;
 
-  /* SAFE FALLBACK */
   return {
     conceptId: "fallback",
     heroImageMen: fallbackHero,

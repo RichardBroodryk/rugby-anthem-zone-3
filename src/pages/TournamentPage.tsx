@@ -118,11 +118,16 @@ export default function TournamentPage() {
         <div className={styles.anthemsRow}>
           <div className={styles.flagsGrid}>
             {teams.map((team) => (
-              <Flag
-                key={team.name}
-                country={team.country}
-                size="medium"
-              />
+             <div
+  key={team.name}
+  onClick={() => navigate(`/anthems/${team.country}`)}
+  style={{ cursor: "pointer" }}
+>
+  <Flag
+    country={team.country}
+    size="medium"
+  />
+</div>
             ))}
           </div>
         </div>
