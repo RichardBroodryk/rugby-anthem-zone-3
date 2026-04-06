@@ -7,19 +7,19 @@ import MatchRow from "../components/match/MatchRow";
 import { tournaments2026 } from "../data/tournamentMeta";
 import { getTournamentVisual } from "../data/tournamentVisuals";
 
-/* ✅ DATA SOURCE */
 import { matches2026 } from "../data/matches";
 
-/* ✅ TYPE */
 import type { MatchData } from "../data/matches/matches2026Men";
 
 import styles from "./TournamentPage.module.css";
 
 /* ==================================================
-   STATE RESOLVER (GLOBAL RULE — NO FAKE LIVE)
+   STATE (FALLBACK ONLY — ADAPTER FIRST)
    ================================================== */
 
 function resolveState(match: MatchData): "final" | "upcoming" {
+  if ((match as any).state) return (match as any).state;
+
   if (match.score) return "final";
 
   return new Date(match.date) > new Date()
@@ -34,10 +34,6 @@ export default function TournamentPage() {
   const tournament = tournaments2026.find(
     (t) => t.route === location.pathname
   );
-
-  /* ==================================================
-     🔥 LOCKED MATCH RESOLUTION (INSTANCE ONLY)
-     ================================================== */
 
   const matches = useMemo((): MatchData[] => {
     if (!tournament) return [];
@@ -61,7 +57,10 @@ export default function TournamentPage() {
 
   const visual = getTournamentVisual(tournament.conceptId);
 
-  /* ================= TEAMS ================= */
+  const heroImage =
+    tournament.gender === "women"
+      ? visual.heroImageWomen
+      : visual.heroImageMen;
 
   const teams = Array.from(
     new Map(
@@ -74,7 +73,6 @@ export default function TournamentPage() {
 
   return (
     <main className={styles.page}>
-      {/* ================= HERO ================= */}
       <header
         className={`${styles.hero} ${
           visual.heroLayout === "contained"
@@ -82,18 +80,17 @@ export default function TournamentPage() {
             : ""
         }`}
         style={{
-          backgroundImage: `url(${
-            tournament.gender === "women"
-              ? visual.heroImageWomen
-              : visual.heroImageMen
-          })`,
+          backgroundImage: `url(${heroImage})`,
         }}
       >
         <div className={styles.heroContent}>
           <h1>
             {tournament.name} {tournament.year}
           </h1>
-          <p>{tournament.heroSubtitle}</p>
+
+          {tournament.heroSubtitle && (
+            <p>{tournament.heroSubtitle}</p>
+          )}
 
           <div className={styles.statusBadge}>
             {tournament.status?.toUpperCase()}
@@ -101,14 +98,12 @@ export default function TournamentPage() {
         </div>
       </header>
 
-      {/* ================= BACK NAV ================= */}
       <div className={styles.backNav}>
         <button onClick={() => navigate("/tournaments")}>
           ← Back to Tournaments
         </button>
       </div>
 
-      {/* ================= ANTHEMS ================= */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2>Anthems</h2>
@@ -118,22 +113,30 @@ export default function TournamentPage() {
         <div className={styles.anthemsRow}>
           <div className={styles.flagsGrid}>
             {teams.map((team) => (
-             <div
-  key={team.name}
-  onClick={() => navigate(`/anthems/${team.country}`)}
-  style={{ cursor: "pointer" }}
->
-  <Flag
-    country={team.country}
-    size="medium"
-  />
-</div>
+              <div
+                key={team.name}
+                onClick={() => {
+                  if (team.country !== "unknown") {
+                    navigate(`/anthems/${team.country}`);
+                  }
+                }}
+                style={{
+                  cursor:
+                    team.country !== "unknown"
+                      ? "pointer"
+                      : "default",
+                }}
+              >
+                <Flag
+                  country={team.country}
+                  size="medium"
+                />
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ================= MATCHES ================= */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2>Matches</h2>
@@ -161,9 +164,6 @@ export default function TournamentPage() {
           ))
         )}
       </section>
-
-      {/* ================= BOTTOM ADS ================= */}
-      {/* KEEP YOUR ADS COMPONENT HERE */}
     </main>
   );
 }

@@ -1,12 +1,10 @@
 // --------------------------------------------------
 // RAZ SYSTEM — MATCHES ADAPTER (ROLLS ROYCE)
-// UPDATED: Instance ID Preservation + Safe Fallback
+// FINAL — STATE + SAFETY + FALLBACK LOCKED
 // --------------------------------------------------
 
-/* ✅ FIX: IMPORT TYPE */
 import type { MatchData } from "./matches/matches2026Men";
 
-/* ✅ DATA SOURCE */
 import { matches2026 } from "./matches";
 
 import { COMPETITIONS } from "../contracts/competitionRegistry";
@@ -16,7 +14,6 @@ import { LEAGUE_API_MAP } from "../contracts/leagueApiMap";
 
 import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
 
-/* 🔥 TOURNAMENT META */
 import { tournaments2026 } from "./tournamentMeta";
 
 /* ==================================================
@@ -59,6 +56,15 @@ function isDomestic(match: MatchData): boolean {
 }
 
 /* ==================================================
+   STATE RESOLUTION (CENTRALIZED)
+   ================================================== */
+
+function getMatchState(match: MatchData) {
+  if (match.score) return "final";
+  return "upcoming";
+}
+
+/* ==================================================
    LEAGUE FILTER
    ================================================== */
 
@@ -74,7 +80,7 @@ function matchesLeague(
 }
 
 /* ==================================================
-   🔥 TOURNAMENT RESOLVER (FALLBACK ONLY)
+   TOURNAMENT RESOLVER
    ================================================== */
 
 function resolveTournamentInstanceId(
@@ -122,22 +128,25 @@ async function fetchFromBackend(
       process.env.REACT_APP_API_URL ||
       "https://rugby-anthem-backend.fly.dev/api/rugby";
 
-    console.log("RAZ BASE URL:", BASE);
-
     const res = await fetch(
       `${BASE}/fixtures?league=${entry.id}&season=2026`
     );
 
     if (!res.ok) {
-      const text = await res.text();
-      console.error("RAZ BACKEND ERROR:", res.status, text);
-
+      console.warn("RAZ BACKEND ERROR:", res.status);
       return null;
     }
 
     const apiData = await res.json();
 
-    return convertApiSportsFixtures(apiData);
+    const converted = convertApiSportsFixtures(apiData);
+
+    if (!Array.isArray(converted)) {
+      console.warn("RAZ: INVALID API FORMAT");
+      return null;
+    }
+
+    return converted;
   } catch (err) {
     console.warn("RAZ BACKEND FAIL → FALLBACK ACTIVATED");
     return null;
@@ -160,12 +169,9 @@ export async function getMatches(options?: {
     options?.gender
   );
 
-  /* 🔒 RULE: FALLBACK IS CORE */
   if (!backendData || backendData.length === 0) {
-    console.log("RAZ: FALLBACK ACTIVATED");
     data = matches2026;
   } else {
-    console.log("RAZ: USING BACKEND DATA");
     data = backendData;
   }
 
@@ -193,15 +199,7 @@ export async function getMatches(options?: {
       new Date(b.date).getTime()
   );
 
-  /* ==================================================
-     🔥 FINAL NORMALIZATION (FIXED)
-     ================================================== */
-
   return filtered.map((match) => {
-    /* ✅ CRITICAL FIX:
-       - Preserve existing instanceId
-       - Only fallback if missing
-    */
     const tournamentInstanceId =
       match.tournamentInstanceId ||
       resolveTournamentInstanceId(match);
@@ -210,6 +208,7 @@ export async function getMatches(options?: {
       ...match,
       tournamentInstanceId,
       importance: calculateImportance(match),
+      state: getMatchState(match),
     };
   });
 }

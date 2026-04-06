@@ -12,13 +12,12 @@ import pacificFour from "../assets/images/tournaments/pacific-four.jpg";
 
 import bledisloe from "../assets/images/tournaments/bledisloe.jpg";
 
-import svns from "../assets/images/tournaments/svns-2026.jpg";
 import greatestRivalry from "../assets/images/tournaments/greatest-rivalry-2026.jpg";
 
 import internationalTestsMen from "../assets/images/tournaments/international-tests-men-hero.jpg";
 import internationalTestsWomen from "../assets/images/tournaments/international-tests-women-hero.jpg";
 
-/* 🔥 ADD WXV (YOU CALLED THIS OUT) */
+/* 🔥 WXV (INTENTIONAL REUSE — LOCKED) */
 import wxvHero from "../assets/images/tournaments/nations-championship-2026.jpg";
 
 import fallbackHero from "../assets/images/tournaments/default-tournament.jpg";
@@ -49,7 +48,7 @@ export interface TournamentVisual {
 }
 
 /* ==================================================
-   VISUAL MAP — COMPLETE
+   VISUAL MAP — COMPLETE (NO UNUSED ENTRIES)
    ================================================== */
 
 export const tournamentVisuals: TournamentVisual[] = [
@@ -58,18 +57,17 @@ export const tournamentVisuals: TournamentVisual[] = [
   {
     conceptId: "six-nations",
     heroImageMen: sixNationsMen,
-    heroImageWomen: sixNationsWomen, // ✅ EXPLICIT
+    heroImageWomen: sixNationsWomen,
     logo: sixNationsMen,
     anthemMode: "six-nations",
   },
 
-  // ================= WOMEN SIX NATIONS (FIX) =================
-{
-  conceptId: "six-nations-women",
-  heroImageWomen: sixNationsWomen,
-  logo: sixNationsWomen,
-  anthemMode: "six-nations",
-},
+  {
+    conceptId: "six-nations-women",
+    heroImageWomen: sixNationsWomen,
+    logo: sixNationsWomen,
+    anthemMode: "six-nations",
+  },
 
   // ================= NATIONS CHAMPIONSHIP =================
   {
@@ -108,16 +106,6 @@ export const tournamentVisuals: TournamentVisual[] = [
     anthemMode: "rivalry",
   },
 
-  // ================= SVNS =================
-  {
-    conceptId: "svns-series",
-    heroImageMen: svns,
-    heroImageWomen: svns,
-    logo: svns,
-    heroLayout: "contained",
-    anthemMode: "global",
-  },
-
   // ================= RIVALRY TOUR =================
   {
     conceptId: "sa-nz-rival-tour",
@@ -137,7 +125,6 @@ export const tournamentVisuals: TournamentVisual[] = [
     anthemMode: "global",
   },
 
-  // ================= WOMEN TESTS (EXPLICIT) =================
   {
     conceptId: "womens-tests",
     heroImageWomen: internationalTestsWomen,
@@ -146,10 +133,10 @@ export const tournamentVisuals: TournamentVisual[] = [
     anthemMode: "global",
   },
 
-  // ================= WXV (FIXED — YOU CALLED THIS OUT) =================
+  // ================= WXV 1 =================
   {
     conceptId: "wxv1",
-    heroImageWomen: wxvHero, // ✅ YOUR INSTRUCTION (reuse nations image)
+    heroImageWomen: wxvHero,
     logo: wxvHero,
     heroLayout: "contained",
     anthemMode: "global",
@@ -157,7 +144,7 @@ export const tournamentVisuals: TournamentVisual[] = [
 ];
 
 /* ==================================================
-   RESOLVER
+   RESOLVER (HARDENED — ZERO UI FAILURE)
    ================================================== */
 
 export function getTournamentVisual(conceptId: string): TournamentVisual {
@@ -165,14 +152,23 @@ export function getTournamentVisual(conceptId: string): TournamentVisual {
     (v) => v.conceptId === conceptId
   );
 
-  if (visual) return visual;
+  // 🔒 FULL FALLBACK (NO MATCH FOUND)
+  if (!visual) {
+    return {
+      conceptId: "fallback",
+      heroImageMen: fallbackHero,
+      heroImageWomen: fallbackHero,
+      logo: fallbackHero,
+      heroLayout: "default",
+      anthemMode: "standard",
+    };
+  }
 
+  // 🔒 GUARANTEE NO UNDEFINED IMAGES EVER REACH UI
   return {
-    conceptId: "fallback",
-    heroImageMen: fallbackHero,
-    heroImageWomen: fallbackHero,
-    logo: fallbackHero,
-    heroLayout: "default",
-    anthemMode: "standard",
+    ...visual,
+    heroImageMen: visual.heroImageMen || fallbackHero,
+    heroImageWomen: visual.heroImageWomen || fallbackHero,
+    logo: visual.logo || fallbackHero,
   };
 }

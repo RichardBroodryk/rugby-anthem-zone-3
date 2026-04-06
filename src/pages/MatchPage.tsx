@@ -181,7 +181,8 @@ export default function MatchPage() {
 
   const stadium = stadiums.find((s) => s.name === venue);
 
-  const status = resolveState(match);
+  const status =
+  (match as any).state || resolveState(match);
 
   /* ================= STATS MAPPING ================= */
 

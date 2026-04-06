@@ -50,15 +50,16 @@ export const matches2026Women: MatchData[] = [
     away: { name: "Ireland", country: "ireland" },
   },
   {
-    id: 2002,
-    competitionId: "six-nations-women",
-    tournamentInstanceId: SIX_NATIONS_WOMEN_2026,
-    tournament: "Women's Six Nations 2026",
-    date: "2026-04-11",
-    venue: "Twickenham",
-    home: { name: "England", country: "england" },
-    away: { name: "Ireland", country: "ireland" },
-  },
+
+  id: 2002,
+  competitionId: "six-nations-women",
+  tournamentInstanceId: SIX_NATIONS_WOMEN_2026,
+  tournament: "Women's Six Nations 2026",
+  date: "2026-04-11",
+  venue: "Paris",
+  home: { name: "France", country: "france" },
+  away: { name: "Italy", country: "italy" },
+},
   {
     id: 2003,
     competitionId: "six-nations-women",
@@ -265,7 +266,7 @@ export const matches2026Women: MatchData[] = [
 
 {
   id: 9001,
-  competitionId: "wxv",
+  competitionId: "wxv1",
   tournamentInstanceId: WXV1_2026,
   tournament: "WXV 1 2026",
   date: "2026-09-25",
@@ -275,7 +276,7 @@ export const matches2026Women: MatchData[] = [
 },
 {
   id: 9002,
-  competitionId: "wxv",
+  competitionId: "wxv1",
   tournamentInstanceId: WXV1_2026,
   tournament: "WXV 1 2026",
   date: "2026-09-25",
@@ -285,7 +286,7 @@ export const matches2026Women: MatchData[] = [
 },
 {
   id: 9003,
-  competitionId: "wxv",
+  competitionId: "wxv1",
   tournamentInstanceId: WXV1_2026,
   tournament: "WXV 1 2026",
   date: "2026-10-02",

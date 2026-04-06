@@ -378,8 +378,8 @@ export const matches2026Men: MatchData[] = [
     tournament: "Nations Championship Semi Final",
     date: "2026-10-24",
     venue: "London",
-    home: { name: "TBD", country: "tbd" },
-    away: { name: "TBD", country: "tbd" },
+    home: { name: "TBD", country: "unknown" },
+    away: { name: "TBD", country: "unknown" },
   },
 
   // FINAL
@@ -390,8 +390,8 @@ export const matches2026Men: MatchData[] = [
     tournament: "Nations Championship Final",
     date: "2026-11-07",
     venue: "Twickenham",
-    home: { name: "TBD", country: "tbd" },
-    away: { name: "TBD", country: "tbd" },
+    home: { name: "TBD", country: "unknown" },
+    away: { name: "TBD", country: "unknown" },
   },
 
   // ================= INTERNATIONAL TESTS =================
@@ -456,15 +456,15 @@ export const matches2026Men: MatchData[] = [
     tournament: "Pacific Nations Cup 2026",
     date: "2026-08-29",
     venue: "Apia",
-    home: { name: "Samoa", country: "samoa" },
-    away: { name: "Tonga", country: "tonga" },
+    home: { name: "tbd", country: "unknown" },
+    away: { name: "tbd", country: "unknown" },
   },
 
  // ================= BLEDISLOE CUP =================
 
 {
   id: 6001,
-  competitionId: "rivalry",
+  competitionId: "bledisloe-cup",
   tournamentInstanceId: BLEDISLOE_2026,
   tournament: "Bledisloe Cup 2026",
   date: "2026-08-01",
@@ -474,7 +474,7 @@ export const matches2026Men: MatchData[] = [
 },
 {
   id: 6002,
-  competitionId: "rivalry",
+  competitionId: "bledisloe-cup",
   tournamentInstanceId: BLEDISLOE_2026,
   tournament: "Bledisloe Cup 2026",
   date: "2026-08-08",
@@ -484,7 +484,7 @@ export const matches2026Men: MatchData[] = [
 },
 {
   id: 6003,
-  competitionId: "rivalry",
+  competitionId: "bledisloe-cup",
   tournamentInstanceId: BLEDISLOE_2026,
   tournament: "Bledisloe Cup 2026",
   date: "2026-08-15",

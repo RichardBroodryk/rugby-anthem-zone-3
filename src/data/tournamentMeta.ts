@@ -112,7 +112,7 @@ export const tournaments2026: TournamentMeta[] = [
     type: "tournament",
     status: "active",
     matchKey: "Women's Six Nations 2026",
-    route: "/tournaments/women/six-nations-2026",
+    route: "/tournaments/women/six-nations-women-2026",
   },
 
   {
@@ -148,6 +148,6 @@ export const tournaments2026: TournamentMeta[] = [
     type: "test",
     status: "planned",
     matchKey: "Women's International Tests 2026",
-    route: "/tournaments/women/international-tests-2026",
+    route: "/tournaments/women/womens-tests-2026",
   },
 ];
