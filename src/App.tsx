@@ -31,6 +31,8 @@ import SuperHomePage from "./pages/SuperHomePage";
 
 import ProfilePage from "./pages/ProfilePage";
 
+import ContactPage from "./pages/ContactPage";
+
 /* ================= ANTHEMS ================= */
 import NationalAnthemsDirectory from "./pages/NationalAnthemsDirectory";
 import NationalAnthemPage from "./pages/NationalAnthemPage";
@@ -339,6 +341,8 @@ export default function App() {
           <Route path="/notifications" element={<NotificationsPage />} />
 
           <Route path="/profile" element={<ProfilePage />} />
+
+          <Route path="/contact" element={<ContactPage />} />
 
           <Route path="/news" element={<NewsHubPage />} />
           <Route path="/news/feed" element={<MyFeedPage />} />

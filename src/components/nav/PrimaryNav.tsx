@@ -1,9 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import styles from "./PrimaryNav.module.css";
 
-// 🔥 REPLACED LOGO (use splash logo)
 import logo from "../../assets/images/raz/raz-splash.png";
+
+import {
+  buildSearchIndex,
+  searchEntities,
+  SearchEntity,
+} from "../../data/searchIndex";
 
 type PrimaryNavProps = {
   variant: "freemium" | "premium" | "super";
@@ -20,20 +25,34 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
   );
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [logoutConfirm, setLogoutConfirm] = useState(false);
+
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [index, setIndex] = useState<SearchEntity[]>([]);
 
   const menuRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
-  /* STORE ACTIVE TIER */
+  /* STORE TIER */
   useEffect(() => {
     if (variant === "super") {
       sessionStorage.setItem(ACTIVE_TIER_KEY, "super");
-    }
-
-    if (variant === "premium") {
+    } else if (variant === "premium") {
       sessionStorage.setItem(ACTIVE_TIER_KEY, "premium");
     }
   }, [variant]);
+
+  /* BUILD SEARCH INDEX */
+  useEffect(() => {
+    if (variant === "freemium") return;
+    setIndex(buildSearchIndex(variant));
+  }, [variant]);
+
+  /* SEARCH RESULTS */
+  const results = useMemo(() => {
+    if (!query) return index.slice(0, 8);
+    return searchEntities(query, index).slice(0, 8);
+  }, [query, index]);
 
   /* SYNC AVATAR */
   useEffect(() => {
@@ -45,7 +64,7 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
     return () => window.removeEventListener("storage", syncAvatar);
   }, []);
 
-  /* CLOSE DROPDOWN */
+  /* CLOSE DROPDOWNS */
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -54,6 +73,13 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
       ) {
         setMenuOpen(false);
       }
+
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setSearchOpen(false);
+      }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -61,61 +87,56 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  /* DETERMINE HOME ROUTE */
   const storedTier = sessionStorage.getItem(ACTIVE_TIER_KEY);
   const homeRoute = storedTier === "super" ? "/home-super" : "/home";
 
-  /* FREEMIUM NAV HIDDEN */
-  if (variant === "freemium") {
-    return null;
-  }
+  if (variant === "freemium") return null;
 
-  function handleLogout() {
-    localStorage.removeItem("raz_avatar");
-    sessionStorage.clear();
-    navigate("/welcome");
+  function handleNavigate(route: string) {
+    if (!route) {
+      console.warn("RAZ: invalid route");
+      return;
+    }
+
+    setSearchOpen(false);
+    setQuery("");
+    navigate(route);
   }
 
   return (
-    <>
-      <nav className={styles.nav}>
-        {/* LEFT SIDE */}
-        <div className={styles.left}>
-          <NavLink to={homeRoute} className={styles.logoLink}>
-            <img
-              src={logo}
-              alt="Rugby Anthem Zone"
-              className={styles.logo}
-            />
-          </NavLink>
+    <nav className={styles.nav}>
+      {/* LEFT */}
+      <div className={styles.left}>
+        <NavLink to={homeRoute} className={styles.logoLink}>
+          <img src={logo} className={styles.logo} />
+        </NavLink>
 
-          <button
-            className={styles.homeButton}
-            onClick={() => navigate(homeRoute)}
-            aria-label="Home"
+        {/* HOME ICON */}
+        <button
+          className={styles.homeButton}
+          onClick={() => navigate(homeRoute)}
+        >
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
           >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M3 10.5L12 3l9 7.5" />
-              <path d="M5 10v10h14V10" />
-            </svg>
-          </button>
-        </div>
+            <path d="M3 10.5L12 3l9 7.5" />
+            <path d="M5 10v10h14V10" />
+          </svg>
+        </button>
+      </div>
 
-        {/* RIGHT SIDE */}
-        <div className={styles.actions} ref={menuRef}>
-          
-          {/* 🔍 NEW SEARCH ICON (NO LOGIC YET) */}
+      {/* RIGHT */}
+      <div className={styles.actions}>
+        {/* SEARCH */}
+        <div ref={searchRef} className={styles.searchWrapper}>
           <button
             className={styles.iconButton}
-            onClick={() => navigate("/search")} // placeholder route
-            aria-label="Search"
+            onClick={() => setSearchOpen((p) => !p)}
           >
             <svg
               width="22"
@@ -130,18 +151,70 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
             </svg>
           </button>
 
-          {/* PROFILE */}
+          {searchOpen && (
+            <div className={styles.searchDropdown}>
+              <input
+                autoFocus
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className={styles.searchInput}
+                placeholder="Search..."
+              />
+
+              <div className={styles.searchResults}>
+                {results.map((item) => (
+                  <button
+                    key={item.id}
+                    className={styles.searchItem}
+                    onClick={() => handleNavigate(item.route)}
+                  >
+                    <div>
+                      <div className={styles.searchTitle}>
+                        {item.title}
+                      </div>
+                      {item.subtitle && (
+                        <div className={styles.searchSubtitle}>
+                          {item.subtitle}
+                        </div>
+                      )}
+                    </div>
+
+                    <span className={styles.searchType}>
+                      {item.type}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* CONTACT */}
+        <button
+          className={styles.iconButton}
+          onClick={() => navigate("/contact")}
+        >
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="M3 7l9 6 9-6" />
+          </svg>
+        </button>
+
+        {/* PROFILE */}
+        <div ref={menuRef}>
           <button
             className={styles.profileButton}
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Profile menu"
+            onClick={() => setMenuOpen((p) => !p)}
           >
             {avatar ? (
-              <img
-                src={avatar}
-                alt="Profile"
-                className={styles.navAvatar}
-              />
+              <img src={avatar} className={styles.navAvatar} />
             ) : (
               <svg
                 width="22"
@@ -162,53 +235,28 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
               <button onClick={() => navigate("/profile")}>
                 Profile
               </button>
-
               <button onClick={() => navigate("/my-teams")}>
                 My Teams
               </button>
-
               <button onClick={() => navigate("/notifications")}>
                 Notifications
               </button>
 
               <div className={styles.divider} />
 
-              <button onClick={() => setLogoutConfirm(true)}>
+              <button
+                onClick={() => {
+                  localStorage.removeItem(AVATAR_KEY);
+                  sessionStorage.clear();
+                  navigate("/welcome");
+                }}
+              >
                 Logout
               </button>
             </div>
           )}
         </div>
-      </nav>
-
-      {/* LOGOUT MODAL */}
-      {logoutConfirm && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modal}>
-            <h3>Confirm Logout</h3>
-
-            <p>
-              Are you sure you want to log out of Rugby Anthem Zone?
-            </p>
-
-            <div className={styles.modalActions}>
-              <button
-                className={styles.cancel}
-                onClick={() => setLogoutConfirm(false)}
-              >
-                Cancel
-              </button>
-
-              <button
-                className={styles.confirm}
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+      </div>
+    </nav>
   );
 }

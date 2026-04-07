@@ -59,9 +59,10 @@
 .actions {
   display: flex;
   align-items: center;
+  gap: 6px; /* 🔥 small spacing fix */
 }
 
-/* ICON BUTTON (SEARCH ETC) */
+/* ICON BUTTON */
 .iconButton {
   display: flex;
   align-items: center;
@@ -155,7 +156,102 @@
   margin: 6px 0;
 }
 
-/* LOGOUT MODAL */
+/* ================= SEARCH (CLEAN + ALIGNED) ================= */
+
+.searchWrapper {
+  position: relative;
+}
+
+/* 🔥 MATCHES PROFILE DROPDOWN STYLE */
+.searchDropdown {
+  position: absolute;
+  right: 0;
+  top: 48px;
+
+  width: 320px;
+
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+
+  padding: 10px;
+
+  z-index: 200;
+}
+
+/* INPUT */
+.searchInput {
+  width: 100%;
+  padding: 10px;
+
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+
+  outline: none;
+  font-size: 14px;
+
+  margin-bottom: 10px;
+}
+
+/* RESULTS */
+.searchResults {
+  max-height: 260px;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ITEM */
+.searchItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px;
+  border-radius: 8px;
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+  text-align: left;
+}
+
+.searchItem:hover {
+  background: #f8fafc;
+}
+
+/* TEXT */
+.searchTitle {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.searchSubtitle {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.searchType {
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  padding: 10px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* ================= MODAL ================= */
+
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -212,4 +308,11 @@
   background: #c8102e;
   color: white;
   cursor: pointer;
+}
+.searchLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  padding-left: 4px;
 }
