@@ -1,26 +1,64 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { sendContactMessage } from "../services/contactService";
 
 import styles from "./ContactPage.module.css";
 
+/* ==================================================
+   TYPES
+   ================================================== */
+
+type ContactStatus = "idle" | "success" | "error";
+
+type ContactContext = {
+  type?: string;
+};
+
+/* ==================================================
+   PAGE
+   ================================================== */
+
 export default function ContactPage() {
+  const location = useLocation();
+  const context = location.state as ContactContext | null;
+
+  const isPodcastApplication = context?.type === "podcast-application";
+
   const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
   const [heading, setHeading] = useState("");
   const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<ContactStatus>("idle");
+
+  /* ==================================================
+     CONTEXT PREFILL (SAFE — NON-DESTRUCTIVE)
+     ================================================== */
+
+  useEffect(() => {
+    if (isPodcastApplication) {
+      setHeading((prev) =>
+        prev ? prev : "Podcast Application"
+      );
+
+      setMessage((prev) =>
+        prev
+          ? prev
+          : "Podcast Name:\nPodcast URL:\nRegion:\nDescription:\n\n"
+      );
+    }
+  }, [isPodcastApplication]);
 
   /* ==================================================
      VALIDATION
      ================================================== */
 
-  function isValidEmail(value: string) {
+  function isValidEmail(value: string): boolean {
     return /\S+@\S+\.\S+/.test(value);
   }
 
-  function isFormValid() {
+  function isFormValid(): boolean {
     return (
       isValidEmail(email) &&
       date.trim() !== "" &&
@@ -33,7 +71,7 @@ export default function ContactPage() {
      SUBMIT
      ================================================== */
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!isFormValid()) {
@@ -71,12 +109,27 @@ export default function ContactPage() {
     }
   }
 
+  /* ==================================================
+     RENDER
+     ================================================== */
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Contact Support</h1>
+
+        {/* TITLE */}
+        <h1 className={styles.title}>Contact</h1>
+
+        {/* CONTEXT INFO (ONLY WHEN APPLICABLE) */}
+        {isPodcastApplication && (
+          <div className={styles.info}>
+            Podcast application — please include your podcast URL,
+            region, and a short description.
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className={styles.form}>
+
           {/* EMAIL */}
           <div className={styles.field}>
             <label>Email</label>
@@ -115,8 +168,8 @@ export default function ContactPage() {
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Describe your issue or feedback..."
-              rows={5}
+              placeholder="Describe your request, feedback, or application..."
+              rows={6}
             />
           </div>
 
@@ -141,6 +194,7 @@ export default function ContactPage() {
           >
             {loading ? "Sending..." : "Send"}
           </button>
+
         </form>
       </div>
     </div>

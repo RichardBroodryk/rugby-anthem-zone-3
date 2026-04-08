@@ -18,16 +18,6 @@ import womensRugbyPodImg from "../assets/images/podcasts/wrp-ireland.jpg";
 
 /* ================= TYPES ================= */
 
-type Episode = {
-  id: number;
-  title: string;
-  date: string;
-  duration: string;
-  tournament: string;
-  downloads: string;
-  summary: string;
-};
-
 type Podcast = {
   id: number;
   name: string;
@@ -37,16 +27,15 @@ type Podcast = {
   description: string;
   url: string;
   image: string;
-  episodes: Episode[];
+  episodes: any[];
   isPartner?: boolean;
 };
 
 /* ================= PAGE ================= */
 
 export default function PodcastsPage() {
-
   const navigate = useNavigate();
-  const [activeTournament, setActiveTournament] = useState("all");
+  const [activeTournament, setActiveTournament] = useState<string>("all");
 
   const tournaments = [
     { id: "all", label: "All" },
@@ -58,8 +47,6 @@ export default function PodcastsPage() {
   ];
 
   const podcasts: Podcast[] = [
-
-    /* FEATURED PARTNER */
 
     {
       id: 1,
@@ -185,12 +172,8 @@ export default function PodcastsPage() {
     }
   ];
 
-  /* SPLIT FEATURE + GRID */
-
   const featuredPodcast = podcasts.find(p => p.isPartner);
   const otherPodcasts = podcasts.filter(p => !p.isPartner);
-
-  /* FILTER GRID */
 
   const filteredOther =
     activeTournament === "all"
@@ -205,13 +188,12 @@ export default function PodcastsPage() {
     <div className={styles.page}>
 
       {/* HERO */}
-
       <header className={styles.hero}>
         <img
-  src={podcastsHero}
-  alt="Rugby podcast studio banner"
-  className={styles.heroImage}
-/>
+          src={podcastsHero}
+          alt="Rugby podcast studio banner"
+          className={styles.heroImage}
+        />
         <div className={styles.heroText}>
           <h1>Rugby Podcasts</h1>
           <p>
@@ -223,7 +205,6 @@ export default function PodcastsPage() {
       </header>
 
       {/* BACK */}
-
       <div className={styles.backWrap}>
         <button className={styles.back} onClick={() => navigate("/media")}>
           ← Back to The Rugby Studio
@@ -231,7 +212,6 @@ export default function PodcastsPage() {
       </div>
 
       {/* FILTERS */}
-
       <nav className={styles.filters}>
         {tournaments.map(t => (
           <button
@@ -246,17 +226,14 @@ export default function PodcastsPage() {
         ))}
       </nav>
 
-      {/* FEATURED DSPN */}
-
+      {/* FEATURED */}
       {featuredPodcast && (
         <section className={styles.featuredWrap}>
-
           <h2 className={styles.featuredHeading}>
             RAZ Featuring Martin Devlin Podcasts
           </h2>
 
           <article className={styles.featuredCard}>
-
             <img
               src={featuredPodcast.image}
               className={styles.featuredImage}
@@ -264,7 +241,6 @@ export default function PodcastsPage() {
             />
 
             <div className={styles.featuredContent}>
-
               <div className={styles.no1Badge}>#1</div>
 
               <h3>{featuredPodcast.name}</h3>
@@ -283,21 +259,16 @@ export default function PodcastsPage() {
               >
                 Visit Podcast →
               </a>
-
             </div>
           </article>
-
         </section>
       )}
 
-      {/* OTHER PODCASTS */}
-
+      {/* GRID */}
       <section className={styles.grid}>
         {filteredOther.map(podcast => (
           <article key={podcast.id} className={styles.card}>
-
             <header className={styles.cardHeader}>
-
               <img
                 src={podcast.image}
                 alt={podcast.name}
@@ -310,7 +281,6 @@ export default function PodcastsPage() {
                   {podcast.region} • {podcast.language}
                 </span>
               </div>
-
             </header>
 
             <p className={styles.description}>{podcast.description}</p>
@@ -323,20 +293,33 @@ export default function PodcastsPage() {
             >
               Visit Podcast →
             </a>
-
           </article>
         ))}
       </section>
 
       {/* JOIN CTA */}
-
       <section className={styles.join}>
         <h3>Have a Rugby Podcast?</h3>
+
         <p>
           Join the Rugby Studio to reach a global rugby audience.
           Listing, discovery, and monetisation opportunities available.
         </p>
-        <button className={styles.joinBtn}>Apply to Join</button>
+
+        <p>
+          Add your URL and details on the Contact Page.
+        </p>
+
+        <button
+          className={styles.joinBtn}
+          onClick={() =>
+            navigate("/contact", {
+              state: { type: "podcast-application" },
+            })
+          }
+        >
+          Apply to Join
+        </button>
       </section>
 
     </div>
