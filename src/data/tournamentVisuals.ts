@@ -20,6 +20,9 @@ import internationalTestsWomen from "../assets/images/tournaments/international-
 /* 🔥 WXV (INTENTIONAL REUSE — LOCKED) */
 import wxvHero from "../assets/images/tournaments/nations-championship-2026.jpg";
 
+/* 🆕 SVNS */
+import svnsHero from "../assets/images/tournaments/svns-2026.jpg";
+
 import fallbackHero from "../assets/images/tournaments/default-tournament.jpg";
 
 /* ================= TYPES ================= */
@@ -141,6 +144,16 @@ export const tournamentVisuals: TournamentVisual[] = [
     heroLayout: "contained",
     anthemMode: "global",
   },
+
+  // ================= SVNS =================
+  {
+    conceptId: "svns",
+    heroImageMen: svnsHero,
+    heroImageWomen: svnsHero,
+    logo: svnsHero,
+    heroLayout: "contained",
+    anthemMode: "global",
+  },
 ];
 
 /* ==================================================
@@ -152,7 +165,6 @@ export function getTournamentVisual(conceptId: string): TournamentVisual {
     (v) => v.conceptId === conceptId
   );
 
-  // 🔒 FULL FALLBACK (NO MATCH FOUND)
   if (!visual) {
     return {
       conceptId: "fallback",
@@ -164,7 +176,6 @@ export function getTournamentVisual(conceptId: string): TournamentVisual {
     };
   }
 
-  // 🔒 GUARANTEE NO UNDEFINED IMAGES EVER REACH UI
   return {
     ...visual,
     heroImageMen: visual.heroImageMen || fallbackHero,

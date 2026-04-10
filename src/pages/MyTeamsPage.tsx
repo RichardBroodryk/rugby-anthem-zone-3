@@ -7,7 +7,7 @@ import { teamsMeta, TeamMeta } from "../data/teamsMeta";
 import { loadMyTeams } from "../utils/myTeamsStorage";
 
 import { getMatches } from "../data/matchesAdapter";
-import type { MatchData } from "../data/matches/matches2026Men";
+import type { MatchData } from "../data/matches/types";
 
 export default function MyTeamsPage() {
   const navigate = useNavigate();

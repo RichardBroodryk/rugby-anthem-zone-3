@@ -6,7 +6,7 @@ import styles from "./FixturesPage.module.css";
 import { getMatches } from "../data/matchesAdapter";
 
 /* ✅ FIX: correct type import */
-import type { MatchData } from "../data/matches/matches2026Men";
+import type { MatchData } from "../data/matches/types";
 
 import FixtureRow from "../components/fixtures/FixtureRow";
 import FixturesSectionHero from "../components/fixtures/FixturesSectionHero";

@@ -1,4 +1,4 @@
-import type { MatchData } from "../data/matches/matches2026Men";
+import type { MatchData } from "../data/matches/types";
 import { API_TO_CONCEPT_MAP } from "../contracts/competitionIdMap";
 
 /**

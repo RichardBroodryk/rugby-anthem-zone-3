@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /* ✅ IMPORT TYPE ONLY (FIXED PATH) */
-import type { MatchData } from "../data/matches/matches2026Men";
+import type { MatchData } from "../data/matches/types";
 
 import { COMPETITIONS } from "./competitionRegistry";
 

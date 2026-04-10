@@ -1,4 +1,4 @@
-// --------------------------------------------------
+// -------------------------------------------------- 
 // RAZ SYSTEM — TOURNAMENT META 2026 (FULLY NORMALIZED)
 // --------------------------------------------------
 
@@ -7,7 +7,7 @@ export interface TournamentMeta {
   instanceId: string;
   name: string;
   year: number;
-  gender: "men" | "women";
+  gender: "men" | "women" | "mixed"; // ✅ EXTENDED (NON-BREAKING)
   type: string;
   status: string;
   matchKey: string;
@@ -99,6 +99,23 @@ export const tournaments2026: TournamentMeta[] = [
     heroBadge: "ICONIC RIVALRY",
     heroSubtitle: "South Africa · New Zealand",
     route: "/tournaments/men/rivalry-tour-2026",
+  },
+
+  // ================= SVNS (MEN + WOMEN COMBINED) =================
+
+  {
+    conceptId: "svns",
+    instanceId: "svns-2026",
+    name: "HSBC SVNS World Championship",
+    year: 2026,
+    gender: "mixed", // ✅ KEY
+    type: "sevens",
+    status: "active",
+    matchKey: "HSBC SVNS World Championship 2026",
+    heroBadge: "WORLD CHAMPIONSHIP",
+    heroSubtitle: "Hong Kong · Valladolid · Bordeaux",
+    route: "/tournaments/svns-2026",
+    window: "Apr – Jun 2026",
   },
 
   // ================= WOMEN =================

@@ -28,7 +28,7 @@ export default function WomensTournamentsPage() {
   const navigate = useNavigate();
 
   const womensTournaments: TournamentRow[] = tournaments2026
-    .filter((t) => t.gender === "women")
+    .filter((t) => t.gender === "women" || t.gender === "mixed")
     .map((t) => {
       const visual = getTournamentVisual(t.conceptId);
       return {

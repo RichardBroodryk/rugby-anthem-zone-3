@@ -60,10 +60,19 @@ export async function resolveCalendarMatches(
           : m.tournament;
 
       const gender =
+  tournamentMeta?.gender === "mixed"
+    ? (
+        (m as any).gender ||
+        (m.tournament.toLowerCase().includes("women")
+          ? "women"
+          : "men")
+      )
+    : (
         tournamentMeta?.gender ||
         (m.tournament.toLowerCase().includes("women")
           ? "women"
-          : "men");
+          : "men")
+      );
 
       /* ================= STADIUM ================= */
 

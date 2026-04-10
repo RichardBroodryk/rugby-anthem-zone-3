@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Flag from "../components/images/Flag";
 import TeamComparisonTable from "../components/stats/TeamComparisonTable";
 
-import type { MatchData } from "../data/matches/matches2026Men";
+import type { MatchData } from "../data/matches/types";
 import { matches2026 } from "../data/matches";
 import { tournaments2026 } from "../data/tournamentMeta";
 import { stadiums } from "../data/stadiums";

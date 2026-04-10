@@ -6,21 +6,7 @@
    TYPES (LOCAL — NO IMPORT ERRORS)
    ================================================== */
 
-export interface MatchTeam {
-  name: string;
-  country: string;
-}
-
-export interface MatchData {
-  id: number;
-  competitionId: string;
-  tournament: string;
-  date: string;
-  venue: string;
-  home: MatchTeam;
-  away: MatchTeam;
-  tournamentInstanceId?: string;
-}
+import type { MatchData } from "./types";
 
 /* ==================================================
    CONSTANTS

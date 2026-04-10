@@ -5,7 +5,7 @@ import Flag from "../components/images/Flag";
 import { matches2026 } from "../data/matches";
 
 /* ✅ TYPE IMPORT (SAFE) */
-import type { MatchData } from "../data/matches/matches2026Men";
+import type { MatchData } from "../data/matches/types";
 
 import styles from "./GamesOverview.module.css";
 

@@ -279,6 +279,7 @@ export default function App() {
           <Route path="/tournaments" element={<TournamentsHubPage />} />
           <Route path="/tournaments/men" element={<MensTournamentsPage />} />
           <Route path="/tournaments/women" element={<WomensTournamentsPage />} />
+          <Route path="/tournaments/:slug" element={<TournamentPage />} />
           <Route path="/tournaments/men/:slug" element={<TournamentPage />} />
           <Route path="/tournaments/women/:slug" element={<TournamentPage />} />
 

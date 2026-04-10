@@ -7,7 +7,7 @@ import MatchCenterNav from "../components/match/MatchCenterNav";
 import { matches2026 } from "../data/matches";
 
 /* ✅ TYPE */
-import type { MatchData } from "../data/matches/matches2026Men";
+import type { MatchData } from "../data/matches/types";
 
 import Flag from "../components/images/Flag";
 

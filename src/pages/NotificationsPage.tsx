@@ -10,7 +10,7 @@ import { loadMyTeams } from "../utils/myTeamsStorage";
 import { teamsMeta, TeamMeta } from "../data/teamsMeta";
 
 import { getMatches } from "../data/matchesAdapter";
-import type { MatchData } from "../data/matches/matches2026Men";
+import type { MatchData } from "../data/matches/types";
 
 import { calculateImportance } from "../contracts/importanceEngine";
 

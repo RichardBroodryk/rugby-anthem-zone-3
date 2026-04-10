@@ -3,7 +3,7 @@
 // FINAL — STATE + SAFETY + FALLBACK LOCKED
 // --------------------------------------------------
 
-import type { MatchData } from "./matches/matches2026Men";
+import type { MatchData } from "../data/matches/types";
 
 import { matches2026 } from "./matches";
 
