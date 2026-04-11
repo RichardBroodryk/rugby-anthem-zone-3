@@ -190,12 +190,12 @@ function DevHomeEntry() {
   const isDev = process.env.NODE_ENV === "development";
   const isLocalhost = window.location.hostname === "localhost";
 
+  const [params] = useSearchParams();
+
   // 🔒 BLOCK IN PRODUCTION
   if (!isDev || !isLocalhost) {
     return <Navigate to="/" replace />;
   }
-
-  const [params] = useSearchParams();
   const devTier = params.get("devTier");
 
   if (devTier === "freemium") return <Navigate to="/home-free" replace />;
