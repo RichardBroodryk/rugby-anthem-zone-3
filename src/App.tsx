@@ -219,8 +219,15 @@ function RequireAuth({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
-/* ================= DEV ENTRY ================= */
 function DevHomeEntry() {
+  const isDev = process.env.NODE_ENV === "development";
+  const isLocalhost = window.location.hostname === "localhost";
+
+  // 🔒 BLOCK IN PRODUCTION
+  if (!isDev || !isLocalhost) {
+    return <Navigate to="/" replace />;
+  }
+
   const [params] = useSearchParams();
   const devTier = params.get("devTier");
 
