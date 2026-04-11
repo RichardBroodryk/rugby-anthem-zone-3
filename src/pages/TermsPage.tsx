@@ -111,7 +111,7 @@ export default function TermsPage() {
 
   }, [tier, country, navigate, transactionId]);
 
-
+console.log("TOKEN:", getToken());
 
   // ---------------------------------------------------
   // ACCEPT TERMS
