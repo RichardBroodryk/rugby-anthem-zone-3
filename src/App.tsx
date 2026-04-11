@@ -174,39 +174,6 @@ import StatsApiDebugPage from "./pages/StatsApiDebugPage";
 
 import CheckoutPage from "./pages/CheckoutPage";
 
-/* ================= 🆕 PADDLE HANDLER ================= */
-function PaddleTxnListener() {
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const txn = params.get("_ptxn");
-    if (!txn) return;
-
-    const PADDLE_CLIENT_TOKEN =
-      process.env.REACT_APP_PADDLE_CLIENT_TOKEN;
-
-    if (!(window as any).Paddle) {
-      console.error("RAZ: Paddle not loaded globally");
-      return;
-    }
-
-    try {
-      (window as any).Paddle.Initialize({
-        token: PADDLE_CLIENT_TOKEN,
-      });
-
-      (window as any).Paddle.Checkout.open({
-        transactionId: txn,
-      });
-
-      console.log("RAZ: Paddle checkout opened for", txn);
-    } catch (err) {
-      console.error("RAZ Paddle init/open error:", err);
-    }
-  }, []);
-
-  return null;
-}
-
 /* ================= AUTH GUARD ================= */
 function RequireAuth({ children }: { children: ReactNode }) {
   const token = getToken();
@@ -254,7 +221,6 @@ export default function App() {
 
   return (
     <Router>
-      <PaddleTxnListener />
 
       <Routes>
         {isDev && <Route path="/dev/home" element={<DevHomeEntry />} />}
