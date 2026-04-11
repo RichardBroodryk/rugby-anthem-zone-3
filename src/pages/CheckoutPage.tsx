@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -8,27 +7,18 @@ declare global {
 }
 
 const CheckoutPage = () => {
-  const navigate = useNavigate();
 
   useEffect(() => {
 
-    const script = document.createElement("script");
-    script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
-    script.async = true;
+    // =====================================================
+    // 🔴 STEP 1 — VERIFY PAYMENT IMMEDIATELY (CRITICAL FIX)
+    // =====================================================
 
-    document.body.appendChild(script);
+    const params = new URLSearchParams(window.location.search);
+    const transactionId = params.get("_ptxn");
 
-    script.onload = async () => {
-
-      window.Paddle.Initialize({
-        token: "live_1315bcf84802de1b59fc1bd1da5"
-      });
-
-      // 🔴 Read transaction id
-      const params = new URLSearchParams(window.location.search);
-      const transactionId = params.get("_ptxn");
-
-      if (transactionId) {
+    if (transactionId) {
+      (async () => {
         try {
           console.log("🔍 Verifying txn:", transactionId);
 
@@ -49,37 +39,56 @@ const CheckoutPage = () => {
 
           if (data.success) {
             if (data.tier === "super") {
-              navigate("/home-super", { replace: true });
+              window.location.href = "/home-super";
             } else if (data.tier === "premium") {
-              navigate("/home", { replace: true });
+              window.location.href = "/home";
             } else {
-              navigate("/home-free", { replace: true });
+              window.location.href = "/home-free";
             }
           } else {
-            console.error("Verification failed:", data);
+            console.error("❌ Verification failed:", data);
           }
 
         } catch (err) {
           console.error("❌ Verify error:", err);
         }
-      }
+      })();
+    }
 
+    // =====================================================
+    // 🟡 STEP 2 — LOAD PADDLE (OPTIONAL AFTER RETURN)
+    // =====================================================
+
+    const script = document.createElement("script");
+    script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      if (window.Paddle) {
+        window.Paddle.Initialize({
+          token: "live_1315bcf84802de1b59fc1bd1da5"
+        });
+      }
     };
 
     return () => {
       document.body.removeChild(script);
     };
 
-  }, [navigate]);
+  }, []);
 
   return (
-    <div style={{
-      height: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      flexDirection: "column"
-    }}>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
       <h2>Preparing secure checkout...</h2>
       <p>Loading Rugby Anthem Zone subscription.</p>
     </div>
