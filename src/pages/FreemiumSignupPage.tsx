@@ -1,3 +1,5 @@
+// src/pages/FreemiumSignupPage.tsx
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./FreemiumSignupPage.module.css";
@@ -17,17 +19,17 @@ const COUNTRIES = [
 ];
 
 export default function FreemiumSignupPage() {
-  console.log("FREEMIUM SIGNUP NEW BUILD ACTIVE");
   const navigate = useNavigate();
 
-  const [country, setCountry] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [country, setCountry] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [showPassword, setShowPassword] = useState<boolean>(false); // ✅ FIXED
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
   const handleSignup = async () => {
     if (!country) {
@@ -37,6 +39,11 @@ export default function FreemiumSignupPage() {
 
     if (!email || !password) {
       setError("Please enter email and password.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email.");
       return;
     }
 
@@ -54,19 +61,15 @@ export default function FreemiumSignupPage() {
           email,
         },
       });
-
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Signup failed";
 
-      if (message.toLowerCase().includes("password")) {
-        setError("Incorrect password");
-      } else if (message.toLowerCase().includes("user")) {
-        setError("Email already exists or invalid");
+      if (message.toLowerCase().includes("exists")) {
+        setError("Email already registered.");
       } else {
         setError("Signup failed. Please try again.");
       }
-
     } finally {
       setLoading(false);
     }
@@ -75,7 +78,7 @@ export default function FreemiumSignupPage() {
   return (
     <section className={styles.page}>
       <header className={styles.header}>
-        <h1>Freemium Access v2</h1>
+        <h1>Freemium Access</h1>
         <p className={styles.subtitle}>
           Permanent free access to the essential Rugby Anthem Zone experience,
           supported by advertising.
@@ -97,7 +100,7 @@ export default function FreemiumSignupPage() {
           <h2>Important to Know</h2>
           <p>
             Freemium is not a trial. It is a permanently free tier designed
-            for casual and regular followers.
+            for casual users.
           </p>
         </div>
 
@@ -113,7 +116,6 @@ export default function FreemiumSignupPage() {
           />
 
           <label className={styles.label}>Password</label>
-
           <div style={{ position: "relative" }}>
             <input
               type={showPassword ? "text" : "password"}
@@ -121,16 +123,15 @@ export default function FreemiumSignupPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
-              style={{ paddingRight: "60px" }}
+              style={{ paddingRight: "50px" }}
             />
 
-            {/* 👁 TOGGLE */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               style={{
                 position: "absolute",
-                right: "10px",
+                right: "8px",
                 top: "50%",
                 transform: "translateY(-50%)",
                 background: "#222",
@@ -141,7 +142,7 @@ export default function FreemiumSignupPage() {
                 cursor: "pointer",
               }}
             >
-              {showPassword ? "HIDE" : "SHOW"}
+              {showPassword ? "Hide" : "Show"}
             </button>
           </div>
         </div>
@@ -168,7 +169,6 @@ export default function FreemiumSignupPage() {
           {error && <p className={styles.error}>{error}</p>}
         </div>
 
-        {/* PRICING */}
         <div className={styles.pricingBox}>
           <p className={styles.price}>Free</p>
           <p className={styles.psychology}>
