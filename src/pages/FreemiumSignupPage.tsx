@@ -17,6 +17,7 @@ const COUNTRIES = [
 ];
 
 export default function FreemiumSignupPage() {
+  console.log("FREEMIUM SIGNUP NEW BUILD ACTIVE");
   const navigate = useNavigate();
 
   const [country, setCountry] = useState<string>("");
@@ -74,7 +75,7 @@ export default function FreemiumSignupPage() {
   return (
     <section className={styles.page}>
       <header className={styles.header}>
-        <h1>Freemium Access</h1>
+        <h1>Freemium Access v2</h1>
         <p className={styles.subtitle}>
           Permanent free access to the essential Rugby Anthem Zone experience,
           supported by advertising.
