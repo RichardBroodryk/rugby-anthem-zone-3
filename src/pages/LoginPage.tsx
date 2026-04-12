@@ -29,6 +29,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const [error, setError] = useState("");
+  const [info, setInfo] = useState(""); // 👈 for forgot password feedback
   const [loading, setLoading] = useState(false);
 
   const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
@@ -46,16 +47,14 @@ export default function LoginPage() {
 
     setLoading(true);
     setError("");
+    setInfo("");
 
     try {
-      // 🔐 LOGIN
       await loginUser(email, password);
 
       const token = getToken();
 
-      // =============================
-      // 💳 CHECKOUT INTENT FLOW
-      // =============================
+      // 💳 CHECKOUT FLOW
       if (checkoutIntent && checkoutTier && token) {
         try {
           const data = await apiRequest(
@@ -66,7 +65,7 @@ export default function LoginPage() {
           );
 
           if (!data.checkoutUrl) {
-            setError("Unable to start payment. Please try again.");
+            setError("Unable to start payment.");
             setLoading(false);
             return;
           }
@@ -74,32 +73,25 @@ export default function LoginPage() {
           window.location.href = data.checkoutUrl;
           return;
 
-        } catch (err) {
-          console.error("Checkout error:", err);
+        } catch {
           setError("Payment service unavailable.");
           setLoading(false);
           return;
         }
       }
 
-      // =============================
-      // 🧭 NORMAL LOGIN ROUTING
-      // =============================
+      // 🧭 NORMAL LOGIN
       const tier = await getUserTier();
 
-      if (tier === "super") {
-        window.location.href = "/home-super";
-      } else if (tier === "premium") {
-        window.location.href = "/home";
-      } else {
-        window.location.href = "/home-free";
-      }
+      if (tier === "super") window.location.href = "/home-super";
+      else if (tier === "premium") window.location.href = "/home";
+      else window.location.href = "/home-free";
 
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : "Login failed";
+        err instanceof Error ? err.message : "";
 
-      // 🔥 FRIENDLY ERRORS
+      // 🔥 CLEAN ERROR MESSAGES
       if (message.toLowerCase().includes("password")) {
         setError("Incorrect password");
       } else if (message.toLowerCase().includes("user")) {
@@ -111,6 +103,23 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // 🔁 FORGOT PASSWORD (SAFE PLACEHOLDER)
+  const handleForgotPassword = () => {
+    if (!email) {
+      setError("Enter your email first.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("Enter a valid email to reset password.");
+      return;
+    }
+
+    // 🔥 For now (no backend endpoint yet)
+    setError("");
+    setInfo("Password reset link will be available soon.");
   };
 
   return (
@@ -134,13 +143,6 @@ export default function LoginPage() {
             placeholder="you@example.com"
           />
 
-          {/* EMAIL PREVIEW */}
-          {email && (
-            <p style={{ fontSize: "12px", color: "#888", marginTop: "5px" }}>
-              You entered: <strong>{email}</strong>
-            </p>
-          )}
-
           {/* PASSWORD */}
           <label className={styles.label}>Password</label>
           <div style={{ position: "relative" }}>
@@ -153,7 +155,6 @@ export default function LoginPage() {
               style={{ paddingRight: "50px" }}
             />
 
-            {/* 👁 TOGGLE */}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -174,8 +175,29 @@ export default function LoginPage() {
             </button>
           </div>
 
+          {/* 🔁 FORGOT PASSWORD */}
+          <p
+            onClick={handleForgotPassword}
+            style={{
+              marginTop: "8px",
+              fontSize: "12px",
+              color: "#007bff",
+              cursor: "pointer",
+              textDecoration: "underline",
+            }}
+          >
+            Forgot password?
+          </p>
+
           {/* ERROR */}
           {error && <p className={styles.error}>{error}</p>}
+
+          {/* INFO */}
+          {info && (
+            <p style={{ color: "#4caf50", fontSize: "12px" }}>
+              {info}
+            </p>
+          )}
         </div>
       </section>
 
