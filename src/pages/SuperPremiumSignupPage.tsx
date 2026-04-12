@@ -32,6 +32,8 @@ export default function SuperPremiumSignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [showPassword, setShowPassword] = useState(false); // ✅ FIX
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -67,7 +69,14 @@ export default function SuperPremiumSignupPage() {
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Signup failed";
-      setError(message);
+
+      if (message.toLowerCase().includes("password")) {
+        setError("Incorrect password");
+      } else if (message.toLowerCase().includes("user")) {
+        setError("Email already exists or invalid");
+      } else {
+        setError("Signup failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -78,52 +87,54 @@ export default function SuperPremiumSignupPage() {
       <header className={styles.header}>
         <h1>Super Premium Access</h1>
         <p className={styles.subtitle}>
-          For supporters who want the most complete, uninterrupted Rugby Anthem Zone experience — focused on heritage, history, and the deeper story of the game.
+          For supporters who want the most complete Rugby Anthem Zone experience.
         </p>
       </header>
 
       <section className={styles.content}>
-        {/* WHAT’S INCLUDED */}
-        <div className={styles.block}>
-          <h2>What’s Included</h2>
-          <ul>
-            <li>Everything in Premium</li>
-            <li>Completely ad-free experience</li>
-            <li>Full access to Heritage content</li>
-            <li>Full access to Defining Moments</li>
-            <li>Deep editorial focus across the platform</li>
-          </ul>
-        </div>
-
-        {/* SUBSCRIPTION TERMS */}
-        <div className={styles.block}>
-          <h2>Subscription Terms</h2>
-          <ul>
-            <li>Billed monthly</li>
-            <li>No free trial</li>
-            <li>Cancel anytime before renewal</li>
-          </ul>
-        </div>
-
-        {/* EMAIL + PASSWORD */}
+        {/* EMAIL */}
         <div className={styles.block}>
           <label className={styles.label}>Email</label>
           <input
             type="email"
             className={styles.select}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value.toLowerCase())}
             placeholder="you@example.com"
           />
 
+          {/* PASSWORD WITH TOGGLE */}
           <label className={styles.label}>Password</label>
-          <input
-            type="password"
-            className={styles.select}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-          />
+
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              className={styles.select}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              style={{ paddingRight: "50px" }}
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "8px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "#222",
+                color: "#fff",
+                border: "none",
+                padding: "4px 8px",
+                fontSize: "11px",
+                cursor: "pointer",
+              }}
+            >
+              {showPassword ? "HIDE" : "SHOW"}
+            </button>
+          </div>
         </div>
 
         {/* COUNTRY */}
@@ -148,17 +159,13 @@ export default function SuperPremiumSignupPage() {
           {error && <p className={styles.error}>{error}</p>}
         </div>
 
-        {/* 🔥 FIXED PRICING */}
+        {/* PRICING */}
         <div className={styles.pricingBox}>
           <p className={styles.price}>$3.49 / month</p>
           <p className={styles.billing}>Billed monthly</p>
-          <p className={styles.psychology}>
-            Full access. No distractions.
-          </p>
         </div>
       </section>
 
-      {/* CTA */}
       <footer className={styles.footer}>
         <button
           className={styles.primaryButton}
@@ -169,11 +176,6 @@ export default function SuperPremiumSignupPage() {
             ? "Creating account..."
             : "Proceed to Subscription Terms"}
         </button>
-
-        <p className={styles.premiumHint}>
-          Prefer a lighter experience with reduced advertising?
-          Premium offers full match coverage at a lower monthly cost.
-        </p>
       </footer>
     </section>
   );
