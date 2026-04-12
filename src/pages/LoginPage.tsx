@@ -113,6 +113,7 @@ export default function LoginPage() {
 
   return (
     <section className={styles.page}>
+    <h1 style={{ color: "red" }}>LOGIN V2 ACTIVE</h1>
       <header className={styles.header}>
         <h1>Login</h1>
         <p className={styles.subtitle}>
