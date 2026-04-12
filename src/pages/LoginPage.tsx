@@ -12,8 +12,6 @@ export default function LoginPage() {
     | {
         redirectAfterLogin?: string;
         tier?: "premium" | "super";
-        country?: string;
-        pricing?: any;
       }
     | null;
 
@@ -26,8 +24,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  // ✅ Email validation helper
   const isValidEmail = (email: string) => {
     return /\S+@\S+\.\S+/.test(email);
   };
@@ -47,52 +45,31 @@ export default function LoginPage() {
     setError("");
 
     try {
-      // 🔐 CONFIRM EMAIL BEFORE LOGIN (UX SAFETY)
-      if (!window.confirm(`Continue with this email?\n\n${email}`)) {
-        setLoading(false);
-        return;
-      }
-
-      // 🔐 LOGIN
       await loginUser(email, password);
 
       const token = getToken();
 
-      // =====================================================
-      // 💳 CHECKOUT INTENT PATH
-      // =====================================================
+      // 💳 CHECKOUT FLOW
       if (checkoutIntent && checkoutTier && token) {
-        try {
-          const data = await apiRequest(
-            "/api/payments",
-            "POST",
-            { tier: checkoutTier },
-            token
-          );
+        const data = await apiRequest(
+          "/api/payments",
+          "POST",
+          { tier: checkoutTier },
+          token
+        );
 
-          if (!data.checkoutUrl) {
-            setError("Unable to start payment. Please try again.");
-            setLoading(false);
-            return;
-          }
-
-          // 🚀 REDIRECT TO PADDLE
-          window.location.href = data.checkoutUrl;
-          return;
-        } catch (err) {
-          console.error("Checkout error:", err);
-          setError("Payment service unavailable.");
+        if (!data.checkoutUrl) {
+          setError("Unable to start payment.");
           setLoading(false);
           return;
         }
+
+        window.location.href = data.checkoutUrl;
+        return;
       }
 
-      // =====================================================
-      // 🧭 NORMAL LOGIN ROUTING
-      // =====================================================
+      // 🧭 NORMAL ROUTING
       const tier = await getUserTier();
-
-      console.log("User tier after login:", tier);
 
       if (tier === "super") {
         window.location.href = "/home-super";
@@ -105,7 +82,16 @@ export default function LoginPage() {
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Login failed";
-      setError(message);
+
+      // 🔥 FRIENDLY ERROR MAPPING
+      if (message.toLowerCase().includes("password")) {
+        setError("Incorrect password");
+      } else if (message.toLowerCase().includes("user")) {
+        setError("Email not found");
+      } else {
+        setError("Login failed. Please try again.");
+      }
+
     } finally {
       setLoading(false);
     }
@@ -113,7 +99,12 @@ export default function LoginPage() {
 
   return (
     <section className={styles.page}>
-    <h1 style={{ color: "red" }}>LOGIN V2 ACTIVE</h1>
+
+      {/* 🔥 FORCED VISIBILITY MARKER */}
+      <h1 style={{ background: "yellow", color: "black", padding: "10px" }}>
+        LOGIN PAGE (NEW BUILD)
+      </h1>
+
       <header className={styles.header}>
         <h1>Login</h1>
         <p className={styles.subtitle}>
@@ -123,6 +114,7 @@ export default function LoginPage() {
 
       <section className={styles.content}>
         <div className={styles.block}>
+
           {/* EMAIL */}
           <label className={styles.label}>Email</label>
           <input
@@ -133,7 +125,7 @@ export default function LoginPage() {
             placeholder="you@example.com"
           />
 
-          {/* 🔥 EMAIL PREVIEW */}
+          {/* EMAIL PREVIEW */}
           {email && (
             <p style={{ fontSize: "12px", color: "#888", marginTop: "5px" }}>
               You entered: <strong>{email}</strong>
@@ -142,16 +134,36 @@ export default function LoginPage() {
 
           {/* PASSWORD */}
           <label className={styles.label}>Password</label>
-          <input
-            type="password"
-            className={styles.select}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-          />
+
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              className={styles.select}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+            />
+
+            {/* 👁 EYE TOGGLE */}
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                fontSize: "14px",
+                color: "#666",
+              }}
+            >
+              {showPassword ? "🙈" : "👁"}
+            </span>
+          </div>
 
           {/* ERROR */}
           {error && <p className={styles.error}>{error}</p>}
+
         </div>
       </section>
 
@@ -164,6 +176,7 @@ export default function LoginPage() {
           {loading ? "Logging in..." : "Login"}
         </button>
       </footer>
+
     </section>
   );
 }
