@@ -10,6 +10,7 @@ type TermsState = {
 };
 
 export default function TermsPage() {
+  console.log("🔥 TERMS PAGE VERSION V2");
 
   const navigate = useNavigate();
   const location = useLocation();
