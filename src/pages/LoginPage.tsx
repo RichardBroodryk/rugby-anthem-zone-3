@@ -53,12 +53,6 @@ export default function LoginPage() {
 
       // 🔥 FORCE FRESH TIER (CRITICAL FIX)
       const freshTier = await getUserTier();
-      // eslint-disable-next-line no-console
-console.log("DEBUG LOGIN FLOW →", {
-  freshTier,
-  checkoutIntent,
-  checkoutTier,
-});
 
    // 🚨 HARD GUARD: ONLY ALLOW CHECKOUT AFTER CONFIRMED LOGIN + FREEMIUM
 if (checkoutIntent && checkoutTier) {
