@@ -15,7 +15,14 @@ const CheckoutPage = () => {
     // =====================================================
 
     const params = new URLSearchParams(window.location.search);
-    const transactionId = params.get("_ptxn");
+    const transactionId =
+  params.get("transaction_id") ||
+  params.get("_ptxn") ||
+  params.get("txn");
+
+  // 🔥 ADD DEBUG HERE (EXACT LOCATION)
+console.log("🔍 URL PARAMS:", Object.fromEntries(params.entries()));
+console.log("🔍 Transaction ID:", transactionId);
 
     if (transactionId) {
       (async () => {
