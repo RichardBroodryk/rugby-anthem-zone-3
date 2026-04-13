@@ -2,6 +2,7 @@ import { apiRequest } from "./api";
 
 const TOKEN_KEY = "raz_token";
 const USER_ID_KEY = "raz_user_id";
+const TIER_KEY = "raz_tier";
 
 /**
  * REGISTER USER
@@ -15,17 +16,24 @@ export const registerUser = async (email: string, password: string) => {
       password,
     });
 
-    // 🔥 CRITICAL FIX — AUTO LOGIN AFTER REGISTER
+    // 🔥 AUTO LOGIN AFTER REGISTER
     if (data.token) {
       localStorage.setItem(TOKEN_KEY, data.token);
     }
 
-    return data;
+    // 🔥 GET TIER IMMEDIATELY
+    const tier = await getUserTier();
+    localStorage.setItem(TIER_KEY, tier);
+
+    return {
+      ...data,
+      tier,
+    };
 
   } catch (err) {
     if (err instanceof Error) {
       if (err.message === "User already exists") {
-        // 🔥 ALSO LOGIN EXISTING USER
+        // 🔥 LOGIN EXISTING USER
         const loginData = await loginUser(email, password);
         return loginData;
       }
@@ -35,6 +43,9 @@ export const registerUser = async (email: string, password: string) => {
   }
 };
 
+/**
+ * LOGIN USER
+ */
 export const loginUser = async (email: string, password: string) => {
   const data = await apiRequest("/api/login", "POST", {
     email,
@@ -45,28 +56,47 @@ export const loginUser = async (email: string, password: string) => {
     localStorage.setItem(TOKEN_KEY, data.token);
   }
 
-  // backend currently returns only { token }
-  // but we support future user object
+  // 🔥 FETCH USER TIER IMMEDIATELY
+  const tier = await getUserTier();
+  localStorage.setItem(TIER_KEY, tier);
+
+  // Optional user id support
   if (data.user && data.user.id) {
     localStorage.setItem(USER_ID_KEY, String(data.user.id));
   }
 
-  return data;
+  return {
+    ...data,
+    tier,
+  };
 };
 
+/**
+ * TOKEN
+ */
 export const getToken = () => {
   return localStorage.getItem(TOKEN_KEY);
 };
 
+/**
+ * USER ID
+ */
 export const getUserId = () => {
   return localStorage.getItem(USER_ID_KEY);
 };
 
+/**
+ * LOGOUT
+ */
 export const logoutUser = () => {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_ID_KEY);
+  localStorage.removeItem(TIER_KEY);
 };
 
+/**
+ * FETCH USER TIER FROM BACKEND
+ */
 export const getUserTier = async () => {
   const token = getToken();
   if (!token) return "freemium";
@@ -83,4 +113,11 @@ export const getUserTier = async () => {
   } catch {
     return "freemium";
   }
+};
+
+/**
+ * FAST LOCAL TIER ACCESS (NO API CALL)
+ */
+export const getStoredTier = () => {
+  return localStorage.getItem(TIER_KEY) || "freemium";
 };

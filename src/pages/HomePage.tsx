@@ -1,8 +1,5 @@
 import styles from "./HomePage.module.css";
 
-import { useEffect } from "react";
-import { getMatches } from "../data/matchesAdapter";
-
 import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";
 import InfoBar from "../components/navigation/InfoBar";

@@ -1,8 +1,8 @@
 /* ======================================================
-   TEAM META — AUTHORITATIVE (v1)
+   TEAM META — AUTHORITATIVE (v2)
    Rugby Anthem Zone
    Rule: Flag + Feather = Men + Women
-   Date: 2026-01-18
+   + Coach Support (Non-breaking)
 ====================================================== */
 
 /* ================= FLAGS ================= */
@@ -66,6 +66,7 @@ export interface TeamMeta {
   gender: TeamGender;
   flag: string;
   feather: string;
+  coach?: string; // ✅ NEW (optional, non-breaking)
 }
 
 /* ================= TEAMS ================= */
@@ -89,7 +90,7 @@ export const teamsMeta: TeamMeta[] = [
 
   /* ================= ENGLAND ================= */
   { id: "england-men", name: "England", gender: "men", flag: englandFlag, feather: englandFeather },
-  { id: "england-women", name: "England", gender: "women", flag: englandFlag, feather: englandFeather },
+  { id: "england-women", name: "England", gender: "women", flag: englandFlag, feather: englandFeather, coach: "John Mitchell" },
 
   /* ================= FIJI ================= */
   { id: "fiji-men", name: "Fiji", gender: "men", flag: fijiFlag, feather: fijiFeather },
@@ -97,7 +98,7 @@ export const teamsMeta: TeamMeta[] = [
 
   /* ================= FRANCE ================= */
   { id: "france-men", name: "France", gender: "men", flag: franceFlag, feather: franceFeather },
-  { id: "france-women", name: "France", gender: "women", flag: franceFlag, feather: franceFeather },
+  { id: "france-women", name: "France", gender: "women", flag: franceFlag, feather: franceFeather, coach: "François Ratier" },
 
   /* ================= GEORGIA ================= */
   { id: "georgia-men", name: "Georgia", gender: "men", flag: georgiaFlag, feather: georgiaFeather },
@@ -105,11 +106,11 @@ export const teamsMeta: TeamMeta[] = [
 
   /* ================= IRELAND ================= */
   { id: "ireland-men", name: "Ireland", gender: "men", flag: irelandFlag, feather: irelandFeather },
-  { id: "ireland-women", name: "Ireland", gender: "women", flag: irelandFlag, feather: irelandFeather },
+  { id: "ireland-women", name: "Ireland", gender: "women", flag: irelandFlag, feather: irelandFeather, coach: "Scott Bemand" },
 
   /* ================= ITALY ================= */
   { id: "italy-men", name: "Italy", gender: "men", flag: italyFlag, feather: italyFeather },
-  { id: "italy-women", name: "Italy", gender: "women", flag: italyFlag, feather: italyFeather },
+  { id: "italy-women", name: "Italy", gender: "women", flag: italyFlag, feather: italyFeather, coach: "Fabio Roselli" },
 
   /* ================= JAPAN ================= */
   { id: "japan-men", name: "Japan", gender: "men", flag: japanFlag, feather: japanFeather },
@@ -141,7 +142,7 @@ export const teamsMeta: TeamMeta[] = [
 
   /* ================= SCOTLAND ================= */
   { id: "scotland-men", name: "Scotland", gender: "men", flag: scotlandFlag, feather: scotlandFeather },
-  { id: "scotland-women", name: "Scotland", gender: "women", flag: scotlandFlag, feather: scotlandFeather },
+  { id: "scotland-women", name: "Scotland", gender: "women", flag: scotlandFlag, feather: scotlandFeather, coach: "Sione Fukofuka" },
 
   /* ================= SOUTH AFRICA ================= */
   { id: "south-africa-men", name: "South Africa", gender: "men", flag: southAfricaFlag, feather: southAfricaFeather },
@@ -161,5 +162,5 @@ export const teamsMeta: TeamMeta[] = [
 
   /* ================= WALES ================= */
   { id: "wales-men", name: "Wales", gender: "men", flag: walesFlag, feather: walesFeather },
-  { id: "wales-women", name: "Wales", gender: "women", flag: walesFlag, feather: walesFeather },
+  { id: "wales-women", name: "Wales", gender: "women", flag: walesFlag, feather: walesFeather, coach: "Sean Lynn" },
 ];

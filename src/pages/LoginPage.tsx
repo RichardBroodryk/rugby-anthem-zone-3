@@ -1,8 +1,6 @@
-// src/pages/LoginPage.tsx
-
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { loginUser, getUserTier, getToken } from "../services/auth";
+import { loginUser, getToken, getUserTier } from "../services/auth"; // ✅ FIXED IMPORT
 import { apiRequest } from "../services/api";
 import styles from "./FreemiumSignupPage.module.css";
 
@@ -14,8 +12,6 @@ export default function LoginPage() {
     | {
         redirectAfterLogin?: string;
         tier?: "premium" | "super";
-        country?: string;
-        pricing?: any;
       }
     | null;
 
@@ -29,11 +25,13 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const [error, setError] = useState("");
-  const [info, setInfo] = useState(""); // 👈 for forgot password feedback
+  const [info, setInfo] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
+  const isValidEmail = (email: string) =>
+    /\S+@\S+\.\S+/.test(email);
 
+  // ✅ CLEAN LOGIN HANDLER (FINAL FIXED)
   const handleLogin = async () => {
     if (!email || !password) {
       setError("Please enter email and password.");
@@ -51,47 +49,58 @@ export default function LoginPage() {
 
     try {
       await loginUser(email, password);
-
       const token = getToken();
 
-      // 💳 CHECKOUT FLOW
-      if (checkoutIntent && checkoutTier && token) {
-        try {
-          const data = await apiRequest(
-            "/api/payments",
-            "POST",
-            { tier: checkoutTier },
-            token
-          );
+      // 🔥 FORCE FRESH TIER (CRITICAL FIX)
+      const freshTier = await getUserTier();
+      // eslint-disable-next-line no-console
+console.log("DEBUG LOGIN FLOW →", {
+  freshTier,
+  checkoutIntent,
+  checkoutTier,
+});
 
-          if (!data.checkoutUrl) {
-            setError("Unable to start payment.");
-            setLoading(false);
-            return;
-          }
+   // 🚨 HARD GUARD: ONLY ALLOW CHECKOUT AFTER CONFIRMED LOGIN + FREEMIUM
+if (checkoutIntent && checkoutTier) {
+  if (freshTier !== "freemium") {
+    console.log("🚫 BLOCKED CHECKOUT — user already paid:", freshTier);
+  } else if (token) {
+    const data = await apiRequest(
+      "/api/payments",
+      "POST",
+      { tier: checkoutTier },
+      token
+    );
 
-          window.location.href = data.checkoutUrl;
-          return;
+    if (!data.checkoutUrl) {
+      setError("Unable to start payment.");
+      return;
+    }
 
-        } catch {
-          setError("Payment service unavailable.");
-          setLoading(false);
-          return;
-        }
-      }
+    window.location.href = data.checkoutUrl;
+    return;
+  }
+}
 
-      // 🧭 NORMAL LOGIN
-      const tier = await getUserTier();
+if (window.history.state && window.history.state.usr) {
+  window.history.replaceState({}, document.title);
+}
 
-      if (tier === "super") window.location.href = "/home-super";
-      else if (tier === "premium") window.location.href = "/home";
-      else window.location.href = "/home-free";
+// ===============================
+// 🧭 NORMAL LOGIN ROUTING
+// ===============================
+if (freshTier === "super") {
+  navigate("/home-super");
+} else if (freshTier === "premium") {
+  navigate("/home");
+} else {
+  navigate("/home-free");
+}
 
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "";
 
-      // 🔥 CLEAN ERROR MESSAGES
       if (message.toLowerCase().includes("password")) {
         setError("Incorrect password");
       } else if (message.toLowerCase().includes("user")) {
@@ -105,7 +114,7 @@ export default function LoginPage() {
     }
   };
 
-  // 🔁 FORGOT PASSWORD (SAFE PLACEHOLDER)
+  // 🔁 FORGOT PASSWORD (PLACEHOLDER)
   const handleForgotPassword = () => {
     if (!email) {
       setError("Enter your email first.");
@@ -113,11 +122,10 @@ export default function LoginPage() {
     }
 
     if (!isValidEmail(email)) {
-      setError("Enter a valid email to reset password.");
+      setError("Enter a valid email.");
       return;
     }
 
-    // 🔥 For now (no backend endpoint yet)
     setError("");
     setInfo("Password reset link will be available soon.");
   };
@@ -139,7 +147,9 @@ export default function LoginPage() {
             type="email"
             className={styles.select}
             value={email}
-            onChange={(e) => setEmail(e.target.value.toLowerCase())}
+            onChange={(e) =>
+              setEmail(e.target.value.toLowerCase())
+            }
             placeholder="you@example.com"
           />
 
@@ -150,14 +160,18 @@ export default function LoginPage() {
               type={showPassword ? "text" : "password"}
               className={styles.select}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) =>
+                setPassword(e.target.value)
+              }
               placeholder="Enter password"
               style={{ paddingRight: "50px" }}
             />
 
             <button
               type="button"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={() =>
+                setShowPassword(!showPassword)
+              }
               style={{
                 position: "absolute",
                 right: "8px",
@@ -175,7 +189,7 @@ export default function LoginPage() {
             </button>
           </div>
 
-          {/* 🔁 FORGOT PASSWORD */}
+          {/* FORGOT PASSWORD */}
           <p
             onClick={handleForgotPassword}
             style={{
@@ -190,7 +204,9 @@ export default function LoginPage() {
           </p>
 
           {/* ERROR */}
-          {error && <p className={styles.error}>{error}</p>}
+          {error && (
+            <p className={styles.error}>{error}</p>
+          )}
 
           {/* INFO */}
           {info && (

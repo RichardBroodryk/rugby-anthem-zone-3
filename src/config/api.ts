@@ -6,11 +6,7 @@ const PROD_API = "https://rugby-anthem-backend.fly.dev";
 // Local development backend
 const DEV_API = "http://localhost:4000";
 
-// Choose automatically
-export const API_BASE_URL =
-  window.location.hostname === "localhost"
-    ? DEV_API
-    : PROD_API;
+export const API_BASE_URL = "https://rugby-anthem-backend.fly.dev";
 
 
 // Generic API helper
