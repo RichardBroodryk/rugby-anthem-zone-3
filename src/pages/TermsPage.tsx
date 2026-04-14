@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./TermsPage.module.css";
+
 import { getToken } from "../services/auth";
-import { API_BASE_URL } from "../config/api";
+import { apiRequest } from "../services/api";
 
 type TermsState = {
   tier?: "freemium" | "premium" | "super";
@@ -10,7 +11,7 @@ type TermsState = {
 };
 
 export default function TermsPage() {
-  console.log("🔥 TERMS PAGE VERSION V2");
+  console.log("🔥 TERMS PAGE CLEAN");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,9 +24,8 @@ export default function TermsPage() {
   const [loading, setLoading] = useState(false);
 
   // ---------------------------------------------------
-  // SAFETY GUARD (FIXED)
+  // SAFETY GUARD
   // ---------------------------------------------------
-
   useEffect(() => {
     if (!tier) {
       navigate("/welcome", { replace: true });
@@ -35,15 +35,14 @@ export default function TermsPage() {
   // ---------------------------------------------------
   // ACCEPT TERMS → START CHECKOUT
   // ---------------------------------------------------
-
   const acceptTerms = async () => {
-
     const acceptedAt = new Date().toISOString();
 
+    // ✅ Freemium bypass
     if (tier === "freemium") {
       navigate("/home-free", {
         replace: true,
-        state: { acceptedAt }
+        state: { acceptedAt },
       });
       return;
     }
@@ -56,39 +55,29 @@ export default function TermsPage() {
     }
 
     try {
-
       setLoading(true);
 
-      const res = await fetch(
-        "https://rugby-anthem-backend.fly.dev/api/payments",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify({ tier })
-        }
+      const data = await apiRequest(
+        "/api/payments",
+        "POST",
+        { tier },
+        token
       );
 
-      const data = await res.json();
+      console.log("🔥 CHECKOUT RESPONSE:", data);
 
-      if (!res.ok || !data.checkoutUrl) {
-        console.error("Checkout creation failed:", data);
-        alert("Unable to start payment. Please try again.");
-        setLoading(false);
-        return;
+      if (!data.checkoutUrl) {
+        throw new Error("Missing checkout URL");
       }
 
       // ✅ REDIRECT TO PADDLE
       window.location.href = data.checkoutUrl;
 
     } catch (err) {
-      console.error("Checkout error:", err);
+      console.error("❌ Checkout error:", err);
       alert("Payment service unavailable. Please try again.");
       setLoading(false);
     }
-
   };
 
   const isFreemium = tier === "freemium";
@@ -97,7 +86,6 @@ export default function TermsPage() {
 
   return (
     <section className={styles.page}>
-
       <header className={styles.header}>
         <h1>Terms & Conditions</h1>
 
@@ -122,7 +110,6 @@ export default function TermsPage() {
       </header>
 
       <section className={styles.content}>
-
         {(isPremium || isSuper) && (
           <div className={styles.summaryBox}>
             <h2>Subscription Summary</h2>
@@ -131,9 +118,7 @@ export default function TermsPage() {
               {isPremium ? "$2.49 / month" : "$3.49 / month"}
             </p>
 
-            <p className={styles.note}>
-              Billed monthly
-            </p>
+            <p className={styles.note}>Billed monthly</p>
           </div>
         )}
 
@@ -161,11 +146,9 @@ export default function TermsPage() {
             )}
           </ul>
         </div>
-
       </section>
 
       <footer className={styles.footer}>
-
         <button
           className={styles.primaryButton}
           onClick={acceptTerms}
@@ -180,9 +163,7 @@ export default function TermsPage() {
           By continuing, you confirm that you understand and accept the
           terms above.
         </p>
-
       </footer>
-
     </section>
   );
 }
