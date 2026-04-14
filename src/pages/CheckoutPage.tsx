@@ -10,18 +10,48 @@ const CheckoutPage = () => {
 
   useEffect(() => {
 
-    // =====================================================
-    // 🔥 AFTER RETURN → CHECK SUBSCRIPTION (WEBHOOK-BASED FLOW)
-    // =====================================================
+    console.log("🔥 CHECKOUT PAGE LOADED");
 
-    (async () => {
+    // ✅ VERY IMPORTANT: detect Paddle transaction
+    const params = new URLSearchParams(window.location.search);
+    const txn = params.get("_ptxn");
+
+    console.log("🔍 TXN:", txn);
+
+    // =====================================================
+    // ✅ IF _ptxn EXISTS → DO NOTHING (LET PADDLE OPEN)
+    // =====================================================
+    if (txn) {
+      console.log("🟢 Paddle mode — waiting for checkout overlay");
+
+      const script = document.createElement("script");
+      script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
+      script.async = true;
+
+      document.body.appendChild(script);
+
+      script.onload = () => {
+        if (window.Paddle) {
+          window.Paddle.Initialize({
+            token: "live_1315bcf84802de1b59fc1bd1da5",
+          });
+        }
+      };
+
+      return;
+    }
+
+    // =====================================================
+    // 🔁 AFTER PAYMENT RETURN (NO _ptxn)
+    // =====================================================
+    console.log("🔁 Checking subscription after payment");
+
+    setTimeout(async () => {
       try {
-        console.log("🔍 Checking subscription after checkout");
-
         const token = localStorage.getItem("raz_token");
 
         if (!token) {
-          console.error("❌ No auth token found");
+          console.error("❌ No token");
           return;
         }
 
@@ -36,7 +66,7 @@ const CheckoutPage = () => {
 
         const data = await res.json();
 
-        console.log("✅ Subscription status:", data);
+        console.log("✅ Subscription:", data);
 
         if (data.tier === "super") {
           window.location.href = "/home-super";
@@ -49,29 +79,7 @@ const CheckoutPage = () => {
       } catch (err) {
         console.error("❌ Subscription check failed:", err);
       }
-    })();
-
-    // =====================================================
-    // 🟡 LOAD PADDLE (SAFE — NO REOPEN)
-    // =====================================================
-
-    const script = document.createElement("script");
-    script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      if (window.Paddle) {
-        window.Paddle.Initialize({
-          token: "live_1315bcf84802de1b59fc1bd1da5",
-        });
-      }
-    };
-
-    return () => {
-      document.body.removeChild(script);
-    };
+    }, 3000); // ⏳ give webhook time
 
   }, []);
 
@@ -85,8 +93,8 @@ const CheckoutPage = () => {
         flexDirection: "column",
       }}
     >
-      <h2>Finalizing your subscription...</h2>
-      <p>Please wait while we confirm your access.</p>
+      <h2>Processing your subscription...</h2>
+      <p>Please wait while we complete checkout.</p>
     </div>
   );
 };
