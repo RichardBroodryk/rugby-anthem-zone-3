@@ -1,65 +1,78 @@
 import { useEffect, useState } from "react";
-import { getUserTier } from "../services/auth";
+
+declare global {
+  interface Window {
+    Paddle: any;
+  }
+}
 
 const CheckoutPage = () => {
-  const [status, setStatus] = useState("Processing your payment...");
+  const [status, setStatus] = useState("Loading secure checkout...");
 
   useEffect(() => {
-    console.log("🔥 CheckoutPage loaded");
+    console.log("🔥 CheckoutPage loaded - Initializing Paddle");
 
-    // Clear any old cached tier data
-    localStorage.removeItem("subscriptionTier");
-    localStorage.removeItem("raz_tier");
+    // Load Paddle script
+    const script = document.createElement("script");
+    script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
+    script.async = true;
 
-    const checkAndRedirect = async (attempt = 0) => {
-      try {
-        const tier = await getUserTier();
+    document.body.appendChild(script);
 
-        console.log("✅ Real tier from server:", tier);
+    script.onload = () => {
+      if (window.Paddle) {
+        console.log("✅ Paddle script loaded successfully");
 
-        setStatus(`Subscription upgraded to ${tier || "freemium"}...`);
+        window.Paddle.Initialize({
+          token: "live_1315bcf84802de1b59fc1bd1da5",   // Your live client token
+          eventCallback: (event: any) => {
+            console.log("📦 Paddle event received:", event.name);
 
-        // Exact redirect rules you specified
-        if (tier === "super") {
-          window.location.href = "/home-super";        // Super Premium homepage
-        } else if (tier === "premium") {
-          window.location.href = "/home";              // Main Premium homepage
-        } else {
-          window.location.href = "/home-free";         // Freemium homepage
-        }
+            if (event.name === "checkout.completed") {
+              console.log("🎉 Checkout completed successfully");
+              setStatus("Payment successful! Redirecting...");
 
-      } catch (err) {
-        console.error("Tier check failed on attempt", attempt, err);
+              // Give a moment before redirecting to the correct homepage
+              setTimeout(() => {
+                window.location.href = "/home-super";   // Change based on tier if needed
+              }, 1500);
+            }
+          },
+        });
 
-        if (attempt < 6) {
-          setStatus(`Verifying payment... (${attempt + 1}/6)`);
-          setTimeout(() => checkAndRedirect(attempt + 1), 1800);
-        } else {
-          setStatus("Payment completed. Please refresh the page or log in again.");
-          window.location.href = "/home-free";
-        }
+        setStatus("Opening secure checkout...");
+      } else {
+        console.error("❌ Paddle failed to load");
+        setStatus("Failed to load checkout. Please try again.");
       }
     };
 
-    // Start checking after short delay to allow webhook to process
-    setTimeout(() => checkAndRedirect(), 3000);
+    script.onerror = () => {
+      console.error("❌ Failed to load Paddle script");
+      setStatus("Network error loading checkout. Please refresh.");
+    };
 
   }, []);
 
   return (
-    <div style={{
-      height: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      background: "#0a0a0a",
-      color: "white",
-      textAlign: "center",
-      padding: "20px"
-    }}>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#0a0a0a",
+        color: "white",
+        textAlign: "center",
+        padding: "20px",
+      }}
+    >
       <h2>{status}</h2>
-      <p>Please wait while we verify your subscription and redirect you...</p>
+      <p>Please wait while we open the secure payment page...</p>
+      <p style={{ fontSize: "14px", opacity: 0.7, marginTop: "20px" }}>
+        You will be redirected automatically after payment.
+      </p>
     </div>
   );
 };

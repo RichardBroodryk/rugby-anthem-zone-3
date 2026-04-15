@@ -27,60 +27,58 @@ export default function TermsPage() {
   }, [tier, navigate]);
 
   const acceptTerms = async () => {
-    console.log("🔥 ACCEPT TERMS CLICKED");
+  console.log("🔥 ACCEPT TERMS CLICKED");
 
-    if (tier === "freemium") {
-      navigate("/home-free", { replace: true });
-      return;
-    }
+  if (tier === "freemium") {
+    navigate("/home-free", { replace: true });
+    return;
+  }
 
-    const token = getToken();
-    if (!token) {
-      navigate("/login");
-      return;
-    }
+  const token = getToken();
+  if (!token) {
+    navigate("/login");
+    return;
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      console.log("🚀 CALLING /api/payments with tier:", tier);
+    console.log("🚀 CALLING /api/payments with tier:", tier);
 
-      const response = await fetch(
-        "https://rugby-anthem-backend.fly.dev/api/payments",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ tier }),
-        }
-      );
-
-      const data = await response.json();
-      console.log("📦 RESPONSE DATA:", data);
-
-      if (!response.ok) {
-        console.error("❌ RESPONSE NOT OK", data);
-        throw new Error(data.error || "Request failed");
+    const response = await fetch(
+      "https://rugby-anthem-backend.fly.dev/api/payments",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ tier }),
       }
+    );
 
-      if (!data.checkoutUrl) {
-        console.error("❌ NO checkoutUrl RECEIVED", data);
-        throw new Error("Missing checkout URL from backend");
-      }
+    const data = await response.json();
+    console.log("📦 RESPONSE DATA:", data);
 
-      console.log("✅ REDIRECTING TO PADDLE CHECKOUT:", data.checkoutUrl);
-
-      // Critical: Use window.location.href to leave React Router context
-      window.location.href = data.checkoutUrl;
-
-    } catch (err: any) {
-      console.error("💥 CHECKOUT FAILED:", err);
-      alert("Checkout failed: " + (err.message || "Unknown error"));
-      setLoading(false);
+    if (!response.ok) {
+      throw new Error(data.error || "Request failed");
     }
-  };
+
+    if (!data.checkoutUrl) {
+      throw new Error("Missing checkout URL from backend");
+    }
+
+    console.log("✅ REDIRECTING TO PADDLE:", data.checkoutUrl);
+
+    // Critical: Full page redirect (bypasses React Router)
+    window.location.href = data.checkoutUrl;
+
+  } catch (err: any) {
+    console.error("💥 CHECKOUT FAILED:", err);
+    alert("Checkout failed: " + (err.message || "Unknown error"));
+    setLoading(false);
+  }
+};
 
   const isFreemium = tier === "freemium";
   const isPremium = tier === "premium";
