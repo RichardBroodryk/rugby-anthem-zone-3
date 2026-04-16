@@ -15,7 +15,6 @@ const CheckoutPage = () => {
     // 🔒 Prevent duplicate script loading
     if (window.Paddle) {
       console.log("⚠️ Paddle already loaded");
-      return;
     }
 
     const script = document.createElement("script");
