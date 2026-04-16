@@ -72,6 +72,107 @@ export default function TournamentPage() {
     ).values()
   );
 
+  /* ================= ROUND GROUPING ================= */
+
+  const roundMap: Record<string, string> = {
+    "2026-04-11": "Round 1",
+    "2026-04-18": "Round 2",
+    "2026-04-25": "Round 3",
+    "2026-05-09": "Round 4",
+    "2026-05-17": "Round 5",
+  };
+
+  const groupedMatches: Record<string, MatchData[]> = {};
+
+  matches.forEach((match) => {
+    const round = roundMap[match.date] || "Other";
+    if (!groupedMatches[round]) groupedMatches[round] = [];
+    groupedMatches[round].push(match);
+  });
+
+  /* ================= STANDINGS ================= */
+
+  type TableRow = {
+    team: string;
+    country: string;
+    played: number;
+    won: number;
+    draw: number;
+    lost: number;
+    pf: number;
+    pa: number;
+    pd: number;
+    points: number;
+  };
+
+  // 🔥 ALL TEAMS INCLUDED (KEY FIX)
+  const standings: Record<string, TableRow> = {};
+
+  teams.forEach((team) => {
+    standings[team.name] = {
+      team: team.name,
+      country: team.country,
+      played: 0,
+      won: 0,
+      draw: 0,
+      lost: 0,
+      pf: 0,
+      pa: 0,
+      pd: 0,
+      points: 0,
+    };
+  });
+
+  // 🔥 APPLY MATCH RESULTS
+  matches.forEach((match) => {
+    if (!match.score) return;
+
+    const home = standings[match.home.name];
+    const away = standings[match.away.name];
+
+    const homeScore = match.score.home;
+    const awayScore = match.score.away;
+
+    home.played++;
+    away.played++;
+
+    home.pf += homeScore;
+    home.pa += awayScore;
+
+    away.pf += awayScore;
+    away.pa += homeScore;
+
+    if (homeScore > awayScore) {
+      home.won++;
+      away.lost++;
+      home.points += 4;
+
+      if (homeScore - awayScore <= 7) {
+        away.points += 1;
+      }
+    } else if (awayScore > homeScore) {
+      away.won++;
+      home.lost++;
+      away.points += 4;
+
+      if (awayScore - homeScore <= 7) {
+        home.points += 1;
+      }
+    } else {
+      home.draw++;
+      away.draw++;
+      home.points += 2;
+      away.points += 2;
+    }
+  });
+
+  const table = Object.values(standings)
+    .map((t) => ({
+      ...t,
+      pd: t.pf - t.pa,
+    }))
+    .sort((a, b) => b.points - a.points || b.pd - a.pd);
+
   /* ================= RENDER ================= */
 
   return (
@@ -96,27 +197,25 @@ export default function TournamentPage() {
             {tournament.name} {tournament.year}
           </h1>
           <p>{tournament.heroSubtitle}</p>
-
-          <div className={styles.statusBadge}>
-            {tournament.status?.toUpperCase()}
-          </div>
         </div>
       </header>
 
-      {/* BACK */}
       <div className={styles.backNav}>
-        <button onClick={() => navigate("/tournaments")}>
-          ← Back to Tournaments
-        </button>
-      </div>
+  <button
+    onClick={() =>
+      navigate(
+        tournament.gender === "women"
+          ? "/tournaments/women"
+          : "/tournaments"
+      )
+    }
+  >
+    ← Back to {tournament.gender === "women" ? "Women's" : "Men's"} Tournaments
+  </button>
+</div>
 
       {/* ANTHEMS */}
       <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2>Anthems</h2>
-          <p>Flags link to national anthems</p>
-        </div>
-
         <div className={styles.flagsGrid}>
           {teams.map((team) => (
             <div
@@ -132,38 +231,78 @@ export default function TournamentPage() {
         </div>
       </section>
 
+      {/* STANDINGS */}
+      <section className={styles.section}>
+        <h2>Standings</h2>
+
+        <table className={styles.standingsTable}>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th className={styles.teamHeader}>Team</th>
+              <th>P</th>
+              <th>W</th>
+              <th>D</th>
+              <th>L</th>
+              <th>PF</th>
+              <th>PA</th>
+              <th>PD</th>
+              <th>PTS</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {table.map((row, index) => (
+              <tr key={row.team}>
+                <td className={styles.rank}>{index + 1}</td>
+
+                <td className={styles.teamCell}>
+                  <div className={styles.teamWrap}>
+                    <Flag country={row.country} size="small" />
+                    <span>{row.team}</span>
+                  </div>
+                </td>
+
+                <td>{row.played}</td>
+                <td>{row.won}</td>
+                <td>{row.draw}</td>
+                <td>{row.lost}</td>
+                <td>{row.pf}</td>
+                <td>{row.pa}</td>
+                <td>{row.pd}</td>
+                <td className={styles.points}>{row.points}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
       {/* MATCHES */}
       <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h2>Matches</h2>
-          <p>All fixtures and results</p>
-        </div>
+        <h2>Matches</h2>
 
-        {matches.length === 0 ? (
-          <div className={styles.emptyState}>
-            No matches available
+        {Object.entries(groupedMatches).map(([round, games]) => (
+          <div key={round}>
+            <h3>{round}</h3>
+
+            {games.map((match: MatchData) => (
+              <MatchRow
+                key={match.id}
+                home={match.home}
+                away={match.away}
+                state={
+                  match.score ? "final" : "upcoming"
+                }
+                score={match.score}
+                metaLeft={match.date}
+                metaRight={match.venue}
+                onClick={() =>
+                  navigate(`/match/${match.id}`)
+                }
+              />
+            ))}
           </div>
-        ) : (
-          matches.map((match: MatchData) => (
-            <MatchRow
-              key={match.id}
-              home={match.home}
-              away={match.away}
-              state={
-                tournament.status === "completed"
-                  ? "final"
-                  : match.state ||
-                    (match.score ? "final" : "upcoming")
-              }
-              score={match.score}
-              metaLeft={match.date}
-              metaRight={match.venue}
-              onClick={() =>
-                navigate(`/match/${match.id}`)
-              }
-            />
-          ))
-        )}
+        ))}
       </section>
     </main>
   );

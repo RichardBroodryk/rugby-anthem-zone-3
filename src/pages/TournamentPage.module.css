@@ -362,3 +362,71 @@
 .backButton:hover {
   background: #1e293b;
 }
+.standingsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* HEADER */
+.standingsTable thead tr {
+  background: #111;
+  color: #fff;
+}
+
+.standingsTable th {
+  padding: 12px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* BODY */
+.standingsTable td {
+  padding: 12px 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+/* TEAM COLUMN */
+.teamHeader {
+  text-align: left;
+}
+
+.teamCell {
+  text-align: left;
+}
+
+.teamWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* RANK COLUMN */
+.rank {
+  font-weight: bold;
+  width: 40px;
+}
+
+/* POINTS */
+.points {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+/* ROW STATES */
+.standingsTable tbody tr:hover {
+  background: #f7f7f7;
+}
+
+/* TOP TEAM */
+.standingsTable tbody tr:first-child {
+  background: #e8f5e9;
+}
+
+/* LAST TEAM */
+.standingsTable tbody tr:last-child {
+  background: #fdecea;
+}

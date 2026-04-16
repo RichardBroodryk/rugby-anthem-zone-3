@@ -1,0 +1,37 @@
+.page { padding: 16px; }
+
+.hero { margin-bottom: 16px; }
+
+.section { margin-bottom: 32px; }
+
+.block { margin-top: 20px; }
+
+.poolBlock { margin-bottom: 16px; }
+
+.poolTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+}
+
+.poolTable th {
+  background: #111;
+  color: #fff;
+  padding: 6px;
+}
+
+.poolTable td {
+  padding: 6px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.bracket {
+  margin-top: 16px;
+}
+
+.matchBox {
+  padding: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 6px;
+}
