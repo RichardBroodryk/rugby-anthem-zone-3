@@ -1,3 +1,7 @@
+// =====================================================
+// AUTH SERVICE — FIXED VERSION
+// =====================================================
+
 import { apiRequest } from "./api";
 import { API_BASE_URL } from "../config/api";
 
@@ -13,24 +17,23 @@ export const registerUser = async (email: string, password: string) => {
       password,
     });
 
+    // 🔥 STORE TOKEN (CRITICAL)
     if (data.token) {
       localStorage.setItem(TOKEN_KEY, data.token);
     }
 
-    const tier = await getUserTier();
-    localStorage.setItem(TIER_KEY, tier);
+    // 🔥 DO NOT FETCH TIER HERE
+    // User is freemium until payment completes
 
-    return { ...data, tier };
+    return data;
 
   } catch (err) {
     console.log("🔥 REGISTER ERROR:", err);
 
-    // fallback login
+    // fallback login (optional safety)
     try {
       console.log("🔁 FALLBACK LOGIN");
-
       return await loginUser(email, password);
-
     } catch (loginErr) {
       console.log("❌ LOGIN FAILED:", loginErr);
       throw err;
@@ -49,6 +52,7 @@ export const loginUser = async (email: string, password: string) => {
     localStorage.setItem(TOKEN_KEY, data.token);
   }
 
+  // 🔥 SAFE TO FETCH TIER HERE (user already exists)
   const tier = await getUserTier();
   localStorage.setItem(TIER_KEY, tier);
 
