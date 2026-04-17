@@ -14,87 +14,33 @@ import styles from "./MatchPage.module.css";
 
 import { API_BASE_URL } from "../config/api";
 
-/* ================= ICONS ================= */
+import {
+  fetchMatchLineups,
+  MatchLineups,
+} from "../services/playerService";
 
-function TryIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <ellipse cx="12" cy="12" rx="6" ry="3" />
-    </svg>
-  );
-}
-
-function KickIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M4 20L20 4" />
-      <circle cx="8" cy="16" r="2" />
-    </svg>
-  );
-}
-
-function YellowCardIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="7" y="5" width="10" height="14" rx="1" />
-    </svg>
-  );
-}
-
-function RedCardIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="7" y="5" width="10" height="14" rx="1" />
-      <line x1="7" y1="5" x2="17" y2="19" />
-    </svg>
-  );
-}
-
-function getTimelineIcon(label: string) {
-  const text = label.toLowerCase();
-
-  if (text.includes("try")) return <TryIcon className={styles.timelineIcon} />;
-  if (text.includes("conversion")) return <KickIcon className={styles.timelineIcon} />;
-  if (text.includes("yellow")) return <YellowCardIcon className={styles.timelineIcon} />;
-  if (text.includes("red")) return <RedCardIcon className={styles.timelineIcon} />;
-
-  return null;
-}
-
-/* ================= TYPES ================= */
-
-type Player = {
-  number: number;
-  name: string;
-  position?: string;
-};
-
-type MatchStats = {
-  timeline?: {
-    minute: string;
-    label: string;
-  }[];
-
-  lineups?: {
-    homeStarting: Player[];
-    homeBench: Player[];
-    awayStarting: Player[];
-    awayBench: Player[];
-  };
-
-  // dynamic stats from backend
-  [key: string]: any;
-};
-
-/* ================= STATE ================= */
+/* ================= HELPERS ================= */
 
 function resolveState(match: MatchData): "final" | "upcoming" {
   if (match.score) return "final";
-
-  return new Date(match.date) > new Date()
-    ? "upcoming"
-    : "final";
+  return new Date(match.date) > new Date() ? "upcoming" : "final";
 }
+
+function buildMirrorRows(home: any[], away: any[]) {
+  const max = Math.max(home.length, away.length);
+  const rows = [];
+
+  for (let i = 0; i < max; i++) {
+    rows.push({
+      home: home[i],
+      away: away[i],
+    });
+  }
+
+  return rows;
+}
+
+/* ================= PAGE ================= */
 
 export default function MatchPage() {
   const { id } = useParams<{ id: string }>();
@@ -102,13 +48,14 @@ export default function MatchPage() {
 
   const matchId = id ? Number(id) : NaN;
 
-  const [stats, setStats] = useState<MatchStats | null>(null);
+  const [stats, setStats] = useState<any>(null);
+  const [lineups, setLineups] = useState<MatchLineups | null>(null);
   const [comments, setComments] = useState<any[]>([]);
   const [text, setText] = useState("");
 
-  const match = matches2026.find((m: MatchData) => m.id === matchId);
+  const match = matches2026.find((m) => m.id === matchId);
 
-  /* ================= LOAD STATS ================= */
+  /* ================= LOAD DATA ================= */
 
   useEffect(() => {
     async function loadStats() {
@@ -118,9 +65,7 @@ export default function MatchPage() {
           setStats(await res.json());
           return;
         }
-      } catch {
-        console.warn("API stats unavailable");
-      }
+      } catch {}
 
       const local = matchDetails2026.find((m) => m.matchId === matchId);
       if (local) setStats(local);
@@ -129,7 +74,11 @@ export default function MatchPage() {
     if (!isNaN(matchId)) loadStats();
   }, [matchId]);
 
-  /* ================= LOAD COMMENTS ================= */
+  useEffect(() => {
+    if (!isNaN(matchId)) {
+      fetchMatchLineups(matchId).then(setLineups);
+    }
+  }, [matchId]);
 
   useEffect(() => {
     async function loadComments() {
@@ -137,9 +86,7 @@ export default function MatchPage() {
         const res = await fetch(`${API_BASE_URL}/api/comments?match_id=${matchId}`);
         if (!res.ok) return;
         setComments(await res.json());
-      } catch {
-        console.error("Failed to load comments");
-      }
+      } catch {}
     }
 
     if (!isNaN(matchId)) loadComments();
@@ -147,7 +94,7 @@ export default function MatchPage() {
 
   async function postComment() {
     const token = localStorage.getItem("token");
-    if (!token) return alert("Please log in to post.");
+    if (!token) return alert("Please log in.");
 
     await fetch(`${API_BASE_URL}/api/comments`, {
       method: "POST",
@@ -162,14 +109,10 @@ export default function MatchPage() {
   }
 
   if (!match) {
-    return (
-      <main className={styles.error}>
-        <h2>Match not found</h2>
-      </main>
-    );
+    return <main className={styles.error}>Match not found</main>;
   }
 
-  const instanceId = (match as { tournamentInstanceId?: string }).tournamentInstanceId;
+  const instanceId = (match as any).tournamentInstanceId;
 
   const tournament = tournaments2026.find(
     (t) => t.instanceId === instanceId
@@ -181,182 +124,114 @@ export default function MatchPage() {
 
   const stadium = stadiums.find((s) => s.name === venue);
 
-  const status =
-  (match as any).state || resolveState(match);
+  const status = (match as any).state || resolveState(match);
 
-  /* ================= STATS MAPPING ================= */
+  /* ================= LINEUPS ================= */
+
+  const homePlayers =
+    lineups?.home.starting ||
+    stats?.lineups?.homeStarting ||
+    [];
+
+  const awayPlayers =
+    lineups?.away.starting ||
+    stats?.lineups?.awayStarting ||
+    [];
+
+  const mirrorRows = buildMirrorRows(homePlayers, awayPlayers);
+
+  /* ================= STATS ================= */
 
   const matchStats = stats
     ? [
-        {
-          label: "Possession",
-          home: stats.possession?.home ?? "—",
-          away: stats.possession?.away ?? "—",
-        },
-        {
-          label: "Territory",
-          home: stats.territory?.home ?? "—",
-          away: stats.territory?.away ?? "—",
-        },
-        {
-          label: "Tries",
-          home: stats.tries?.home ?? score?.home ?? "—",
-          away: stats.tries?.away ?? score?.away ?? "—",
-        },
-        {
-          label: "Tackles Made",
-          home: stats.tacklesMade?.home ?? "—",
-          away: stats.tacklesMade?.away ?? "—",
-        },
-        {
-          label: "Missed Tackles",
-          home: stats.missedTackles?.home ?? "—",
-          away: stats.missedTackles?.away ?? "—",
-        },
-        {
-          label: "Penalties Conceded",
-          home: stats.penalties?.home ?? "—",
-          away: stats.penalties?.away ?? "—",
-        },
+        { label: "Possession", home: stats.possession?.home ?? "—", away: stats.possession?.away ?? "—" },
+        { label: "Territory", home: stats.territory?.home ?? "—", away: stats.territory?.away ?? "—" },
+        { label: "Tries", home: stats.tries?.home ?? score?.home ?? "—", away: stats.tries?.away ?? score?.away ?? "—" },
       ]
-    : [
-        { label: "Possession", home: "—", away: "—" },
-        { label: "Territory", home: "—", away: "—" },
-        { label: "Tries", home: "—", away: "—" },
-        { label: "Tackles Made", home: "—", away: "—" },
-        { label: "Missed Tackles", home: "—", away: "—" },
-        { label: "Penalties Conceded", home: "—", away: "—" },
-      ];
+    : [];
+
+  /* ================= RENDER ================= */
 
   return (
     <main className={styles.page}>
+      {/* BACK */}
       <nav className={styles.backNav}>
         <button onClick={() => navigate(backToTournament)}>
           ← Back to {tournament ? `${tournament.name} ${tournament.year}` : "Tournaments"}
         </button>
       </nav>
 
-      <header className={styles.tournamentHeader}>
+      {/* HEADER */}
+      <header className={styles.header}>
         <h1>{match.tournament}</h1>
+        <span className={`${styles.status} ${styles[status]}`}>
+          {status}
+        </span>
       </header>
 
-      <section className={styles.statusBar}>
-        <span className={`${styles.status} ${styles[status]}`}>{status}</span>
-      </section>
-
-      <section className={styles.vsSection}>
-        <div className={styles.team}>
+      {/* TEAMS */}
+      <section className={styles.teams}>
+        <div>
           <Flag country={home.country} size="large" />
-          <span className={styles.teamName}>{home.name}</span>
+          <h2>{home.name}</h2>
         </div>
 
-        {score ? (
-          <div className={styles.scoreBlock}>
-            <span className={styles.score}>{score.home}</span>
-            <span className={styles.scoreDivider}>–</span>
-            <span className={styles.score}>{score.away}</span>
-          </div>
-        ) : (
-          <span className={styles.vs}>vs</span>
-        )}
+        <div className={styles.score}>
+          {score ? `${score.home} – ${score.away}` : "vs"}
+        </div>
 
-        <div className={styles.team}>
+        <div>
           <Flag country={away.country} size="large" />
-          <span className={styles.teamName}>{away.name}</span>
+          <h2>{away.name}</h2>
         </div>
       </section>
 
+      {/* META */}
       <section className={styles.meta}>
-        <span>📅 {date}</span>
-
-        {stadium ? (
-          <button
-            className={styles.venueLink}
-            onClick={() => navigate(`/stadium/${stadium.slug}`)}
-          >
-            🏟 {stadium.name}
-          </button>
-        ) : (
-          <span>🏟 Venue TBC</span>
-        )}
+        <span>{date}</span>
+        <span>{stadium?.name || "Venue TBC"}</span>
       </section>
 
-      {/* TIMELINE */}
-      <section className={styles.timeline}>
-        <h2>Match Timeline</h2>
-        {stats?.timeline ? (
-          <ul className={styles.timelineList}>
-            {stats.timeline.map((e, i) => (
-              <li key={i} className={styles.timelineItem}>
-                <span className={styles.minute}>{e.minute}</span>
-                <span className={styles.label}>
-                  {getTimelineIcon(e.label)}
-                  {e.label}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className={styles.emptyState}>Timeline will appear when match begins</p>
-        )}
-      </section>
-
-      {/* LINEUPS */}
+      {/* LINEUPS — MIRROR */}
       <section className={styles.lineups}>
         <h2>Lineups</h2>
 
-        {stats?.lineups ? (
-          <div className={styles.lineupGrid}>
-            <div className={styles.teamLineup}>
-              <h3>{home.name}</h3>
-              <ul>
-                {stats.lineups.homeStarting.map((p) => (
-                  <li key={p.number}>{p.name}</li>
-                ))}
-              </ul>
-            </div>
+        <div className={styles.mirrorHeader}>
+          <span>{home.name}</span>
+          <span>vs</span>
+          <span>{away.name}</span>
+        </div>
 
-            <div className={styles.teamLineup}>
-              <h3>{away.name}</h3>
-              <ul>
-                {stats.lineups.awayStarting.map((p) => (
-                  <li key={p.number}>{p.name}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ) : (
-          <div className={styles.lineupGrid}>
-            <div className={styles.teamLineup}>
-              <h3>{home.name}</h3>
-              <ul>
-                {Array.from({ length: 15 }).map((_, i) => (
-                  <li key={i}>Player {i + 1}</li>
-                ))}
-              </ul>
-            </div>
+        <div className={styles.mirrorGrid}>
+          {mirrorRows.map((row, i) => (
+            <div key={i} className={styles.mirrorRow}>
+              <div className={styles.mirrorPlayerLeft}>
+                {row.home && (
+                  <>
+                    <span className={styles.number}>{row.home.number}</span>
+                    <span>{row.home.name}</span>
+                  </>
+                )}
+              </div>
 
-            <div className={styles.teamLineup}>
-              <h3>{away.name}</h3>
-              <ul>
-                {Array.from({ length: 15 }).map((_, i) => (
-                  <li key={i}>Player {i + 1}</li>
-                ))}
-              </ul>
+              <div className={styles.mirrorCenter}>vs</div>
+
+              <div className={styles.mirrorPlayerRight}>
+                {row.away && (
+                  <>
+                    <span>{row.away.name}</span>
+                    <span className={styles.number}>{row.away.number}</span>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          ))}
+        </div>
       </section>
 
-      {/* TEAM STATS */}
+      {/* STATS */}
       <section className={styles.section}>
-        <h2>Team Stats</h2>
-
-        {!stats && (
-          <p className={styles.emptyState}>
-            Stats will appear when match data becomes available
-          </p>
-        )}
+        <h2>Stats</h2>
 
         <TeamComparisonTable
           home={{ name: home.name, country: home.country }}
@@ -369,18 +244,12 @@ export default function MatchPage() {
       <section className={styles.section}>
         <h2>Fan Reactions</h2>
 
-        <div className={styles.commentsPanel}>
-          {comments.length > 0 ? (
-            comments.map((c) => <p key={c.id}>“{c.content}”</p>)
-          ) : (
-            <p>No reactions yet.</p>
-          )}
-        </div>
+        {comments.map((c) => (
+          <p key={c.id}>{c.content}</p>
+        ))}
 
-        <div className={styles.commentInput}>
-          <textarea value={text} onChange={(e) => setText(e.target.value)} />
-          <button onClick={postComment}>Post</button>
-        </div>
+        <textarea value={text} onChange={(e) => setText(e.target.value)} />
+        <button onClick={postComment}>Post</button>
       </section>
     </main>
   );

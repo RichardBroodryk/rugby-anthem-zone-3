@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 
 import Flag from "../components/images/Flag";
 import MatchRow from "../components/match/MatchRow";
@@ -7,6 +7,8 @@ import MatchRow from "../components/match/MatchRow";
 import { tournaments2026 } from "../data/tournamentMeta";
 import { getTournamentVisual } from "../data/tournamentVisuals";
 import { matches2026 } from "../data/matches";
+
+import { fetchSixNationsWomen } from "../services/sixNationsWomenService";
 
 import type { MatchData } from "../data/matches/types";
 
@@ -22,14 +24,25 @@ export default function TournamentPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [matches, setMatches] = useState<MatchData[]>([]);
+
   const tournament = tournaments2026.find(
     (t) => t.route === location.pathname
   );
 
-  const matches = useMemo((): MatchData[] => {
-    if (!tournament) return [];
+  /* ================= LOAD MATCHES ================= */
 
-    return matches2026
+  useEffect(() => {
+    if (!tournament) return;
+
+    // 🔥 LIVE: Women's Six Nations
+    if (tournament.conceptId === "six-nations-women") {
+      fetchSixNationsWomen().then(setMatches);
+      return;
+    }
+
+    // 🔥 STATIC FALLBACK (ALL OTHER TOURNAMENTS)
+    const filtered = matches2026
       .filter((m: MatchData) => {
         const instanceId =
           (m as { tournamentInstanceId?: string }).tournamentInstanceId;
@@ -53,6 +66,8 @@ export default function TournamentPage() {
           new Date(a.date).getTime() -
           new Date(b.date).getTime()
       );
+
+    setMatches(filtered);
   }, [tournament]);
 
   if (!tournament) {
@@ -105,7 +120,6 @@ export default function TournamentPage() {
     points: number;
   };
 
-  // 🔥 ALL TEAMS INCLUDED (KEY FIX)
   const standings: Record<string, TableRow> = {};
 
   teams.forEach((team) => {
@@ -123,7 +137,6 @@ export default function TournamentPage() {
     };
   });
 
-  // 🔥 APPLY MATCH RESULTS
   matches.forEach((match) => {
     if (!match.score) return;
 
@@ -200,19 +213,21 @@ export default function TournamentPage() {
         </div>
       </header>
 
+      {/* BACK */}
       <div className={styles.backNav}>
-  <button
-    onClick={() =>
-      navigate(
-        tournament.gender === "women"
-          ? "/tournaments/women"
-          : "/tournaments"
-      )
-    }
-  >
-    ← Back to {tournament.gender === "women" ? "Women's" : "Men's"} Tournaments
-  </button>
-</div>
+        <button
+          onClick={() =>
+            navigate(
+              tournament.gender === "women"
+                ? "/tournaments/women"
+                : "/tournaments"
+            )
+          }
+        >
+          ← Back to{" "}
+          {tournament.gender === "women" ? "Women's" : "Men's"} Tournaments
+        </button>
+      </div>
 
       {/* ANTHEMS */}
       <section className={styles.section}>
@@ -290,9 +305,7 @@ export default function TournamentPage() {
                 key={match.id}
                 home={match.home}
                 away={match.away}
-                state={
-                  match.score ? "final" : "upcoming"
-                }
+                state={match.score ? "final" : "upcoming"}
                 score={match.score}
                 metaLeft={match.date}
                 metaRight={match.venue}

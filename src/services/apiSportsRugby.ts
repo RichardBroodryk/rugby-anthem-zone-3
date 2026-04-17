@@ -49,3 +49,15 @@ export async function fetchFixturesByLeague(
 ) {
   return apiSportsFetch(`fixtures?league=${leagueId}&season=${season}`);
 }
+export const SVNS_LEAGUES = [
+  110, // Australia
+  119, // Canada
+  111, // Dubai
+  115, // Hong Kong
+  113, // New Zealand
+  116, // Scotland
+  120, // Singapore
+  112, // South Africa
+  130, // Spain
+  114, // USA
+];
