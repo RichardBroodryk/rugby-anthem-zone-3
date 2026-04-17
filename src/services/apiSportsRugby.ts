@@ -39,3 +39,13 @@ export async function fetchRugbyLeagues() {
 export async function fetchRugbyFixtures() {
   return apiSportsFetch("fixtures?league=1116&season=2026");
 }
+// --------------------------------------------------
+// 🔥 GENERIC FIXTURES BY LEAGUE (NEW)
+// --------------------------------------------------
+
+export async function fetchFixturesByLeague(
+  leagueId: number,
+  season: number
+) {
+  return apiSportsFetch(`fixtures?league=${leagueId}&season=${season}`);
+}
