@@ -9,12 +9,11 @@ import { getTournamentVisual } from "../data/tournamentVisuals";
 import { matches2026 } from "../data/matches";
 
 import { fetchSixNationsWomenMatches } from "../services/sixNationsWomenService";
+import { fetchSvnsMatches } from "../services/svnsService";
 
 import type { MatchData } from "../data/matches/types";
 
 import styles from "./TournamentPage.module.css";
-
-import { fetchSvnsMatches } from "../services/svnsService";
 
 /* ================= HELPERS ================= */
 
@@ -37,37 +36,39 @@ export default function TournamentPage() {
   useEffect(() => {
     if (!tournament) return;
 
-    
-     // 🔥 LIVE: Women's Six Nations
-if (tournament.conceptId === "six-nations-women") {
-  fetchSixNationsWomenMatches().then((data) => {
-    console.log("SNW DATA:", data);
+    // 🔥 LIVE: Women's Six Nations
+    if (tournament.conceptId === "six-nations-women") {
+      fetchSixNationsWomenMatches().then((data) => {
+        console.log("SNW DATA:", data);
 
-  if (data.length) {
-  setMatches(data);
-} else {
-  console.warn("SNW empty → no fallback");
-  setMatches([]);
-}
-  });
-  return;
-}
+        if (data.length) {
+          setMatches(data);
+          console.log("TOURNAMENT MATCHES:", data);
+        } else {
+          console.warn("SNW empty → no fallback");
+          setMatches([]);
+        }
+      });
+      return;
+    }
 
-// 🔥 LIVE: SVNS
-if (tournament.conceptId === "svns") {
-  fetchSvnsMatches().then((data) => {
-    console.log("SVNS DATA:", data);
+    // 🔥 LIVE: SVNS
+    if (tournament.conceptId === "svns") {
+      fetchSvnsMatches().then((data) => {
+        console.log("SVNS DATA:", data);
 
-   if (data.length) {
-  setMatches(data);
-} else {
-  console.warn("SVNS empty → no fallback");
-  setMatches([]);
-}
-  });
-  return;
-}
-    // 🔥 STATIC FALLBACK (ALL OTHER TOURNAMENTS)
+        if (data.length) {
+          setMatches(data);
+          console.log("TOURNAMENT MATCHES:", data);
+        } else {
+          console.warn("SVNS empty → no fallback");
+          setMatches([]);
+        }
+      });
+      return;
+    }
+
+    // 🔥 STATIC FALLBACK
     const filtered = matches2026
       .filter((m: MatchData) => {
         const instanceId =
@@ -101,19 +102,19 @@ if (tournament.conceptId === "svns") {
   }
 
   if (!matches.length) {
-  return (
-    <main className={styles.page}>
-      <header className={styles.hero}>
-        <h1>{tournament.name}</h1>
-        <p>Live data is currently unavailable.</p>
-      </header>
+    return (
+      <main className={styles.page}>
+        <header className={styles.hero}>
+          <h1>{tournament.name}</h1>
+          <p>Live data is currently unavailable.</p>
+        </header>
 
-      <div className={styles.error}>
-        No matches available for this tournament yet.
-      </div>
-    </main>
-  );
-}
+        <div className={styles.error}>
+          No matches available for this tournament yet.
+        </div>
+      </main>
+    );
+  }
 
   const visual = getTournamentVisual(tournament.conceptId);
 
@@ -142,16 +143,13 @@ if (tournament.conceptId === "svns") {
 
   matches.forEach((match: MatchData) => {
     const round =
-  match.round ||
-  roundMap[match.date] ||
-  "Other";
+      match.round ||
+      roundMap[match.date] ||
+      "Other";
+
     if (!groupedMatches[round]) groupedMatches[round] = [];
     groupedMatches[round].push(match);
   });
-
-const validMatches: MatchData[] = matches.filter(
-  (m) => m.competitionId === tournament.conceptId
-);
 
   /* ================= STANDINGS ================= */
 
@@ -207,18 +205,10 @@ const validMatches: MatchData[] = matches.filter(
       home.won++;
       away.lost++;
       home.points += 4;
-
-      if (homeScore - awayScore <= 7) {
-        away.points += 1;
-      }
     } else if (awayScore > homeScore) {
       away.won++;
       home.lost++;
       away.points += 4;
-
-      if (awayScore - homeScore <= 7) {
-        home.points += 1;
-      }
     } else {
       home.draw++;
       away.draw++;
@@ -240,11 +230,7 @@ const validMatches: MatchData[] = matches.filter(
     <main className={styles.page}>
       {/* HERO */}
       <header
-        className={`${styles.hero} ${
-          visual.heroLayout === "contained"
-            ? styles.heroContained
-            : ""
-        }`}
+        className={styles.hero}
         style={{
           backgroundImage: `url(${
             tournament.gender === "women"
@@ -254,91 +240,17 @@ const validMatches: MatchData[] = matches.filter(
         }}
       >
         <div className={styles.heroContent}>
-          <h1>
-            {tournament.name} {tournament.year}
-          </h1>
+          <h1>{tournament.name} {tournament.year}</h1>
           <p>{tournament.heroSubtitle}</p>
         </div>
       </header>
 
       {/* BACK */}
       <div className={styles.backNav}>
-        <button
-          onClick={() =>
-            navigate(
-              tournament.gender === "women"
-                ? "/tournaments/women"
-                : "/tournaments"
-            )
-          }
-        >
-          ← Back to{" "}
-          {tournament.gender === "women" ? "Women's" : "Men's"} Tournaments
+        <button onClick={() => navigate("/tournaments")}>
+          ← Back to Tournaments
         </button>
       </div>
-
-      {/* ANTHEMS */}
-      <section className={styles.section}>
-        <div className={styles.flagsGrid}>
-          {teams.map((team) => (
-            <div
-              key={team.name}
-              onClick={() =>
-                navigate(`/anthems/${team.country}`)
-              }
-              style={{ cursor: "pointer" }}
-            >
-              <Flag country={team.country} size="medium" />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* STANDINGS */}
-      <section className={styles.section}>
-        <h2>Standings</h2>
-
-        <table className={styles.standingsTable}>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th className={styles.teamHeader}>Team</th>
-              <th>P</th>
-              <th>W</th>
-              <th>D</th>
-              <th>L</th>
-              <th>PF</th>
-              <th>PA</th>
-              <th>PD</th>
-              <th>PTS</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {table.map((row, index) => (
-              <tr key={row.team}>
-                <td className={styles.rank}>{index + 1}</td>
-
-                <td className={styles.teamCell}>
-                  <div className={styles.teamWrap}>
-                    <Flag country={row.country} size="small" />
-                    <span>{row.team}</span>
-                  </div>
-                </td>
-
-                <td>{row.played}</td>
-                <td>{row.won}</td>
-                <td>{row.draw}</td>
-                <td>{row.lost}</td>
-                <td>{row.pf}</td>
-                <td>{row.pa}</td>
-                <td>{row.pd}</td>
-                <td className={styles.points}>{row.points}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
 
       {/* MATCHES */}
       <section className={styles.section}>
