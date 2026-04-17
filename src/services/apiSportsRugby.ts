@@ -1,5 +1,5 @@
 // --------------------------------------------------
-// API-Sports Rugby Service (UPDATED)
+// API-Sports Rugby Service (CLEAN + PRODUCTION READY)
 // --------------------------------------------------
 
 const BASE_URL =
@@ -19,6 +19,10 @@ async function apiSportsFetch(endpoint: string) {
     },
   });
 
+  if (!response.ok) {
+    throw new Error(`API error: ${response.status}`);
+  }
+
   const data = await response.json();
 
   console.log("API SPORTS RESPONSE:", data);
@@ -27,37 +31,38 @@ async function apiSportsFetch(endpoint: string) {
 }
 
 /**
- * 🔥 NEW — Fetch ALL rugby leagues
+ * Fetch all leagues (debug / discovery)
  */
 export async function fetchRugbyLeagues() {
   return apiSportsFetch("leagues");
 }
 
 /**
- * Existing (Six Nations only)
+ * 🔥 GENERIC FIXTURES BY LEAGUE (MAIN ENTRY POINT)
  */
-export async function fetchRugbyFixtures() {
-  return apiSportsFetch("fixtures?league=1116&season=2026");
-}
-// --------------------------------------------------
-// 🔥 GENERIC FIXTURES BY LEAGUE (NEW)
-// --------------------------------------------------
-
 export async function fetchFixturesByLeague(
   leagueId: number,
-  season: number
+  season: number = 2026
 ) {
   return apiSportsFetch(`fixtures?league=${leagueId}&season=${season}`);
 }
+
+/**
+ * 🔥 SVNS LEAGUES (CORRECTED)
+ */
 export const SVNS_LEAGUES = [
   110, // Australia
   119, // Canada
-  111, // Dubai
+  121, // France
   115, // Hong Kong
   113, // New Zealand
-  116, // Scotland
   120, // Singapore
   112, // South Africa
   130, // Spain
   114, // USA
 ];
+
+/**
+ * 🔥 SIX NATIONS WOMEN
+ */
+export const SIX_NATIONS_WOMEN_LEAGUE = 55;

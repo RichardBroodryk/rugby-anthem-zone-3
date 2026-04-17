@@ -8,11 +8,13 @@ import { tournaments2026 } from "../data/tournamentMeta";
 import { getTournamentVisual } from "../data/tournamentVisuals";
 import { matches2026 } from "../data/matches";
 
-import { fetchSixNationsWomen } from "../services/sixNationsWomenService";
+import { fetchSixNationsWomenMatches } from "../services/sixNationsWomenService";
 
 import type { MatchData } from "../data/matches/types";
 
 import styles from "./TournamentPage.module.css";
+
+import { fetchSvnsMatches } from "../services/svnsService";
 
 /* ================= HELPERS ================= */
 
@@ -35,11 +37,18 @@ export default function TournamentPage() {
   useEffect(() => {
     if (!tournament) return;
 
+    
     // 🔥 LIVE: Women's Six Nations
-    if (tournament.conceptId === "six-nations-women") {
-      fetchSixNationsWomen().then(setMatches);
-      return;
-    }
+if (tournament.conceptId === "six-nations-women") {
+  fetchSixNationsWomenMatches().then(setMatches);
+  return;
+}
+
+// 🔥 LIVE: SVNS (World Series / Championship)
+if (tournament.conceptId === "svns") {
+  fetchSvnsMatches().then(setMatches);
+  return;
+}
 
     // 🔥 STATIC FALLBACK (ALL OTHER TOURNAMENTS)
     const filtered = matches2026

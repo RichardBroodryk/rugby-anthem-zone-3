@@ -1,29 +1,34 @@
 import type { MatchData } from "../data/matches/types";
-import { fetchRugbyFixtures } from "./apiSportsRugby";
+
+import {
+  fetchFixturesByLeague,
+  SIX_NATIONS_WOMEN_LEAGUE,
+} from "./apiSportsRugby";
+
 import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
 
-/* ================= FETCH ================= */
+/* ==================================================
+   SIX NATIONS WOMEN SERVICE — LIVE DATA
+   ================================================== */
 
-export async function fetchSixNationsWomen(): Promise<MatchData[]> {
+export async function fetchSixNationsWomenMatches(): Promise<MatchData[]> {
   try {
-    const raw = await fetchRugbyFixtures();
+    const rawFixtures = await fetchFixturesByLeague(
+      SIX_NATIONS_WOMEN_LEAGUE,
+      2026
+    );
 
-    const baseMatches = convertApiSportsFixtures(raw);
+    if (!rawFixtures.length) {
+      console.warn("No Six Nations Women fixtures returned");
+      return [];
+    }
 
-    return baseMatches
-      .filter((m) =>
-        m.tournament?.toLowerCase().includes("women")
-      )
-      .map((m) => ({
-        ...m,
+    const matches = convertApiSportsFixtures(rawFixtures);
 
-        gender: "women",
-
-        // Six Nations = round-based
-        round: "pool",
-
-        pool: undefined,
-      })) as MatchData[];
+    return matches.map((match) => ({
+      ...match,
+      gender: "women",
+    })) as MatchData[];
   } catch (err) {
     console.error("Six Nations Women fetch failed", err);
     return [];

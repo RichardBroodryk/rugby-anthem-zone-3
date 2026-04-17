@@ -1,6 +1,6 @@
 // --------------------------------------------------
 // RAZ SYSTEM — API → INTERNAL COMPETITION MAP
-// Phase 4.3.2 — COMPLETE & LOCKED
+// Phase 4.3.3 — SVNS + LIVE FIX
 // --------------------------------------------------
 
 /**
@@ -58,12 +58,37 @@ export const API_TO_CONCEPT_MAP: Record<number, string> = {
   136: "aupiki",
 
   // ==================================================
-  // ⚡ SEVENS — CONTROLLED ENTRY
+  // ⚡ SEVENS — WORLD CUP
   // ==================================================
 
   86: "sevens-world-cup",
   87: "sevens-world-cup",
 
-  // ⚠️ NOTE:
-  // SVNS Series uses multiple IDs → handled later
+  // ==================================================
+  // ⚡ SVNS WORLD SERIES (CRITICAL FIX)
+  // ==================================================
+  // ALL EVENTS → ONE SYSTEM ("svns")
+
+  110: "svns", // Australia
+  119: "svns", // Canada
+  121: "svns", // France
+  115: "svns", // Hong Kong
+  113: "svns", // New Zealand
+  120: "svns", // Singapore
+  112: "svns", // South Africa
+  130: "svns", // Spain
+  114: "svns", // USA
+
+  // WOMEN EVENTS (SAME SYSTEM)
+
+  123: "svns",
+  126: "svns",
+  133: "svns",
+  122: "svns",
+  135: "svns",
+  127: "svns",
+  125: "svns",
+  129: "svns",
+  131: "svns",
+  124: "svns",
 };

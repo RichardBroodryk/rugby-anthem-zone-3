@@ -1,9 +1,24 @@
 import type { MatchData } from "../data/matches/types";
 import { API_TO_CONCEPT_MAP } from "../contracts/competitionIdMap";
 
-/**
- * Convert API fixture → RAZ MatchData
- */
+/* ==================================================
+   NORMALIZER
+   ================================================== */
+
+function normalizeCountry(name?: string): string {
+  if (!name) return "unknown";
+
+  return name
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/'/g, "")
+    .trim();
+}
+
+/* ==================================================
+   CONVERTER
+   ================================================== */
+
 export function convertApiSportsFixture(fixture: any): MatchData {
   const home = fixture.teams?.home;
   const away = fixture.teams?.away;
@@ -13,11 +28,9 @@ export function convertApiSportsFixture(fixture: any): MatchData {
 
   const leagueId = fixture.league?.id;
 
-  // 🔥 MAP TO INTERNAL ID
   const competitionId =
     API_TO_CONCEPT_MAP[leagueId] ?? "unknown";
 
-  // 🔥 STATE MAPPING
   let state: MatchData["state"] = "upcoming";
 
   const status = fixture.fixture?.status?.short;
@@ -27,7 +40,7 @@ export function convertApiSportsFixture(fixture: any): MatchData {
   else if (status === "NS") state = "upcoming";
 
   return {
-    id: fixture.fixture?.id,
+    id: Number(fixture.fixture?.id),
 
     competitionId,
 
@@ -38,12 +51,12 @@ export function convertApiSportsFixture(fixture: any): MatchData {
 
     home: {
       name: home?.name ?? "Unknown",
-      country: (home?.name ?? "").toLowerCase(),
+      country: normalizeCountry(home?.name),
     },
 
     away: {
       name: away?.name ?? "Unknown",
-      country: (away?.name ?? "").toLowerCase(),
+      country: normalizeCountry(away?.name), // ✅ FIXED
     },
 
     score:
@@ -53,14 +66,14 @@ export function convertApiSportsFixture(fixture: any): MatchData {
 
     state,
 
-    // 🔥 BASELINE IMPORTANCE (can upgrade later)
     importance: 50,
   };
 }
 
-/**
- * Batch converter
- */
+/* ==================================================
+   BATCH
+   ================================================== */
+
 export function convertApiSportsFixtures(
   fixtures: any[]
 ): MatchData[] {

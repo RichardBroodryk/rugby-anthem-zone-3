@@ -1,50 +1,54 @@
 import type { MatchData } from "../data/matches/types";
 
 import { SVNS_EVENTS_2026 } from "../data/svnsEvents";
-import { fetchFixturesByLeague } from "./apiSportsRugby";
+import {
+  fetchFixturesByLeague,
+  SVNS_LEAGUES,
+} from "./apiSportsRugby";
+
 import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
 
 /* ==================================================
-   SVNS SERVICE — LIVE EVENT AWARE
+   SVNS SERVICE — LIVE + FALLBACK SAFE
    ================================================== */
 
 export async function fetchSvnsMatches(): Promise<MatchData[]> {
   try {
-    /* ================= ACTIVE EVENTS ================= */
-
     const activeEvents = SVNS_EVENTS_2026.filter(
       (event) => event.status === "live" && event.leagueId
     );
 
-    if (!activeEvents.length) {
-      console.warn("No active SVNS events");
-      return [];
+    let leagueIds: number[] = [];
+
+    if (activeEvents.length) {
+      console.log("Using ACTIVE SVNS events");
+      leagueIds = activeEvents.map((e) => e.leagueId as number);
+    } else {
+      console.warn("No active events → fallback to ALL SVNS leagues");
+      leagueIds = SVNS_LEAGUES;
     }
 
-    /* ================= FETCH ALL ACTIVE EVENTS ================= */
-
     const responses = await Promise.all(
-      activeEvents.map((event) =>
-        fetchFixturesByLeague(event.leagueId as number, 2026)
+      leagueIds.map((leagueId) =>
+        fetchFixturesByLeague(leagueId, 2026)
       )
     );
 
     const rawFixtures = responses.flat();
 
-    /* ================= CONVERT TO MATCHDATA ================= */
+    if (!rawFixtures.length) {
+      console.warn("SVNS API returned no fixtures");
+      return [];
+    }
 
     const baseMatches = convertApiSportsFixtures(rawFixtures);
 
-    /* ================= ENHANCE MATCHDATA ================= */
-
     const enhancedMatches: MatchData[] = baseMatches.map((match) => ({
       ...match,
-
-      // 🔥 SVNS SPECIFIC FIELDS
       gender: inferGender(match),
       round: inferRound(match),
-      pool: undefined, // API does not provide pools
-    })) as MatchData[];
+      pool: inferPool(match),
+    }));
 
     return enhancedMatches;
   } catch (err) {
@@ -59,9 +63,7 @@ export async function fetchSvnsMatches(): Promise<MatchData[]> {
 
 function inferGender(match: MatchData): "men" | "women" {
   const name = match.tournament?.toLowerCase() || "";
-
-  if (name.includes("women")) return "women";
-  return "men";
+  return name.includes("women") ? "women" : "men";
 }
 
 function inferRound(match: MatchData): MatchData["round"] {
@@ -72,4 +74,34 @@ function inferRound(match: MatchData): MatchData["round"] {
   if (name.includes("final")) return "final";
 
   return "pool";
+}
+
+function inferPool(match: MatchData): string | undefined {
+  const teams = [
+    match.home.name.toLowerCase(),
+    match.away.name.toLowerCase(),
+  ];
+
+  if (
+    teams.some((t) =>
+      ["fiji", "japan", "new zealand", "brazil"].includes(t)
+    )
+  )
+    return "A";
+
+  if (
+    teams.some((t) =>
+      ["canada", "great britain", "australia", "south africa"].includes(t)
+    )
+  )
+    return "B";
+
+  if (
+    teams.some((t) =>
+      ["france", "argentina", "usa", "spain"].includes(t)
+    )
+  )
+    return "C";
+
+  return undefined;
 }
