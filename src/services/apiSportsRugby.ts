@@ -42,7 +42,7 @@ export async function fetchRugbyLeagues() {
  */
 export async function fetchFixturesByLeague(
   leagueId: number,
-  season: number = 2026
+  season: number = 2024
 ) {
   return apiSportsFetch(`fixtures?league=${leagueId}&season=${season}`);
 }

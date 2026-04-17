@@ -10,6 +10,8 @@ function normalizeCountry(name?: string): string {
 
   return name
     .toLowerCase()
+    .replace("women", "")
+    .replace("7s", "")
     .replace(/\s+/g, "-")
     .replace(/'/g, "")
     .trim();
@@ -19,7 +21,9 @@ function normalizeCountry(name?: string): string {
    CONVERTER
    ================================================== */
 
-export function convertApiSportsFixture(fixture: any): MatchData {
+export function convertApiSportsFixture(
+  fixture: any
+): MatchData | null {
   const home = fixture.teams?.home;
   const away = fixture.teams?.away;
 
@@ -28,8 +32,13 @@ export function convertApiSportsFixture(fixture: any): MatchData {
 
   const leagueId = fixture.league?.id;
 
-  const competitionId =
-    API_TO_CONCEPT_MAP[leagueId] ?? "unknown";
+  /* 🔒 CRITICAL: HARD FILTER AT SOURCE */
+  const competitionId = API_TO_CONCEPT_MAP[leagueId];
+  console.log("LEAGUE ID:", leagueId, "→", competitionId);
+
+  if (!competitionId) {
+    return null; // 🚫 DROP INVALID COMPETITIONS
+  }
 
   let state: MatchData["state"] = "upcoming";
 
@@ -56,7 +65,7 @@ export function convertApiSportsFixture(fixture: any): MatchData {
 
     away: {
       name: away?.name ?? "Unknown",
-      country: normalizeCountry(away?.name), // ✅ FIXED
+      country: normalizeCountry(away?.name),
     },
 
     score:
@@ -77,5 +86,7 @@ export function convertApiSportsFixture(fixture: any): MatchData {
 export function convertApiSportsFixtures(
   fixtures: any[]
 ): MatchData[] {
-  return fixtures.map(convertApiSportsFixture);
+  return fixtures
+    .map(convertApiSportsFixture)
+    .filter((m): m is MatchData => m !== null);
 }

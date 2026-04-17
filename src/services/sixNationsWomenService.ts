@@ -8,14 +8,14 @@ import {
 import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
 
 /* ==================================================
-   SIX NATIONS WOMEN SERVICE — LIVE DATA
+   SIX NATIONS WOMEN SERVICE — LIVE CLEAN (FIXED)
    ================================================== */
 
 export async function fetchSixNationsWomenMatches(): Promise<MatchData[]> {
   try {
     const rawFixtures = await fetchFixturesByLeague(
       SIX_NATIONS_WOMEN_LEAGUE,
-      2026
+      2024 // ✅ FIXED SEASON
     );
 
     if (!rawFixtures.length) {
@@ -23,9 +23,26 @@ export async function fetchSixNationsWomenMatches(): Promise<MatchData[]> {
       return [];
     }
 
-    const matches = convertApiSportsFixtures(rawFixtures);
+    const converted = convertApiSportsFixtures(rawFixtures);
+    console.log("RAW SNW FIXTURES:", rawFixtures);
+console.log("CONVERTED SNW:", converted);
 
-    return matches.map((match) => ({
+    const snwMatches = converted.filter(
+      (m) => m.competitionId === "six-nations-women"
+    );
+
+    console.log("Six Nations Women matches:", snwMatches.length);
+    console.log(
+  "SNW teams:",
+  [...new Set(snwMatches.map((m) => m.home.name))]
+);
+
+    console.log(
+      "SNW teams:",
+      [...new Set(snwMatches.map((m) => m.home.name))]
+    );
+
+    return snwMatches.map((match) => ({
       ...match,
       gender: "women",
     })) as MatchData[];

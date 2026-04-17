@@ -1,15 +1,12 @@
 import type { MatchData } from "../data/matches/types";
 
 import { SVNS_EVENTS_2026 } from "../data/svnsEvents";
-import {
-  fetchFixturesByLeague,
-  SVNS_LEAGUES,
-} from "./apiSportsRugby";
+import { fetchFixturesByLeague } from "./apiSportsRugby";
 
 import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
 
 /* ==================================================
-   SVNS SERVICE — LIVE + FALLBACK SAFE
+   SVNS SERVICE — CHAMPIONSHIP ONLY (FIXED)
    ================================================== */
 
 export async function fetchSvnsMatches(): Promise<MatchData[]> {
@@ -18,37 +15,44 @@ export async function fetchSvnsMatches(): Promise<MatchData[]> {
       (event) => event.status === "live" && event.leagueId
     );
 
-    let leagueIds: number[] = [];
-
-    if (activeEvents.length) {
-      console.log("Using ACTIVE SVNS events");
-      leagueIds = activeEvents.map((e) => e.leagueId as number);
-    } else {
-      console.warn("No active events → fallback to ALL SVNS leagues");
-      leagueIds = SVNS_LEAGUES;
+    if (!activeEvents.length) {
+      console.warn("No active SVNS championship events");
+      return [];
     }
+
+    /* ✅ FIX: SET LEAGUE IDS */
+    const leagueIds = activeEvents.map((e) => e.leagueId as number);
 
     const responses = await Promise.all(
       leagueIds.map((leagueId) =>
-        fetchFixturesByLeague(leagueId, 2026)
+        fetchFixturesByLeague(leagueId, 2024) // ✅ FIXED SEASON
       )
     );
 
     const rawFixtures = responses.flat();
+    console.log("SVNS RAW FIXTURES:", rawFixtures);
 
     if (!rawFixtures.length) {
       console.warn("SVNS API returned no fixtures");
       return [];
     }
 
-    const baseMatches = convertApiSportsFixtures(rawFixtures);
+    const converted = convertApiSportsFixtures(rawFixtures);
 
-    const enhancedMatches: MatchData[] = baseMatches.map((match) => ({
+    const svnsMatches = converted.filter(
+      (m) => m.competitionId === "svns"
+    );
+
+    console.log("SVNS matches:", svnsMatches.length);
+
+    const enhancedMatches: MatchData[] = svnsMatches.map((match) => ({
       ...match,
       gender: inferGender(match),
       round: inferRound(match),
       pool: inferPool(match),
     }));
+
+    console.log("SVNS enriched:", enhancedMatches);
 
     return enhancedMatches;
   } catch (err) {

@@ -38,18 +38,35 @@ export default function TournamentPage() {
     if (!tournament) return;
 
     
-    // 🔥 LIVE: Women's Six Nations
+     // 🔥 LIVE: Women's Six Nations
 if (tournament.conceptId === "six-nations-women") {
-  fetchSixNationsWomenMatches().then(setMatches);
+  fetchSixNationsWomenMatches().then((data) => {
+    console.log("SNW DATA:", data);
+
+  if (data.length) {
+  setMatches(data);
+} else {
+  console.warn("SNW empty → no fallback");
+  setMatches([]);
+}
+  });
   return;
 }
 
-// 🔥 LIVE: SVNS (World Series / Championship)
+// 🔥 LIVE: SVNS
 if (tournament.conceptId === "svns") {
-  fetchSvnsMatches().then(setMatches);
+  fetchSvnsMatches().then((data) => {
+    console.log("SVNS DATA:", data);
+
+   if (data.length) {
+  setMatches(data);
+} else {
+  console.warn("SVNS empty → no fallback");
+  setMatches([]);
+}
+  });
   return;
 }
-
     // 🔥 STATIC FALLBACK (ALL OTHER TOURNAMENTS)
     const filtered = matches2026
       .filter((m: MatchData) => {
@@ -83,6 +100,21 @@ if (tournament.conceptId === "svns") {
     return <div className={styles.error}>Tournament not found</div>;
   }
 
+  if (!matches.length) {
+  return (
+    <main className={styles.page}>
+      <header className={styles.hero}>
+        <h1>{tournament.name}</h1>
+        <p>Live data is currently unavailable.</p>
+      </header>
+
+      <div className={styles.error}>
+        No matches available for this tournament yet.
+      </div>
+    </main>
+  );
+}
+
   const visual = getTournamentVisual(tournament.conceptId);
 
   /* ================= TEAMS ================= */
@@ -108,11 +140,18 @@ if (tournament.conceptId === "svns") {
 
   const groupedMatches: Record<string, MatchData[]> = {};
 
-  matches.forEach((match) => {
-    const round = roundMap[match.date] || "Other";
+  matches.forEach((match: MatchData) => {
+    const round =
+  match.round ||
+  roundMap[match.date] ||
+  "Other";
     if (!groupedMatches[round]) groupedMatches[round] = [];
     groupedMatches[round].push(match);
   });
+
+const validMatches: MatchData[] = matches.filter(
+  (m) => m.competitionId === tournament.conceptId
+);
 
   /* ================= STANDINGS ================= */
 
@@ -146,7 +185,7 @@ if (tournament.conceptId === "svns") {
     };
   });
 
-  matches.forEach((match) => {
+  matches.forEach((match: MatchData) => {
     if (!match.score) return;
 
     const home = standings[match.home.name];

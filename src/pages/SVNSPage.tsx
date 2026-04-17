@@ -11,8 +11,6 @@ import { svnsFlags } from "../data/flags/svnsFlags";
 
 import { fetchSvnsMatches } from "../services/svnsService";
 
-import { fetchRugbyLeagues } from "../services/apiSportsRugby";
-
 /* ================= POOL ENGINE ================= */
 
 type PoolRow = {
@@ -92,34 +90,78 @@ function getPools(
 export default function SVNSPage() {
   const navigate = useNavigate();
 
-  /* ================= TEMP LEAGUE TEST ================= */
-  useEffect(() => {
-    fetchRugbyLeagues().then((data) => {
-      console.log("LEAGUES:", data);
-    });
-  }, []);
-
   const tournament = tournaments2026.find(
     (t) => t.conceptId === "svns"
   );
 
   const visual = getTournamentVisual("svns");
 
-  
+  const [svnsMatches, setSvnsMatches] = useState<MatchData[]>([]);
 
-const [svnsMatches, setSvnsMatches] = useState<MatchData[]>([]);
+  useEffect(() => {
+    fetchSvnsMatches().then((data) => {
+      console.log("SVNS PAGE DATA:", data);
+      setSvnsMatches(data);
+    });
+  }, []);
 
-useEffect(() => {
-  fetchSvnsMatches().then(setSvnsMatches);
-}, []);
+  /* ================= GUARDS ================= */
+
+  if (!tournament) {
+    return <div>SVNS tournament not found</div>;
+  }
+
+  if (!svnsMatches.length) {
+    return (
+      <main className={styles.page}>
+        <header
+          className={`${styles.hero} ${styles.heroSVNSLayout}`}
+          style={{
+            backgroundImage: `url(${
+              visual.heroImageMen || visual.heroImageWomen
+            })`,
+          }}
+        >
+          <div className={styles.heroContent}>
+            <h1>{tournament.name} {tournament.year}</h1>
+            <p>Live data is currently unavailable.</p>
+          </div>
+        </header>
+
+        <div className={styles.error}>
+          No SVNS championship matches available yet.
+        </div>
+      </main>
+    );
+  }
 
   const poolMatches = svnsMatches.filter((m) => m.round === "pool");
-  const qfMatches = svnsMatches.filter((m) => m.round === "quarter-final");
-  const sfMatches = svnsMatches.filter((m) => m.round === "semi-final");
-  const finalMatches = svnsMatches.filter((m) => m.round === "final");
 
   const womensPools = getPools(poolMatches, "women");
   const mensPools = getPools(poolMatches, "men");
+
+  const hasPools =
+    Object.keys(womensPools).length > 0 ||
+    Object.keys(mensPools).length > 0;
+
+  if (!hasPools) {
+    return (
+      <main className={styles.page}>
+        <header className={styles.hero}>
+          <h1>SVNS World Championship</h1>
+          <p>Data is loading or incomplete.</p>
+        </header>
+
+        <div className={styles.error}>
+          Pool data not ready yet.
+        </div>
+      </main>
+    );
+  }
+
+  const qfMatches = svnsMatches.filter((m) => m.round === "quarter-final");
+  const sfMatches = svnsMatches.filter((m) => m.round === "semi-final");
+  const finalMatches = svnsMatches.filter((m) => m.round === "final");
 
   const womensQF = qfMatches.filter((m) => m.gender === "women");
   const mensQF = qfMatches.filter((m) => m.gender === "men");
@@ -129,8 +171,6 @@ useEffect(() => {
 
   const womensFinal = finalMatches.filter((m) => m.gender === "women");
   const mensFinal = finalMatches.filter((m) => m.gender === "men");
-
-  if (!tournament) return <div>SVNS tournament not found</div>;
 
   return (
     <main>
@@ -144,76 +184,37 @@ useEffect(() => {
         }}
       >
         <div className={styles.heroContent}>
-          <div>
-            <h1>{tournament.name} {tournament.year}</h1>
-            <p>{tournament.heroSubtitle}</p>
-          </div>
+          <h1>{tournament.name} {tournament.year}</h1>
+          <p>{tournament.heroSubtitle}</p>
         </div>
       </header>
 
       {/* NAV */}
       <div className={styles.navButtons}>
-  <button
-    className={styles.primaryButton}
-    onClick={() => navigate("/svns/matches")}
-  >
-    Matches
-  </button>
+        <button
+          className={styles.primaryButton}
+          onClick={() => navigate("/svns/matches")}
+        >
+          Matches
+        </button>
 
-  <button
-    className={styles.secondaryButton}
-    onClick={() => navigate("/svns/pools")}
-  >
-    Pools
-  </button>
-</div>
+        <button
+          className={styles.secondaryButton}
+          onClick={() => navigate("/svns/pools")}
+        >
+          Pools
+        </button>
+      </div>
 
-{/* BACK BUTTON — BELOW */}
-<div className={styles.backNav}>
-  <button
-    className={styles.backButton}
-    onClick={() => navigate("/tournaments")}
-  >
-    ← All Tournaments
-  </button>
-</div>
-
-      {/* FEATURED */}
-      {finalMatches.length > 0 && (
-        <section className={styles.section}>
-          <h2>Featured Match</h2>
-
-          {finalMatches.slice(0, 1).map((m) => (
-            <div
-              key={m.id}
-              className={styles.featuredCard}
-              onClick={() => navigate(`/match/${m.id}`)}
-            >
-              <div className={styles.featuredTeams}>
-                <div className={styles.team}>
-                  <img
-                    src={svnsFlags[m.home.name]}
-                    alt={m.home.name}
-                    className={styles.flag}
-                  />
-                  <span>{m.home.name}</span>
-                </div>
-
-                <span className={styles.vs}>vs</span>
-
-                <div className={styles.team}>
-                  <img
-                    src={svnsFlags[m.away.name]}
-                    alt={m.away.name}
-                    className={styles.flag}
-                  />
-                  <span>{m.away.name}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </section>
-      )}
+      {/* BACK */}
+      <div className={styles.backNav}>
+        <button
+          className={styles.backButton}
+          onClick={() => navigate("/tournaments")}
+        >
+          ← All Tournaments
+        </button>
+      </div>
 
       {/* POOLS */}
       <section className={styles.section}>
@@ -261,134 +262,6 @@ useEffect(() => {
           );
         })}
       </section>
-
-      {/* KNOCKOUT */}
-      <section className={styles.section}>
-        <h2>Knockout Stage</h2>
-
-        {/* WOMEN */}
-        <h3>Women</h3>
-        <div className={styles.bracket}>
-          <div>
-            <h4>QF</h4>
-            {womensQF.map((m) => (
-              <div key={m.id} className={styles.matchCard}>
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.home.name]} alt={m.home.name} className={styles.flag} />
-                  <span>{m.home.name}</span>
-                </div>
-
-                <span className={styles.vs}>vs</span>
-
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.away.name]} alt={m.away.name} className={styles.flag} />
-                  <span>{m.away.name}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h4>SF</h4>
-            {womensSF.map((m) => (
-              <div key={m.id} className={styles.matchCard}>
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.home.name]} alt={m.home.name} className={styles.flag} />
-                  <span>{m.home.name}</span>
-                </div>
-
-                <span className={styles.matchType}>SF</span>
-
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.away.name]} alt={m.away.name} className={styles.flag} />
-                  <span>{m.away.name}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h4>FINAL</h4>
-            {womensFinal.map((m) => (
-              <div key={m.id} className={styles.finalCard}>
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.home.name]} alt={m.home.name} className={styles.flag} />
-                  <span>{m.home.name}</span>
-                </div>
-
-                <span className={styles.vs}>vs</span>
-
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.away.name]} alt={m.away.name} className={styles.flag} />
-                  <span>{m.away.name}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* MEN */}
-        <h3>Men</h3>
-        <div className={styles.bracket}>
-          <div>
-            <h4>QF</h4>
-            {mensQF.map((m) => (
-              <div key={m.id} className={styles.matchCard}>
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.home.name]} alt={m.home.name} className={styles.flag} />
-                  <span>{m.home.name}</span>
-                </div>
-
-                <span className={styles.vs}>vs</span>
-
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.away.name]} alt={m.away.name} className={styles.flag} />
-                  <span>{m.away.name}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h4>SF</h4>
-            {mensSF.map((m) => (
-              <div key={m.id} className={styles.matchCard}>
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.home.name]} alt={m.home.name} className={styles.flag} />
-                  <span>{m.home.name}</span>
-                </div>
-
-                <span className={styles.matchType}>SF</span>
-
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.away.name]} alt={m.away.name} className={styles.flag} />
-                  <span>{m.away.name}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <h4>FINAL</h4>
-            {mensFinal.map((m) => (
-              <div key={m.id} className={styles.finalCard}>
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.home.name]} alt={m.home.name} className={styles.flag} />
-                  <span>{m.home.name}</span>
-                </div>
-
-                <span className={styles.vs}>vs</span>
-
-                <div className={styles.team}>
-                  <img src={svnsFlags[m.away.name]} alt={m.away.name} className={styles.flag} />
-                  <span>{m.away.name}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
     </main>
   );
 }
