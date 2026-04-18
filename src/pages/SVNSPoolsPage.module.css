@@ -66,3 +66,18 @@
 .tableRow {
   border-bottom: 1px solid #f1f1f1;
 }
+/* Flags - same size as Matches page */
+.flag {
+  width: 28px;
+  height: 18px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* Mobile responsiveness for poolsGrid */
+@media (max-width: 768px) {
+  .poolsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+}

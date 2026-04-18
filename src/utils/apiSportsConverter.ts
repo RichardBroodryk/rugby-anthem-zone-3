@@ -2,7 +2,7 @@ import type { MatchData } from "../data/matches/types";
 import { API_TO_CONCEPT_MAP } from "../contracts/competitionIdMap";
 
 /* ==================================================
-   NORMALIZER
+   NORMALIZER (FIXED FOR FLAGS)
    ================================================== */
 
 function normalizeCountry(name?: string): string {
@@ -10,15 +10,16 @@ function normalizeCountry(name?: string): string {
 
   return name
     .toLowerCase()
-    .replace("women", "")
-    .replace("7s", "")
-    .replace(/\s+/g, "-")
+    .replace(/\b(7s|sevens|women|w)\b/g, "") // remove noise
+    .replace(/\s+/g, "-")                    // spaces → dash
+    .replace(/-+/g, "-")                     // collapse dashes
+    .replace(/^-|-$/g, "")                   // trim dashes
     .replace(/'/g, "")
     .trim();
 }
 
 /* ==================================================
-   CONVERTER
+   CONVERTER (STRICT + SAFE)
    ================================================== */
 
 export function convertApiSportsFixture(
@@ -32,13 +33,16 @@ export function convertApiSportsFixture(
 
   const leagueId = fixture.league?.id;
 
-  /* 🔒 CRITICAL: HARD FILTER AT SOURCE */
+  /* 🔒 HARD FILTER — ONLY ALLOWED COMPETITIONS */
   const competitionId = API_TO_CONCEPT_MAP[leagueId];
-  console.log("LEAGUE ID:", leagueId, "→", competitionId);
 
   if (!competitionId) {
-    return null; // 🚫 DROP INVALID COMPETITIONS
+    return null; // 🚫 DROP UNKNOWN LEAGUES
   }
+
+  /* ==================================================
+     MATCH STATE
+     ================================================== */
 
   let state: MatchData["state"] = "upcoming";
 
@@ -48,39 +52,50 @@ export function convertApiSportsFixture(
   else if (status === "1H" || status === "2H") state = "live";
   else if (status === "NS") state = "upcoming";
 
-  return {
-    id: Number(fixture.fixture?.id),
+  /* ==================================================
+     RETURN CLEAN STRUCTURE
+     ================================================== */
 
-    competitionId,
+return {
+  id: Number(fixture.fixture?.id),
 
-    tournament: fixture.league?.name ?? "Unknown",
+  competitionId,
 
-    date: fixture.fixture?.date ?? "",
-    venue: fixture.fixture?.venue?.name ?? "TBC",
+  tournament: fixture.league?.name ?? "Unknown",
 
-    home: {
-      name: home?.name ?? "Unknown",
-      country: normalizeCountry(home?.name),
-    },
+  // 🔥 ADD THIS
+  stage:
+    fixture.fixture?.stage ||
+    fixture.fixture?.round ||
+    fixture.league?.round ||
+    "",
 
-    away: {
-      name: away?.name ?? "Unknown",
-      country: normalizeCountry(away?.name),
-    },
+  date: fixture.fixture?.date ?? "",
+  venue: fixture.fixture?.venue?.name ?? "TBC",
 
-    score:
-      homeScore != null && awayScore != null
-        ? { home: homeScore, away: awayScore }
-        : undefined,
+  home: {
+    name: home?.name ?? "Unknown",
+    country: normalizeCountry(home?.name),
+  },
 
-    state,
+  away: {
+    name: away?.name ?? "Unknown",
+    country: normalizeCountry(away?.name),
+  },
 
-    importance: 50,
-  };
+  score:
+    homeScore != null && awayScore != null
+      ? { home: homeScore, away: awayScore }
+      : undefined,
+
+  state,
+
+  importance: 50,
+};
 }
 
 /* ==================================================
-   BATCH
+   BATCH CONVERTER (SAFE)
    ================================================== */
 
 export function convertApiSportsFixtures(

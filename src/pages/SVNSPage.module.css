@@ -240,3 +240,37 @@
   object-fit: cover;
   border-radius: 2px;
 }
+/* Mobile responsiveness for pools */
+@media (max-width: 768px) {
+  .poolsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .poolCard {
+    max-width: 100%;
+  }
+
+  .poolRow {
+    grid-template-columns: 28px 1fr 50px;
+    gap: 10px;
+  }
+
+  .team {
+    gap: 6px;
+  }
+
+  .flag {
+    width: 24px;
+    height: 16px;
+  }
+}
+
+/* Make sure flags are consistent */
+.flag {
+  width: 24px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 2px;
+}

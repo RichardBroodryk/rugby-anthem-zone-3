@@ -8,6 +8,7 @@ import { getTournamentVisual } from "../data/tournamentVisuals";
 import type { MatchData } from "../data/matches/types";
 
 import styles from "./SVNSPoolsPage.module.css";
+import { svnsFlags } from "../data/flags/svnsFlags";   // ← Added for flags
 
 /* ================= POOL ENGINE ================= */
 
@@ -116,7 +117,7 @@ export default function SVNSPoolsPage() {
 
   return (
     <main>
-      {/* HERO */}
+      {/* HERO - UNCHANGED */}
       <header
         className={`${styles.hero} ${styles.heroSVNSLayout}`}
         style={{
@@ -133,7 +134,7 @@ export default function SVNSPoolsPage() {
         </div>
       </header>
 
-      {/* BACK */}
+      {/* BACK - UNCHANGED */}
       <div className={styles.backNav}>
         <button
           className={styles.backButton}
@@ -144,7 +145,6 @@ export default function SVNSPoolsPage() {
       </div>
 
       {/* ================= WOMEN ================= */}
-
       <section className={styles.section}>
         <h2>Women</h2>
 
@@ -169,17 +169,27 @@ export default function SVNSPoolsPage() {
                   <span>Pts</span>
                 </div>
 
-                {table.map((row, i) => (
-                  <div key={row.team} className={styles.tableRow}>
-                    <span>{i + 1}</span>
-                    <span>{row.team}</span>
-                    <span>{row.played}</span>
-                    <span>{row.pf}</span>
-                    <span>{row.pa}</span>
-                    <span>{row.pd}</span>
-                    <span>{row.points}</span>
-                  </div>
-                ))}
+                {table.map((row, i) => {
+                  const cleanName = row.team.replace(/ 7s/i, "");
+                  return (
+                    <div key={row.team} className={styles.tableRow}>
+                      <span>{i + 1}</span>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <img 
+                          src={svnsFlags[cleanName]} 
+                          alt={cleanName} 
+                          className={styles.flag} 
+                        />
+                        <span>{row.team}</span>
+                      </div>
+                      <span>{row.played}</span>
+                      <span>{row.pf}</span>
+                      <span>{row.pa}</span>
+                      <span>{row.pd}</span>
+                      <span>{row.points}</span>
+                    </div>
+                  );
+                })}
               </div>
             );
           })}
@@ -187,7 +197,6 @@ export default function SVNSPoolsPage() {
       </section>
 
       {/* ================= MEN ================= */}
-
       <section className={styles.section}>
         <h2>Men</h2>
 
@@ -212,17 +221,27 @@ export default function SVNSPoolsPage() {
                   <span>Pts</span>
                 </div>
 
-                {table.map((row, i) => (
-                  <div key={row.team} className={styles.tableRow}>
-                    <span>{i + 1}</span>
-                    <span>{row.team}</span>
-                    <span>{row.played}</span>
-                    <span>{row.pf}</span>
-                    <span>{row.pa}</span>
-                    <span>{row.pd}</span>
-                    <span>{row.points}</span>
-                  </div>
-                ))}
+                {table.map((row, i) => {
+                  const cleanName = row.team.replace(/ 7s/i, "");
+                  return (
+                    <div key={row.team} className={styles.tableRow}>
+                      <span>{i + 1}</span>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <img 
+                          src={svnsFlags[cleanName]} 
+                          alt={cleanName} 
+                          className={styles.flag} 
+                        />
+                        <span>{row.team}</span>
+                      </div>
+                      <span>{row.played}</span>
+                      <span>{row.pf}</span>
+                      <span>{row.pa}</span>
+                      <span>{row.pd}</span>
+                      <span>{row.points}</span>
+                    </div>
+                  );
+                })}
               </div>
             );
           })}

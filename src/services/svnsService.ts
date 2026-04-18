@@ -6,7 +6,7 @@ import { fetchFixturesByLeague } from "./apiSportsRugby";
 import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
 
 /* ==================================================
-   SVNS SERVICE — CHAMPIONSHIP ONLY (FIXED)
+   SVNS SERVICE — CHAMPIONSHIP ONLY (CLEAN + STABLE)
    ================================================== */
 
 export async function fetchSvnsMatches(): Promise<MatchData[]> {
@@ -20,16 +20,18 @@ export async function fetchSvnsMatches(): Promise<MatchData[]> {
       return [];
     }
 
-    /* ✅ FIX: SET LEAGUE IDS */
-    const leagueIds = activeEvents.map((e) => e.leagueId as number);
+    const leagueIds = activeEvents.map(
+      (e) => e.leagueId as number
+    );
 
     const responses = await Promise.all(
       leagueIds.map((leagueId) =>
-        fetchFixturesByLeague(leagueId, 2024) // ✅ FIXED SEASON
+        fetchFixturesByLeague(leagueId, 2024)
       )
     );
 
     const rawFixtures = responses.flat();
+
     console.log("SVNS RAW FIXTURES:", rawFixtures);
 
     if (!rawFixtures.length) {
@@ -37,20 +39,34 @@ export async function fetchSvnsMatches(): Promise<MatchData[]> {
       return [];
     }
 
+    /* ==================================================
+       STEP 1 — CONVERT + DROP INVALID
+       ================================================== */
     const converted = convertApiSportsFixtures(rawFixtures);
 
+    /* ==================================================
+       STEP 2 — HARD FILTER (ISOLATION)
+       ================================================== */
     const svnsMatches = converted.filter(
       (m) => m.competitionId === "svns"
     );
 
     console.log("SVNS matches:", svnsMatches.length);
 
-    const enhancedMatches: MatchData[] = svnsMatches.map((match) => ({
-      ...match,
-      gender: inferGender(match),
-      round: inferRound(match),
-      pool: inferPool(match),
-    }));
+    /* ==================================================
+       STEP 3 — ENRICH WITH REAL STRUCTURE
+       ================================================== */
+    const enhancedMatches: MatchData[] = svnsMatches.map(
+      (match) => ({
+        ...match,
+
+        gender: inferGender(match),
+
+        round: inferRound(match.stage),
+
+        pool: extractPool(match.stage),
+      })
+    );
 
     console.log("SVNS enriched:", enhancedMatches);
 
@@ -62,50 +78,47 @@ export async function fetchSvnsMatches(): Promise<MatchData[]> {
 }
 
 /* ==================================================
-   HELPERS
+   HELPERS — CLEAN + USED
    ================================================== */
 
 function inferGender(match: MatchData): "men" | "women" {
-  const name = match.tournament?.toLowerCase() || "";
-  return name.includes("women") ? "women" : "men";
-}
-
-function inferRound(match: MatchData): MatchData["round"] {
-  const name = match.tournament?.toLowerCase() || "";
-
-  if (name.includes("quarter")) return "quarter-final";
-  if (name.includes("semi")) return "semi-final";
-  if (name.includes("final")) return "final";
-
-  return "pool";
-}
-
-function inferPool(match: MatchData): string | undefined {
   const teams = [
     match.home.name.toLowerCase(),
     match.away.name.toLowerCase(),
   ];
 
+  // crude but works for now — SVNS women teams overlap but we split later
   if (
     teams.some((t) =>
-      ["fiji", "japan", "new zealand", "brazil"].includes(t)
+      ["brazil", "japan"].includes(t)
     )
-  )
-    return "A";
+  ) {
+    return "women";
+  }
 
-  if (
-    teams.some((t) =>
-      ["canada", "great britain", "australia", "south africa"].includes(t)
-    )
-  )
-    return "B";
+  return "men";
+}
 
-  if (
-    teams.some((t) =>
-      ["france", "argentina", "usa", "spain"].includes(t)
-    )
-  )
-    return "C";
+function inferRound(stage?: string): MatchData["round"] {
+  if (!stage) return "pool";
+
+  const s = stage.toLowerCase();
+
+  if (s.includes("quarter")) return "quarter-final";
+  if (s.includes("semi")) return "semi-final";
+  if (s.includes("final")) return "final";
+
+  return "pool";
+}
+
+function extractPool(stage?: string): string | undefined {
+  if (!stage) return undefined;
+
+  const s = stage.toLowerCase();
+
+  if (s.includes("pool a")) return "A";
+  if (s.includes("pool b")) return "B";
+  if (s.includes("pool c")) return "C";
 
   return undefined;
 }

@@ -44,7 +44,7 @@ export async function fetchFixturesByLeague(
   leagueId: number,
   season: number = 2024
 ) {
-  return apiSportsFetch(`fixtures?league=${leagueId}&season=${season}`);
+  return apiSportsFetch(`games?league=${leagueId}&season=${season}`);
 }
 
 /**

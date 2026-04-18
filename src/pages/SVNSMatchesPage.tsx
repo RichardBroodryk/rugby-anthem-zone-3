@@ -8,12 +8,12 @@ import { getTournamentVisual } from "../data/tournamentVisuals";
 import type { MatchData } from "../data/matches/types";
 
 import styles from "./SVNSMatchesPage.module.css";
+import { svnsFlags } from "../data/flags/svnsFlags";
 
 /* ================= HELPERS ================= */
 
 function formatDay(date: string) {
   const d = new Date(date);
-
   return d.toLocaleDateString("en-GB", {
     weekday: "long",
     day: "numeric",
@@ -21,15 +21,19 @@ function formatDay(date: string) {
   });
 }
 
-function getDayLabel(matches: MatchData[]) {
-  if (!matches.length) return "";
+/* Proper Day Mapping for SVNS (Thursday = Day 1, Friday = Day 2, Saturday = Day 3) */
+function getDayLabel(dateStr: string, round?: string) {
+  const date = new Date(dateStr);
+  const dayOfMonth = date.getDate();
 
-  const round = matches[0].round;
-
-  if (round === "pool") return "Day 1 — Pool Stage";
-  if (round === "quarter-final") return "Day 2 — Quarter Finals";
-  if (round === "semi-final") return "Day 3 — Semi Finals";
-  if (round === "final") return "Finals Day";
+  if (dayOfMonth === 16) return "Day 1 — Pool Stage";
+  if (dayOfMonth === 17) return "Day 2 — Pool Stage";
+  if (dayOfMonth === 18) {
+    if (round === "quarter-final") return "Day 3 — Quarter Finals";
+    if (round === "semi-final") return "Day 3 — Semi Finals";
+    if (round === "final") return "Finals Day";
+    return "Day 3 — Knockouts";
+  }
 
   return "Match Day";
 }
@@ -37,12 +41,10 @@ function getDayLabel(matches: MatchData[]) {
 function getMatchStatus(match: MatchData) {
   const now = new Date().getTime();
   const matchTime = new Date(match.date).getTime();
-
   const diff = matchTime - now;
 
   if (diff < 0 && diff > -30 * 60 * 1000) return "LIVE";
   if (diff <= -30 * 60 * 1000) return "FT";
-
   return "UPCOMING";
 }
 
@@ -50,13 +52,9 @@ function groupMatchesByDay(matches: MatchData[]) {
   const grouped: Record<string, MatchData[]> = {};
 
   matches.forEach((match) => {
-    const day = formatDay(match.date);
-
-    if (!grouped[day]) {
-      grouped[day] = [];
-    }
-
-    grouped[day].push(match);
+    const dayKey = formatDay(match.date); // used as group key
+    if (!grouped[dayKey]) grouped[dayKey] = [];
+    grouped[dayKey].push(match);
   });
 
   return grouped;
@@ -67,10 +65,7 @@ function groupMatchesByDay(matches: MatchData[]) {
 export default function SVNSMatchesPage() {
   const navigate = useNavigate();
 
-  const tournament = tournaments2026.find(
-    (t) => t.conceptId === "svns"
-  );
-
+  const tournament = tournaments2026.find((t) => t.conceptId === "svns");
   const visual = getTournamentVisual("svns");
 
   const svnsMatches = useMemo(() => {
@@ -89,13 +84,11 @@ export default function SVNSMatchesPage() {
 
   return (
     <main>
-      {/* HERO */}
+      {/* HERO - UNCHANGED */}
       <header
         className={`${styles.hero} ${styles.heroSVNSLayout}`}
         style={{
-          backgroundImage: `url(${
-            visual.heroImageMen || visual.heroImageWomen
-          })`,
+          backgroundImage: `url(${visual.heroImageMen || visual.heroImageWomen})`,
         }}
       >
         <div className={styles.heroContent}>
@@ -106,7 +99,7 @@ export default function SVNSMatchesPage() {
         </div>
       </header>
 
-      {/* BACK */}
+      {/* BACK - UNCHANGED */}
       <div className={styles.backNav}>
         <button
           className={styles.backButton}
@@ -123,12 +116,14 @@ export default function SVNSMatchesPage() {
         {Object.entries(womensByDay).map(([day, matches]) => (
           <div key={day} className={styles.dayBlock}>
             <h3>
-              {getDayLabel(matches)}
+              {getDayLabel(matches[0].date, matches[0].round)}
               <span className={styles.dateSub}>{day}</span>
             </h3>
 
             {matches.map((match) => {
               const status = getMatchStatus(match);
+              const homeClean = match.home.name.replace(/ 7s/i, "");
+              const awayClean = match.away.name.replace(/ 7s/i, "");
 
               return (
                 <div
@@ -136,7 +131,14 @@ export default function SVNSMatchesPage() {
                   className={styles.matchRow}
                   onClick={() => navigate(`/match/${match.id}`)}
                 >
-                  <span className={styles.team}>{match.home.name}</span>
+                  <div className={styles.team}>
+                    <img 
+                      src={svnsFlags[homeClean]} 
+                      alt={match.home.name} 
+                      className={styles.flag} 
+                    />
+                    <span>{match.home.name}</span>
+                  </div>
 
                   <span className={styles.timeBlock}>
                     <span
@@ -150,7 +152,6 @@ export default function SVNSMatchesPage() {
                     >
                       {status}
                     </span>
-
                     <span className={styles.time}>
                       {new Date(match.date).toLocaleTimeString([], {
                         hour: "2-digit",
@@ -159,7 +160,14 @@ export default function SVNSMatchesPage() {
                     </span>
                   </span>
 
-                  <span className={styles.team}>{match.away.name}</span>
+                  <div className={styles.team} style={{ textAlign: "right" }}>
+                    <span>{match.away.name}</span>
+                    <img 
+                      src={svnsFlags[awayClean]} 
+                      alt={match.away.name} 
+                      className={styles.flag} 
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -174,12 +182,14 @@ export default function SVNSMatchesPage() {
         {Object.entries(mensByDay).map(([day, matches]) => (
           <div key={day} className={styles.dayBlock}>
             <h3>
-              {getDayLabel(matches)}
+              {getDayLabel(matches[0].date, matches[0].round)}
               <span className={styles.dateSub}>{day}</span>
             </h3>
 
             {matches.map((match) => {
               const status = getMatchStatus(match);
+              const homeClean = match.home.name.replace(/ 7s/i, "");
+              const awayClean = match.away.name.replace(/ 7s/i, "");
 
               return (
                 <div
@@ -187,7 +197,14 @@ export default function SVNSMatchesPage() {
                   className={styles.matchRow}
                   onClick={() => navigate(`/match/${match.id}`)}
                 >
-                  <span className={styles.team}>{match.home.name}</span>
+                  <div className={styles.team}>
+                    <img 
+                      src={svnsFlags[homeClean]} 
+                      alt={match.home.name} 
+                      className={styles.flag} 
+                    />
+                    <span>{match.home.name}</span>
+                  </div>
 
                   <span className={styles.timeBlock}>
                     <span
@@ -201,7 +218,6 @@ export default function SVNSMatchesPage() {
                     >
                       {status}
                     </span>
-
                     <span className={styles.time}>
                       {new Date(match.date).toLocaleTimeString([], {
                         hour: "2-digit",
@@ -210,7 +226,14 @@ export default function SVNSMatchesPage() {
                     </span>
                   </span>
 
-                  <span className={styles.team}>{match.away.name}</span>
+                  <div className={styles.team} style={{ textAlign: "right" }}>
+                    <span>{match.away.name}</span>
+                    <img 
+                      src={svnsFlags[awayClean]} 
+                      alt={match.away.name} 
+                      className={styles.flag} 
+                    />
+                  </div>
                 </div>
               );
             })}
