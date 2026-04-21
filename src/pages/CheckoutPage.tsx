@@ -12,9 +12,9 @@ const CheckoutPage = () => {
   useEffect(() => {
     console.log("🔥 CheckoutPage loaded - Initializing Paddle");
 
-    // 🔒 Prevent duplicate script loading
+    // If Paddle already exists, we still re-initialize (DO NOT return)
     if (window.Paddle) {
-      console.log("⚠️ Paddle already loaded");
+      console.log("⚠️ Paddle already loaded — reinitializing");
     }
 
     const script = document.createElement("script");
@@ -38,49 +38,55 @@ const CheckoutPage = () => {
         eventCallback: (event: any) => {
           console.log("📦 Paddle event:", event.name);
 
-          // 🔥 Only act on successful completion
           if (event.name === "checkout.completed") {
             console.log("🎉 Checkout completed successfully");
 
             setStatus("Payment successful! Redirecting to your homepage...");
 
-            // ⏱️ Allow webhook + backend to finalize
-            setTimeout(async () => {
-              try {
-                const token = localStorage.getItem("raz_token");
+            // 🔥 RETRY LOGIC (FIXES FREEMIUM ISSUE)
+            const checkTierAndRedirect = async () => {
+              const token = localStorage.getItem("raz_token");
 
-                const res = await fetch(
-                  "https://rugby-anthem-backend.fly.dev/api/subscription",
-                  {
-                    headers: token
-                      ? { Authorization: `Bearer ${token}` }
-                      : {},
+              for (let i = 0; i < 6; i++) {
+                try {
+                  const res = await fetch(
+                    "https://rugby-anthem-backend.fly.dev/api/subscription",
+                    {
+                      headers: token
+                        ? { Authorization: `Bearer ${token}` }
+                        : {},
+                    }
+                  );
+
+                  if (res.ok) {
+                    const data = await res.json();
+                    const tier = data.tier;
+
+                    console.log(`🔁 Tier check attempt ${i}:`, tier);
+
+                    if (tier === "super") {
+                      window.location.href = "/home-super";
+                      return;
+                    }
+
+                    if (tier === "premium") {
+                      window.location.href = "/home";
+                      return;
+                    }
                   }
-                );
-
-                if (res.ok) {
-                  const data = await res.json();
-                  const tier = data.tier;
-
-                  console.log("✅ Real tier from server:", tier);
-
-                  if (tier === "super") {
-                    window.location.href = "/home-super";
-                  } else if (tier === "premium") {
-                    window.location.href = "/home";
-                  } else {
-                    console.warn("⚠️ Tier still freemium — fallback redirect");
-                    window.location.href = "/home-free";
-                  }
-                } else {
-                  console.warn("⚠️ Subscription API failed — fallback redirect");
-                  window.location.href = "/home";
+                } catch (err) {
+                  console.error("Retry error:", err);
                 }
-              } catch (err) {
-                console.error("❌ Redirect failed, using fallback:", err);
-                window.location.href = "/home";
+
+                // wait 1 second before retry
+                await new Promise((res) => setTimeout(res, 1000));
               }
-            }, 2000);
+
+              console.warn("⚠️ Tier never updated — fallback to free");
+              window.location.href = "/home-free";
+            };
+
+            checkTierAndRedirect();
           }
         },
       });
@@ -93,7 +99,7 @@ const CheckoutPage = () => {
       setStatus("Network error loading checkout. Please refresh.");
     };
 
-    // 🧹 Cleanup (important for React navigation)
+    // Cleanup on unmount
     return () => {
       if (script.parentNode) {
         script.parentNode.removeChild(script);
