@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./FreemiumHomePage.module.css";
 
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/raz-light.jpg";
+
 import HubCard from "../components/homepage/HubCard";
 import AutoContentRail from "../components/ui/AutoContentRail";
 
@@ -16,7 +19,8 @@ import calendarImage from "../assets/images/raz/calendar-hero.jpg";
 export default function FreemiumHomePage() {
   const navigate = useNavigate();
 
-  return (
+ return (
+  <PageWrapper imageUrl={razLight}>
     <section className={styles.page}>
       <header className={styles.header}>
         <span className={styles.kicker}>FREEMIUM ACCESS</span>
@@ -73,5 +77,6 @@ export default function FreemiumHomePage() {
         </button>
       </section>
     </section>
-  );
+  </PageWrapper>
+);
 }

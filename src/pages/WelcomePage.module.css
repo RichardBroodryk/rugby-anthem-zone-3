@@ -98,3 +98,26 @@
 .loginButton:hover {
   opacity: 0.92;
 }
+.termsFooter {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.termsText {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.termsLink {
+  background: none;
+  border: none;
+  color: #ffffff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.termsLink:hover {
+  opacity: 0.8;
+}

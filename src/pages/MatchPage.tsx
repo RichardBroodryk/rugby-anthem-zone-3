@@ -1,6 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./MatchPage.module.css";
+
+import { useParams } from "react-router-dom";
+import { getMatches } from "../data/matchesAdapter";
 
 import { flagMap } from "../data/flagMap";
 import { getStadiumByName } from "../utils/stadiumResolver";
@@ -10,15 +13,63 @@ export default function MatchPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const match = location.state as any;
-  const tournamentSlug = match?.tournamentSlug || "";
+ const { id } = useParams();
+
+const [match, setMatch] = useState<any>(
+  location.state || null
+);
+
+const tournamentSlug = match?.tournamentSlug || "";
+
+useEffect(() => {
+  // If match already exists (state-based), do nothing
+  if (match) return;
+
+  // Otherwise fetch via ID (URL-based)
+  async function loadMatch() {
+    const allMatches = await getMatches();
+
+    const found = allMatches.find(
+      (m) => String(m.id) === id
+    );
+
+    if (found) {
+      setMatch(found);
+    }
+  }
+
+  if (id) {
+    loadMatch();
+  }
+}, [id, match]);
 
   const [userComments, setUserComments] = useState<any[]>([]);
   const [newComment, setNewComment] = useState("");
 
+  useEffect(() => {
+  const key = "raz_last_match_view";
+
+  // prevent double count in dev
+  if (sessionStorage.getItem(key)) return;
+
+  const current =
+    Number(localStorage.getItem("raz_matches_followed")) || 0;
+
+  localStorage.setItem(
+    "raz_matches_followed",
+    String(current + 1)
+  );
+
+  sessionStorage.setItem(key, "true");
+}, []);
+
   if (!match) {
-    return <div className={styles.page}>Match not found</div>;
-  }
+  return (
+    <div className={styles.page}>
+      Loading match...
+    </div>
+  );
+}
 
   const details = getMatchDetails(match);
 

@@ -1,5 +1,5 @@
 // ==================================================
-// CALENDAR RESOLVER — IDENTITY LOCKED (FINAL)
+// CALENDAR RESOLVER — IDENTITY LOCKED (FULL FIXED)
 // ==================================================
 
 import { getMatches } from "../../data/matchesAdapter";
@@ -12,6 +12,22 @@ import { stadiums } from "../../data/stadiums";
 
 type ResolveOptions = {
   leagueId?: string;
+};
+
+/* ================= NORMALIZATION MAP ================= */
+/**
+ * 🔒 CRITICAL: Maps inconsistent match instance IDs
+ * to canonical tournamentMeta instanceIds
+ *
+ * DOES NOT affect other systems — resolver only
+ */
+const TOURNAMENT_INSTANCE_MAP: Record<string, string> = {
+  // MEN FIXES
+  "summer-internationals-2026": "international-tests-2026",
+  "test-matches": "international-tests-2026",
+
+  // SAFETY
+  "six-nations": "six-nations-2026",
 };
 
 /* ================= HELPERS ================= */
@@ -34,45 +50,82 @@ export async function resolveCalendarMatches(
   options?: ResolveOptions
 ): Promise<CalendarMatch[]> {
   try {
+    /**
+     * 🔥 CRITICAL FIX:
+     * Force FULL dataset (bypass adapter competition filtering)
+     */
     const matches = await getMatches({
-      type: "international",
-      leagueId: options?.leagueId,
+      includeAll: true,
     });
 
-    return matches.map((m) => {
-      const dateObj = new Date(m.date);
+    /**
+     * 🔥 SAFETY:
+     * De-duplicate matches by ID (protect against merge overlaps)
+     */
+    const uniqueMatchesMap = new Map<number, any>();
+    matches.forEach((m) => {
+      if (!uniqueMatchesMap.has(m.id)) {
+        uniqueMatchesMap.set(m.id, m);
+      }
+    });
+
+    const uniqueMatches = Array.from(uniqueMatchesMap.values());
+
+    return uniqueMatches.map((m) => {
+      /* ================= DATE ================= */
+
+      // ✅ HARD GUARANTEE — no nulls, no type break
+const dateObj = new Date(m.date);
+
+// Optional safety (won’t break types)
+if (isNaN(dateObj.getTime())) {
+  console.warn("Invalid date detected in match:", m);
+}
 
       /* ================= TOURNAMENT ================= */
 
-      const tournamentMeta = getTournamentMeta(
+      const rawInstanceId =
         (m as { tournamentInstanceId?: string })
-          .tournamentInstanceId
+          .tournamentInstanceId;
+
+      const normalizedInstanceId =
+        TOURNAMENT_INSTANCE_MAP[rawInstanceId || ""] ||
+        rawInstanceId;
+
+      const tournamentMeta = getTournamentMeta(
+        normalizedInstanceId
       );
 
+      /**
+       * 🔥 CRITICAL FIX:
+       * Never allow "unknown"
+       * Always fallback safely
+       */
       const tournamentId =
         tournamentMeta?.instanceId ||
-        (m as any).tournamentInstanceId ||
-        "unknown";
+        normalizedInstanceId ||
+        m.competitionId ||
+        `fallback-${m.id}`;
 
       const tournamentName =
         tournamentMeta?.name
           ? `${tournamentMeta.name} ${tournamentMeta.year}`
-          : m.tournament;
+          : m.tournament ||
+            m.competitionId ||
+            "Unknown Tournament";
 
-      const gender =
-  tournamentMeta?.gender === "mixed"
-    ? (
+      /* ================= GENDER ================= */
+
+      const inferredGender =
         (m as any).gender ||
-        (m.tournament.toLowerCase().includes("women")
+        (tournamentMeta?.gender === "mixed"
+          ? undefined
+          : tournamentMeta?.gender) ||
+        (m.tournament?.toLowerCase().includes("women")
           ? "women"
-          : "men")
-      )
-    : (
-        tournamentMeta?.gender ||
-        (m.tournament.toLowerCase().includes("women")
-          ? "women"
-          : "men")
-      );
+          : "men");
+
+      const gender = inferredGender || "men";
 
       /* ================= STADIUM ================= */
 
@@ -90,6 +143,20 @@ export async function resolveCalendarMatches(
       const city = stadiumMeta?.city;
       const country = stadiumMeta?.country;
 
+      /* ================= TEAM CLEANUP ================= */
+
+      const homeName =
+        m.home.name === "TBD" ? "TBC" : m.home.name;
+
+      const awayName =
+        m.away.name === "TBD" ? "TBC" : m.away.name;
+
+      /* ================= STATUS ================= */
+
+      const status =
+        (m as any).state ||
+        (m.score ? "final" : "upcoming");
+
       /* ================= RETURN ================= */
 
       return {
@@ -103,12 +170,12 @@ export async function resolveCalendarMatches(
         gender,
 
         home: {
-          name: m.home.name,
+          name: homeName,
           country: m.home.country,
         },
 
         away: {
-          name: m.away.name,
+          name: awayName,
           country: m.away.country,
         },
 
@@ -117,15 +184,12 @@ export async function resolveCalendarMatches(
         city,
         country,
 
-        /* 🔒 STATE (FROM ADAPTER — SINGLE SOURCE) */
-        status: (m as any).state || "upcoming",
-
+        status,
         score: m.score,
 
-        /* 🔥 OPTIONAL INTELLIGENCE (SAFE) */
         importance: (m as any).importance,
         isFeatured:
-          (m as any).state === "live" ||
+          status === "live" ||
           ((m as any).importance ?? 0) >= 80,
       };
     });

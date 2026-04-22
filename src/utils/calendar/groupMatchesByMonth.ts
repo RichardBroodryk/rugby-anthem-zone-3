@@ -2,10 +2,14 @@ import { CalendarMatch } from "./calendarTypes";
 
 export type CalendarMonthGroup = {
   year: number;
-  month: number;     // 0–11
-  label: string;     // e.g. "February 2026"
+  month: number; // 0–11
+  label: string;
   matches: CalendarMatch[];
 };
+
+function isValidDate(d: Date) {
+  return d instanceof Date && !isNaN(d.getTime());
+}
 
 export function groupMatchesByMonth(
   matches: CalendarMatch[]
@@ -13,15 +17,22 @@ export function groupMatchesByMonth(
   const map = new Map<string, CalendarMonthGroup>();
 
   matches.forEach((match) => {
-    const year = match.date.getFullYear();
-    const month = match.date.getMonth();
+    // ✅ CRITICAL FIX
+    const safeDate = isValidDate(match.date)
+      ? match.date
+      : new Date(match.isoDate);
+
+    if (!isValidDate(safeDate)) return; // skip broken entries
+
+    const year = safeDate.getFullYear();
+    const month = safeDate.getMonth();
     const key = `${year}-${month}`;
 
     if (!map.has(key)) {
       map.set(key, {
         year,
         month,
-        label: match.date.toLocaleString("en-GB", {
+        label: safeDate.toLocaleString("en-GB", {
           month: "long",
           year: "numeric",
         }),
@@ -29,7 +40,10 @@ export function groupMatchesByMonth(
       });
     }
 
-    map.get(key)!.matches.push(match);
+    map.get(key)!.matches.push({
+      ...match,
+      date: safeDate, // ensure consistency
+    });
   });
 
   return Array.from(map.values())

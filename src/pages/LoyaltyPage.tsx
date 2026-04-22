@@ -5,8 +5,6 @@ import styles from "./LoyaltyPage.module.css";
 import LoyaltyCard from "./LoyaltyCard";
 import heroImage from "../assets/images/raz/fanzone-loyalty.png";
 
-import { buildEngagement } from "../utils/engagementEngine";
-
 type TierKey = "bronze" | "silver" | "gold" | "platinum";
 
 export default function LoyaltyPage() {
@@ -20,35 +18,48 @@ export default function LoyaltyPage() {
   /* ================= FETCH ================= */
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/loyalty/test-user")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && typeof data.points === "number") {
-          setPoints(data.points);
-          setTier(data.tier || "bronze");
-        }
+  try {
+    const matches =
+      Number(localStorage.getItem("raz_matches_followed")) || 0;
 
-        /* 🔥 REAL-READY INPUT (EMPTY NOW = NO SNAPSHOT) */
-        const userActivity = {
-          matches: [],
-          videos: [],
-          purchases: [],
-          comments: [],
-        };
+    const anthems =
+      Number(localStorage.getItem("raz_anthems_played")) || 0;
 
-        const built = buildEngagement(userActivity);
-        setEngagement(built);
-      })
-      .catch(() => {
-        console.warn("Loyalty fallback active");
-        setPoints(0);
-        setTier("bronze");
-        setEngagement(null);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+    const tournaments =
+      Number(localStorage.getItem("raz_tournaments_followed")) || 0;
+
+    // 🎯 POINT SYSTEM (aligned with your card)
+    const calculatedPoints =
+      matches * 50 +
+      anthems * 10 +
+      tournaments * 100;
+
+    setPoints(calculatedPoints);
+
+    // 🧠 DETERMINE TIER
+    let calculatedTier: TierKey = "bronze";
+
+    if (calculatedPoints >= 7000) calculatedTier = "platinum";
+    else if (calculatedPoints >= 3000) calculatedTier = "gold";
+    else if (calculatedPoints >= 1000) calculatedTier = "silver";
+
+    setTier(calculatedTier);
+
+    setEngagement({
+      matchesFollowedSeason: matches,
+      tournaments: tournaments ? ["Active"] : [],
+      featuresUsed: anthems ? ["Anthems"] : [],
+      merchPurchases: 0,
+    });
+  } catch (e) {
+    console.warn("Loyalty local fallback error", e);
+    setPoints(0);
+    setTier("bronze");
+    setEngagement(null);
+  } finally {
+    setLoading(false);
+  }
+}, []);
 
   /* ================= RENDER ================= */
 

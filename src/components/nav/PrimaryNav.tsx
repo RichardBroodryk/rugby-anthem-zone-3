@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState, useRef, useMemo } from "react";
 import styles from "./PrimaryNav.module.css";
 
@@ -19,6 +19,7 @@ const AVATAR_KEY = "raz_avatar";
 
 export default function PrimaryNav({ variant }: PrimaryNavProps) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [avatar, setAvatar] = useState<string | null>(
     localStorage.getItem(AVATAR_KEY)
@@ -64,7 +65,7 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
     return () => window.removeEventListener("storage", syncAvatar);
   }, []);
 
-  /* CLOSE DROPDOWNS */
+  /* CLOSE DROPDOWNS (CLICK OUTSIDE) */
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -86,6 +87,12 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
     return () =>
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  /* ✅ CLOSE ON ROUTE CHANGE (FIX) */
+  useEffect(() => {
+    setMenuOpen(false);
+    setSearchOpen(false);
+  }, [location.pathname]);
 
   const storedTier = sessionStorage.getItem(ACTIVE_TIER_KEY);
   const homeRoute = storedTier === "super" ? "/home-super" : "/home";
@@ -121,7 +128,7 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
           />
         </NavLink>
 
-        {/* HOME ICON */}
+        {/* HOME ICON (UNCHANGED) */}
         <button
           className={styles.homeButton}
           onClick={() => navigate(homeRoute)}
@@ -227,7 +234,7 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
               <img
                 src={avatar}
                 className={styles.navAvatar}
-                alt="User profile"
+                alt="User profile avatar"   // ✅ FIXED
               />
             ) : (
               <svg

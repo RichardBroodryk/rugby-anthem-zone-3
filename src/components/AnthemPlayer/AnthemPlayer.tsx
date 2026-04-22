@@ -11,12 +11,14 @@ type AnthemPlayerProps = {
   src: string;
   label?: string;
   accentColor?: string;
+  onPlay?: () => void;
 };
 
 export default function AnthemPlayer({
   src,
   label = "Anthem Audio",
   accentColor = "#111111",
+  onPlay,
 }: AnthemPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -58,6 +60,9 @@ export default function AnthemPlayer({
     }
 
     activeAudio = audioRef.current;
+    if (onPlay) {
+    onPlay();
+  }
     audioRef.current.play();
     setIsPlaying(true);
   };

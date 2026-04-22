@@ -79,3 +79,20 @@
   font-size: 0.9rem;
   color: #4b5563;
 }
+.secondaryButton {
+  margin-top: 16px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  color: #1f2933;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.secondaryButton:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}

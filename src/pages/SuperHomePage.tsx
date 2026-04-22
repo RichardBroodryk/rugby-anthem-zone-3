@@ -1,5 +1,8 @@
 import styles from "./SuperHomePage.module.css";
 
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/raz-light.jpg";
+
 import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";
 import InfoBar from "../components/navigation/InfoBar";
@@ -49,7 +52,8 @@ export default function SuperHomePage() {
     tournaments2026.find((t) => t.status === "upcoming") ??
     tournaments2026[0];
 
-  return (
+ return (
+  <PageWrapper imageUrl={razLight}>
     <main className={styles.page}>
       <HeroCard variant="super" />
 
@@ -228,5 +232,6 @@ export default function SuperHomePage() {
         </AutoContentRail>
       </section>
     </main>
-  );
+  </PageWrapper>
+);
 }

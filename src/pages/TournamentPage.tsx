@@ -23,6 +23,23 @@ export default function TournamentPage() {
 
   const [matches, setMatches] = useState<MatchData[]>([]);
   const [loading, setLoading] = useState(true);
+  // ✅ TRACK TOURNAMENT VISIT (SAFE)
+useEffect(() => {
+  const key = "raz_last_tournament_view";
+
+  // prevent double count (React Strict Mode)
+  if (sessionStorage.getItem(key)) return;
+
+  const current =
+    Number(localStorage.getItem("raz_tournaments_followed")) || 0;
+
+  localStorage.setItem(
+    "raz_tournaments_followed",
+    String(current + 1)
+  );
+
+  sessionStorage.setItem(key, "true");
+}, []);
 
   const tournament = tournaments2026.find((t) =>
     t.route?.includes(slug || "") || t.conceptId === slug || t.route === slug

@@ -1,6 +1,6 @@
 import styles from "./ProfilePage.module.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import myRugbyHero from "../assets/images/raz/my-rugby-hero.png";
 import loyaltyHero from "../assets/images/raz/fanzone-loyalty.png";
@@ -8,8 +8,36 @@ import loyaltyHero from "../assets/images/raz/fanzone-loyalty.png";
 export default function ProfilePage() {
   const navigate = useNavigate();
 
+  /* ================= USER ================= */
+
   const tier =
     sessionStorage.getItem("raz_active_tier") || "premium";
+
+  const userEmail =
+    localStorage.getItem("raz_user_email") || "No email";
+
+  /* ================= STATS ================= */
+
+  const [matchesFollowed, setMatchesFollowed] = useState(0);
+  const [anthemsPlayed, setAnthemsPlayed] = useState(0);
+  const [tournamentsFollowed, setTournamentsFollowed] =
+    useState(0);
+
+  useEffect(() => {
+    setMatchesFollowed(
+      Number(localStorage.getItem("raz_matches_followed")) || 0
+    );
+
+    setAnthemsPlayed(
+      Number(localStorage.getItem("raz_anthems_played")) || 0
+    );
+
+    setTournamentsFollowed(
+      Number(localStorage.getItem("raz_tournaments_followed")) || 0
+    );
+  }, []);
+
+  /* ================= AVATAR ================= */
 
   const [avatar, setAvatar] = useState<string | null>(
     localStorage.getItem("raz_avatar")
@@ -25,7 +53,6 @@ export default function ProfilePage() {
 
     reader.onload = () => {
       const result = reader.result as string;
-
       setAvatar(result);
       localStorage.setItem("raz_avatar", result);
     };
@@ -33,9 +60,11 @@ export default function ProfilePage() {
     reader.readAsDataURL(file);
   }
 
+  /* ================= RENDER ================= */
+
   return (
     <main className={styles.page}>
-      {/* PROFILE HEADER */}
+      {/* ================= HEADER ================= */}
       <section className={styles.header}>
         <div className={styles.avatarSection}>
           {avatar ? (
@@ -60,40 +89,39 @@ export default function ProfilePage() {
         </div>
 
         <div className={styles.userInfo}>
-          <h1 className={styles.name}>Profile</h1>
+          <h1 className={styles.name}>Your Profile</h1>
 
-          <p className={styles.email}>user@email.com</p>
+          <p className={styles.email}>{userEmail}</p>
 
-          {/* MEMBER BADGE */}
           <span
             className={`${styles.memberBadge} ${
               tier === "super"
                 ? styles.superBadge
-                : styles.premiumBadge
+                : tier === "premium"
+                ? styles.premiumBadge
+                : styles.freemiumBadge
             }`}
           >
             {tier === "super"
               ? "SUPER MEMBER"
-              : "PREMIUM MEMBER"}
+              : tier === "premium"
+              ? "PREMIUM MEMBER"
+              : "FREEMIUM"}
           </span>
         </div>
 
         <div className={styles.headerActions}>
-          <button
-            onClick={() => navigate("/my-teams/manage")}
-          >
+          <button onClick={() => navigate("/my-teams/manage")}>
             Manage Teams
           </button>
 
-          <button
-            onClick={() => navigate("/notifications")}
-          >
+          <button onClick={() => navigate("/notifications")}>
             Notifications
           </button>
         </div>
       </section>
 
-      {/* MY RUGBY */}
+      {/* ================= MY RUGBY ================= */}
       <section className={styles.section}>
         <h2>My Rugby</h2>
 
@@ -107,27 +135,23 @@ export default function ProfilePage() {
 
             <h3>Favourite Teams</h3>
 
-            <p>
-              View and manage the teams you follow.
-            </p>
+            <p>View and manage the teams you follow.</p>
 
-            <button
-              onClick={() => navigate("/my-teams")}
-            >
+            <button onClick={() => navigate("/my-teams")}>
               View My Teams
             </button>
           </div>
         </div>
       </section>
 
-      {/* FAN STATS */}
+      {/* ================= FAN STATS ================= */}
       <section className={styles.section}>
         <h2>Fan Stats</h2>
 
         <div className={styles.statsGrid}>
           <div className={styles.stat}>
             <span className={styles.statValue}>
-              42
+              {matchesFollowed}
             </span>
             <span className={styles.statLabel}>
               Matches Followed
@@ -136,7 +160,7 @@ export default function ProfilePage() {
 
           <div className={styles.stat}>
             <span className={styles.statValue}>
-              18
+              {anthemsPlayed}
             </span>
             <span className={styles.statLabel}>
               Anthems Played
@@ -145,16 +169,24 @@ export default function ProfilePage() {
 
           <div className={styles.stat}>
             <span className={styles.statValue}>
-              5
+              {tournamentsFollowed}
             </span>
             <span className={styles.statLabel}>
               Tournaments Followed
             </span>
           </div>
         </div>
+
+        {matchesFollowed === 0 &&
+          anthemsPlayed === 0 &&
+          tournamentsFollowed === 0 && (
+            <p className={styles.emptyState}>
+              Start exploring to build your fan stats.
+            </p>
+          )}
       </section>
 
-      {/* LOYALTY */}
+      {/* ================= LOYALTY ================= */}
       <section className={styles.section}>
         <h2>Loyalty</h2>
 
@@ -165,45 +197,46 @@ export default function ProfilePage() {
             className={styles.cardHero}
           />
 
-          <p>Your fan loyalty progress.</p>
+          <p>Track your fan journey and loyalty progress.</p>
 
-          <button
-            onClick={() =>
-              navigate("/fanzone/loyalty")
-            }
-          >
+          <button onClick={() => navigate("/fanzone/loyalty")}>
             View Loyalty
           </button>
         </div>
       </section>
 
-      {/* ACCOUNT SETTINGS */}
+      {/* ================= ACCOUNT SETTINGS ================= */}
       <section className={styles.section}>
         <h2>Account Settings</h2>
 
         <div className={styles.grid}>
+          {/* 🔒 MEMBERSHIP LOCKED */}
           <div className={styles.card}>
             <h3>Membership</h3>
 
-            <p>
-              View and manage your subscription.
+            <p className={styles.disabledText}>
+              Subscription upgrades and changes will be available soon.
             </p>
 
             <button
-              onClick={() => navigate("/checkout")}
+              className={styles.disabledButton}
+              disabled
             >
-              Manage Subscription
+              Coming Soon
             </button>
           </div>
 
+          {/* ACCOUNT SETTINGS */}
           <div className={styles.card}>
             <h3>Account</h3>
 
-            <p>
-              Update your account information.
-            </p>
+            <p>Update your account information.</p>
 
-            <button>Account Settings</button>
+            <button
+              onClick={() => navigate("/account/settings")}
+            >
+              Account Settings
+            </button>
           </div>
         </div>
       </section>

@@ -1,8 +1,8 @@
-// src/pages/CalendarPage.tsx
-
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CalendarPage.module.css";
+
+import PageWrapper from "../components/layout/PageWrapper";
 
 import calendarBg from "../assets/images/raz/calendar-hero.jpg";
 
@@ -29,25 +29,10 @@ export default function CalendarPage() {
   useEffect(() => {
     async function loadCalendar() {
       try {
-        const data: any = await resolveCalendarMatches();
+        // ✅ CLEAN: resolver already returns flat data
+        const data = await resolveCalendarMatches();
 
-        // 🔥 HANDLE BOTH CASES SAFELY
-        let flat: CalendarMatch[] = [];
-
-        if (Array.isArray(data)) {
-          // case 1: already flat CalendarMatch[]
-          if (data.length === 0) {
-            flat = [];
-          } else if ("matches" in data[0]) {
-            // case 2: grouped → flatten
-            flat = data.flatMap((g: any) => g.matches);
-          } else {
-            // case 3: already flat
-            flat = data;
-          }
-        }
-
-        setCalendarMatches(flat);
+        setCalendarMatches(data);
       } catch {
         setCalendarMatches([]);
       }
@@ -90,12 +75,13 @@ export default function CalendarPage() {
   const monthGroups = groupMatchesByMonth(filteredMatches);
 
   const goMatchFromCalendar = (id: number) => {
-    navigate(`/match/${id}`, { state: { from: "calendar" } });
+    navigate(`/match/${id}`);
   };
 
   /* ================= UI ================= */
 
   return (
+  <PageWrapper bg="springbok">
     <main className={styles.page}>
       {/* ================= HERO ================= */}
       <header
@@ -163,7 +149,7 @@ export default function CalendarPage() {
         {loading ? (
           <p>Loading calendar...</p>
         ) : monthGroups.length === 0 ? (
-          <p>No fixtures match the selected filters.</p>
+          <p>No fixtures match your filters — try another selection.</p>
         ) : (
           monthGroups.map((group) => (
             <CalendarMonth
@@ -175,5 +161,6 @@ export default function CalendarPage() {
         )}
       </section>
     </main>
-  );
+  </PageWrapper>
+);
 }

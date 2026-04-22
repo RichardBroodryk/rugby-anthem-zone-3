@@ -161,6 +161,7 @@ export async function getMatches(options?: {
   type?: "international" | "domestic";
   gender?: "men" | "women";
   leagueId?: string;
+  includeAll?: boolean; // 🔥 ADD ONLY
 }): Promise<MatchData[]> {
   let data: MatchData[] = [];
 
@@ -169,7 +170,7 @@ export async function getMatches(options?: {
     options?.gender
   );
 
-  /* ✅ FIX: MERGE instead of replace */
+  /* ✅ EXISTING MERGE LOGIC — UNCHANGED */
   if (!backendData || backendData.length === 0) {
     data = matches2026;
   } else {
@@ -183,11 +184,20 @@ export async function getMatches(options?: {
     data = merged;
   }
 
-  let filtered = data
-    .filter(isValidStructure)
-    .filter(isValidCompetition);
+  /* ==================================================
+     🔥 CRITICAL PATCH (ISOLATED)
+     ================================================== */
 
-  if (!options?.type || options.type === "international") {
+  let filtered = data.filter(isValidStructure);
+
+  // ✅ ONLY bypass competition filter when explicitly requested
+  if (!options?.includeAll) {
+    filtered = filtered.filter(isValidCompetition);
+  }
+
+  /* ================================================== */
+
+  if (options?.type === "international") {
     filtered = filtered.filter(isInternational);
   }
 

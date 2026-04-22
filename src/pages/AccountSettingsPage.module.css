@@ -1,0 +1,79 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.card {
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.avatarWrap {
+  margin-bottom: 1rem;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.avatarActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.button {
+  padding: 0.6rem 1.2rem;
+  background: #1f2933;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.secondaryButton {
+  padding: 0.6rem 1.2rem;
+  background: #f3f4f6;
+  border: none;
+  cursor: pointer;
+}
+
+.disabledButton {
+  padding: 0.6rem 1.2rem;
+  background: #e5e7eb;
+  color: #9ca3af;
+  border: none;
+  cursor: not-allowed;
+}
+
+.backButton {
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1f2933;
+}

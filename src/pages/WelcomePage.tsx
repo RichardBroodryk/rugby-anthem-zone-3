@@ -28,6 +28,11 @@ export default function WelcomePage() {
       state: { redirectAfterLogin: "checkout", tier: "super" },
     });
 
+  const goToTerms = () =>
+  navigate("/terms", {
+    state: { tier: "freemium" }, // ✅ SAFE DEFAULT
+  });
+
   return (
     <section className={styles.page}>
       {/* HERO */}
@@ -125,6 +130,18 @@ export default function WelcomePage() {
           </div>
         </div>
       </section>
+      <footer className={styles.termsFooter}>
+        <p className={styles.termsText}>
+          By continuing, you agree to our Terms & Conditions.
+        </p>
+        <button
+  className={styles.termsLink}
+  onClick={goToTerms}
+  style={{ color: "red", border: "1px solid red" }}
+>
+  View Terms
+</button>
+      </footer>
     </section>
   );
 }

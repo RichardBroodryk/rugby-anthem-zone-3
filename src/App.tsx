@@ -7,6 +7,8 @@ import {
 import { useEffect } from "react";
 import type { ReactNode } from "react";
 
+import ScrollToTop from "./utils/ScrollToTop";
+
 import { getToken } from "./services/auth";
 
 /* ================= SPLASH / ONBOARDING ================= */
@@ -17,6 +19,7 @@ import WhatYouGetPage from "./pages/WhatYouGetPage";
 import TermsPage from "./pages/TermsPage";
 import AccessPendingPage from "./pages/AccessPendingPage";
 import LoginPage from "./pages/LoginPage";
+import AccountSettingsPage from "./pages/AccountSettingsPage";
 
 /* ================= SIGNUP ================= */
 import FreemiumSignupPage from "./pages/FreemiumSignupPage";
@@ -224,9 +227,12 @@ export default function App() {
 
   return (
     <Router>
+       <ScrollToTop />
 
       <Routes>
         {isDev && <Route path="/dev/home" element={<DevHomeEntry />} />}
+
+        <Route path="/account/settings" element={<AccountSettingsPage />} />
 
         {/* ================= FREEMIUM ================= */}
         <Route element={<FreemiumLayout />}>

@@ -206,3 +206,61 @@
   font-size: 0.9rem;
   color: #333;
 }
+.notificationItem {
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #f1f1f1;
+  transition: all 0.2s ease;
+}
+
+.notificationItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  border-color: #e5e7eb;
+}
+/* HIGH IMPORTANCE (LIVE / BIG MATCHES) */
+[data-importance="high"] {
+  border-left: 4px solid #c9b77d;
+}
+
+/* MEDIUM */
+[data-importance="medium"] {
+  border-left: 4px solid #9ca3af;
+}
+.notificationItem strong {
+  font-size: 0.95rem;
+}
+
+.message {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+.emptyState {
+  padding: 16px;
+  border-radius: 8px;
+  background: #f9fafb;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+.statusBlock {
+  padding: 16px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #f1f1f1;
+}
+
+.statusValue {
+  font-weight: 600;
+  margin: 8px 0;
+}
+[data-importance="high"] {
+  border-left: 4px solid #c9b77d;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 rgba(201, 183, 125, 0.3); }
+  50% { box-shadow: 0 0 8px rgba(201, 183, 125, 0.5); }
+  100% { box-shadow: 0 0 0 rgba(201, 183, 125, 0.3); }
+}

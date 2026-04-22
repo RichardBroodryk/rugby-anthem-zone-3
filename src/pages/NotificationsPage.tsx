@@ -1,10 +1,8 @@
-// ==================================================
-// NOTIFICATIONS PAGE — INTELLIGENCE UPGRADED (PHASE 4.4)
-// ==================================================
-
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./NotificationsPage.module.css";
+
+import PageWrapper from "../components/layout/PageWrapper";
 
 import { loadMyTeams } from "../utils/myTeamsStorage";
 import { teamsMeta, TeamMeta } from "../data/teamsMeta";
@@ -48,7 +46,7 @@ function saveSent(ids: number[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
 }
 
-/* ================= INTELLIGENT FILTER ================= */
+/* ================= FILTER ================= */
 
 function shouldNotify(match: MatchData) {
   const state = match.state;
@@ -74,8 +72,7 @@ export default function NotificationsPage() {
       id: 1,
       type: "match",
       title: "Match Alerts",
-      message:
-        "Kick-off reminders, live updates, and final scores.",
+      message: "Kick-off reminders, live updates, and final scores.",
       enabled: true,
     },
     {
@@ -123,11 +120,13 @@ export default function NotificationsPage() {
 
   useEffect(() => {
     const stored = loadMyTeams();
+
     const selected = teamsMeta.filter(
       (t) =>
         stored.men.includes(t.id) ||
         stored.women.includes(t.id)
     );
+
     setTeams(selected);
   }, []);
 
@@ -149,18 +148,15 @@ export default function NotificationsPage() {
       return matches
         .map((m) => ({
           ...m,
-          // 🔥 PERSONALISED IMPORTANCE
           importance: calculateImportance(m, teamNames),
         }))
         .filter((m) => {
-          // 🔥 MUST INVOLVE USER TEAM
           const involvesTeam =
             teamNames.includes(m.home.name) ||
             teamNames.includes(m.away.name);
 
           if (!involvesTeam) return false;
 
-          // 🔥 INTELLIGENT FILTER
           return shouldNotify(m);
         })
         .map((m) => ({
@@ -205,7 +201,6 @@ export default function NotificationsPage() {
 
     setSentIds(updated);
     saveSent(updated);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [generatedNotifications, permission, items]);
 
@@ -223,13 +218,16 @@ export default function NotificationsPage() {
 
   /* ================= NAVIGATION ================= */
 
-  const handleNotificationClick = () => {
-    navigate("/match-center");
-  };
+  const handleNotificationClick = (id: number) => {
+  if (!id) return;
+
+  navigate(`/match/${id}`);
+};
 
   /* ================= UI ================= */
 
   return (
+  <PageWrapper bg="lightGrey">
     <main className={styles.page}>
       <section className={styles.hero}>
         <div className={styles.heroContent}>
@@ -264,20 +262,44 @@ export default function NotificationsPage() {
 
               {generatedNotifications.length === 0 ? (
                 <div className={styles.emptyState}>
-                  No high-priority alerts.
+                  No live alerts yet — follow more teams to get notified.
                 </div>
               ) : (
-                generatedNotifications.map((n) => (
-                  <div
-                    key={n.id}
-                    className={styles.notificationItem}
-                    onClick={handleNotificationClick}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <strong>{n.text}</strong>
-                    <p className={styles.message}>{n.sub}</p>
-                  </div>
-                ))
+                generatedNotifications.map((n) => {
+                  const matchExists = matches.some(
+                    (m) => m.id === n.id
+                  );
+
+                  return (
+                    <div
+                      key={n.id}
+                      className={styles.notificationItem}
+                      data-importance={
+                        n.importance > 85
+                          ? "high"
+                          : n.importance > 70
+                          ? "medium"
+                          : "low"
+                      }
+                      onClick={
+                        matchExists
+                          ? () => handleNotificationClick(n.id)
+                          : undefined
+                      }
+                      style={{
+                        cursor: matchExists
+                          ? "pointer"
+                          : "not-allowed",
+                        opacity: matchExists ? 1 : 0.6,
+                      }}
+                    >
+                      <strong>{n.text}</strong>
+                      <p className={styles.message}>
+                        {n.sub}
+                      </p>
+                    </div>
+                  );
+                })
               )}
             </section>
 
@@ -312,5 +334,6 @@ export default function NotificationsPage() {
         </div>
       </section>
     </main>
-  );
+  </PageWrapper>
+);
 }

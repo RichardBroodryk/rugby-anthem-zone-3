@@ -11,6 +11,15 @@ export default function NationalAnthemPage() {
   const nation = anthemNations.find((n) => n.id === nationId);
 
   const [expanded, setExpanded] = useState(false);
+  function trackAnthemPlay() {
+  const current =
+    Number(localStorage.getItem("raz_anthems_played")) || 0;
+
+  localStorage.setItem(
+    "raz_anthems_played",
+    String(current + 1)
+  );
+}
 
   if (!nation) {
     return (
@@ -107,9 +116,10 @@ const displayedEnglish = expanded
 
           <div className={styles.audioCard}>
             <AnthemPlayer
-              src={nation.anthem.audioUrl || "/audio/neutral-anthem-test.mp3"}
-              accentColor={accentColor}
-            />
+  src={nation.anthem.audioUrl || "/audio/neutral-anthem-test.mp3"}
+  accentColor={accentColor}
+  onPlay={trackAnthemPlay}
+/>
           </div>
         </aside>
 

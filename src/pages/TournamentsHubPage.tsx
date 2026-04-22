@@ -8,6 +8,8 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./TournamentsHubPage.module.css";
 
+import PageWrapper from "../components/layout/PageWrapper";
+
 /* ================= HERO ================= */
 import tournamentHero from "../assets/images/raz/tournament-hub-page.png";
 
@@ -56,6 +58,7 @@ export default function TournamentsHubPage() {
     });
 
   return (
+  <PageWrapper bg="skyBlue">
     <main className={styles.page}>
       {/* ================= HERO ================= */}
       <header
@@ -191,5 +194,6 @@ export default function TournamentsHubPage() {
         </div>
       </section>
     </main>
-  );
+  </PageWrapper>
+);
 }
