@@ -96,3 +96,8 @@
   background: #f3f4f6;
   border-color: #9ca3af;
 }
+.currencyNote {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}

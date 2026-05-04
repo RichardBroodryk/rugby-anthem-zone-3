@@ -119,14 +119,23 @@ export default function TermsPage() {
         {/* ⭐ SHOW ONLY DURING CHECKOUT FLOW */}
         {!isReadOnly && (isPremium || isSuper) && (
           <div className={styles.summaryBox}>
-            <h2>Subscription Summary</h2>
-            <p className={styles.price}>
-              {isPremium ? "$2.49 / month" : "$3.49 / month"}
-            </p>
-            <p className={styles.note}>
-              Billed monthly • Cancel anytime
-            </p>
-          </div>
+  <h2>Subscription Summary</h2>
+
+  <p className={styles.price}>
+    {isPremium ? "$2.49 / month" : "$3.49 / month"}
+  </p>
+
+  <p className={styles.note}>
+    Billed monthly • Cancel anytime
+  </p>
+
+  {/* 🌍 CURRENCY NOTE — NEW */}
+  <p className={styles.currencyNote}>
+  {country === "South Africa"
+    ? "Approximate price in South African Rand will be shown at checkout."
+    : "Prices shown in USD. Your local currency will be applied securely at checkout."}
+</p>
+</div>
         )}
 
       </section>
