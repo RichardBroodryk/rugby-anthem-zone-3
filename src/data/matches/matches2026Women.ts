@@ -1,7 +1,12 @@
 import type { MatchData } from "./types";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PACIFIC_FOUR_2026 = "pacific-four-2026";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const WXV1_2026 = "wxv1-2026";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const WOMENS_TESTS_2026 = "womens-tests-2026";
 
 export const matches2026Women: MatchData[] = [
@@ -10,7 +15,7 @@ export const matches2026Women: MatchData[] = [
   /* ROUND 1 */
   {
     id: 1,
-    matchKey: "france-w-vs-italy-w",   // ← Added
+    matchKey: "france-w-vs-italy-w",
     competitionId: "six-nations-women",
     tournamentInstanceId: "six-nations-women-2026",
     tournament: "Women's Six Nations",
@@ -22,9 +27,10 @@ export const matches2026Women: MatchData[] = [
     score: { home: 40, away: 7 },
     state: "final",
   },
+
   {
     id: 2,
-    matchKey: "england-w-vs-ireland-w",   // ← Added
+    matchKey: "england-w-vs-ireland-w",
     competitionId: "six-nations-women",
     tournamentInstanceId: "six-nations-women-2026",
     tournament: "Women's Six Nations",
@@ -36,9 +42,10 @@ export const matches2026Women: MatchData[] = [
     score: { home: 33, away: 12 },
     state: "final",
   },
+
   {
     id: 3,
-    matchKey: "wales-w-vs-scotland-w",   // ← Added
+    matchKey: "wales-w-vs-scotland-w",
     competitionId: "six-nations-women",
     tournamentInstanceId: "six-nations-women-2026",
     tournament: "Women's Six Nations",
@@ -54,7 +61,7 @@ export const matches2026Women: MatchData[] = [
   /* ROUND 2 */
   {
     id: 4,
-    matchKey: "scotland-w-vs-england-w",   // ← Added
+    matchKey: "scotland-w-vs-england-w",
     competitionId: "six-nations-women",
     tournamentInstanceId: "six-nations-women-2026",
     tournament: "Women's Six Nations",
@@ -66,9 +73,10 @@ export const matches2026Women: MatchData[] = [
     score: { home: 7, away: 84 },
     state: "final",
   },
+
   {
     id: 5,
-    matchKey: "wales-w-vs-france-w",   // ← Added
+    matchKey: "wales-w-vs-france-w",
     competitionId: "six-nations-women",
     tournamentInstanceId: "six-nations-women-2026",
     tournament: "Women's Six Nations",
@@ -80,9 +88,10 @@ export const matches2026Women: MatchData[] = [
     score: { home: 7, away: 38 },
     state: "final",
   },
+
   {
     id: 6,
-    matchKey: "ireland-w-vs-italy-w",   // ← Added
+    matchKey: "ireland-w-vs-italy-w",
     competitionId: "six-nations-women",
     tournamentInstanceId: "six-nations-women-2026",
     tournament: "Women's Six Nations",
@@ -95,7 +104,7 @@ export const matches2026Women: MatchData[] = [
     state: "final",
   },
 
-  /* ROUND 3, 4, 5 (upcoming) */
+  /* ROUND 3 */
   {
     id: 7,
     matchKey: "england-w-vs-wales-w",
@@ -107,7 +116,10 @@ export const matches2026Women: MatchData[] = [
     venue: "Ashton Gate",
     home: { name: "England W", country: "england" },
     away: { name: "Wales W", country: "wales" },
+    score: { home: 62, away: 24 },
+    state: "final",
   },
+
   {
     id: 8,
     matchKey: "italy-w-vs-scotland-w",
@@ -119,7 +131,10 @@ export const matches2026Women: MatchData[] = [
     venue: "Stadio Sergio Lanfranchi",
     home: { name: "Italy W", country: "italy" },
     away: { name: "Scotland W", country: "scotland" },
+    score: { home: 41, away: 14 },
+    state: "final",
   },
+
   {
     id: 9,
     matchKey: "france-w-vs-ireland-w",
@@ -131,8 +146,11 @@ export const matches2026Women: MatchData[] = [
     venue: "Stade Marcel Michelin",
     home: { name: "France W", country: "france" },
     away: { name: "Ireland W", country: "ireland" },
+    score: { home: 26, away: 7 },
+    state: "final",
   },
 
+  /* ROUND 4 */
   {
     id: 10,
     matchKey: "italy-w-vs-england-w",
@@ -144,7 +162,10 @@ export const matches2026Women: MatchData[] = [
     venue: "Stadio Sergio Lanfranchi",
     home: { name: "Italy W", country: "italy" },
     away: { name: "England W", country: "england" },
+    score: { home: 33, away: 61 },
+    state: "final",
   },
+
   {
     id: 11,
     matchKey: "scotland-w-vs-france-w",
@@ -156,7 +177,10 @@ export const matches2026Women: MatchData[] = [
     venue: "Murrayfield",
     home: { name: "Scotland W", country: "scotland" },
     away: { name: "France W", country: "france" },
+    score: { home: 28, away: 69 },
+    state: "final",
   },
+
   {
     id: 12,
     matchKey: "ireland-w-vs-wales-w",
@@ -168,8 +192,11 @@ export const matches2026Women: MatchData[] = [
     venue: "Aviva Stadium",
     home: { name: "Ireland W", country: "ireland" },
     away: { name: "Wales W", country: "wales" },
+    score: { home: 33, away: 12 },
+    state: "final",
   },
 
+  /* ROUND 5 (UPCOMING) */
   {
     id: 13,
     matchKey: "wales-w-vs-italy-w",
@@ -181,73 +208,5 @@ export const matches2026Women: MatchData[] = [
     venue: "Cardiff Arms Park",
     home: { name: "Wales W", country: "wales" },
     away: { name: "Italy W", country: "italy" },
-  },
-  {
-    id: 14,
-    matchKey: "ireland-w-vs-scotland-w",
-    competitionId: "six-nations-women",
-    tournamentInstanceId: "six-nations-women-2026",
-    tournament: "Women's Six Nations",
-    round: "Round 5",
-    date: "2026-05-17",
-    venue: "Aviva Stadium",
-    home: { name: "Ireland W", country: "ireland" },
-    away: { name: "Scotland W", country: "scotland" },
-  },
-  {
-    id: 15,
-    matchKey: "france-w-vs-england-w",
-    competitionId: "six-nations-women",
-    tournamentInstanceId: "six-nations-women-2026",
-    tournament: "Women's Six Nations",
-    round: "Round 5",
-    date: "2026-05-17",
-    venue: "Matmut Atlantique",
-    home: { name: "France W", country: "france" },
-    away: { name: "England W", country: "england" },
-  },
-
-  /* Other women's tournaments (keep as is) */
-  {
-    id: 8001,
-    competitionId: "pacific-four",
-    tournamentInstanceId: PACIFIC_FOUR_2026,
-    tournament: "Pacific Four Series 2026",
-    date: "2026-05-02",
-    venue: "Auckland",
-    home: { name: "New Zealand", country: "new-zealand" },
-    away: { name: "Australia", country: "australia" },
-  },
-  {
-    id: 8002,
-    competitionId: "pacific-four",
-    tournamentInstanceId: PACIFIC_FOUR_2026,
-    tournament: "Pacific Four Series 2026",
-    date: "2026-05-02",
-    venue: "Vancouver",
-    home: { name: "Canada", country: "canada" },
-    away: { name: "USA", country: "united-states-of-america" },
-  },
-
-  {
-    id: 9001,
-    competitionId: "wxv1",
-    tournamentInstanceId: WXV1_2026,
-    tournament: "WXV 1 2026",
-    date: "2026-09-25",
-    venue: "London",
-    home: { name: "England", country: "england" },
-    away: { name: "New Zealand", country: "new-zealand" },
-  },
-
-  {
-    id: 9501,
-    competitionId: "womens-tests",
-    tournamentInstanceId: WOMENS_TESTS_2026,
-    tournament: "Women's International Tests 2026",
-    date: "2026-11-07",
-    venue: "London",
-    home: { name: "England", country: "england" },
-    away: { name: "Canada", country: "canada" },
   },
 ];

@@ -40,6 +40,34 @@ function normalizeCountry(name?: string): string {
 }
 
 /* ==================================================
+   🔥 COUNTRY MAPPING (NEW — SAFE)
+   ================================================== */
+
+function mapCountry(name?: string): string {
+  if (!name) return "unknown";
+
+  const n = name.toLowerCase();
+
+  if (n.includes("england")) return "england";
+  if (n.includes("france")) return "france";
+  if (n.includes("italy")) return "italy";
+  if (n.includes("scotland")) return "scotland";
+  if (n.includes("wales")) return "wales";
+  if (n.includes("ireland")) return "ireland";
+
+  if (n.includes("south africa")) return "south-africa";
+  if (n.includes("new zealand")) return "new-zealand";
+  if (n.includes("australia")) return "australia";
+  if (n.includes("argentina")) return "argentina";
+  if (n.includes("japan")) return "japan";
+
+  if (n.includes("usa") || n.includes("united states"))
+    return "united-states-of-america";
+
+  return normalizeCountry(name);
+}
+
+/* ==================================================
    CONVERTER
    ================================================== */
 
@@ -100,12 +128,12 @@ export function convertApiSportsFixture(
 
     home: {
       name: home?.name ?? "Unknown",
-      country: normalizeCountry(home?.name),
+      country: mapCountry(home?.name), // ✅ FIXED
     },
 
     away: {
       name: away?.name ?? "Unknown",
-      country: normalizeCountry(away?.name),
+      country: mapCountry(away?.name), // ✅ FIXED
     },
 
     score:

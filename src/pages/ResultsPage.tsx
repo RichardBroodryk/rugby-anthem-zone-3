@@ -30,7 +30,6 @@ function groupByTournament(matches: MatchData[]) {
       if (!map.has(match.tournament)) {
         map.set(match.tournament, []);
       }
-
       map.get(match.tournament)!.push(match);
     });
 
@@ -46,8 +45,6 @@ export default function ResultsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  /* ================= FETCH MATCHES ================= */
-
   useEffect(() => {
     let mounted = true;
 
@@ -55,7 +52,6 @@ export default function ResultsPage() {
       try {
         setLoading(true);
         const data = await getMatches();
-
         if (mounted) setMatches(data);
       } catch {
         if (mounted) setError("Failed to load results");
@@ -71,13 +67,16 @@ export default function ResultsPage() {
     };
   }, []);
 
-  /* ================= GROUP RESULTS ================= */
-
+  /* 🔥 PRIORITIZE WOMEN'S SIX NATIONS */
   const grouped = useMemo(() => {
-    return groupByTournament(matches);
-  }, [matches]);
+    const groups = groupByTournament(matches);
 
-  /* ================= STATES ================= */
+    return groups.sort(([a], [b]) => {
+      if (a === "Women's Six Nations") return -1;
+      if (b === "Women's Six Nations") return 1;
+      return 0;
+    });
+  }, [matches]);
 
   if (loading) {
     return (
@@ -97,17 +96,14 @@ export default function ResultsPage() {
 
   return (
     <main className={styles.page}>
-      {/* ================= HERO ================= */}
-
+      {/* HERO */}
       <header
         className={styles.hero}
         style={{ backgroundImage: `url(${heroBg})` }}
       >
         <div className={styles.heroOverlay} />
-
         <div className={styles.heroContent}>
           <h1>Results</h1>
-
           <p>
             Completed international fixtures
             <br />
@@ -116,8 +112,7 @@ export default function ResultsPage() {
         </div>
       </header>
 
-      {/* ================= BACK ================= */}
-
+      {/* BACK */}
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -127,29 +122,24 @@ export default function ResultsPage() {
         </button>
       </div>
 
-      {/* ================= RESULTS ================= */}
+      {/* RESULTS */}
+      {grouped.map(([tournament, matches]) => (
+        <section key={tournament} className={styles.section}>
+          <h2 className={styles.sectionTitle}>{tournament}</h2>
 
-      {grouped.length === 0 ? (
-        <div className={styles.empty}>No results available.</div>
-      ) : (
-        grouped.map(([tournament, matches]) => (
-          <section key={tournament} className={styles.section}>
-            <h2 className={styles.sectionTitle}>{tournament}</h2>
-
-            {matches.map((match) => (
-              <MatchRow
-                key={match.id}
-                home={match.home}
-                away={match.away}
-                metaLeft={match.venue}
-                metaRight={formatDate(match.date)}
-                state="final"
-                score={match.score}
-              />
-            ))}
-          </section>
-        ))
-      )}
+          {matches.map((match) => (
+            <MatchRow
+              key={match.id}
+              home={match.home}
+              away={match.away}
+              metaLeft={match.venue}
+              metaRight={formatDate(match.date)}
+              state="final"
+              score={match.score}
+            />
+          ))}
+        </section>
+      ))}
     </main>
   );
 }

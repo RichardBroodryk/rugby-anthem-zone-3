@@ -18,9 +18,11 @@ type TeamStats = {
   played: number;
   won: number;
   lost: number;
+  draw: number;
   pointsFor: number;
   pointsAgainst: number;
   difference: number;
+  tablePoints: number;
 };
 
 /* ================= HELPERS ================= */
@@ -41,9 +43,11 @@ function buildStats(matches: MatchData[]): TeamStats[] {
           played: 0,
           won: 0,
           lost: 0,
+          draw: 0,
           pointsFor: 0,
           pointsAgainst: 0,
           difference: 0,
+          tablePoints: 0,
         });
       }
       return map.get(name)!;
@@ -52,8 +56,8 @@ function buildStats(matches: MatchData[]): TeamStats[] {
     const homeTeam = ensure(home.name, home.country);
     const awayTeam = ensure(away.name, away.country);
 
-    homeTeam.played += 1;
-    awayTeam.played += 1;
+    homeTeam.played++;
+    awayTeam.played++;
 
     homeTeam.pointsFor += score.home;
     homeTeam.pointsAgainst += score.away;
@@ -62,11 +66,18 @@ function buildStats(matches: MatchData[]): TeamStats[] {
     awayTeam.pointsAgainst += score.home;
 
     if (score.home > score.away) {
-      homeTeam.won += 1;
-      awayTeam.lost += 1;
+      homeTeam.won++;
+      awayTeam.lost++;
+      homeTeam.tablePoints += 4;
     } else if (score.away > score.home) {
-      awayTeam.won += 1;
-      homeTeam.lost += 1;
+      awayTeam.won++;
+      homeTeam.lost++;
+      awayTeam.tablePoints += 4;
+    } else {
+      homeTeam.draw++;
+      awayTeam.draw++;
+      homeTeam.tablePoints += 2;
+      awayTeam.tablePoints += 2;
     }
   });
 
@@ -74,9 +85,12 @@ function buildStats(matches: MatchData[]): TeamStats[] {
     t.difference = t.pointsFor - t.pointsAgainst;
   });
 
-  return Array.from(map.values()).sort(
-    (a, b) => b.difference - a.difference
-  );
+  return Array.from(map.values()).sort((a, b) => {
+    if (b.tablePoints !== a.tablePoints) {
+      return b.tablePoints - a.tablePoints;
+    }
+    return b.difference - a.difference;
+  });
 }
 
 /* ================= PAGE ================= */
@@ -90,46 +104,31 @@ export default function StatsPage() {
     useState<MatchData | null>(null);
 
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadStats() {
-      try {
-        const matches: MatchData[] = await getMatches();
+      const matches = await getMatches();
 
-        /* ================= SPLIT ================= */
+      const mens = matches.filter(
+        (m) => m.competitionId === "six-nations" && m.score
+      );
 
-        const mensMatches = matches.filter(
-          (m) =>
-            m.competitionId === "six-nations" &&
-            m.score
-        );
+      const womens = matches.filter(
+        (m) => m.competitionId === "six-nations-women" && m.score
+      );
 
-        const womensMatches = matches.filter(
-          (m) =>
-            m.competitionId === "six-nations-women" &&
-            m.score
-        );
+      setMensStats(buildStats(mens));
+      setWomensStats(buildStats(womens));
 
-        /* ================= BUILD ================= */
+      const last = matches
+        .filter((m) => m.score)
+        .sort(
+          (a, b) =>
+            new Date(b.date).getTime() -
+            new Date(a.date).getTime()
+        )[0];
 
-        setMensStats(buildStats(mensMatches));
-        setWomensStats(buildStats(womensMatches));
-
-        /* ================= MATCH COMPARISON ================= */
-
-        const lastMatch = matches
-          .filter((m) => m.score)
-          .sort(
-            (a, b) =>
-              new Date(b.date).getTime() -
-              new Date(a.date).getTime()
-          )[0];
-
-        setComparisonMatch(lastMatch || null);
-      } catch (err) {
-        setError("Failed to load stats");
-      }
+      setComparisonMatch(last || null);
 
       setLoading(false);
     }
@@ -149,6 +148,7 @@ export default function StatsPage() {
             <th>PF</th>
             <th>PA</th>
             <th>+/-</th>
+            <th>Pts</th>
           </tr>
         </thead>
 
@@ -157,7 +157,7 @@ export default function StatsPage() {
             <tr key={t.team}>
               <td className={`${styles.teamCell} ${styles.left}`}>
                 <Flag country={t.country} size="small" />
-                {t.team}
+                <span className={styles.teamName}>{t.team}</span>
               </td>
 
               <td>{t.played}</td>
@@ -166,6 +166,7 @@ export default function StatsPage() {
               <td>{t.pointsFor}</td>
               <td>{t.pointsAgainst}</td>
               <td>{t.difference}</td>
+              <td>{t.tablePoints}</td>
             </tr>
           ))}
         </tbody>
@@ -180,78 +181,39 @@ export default function StatsPage() {
         style={{ backgroundImage: `url(${heroBg})` }}
       >
         <div className={styles.heroOverlay} />
-
         <div className={styles.heroContent}>
           <h1>Stats</h1>
-          <p>
-            Tournament standings, match insights,
-            <br />
-            and performance comparisons.
-          </p>
         </div>
       </header>
 
       <div className={styles.backWrap}>
-        <button
-          className={styles.back}
-          onClick={() => navigate("/match-center")}
-        >
-          ← Back to Match Center
+        <button onClick={() => navigate("/match-center")}>
+          ← Back
         </button>
       </div>
 
-      {/* ================= MEN ================= */}
-
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>
-          Six Nations (Men)
-        </h2>
-
-        {loading ? (
-          <div className={styles.empty}>Loading...</div>
-        ) : error ? (
-          <div className={styles.empty}>{error}</div>
-        ) : (
-          renderTable(mensStats)
-        )}
+        <h2>Six Nations (Men)</h2>
+        {loading ? <p>Loading...</p> : renderTable(mensStats)}
       </section>
 
-      {/* ================= WOMEN ================= */}
-
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>
-          Six Nations (Women)
-        </h2>
-
-        {loading ? (
-          <div className={styles.empty}>Loading...</div>
-        ) : error ? (
-          <div className={styles.empty}>{error}</div>
-        ) : (
-          renderTable(womensStats)
-        )}
+        <h2>Six Nations (Women)</h2>
+        {loading ? <p>Loading...</p> : renderTable(womensStats)}
       </section>
-
-      {/* ================= MATCH COMPARISON ================= */}
 
       {comparisonMatch && comparisonMatch.score && (
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>
-            Latest Match Comparison
-          </h2>
-
-          <TeamComparisonTable
-            home={comparisonMatch.home}
-            away={comparisonMatch.away}
-            stats={[
-              {
-                label: "Points",
-                home: comparisonMatch.score.home,
-                away: comparisonMatch.score.away,
-              },
-            ]}
-          />
-        </section>
+        <TeamComparisonTable
+          home={comparisonMatch.home}
+          away={comparisonMatch.away}
+          stats={[
+            {
+              label: "Points",
+              home: comparisonMatch.score.home,
+              away: comparisonMatch.score.away,
+            },
+          ]}
+        />
       )}
     </main>
   );

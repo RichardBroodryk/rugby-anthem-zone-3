@@ -61,9 +61,9 @@ export const matches2026: MatchData[] = [
   ...svnsMatches2026,
 ]
   .map((m) => ({
-    ...m,
-    matchKey: buildMatchKey(m),
-  }))
+  ...m,
+  matchKey: m.matchKey || buildMatchKey(m), // 🔥 PRESERVE EXISTING KEYS
+}))
   .filter(isValidMatch)
   .sort(sortByDate);
 

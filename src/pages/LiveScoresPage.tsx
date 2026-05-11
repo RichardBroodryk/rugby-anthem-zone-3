@@ -25,7 +25,7 @@ const isToday = (dateStr: string) => {
 const isWomenTournament = (tournament: string) =>
   tournament.toLowerCase().includes("women");
 
-/* 🔥 ONLY WOMEN SIX NATIONS FOR UPCOMING */
+/* 🔥 STRICT FILTER */
 const isWomensSixNations = (m: MatchData) =>
   m.competitionId === "six-nations-women";
 
@@ -73,21 +73,29 @@ export default function LiveScoresPage() {
   const { live, recentFinals, today, upcoming } = useMemo(() => {
     const liveMatches = matches.filter((m) => isLive(m.id));
 
-    const recentFinals = matches.filter(
-      (m) => m.score && !isLive(m.id)
-    );
+    const finals = matches
+      .filter((m) => m.score && !isLive(m.id))
+      .sort(
+        (a, b) =>
+          new Date(b.date).getTime() -
+          new Date(a.date).getTime()
+      );
 
     const todayMatches = matches.filter(
       (m) => !m.score && isToday(m.date)
     );
 
-    const upcomingMatches = matches.filter(
-      (m) => !m.score && !isToday(m.date)
-    );
+    const upcomingMatches = matches
+      .filter((m) => !m.score && !isToday(m.date))
+      .sort(
+        (a, b) =>
+          new Date(a.date).getTime() -
+          new Date(b.date).getTime()
+      );
 
     return {
       live: liveMatches,
-      recentFinals,
+      recentFinals: finals,
       today: todayMatches,
       upcoming: upcomingMatches,
     };
@@ -96,7 +104,9 @@ export default function LiveScoresPage() {
   if (loading) {
     return (
       <main className={styles.page}>
-        <div className={styles.empty}>Loading live matches...</div>
+        <div className={styles.empty}>
+          Loading live matches...
+        </div>
       </main>
     );
   }
@@ -120,7 +130,16 @@ export default function LiveScoresPage() {
           <div className={styles.subBlock}>
             <div className={styles.subHeader}>MEN</div>
             {men.map((m) => (
-              <LiveScoreRow key={m.id} matchId={m.id} home={m.home} away={m.away} score={m.score} phase={m.score ? "Final" : "Upcoming"} tournament={m.tournament} venue={m.venue} />
+              <LiveScoreRow
+                key={m.id}
+                matchId={m.id}
+                home={m.home}
+                away={m.away}
+                score={m.score}
+                phase={m.score ? "Final" : "Upcoming"}
+                tournament={m.tournament}
+                venue={m.venue}
+              />
             ))}
           </div>
         )}
@@ -129,7 +148,16 @@ export default function LiveScoresPage() {
           <div className={styles.subBlock}>
             <div className={styles.subHeader}>WOMEN</div>
             {women.map((m) => (
-              <LiveScoreRow key={m.id} matchId={m.id} home={m.home} away={m.away} score={m.score} phase={m.score ? "Final" : "Upcoming"} tournament={m.tournament} venue={m.venue} />
+              <LiveScoreRow
+                key={m.id}
+                matchId={m.id}
+                home={m.home}
+                away={m.away}
+                score={m.score}
+                phase={m.score ? "Final" : "Upcoming"}
+                tournament={m.tournament}
+                venue={m.venue}
+              />
             ))}
           </div>
         )}
@@ -137,13 +165,16 @@ export default function LiveScoresPage() {
     );
   };
 
-  /* 🔥 FILTER UPCOMING */
+  /* 🔥 STRICT WOMEN'S SIX NATIONS UPCOMING */
   const womensUpcoming = upcoming.filter(isWomensSixNations);
 
   return (
     <main className={styles.page}>
       {/* HERO */}
-      <header className={styles.hero} style={{ backgroundImage: `url(${heroBg})` }}>
+      <header
+        className={styles.hero}
+        style={{ backgroundImage: `url(${heroBg})` }}
+      >
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <h1>Live Scores</h1>
@@ -157,7 +188,10 @@ export default function LiveScoresPage() {
 
       {/* BACK */}
       <div className={styles.backWrap}>
-        <button className={styles.back} onClick={() => navigate("/match-center")}>
+        <button
+          className={styles.back}
+          onClick={() => navigate("/match-center")}
+        >
           ← Back to Match Center
         </button>
       </div>
@@ -166,7 +200,9 @@ export default function LiveScoresPage() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitleCenter}>Live Now</h2>
         {live.length === 0 ? (
-          <div className={styles.empty}>No matches live right now.</div>
+          <div className={styles.empty}>
+            No matches live right now.
+          </div>
         ) : (
           renderGroup(live)
         )}
@@ -174,33 +210,47 @@ export default function LiveScoresPage() {
 
       {/* RESULTS */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitleCenter}>Recent Results</h2>
+        <h2 className={styles.sectionTitleCenter}>
+          Recent Results
+        </h2>
         {recentFinals.length === 0 ? (
-          <div className={styles.empty}>No completed matches available.</div>
+          <div className={styles.empty}>
+            No completed matches available.
+          </div>
         ) : (
-          renderGroup(recentFinals)
+          renderGroup(recentFinals.slice(0, 10)) // 🔥 LIMIT
         )}
       </section>
 
       {/* TODAY */}
       <section className={styles.sectionMuted}>
-        <h2 className={styles.sectionTitleMutedCenter}>Today</h2>
+        <h2 className={styles.sectionTitleMutedCenter}>
+          Today
+        </h2>
         {today.length === 0 ? (
-          <div className={styles.empty}>No matches today.</div>
+          <div className={styles.empty}>
+            No matches today.
+          </div>
         ) : (
           renderGroup(today)
         )}
       </section>
 
-      {/* UPCOMING (FILTERED) */}
+      {/* UPCOMING */}
       <section className={styles.sectionMuted}>
-        <h2 className={styles.sectionTitleMutedCenter}>Upcoming</h2>
+        <h2 className={styles.sectionTitleMutedCenter}>
+          Upcoming
+        </h2>
 
         {womensUpcoming.length === 0 ? (
-          <div className={styles.empty}>No upcoming key fixtures.</div>
+          <div className={styles.empty}>
+            No upcoming key fixtures.
+          </div>
         ) : (
           <div className={styles.subBlock}>
-            <div className={styles.subHeader}>WOMEN'S SIX NATIONS</div>
+            <div className={styles.subHeader}>
+              WOMEN'S SIX NATIONS
+            </div>
             {womensUpcoming.map((m) => (
               <LiveScoreRow
                 key={m.id}

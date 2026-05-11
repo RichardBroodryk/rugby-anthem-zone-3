@@ -1,10 +1,8 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./MatchPage.module.css";
 
-import { useParams } from "react-router-dom";
 import { getMatches } from "../data/matchesAdapter";
-
 import { flagMap } from "../data/flagMap";
 import { getStadiumByName } from "../utils/stadiumResolver";
 import { getMatchDetails } from "../utils/matchDetailsResolver";
@@ -12,67 +10,80 @@ import { getMatchDetails } from "../utils/matchDetailsResolver";
 export default function MatchPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { id } = useParams();
 
- const { id } = useParams();
-
-const [match, setMatch] = useState<any>(
-  location.state || null
-);
-
-const tournamentSlug = match?.tournamentSlug || "";
-
-useEffect(() => {
-  // If match already exists (state-based), do nothing
-  if (match) return;
-
-  // Otherwise fetch via ID (URL-based)
-  async function loadMatch() {
-    const allMatches = await getMatches();
-
-    const found = allMatches.find(
-      (m) => String(m.id) === id
-    );
-
-    if (found) {
-      setMatch(found);
-    }
-  }
-
-  if (id) {
-    loadMatch();
-  }
-}, [id, match]);
-
+  const [match, setMatch] = useState<any>(location.state || null);
   const [userComments, setUserComments] = useState<any[]>([]);
   const [newComment, setNewComment] = useState("");
 
+  const tournamentSlug = match?.tournamentSlug || "";
+
+  /* ==================================================
+     LOAD MATCH (STATE OR URL)
+     ================================================== */
   useEffect(() => {
-  const key = "raz_last_match_view";
+    if (match) return;
 
-  // prevent double count in dev
-  if (sessionStorage.getItem(key)) return;
+    async function loadMatch() {
+      const allMatches = await getMatches();
 
-  const current =
-    Number(localStorage.getItem("raz_matches_followed")) || 0;
+      const found = allMatches.find(
+        (m) => String(m.id) === id
+      );
 
-  localStorage.setItem(
-    "raz_matches_followed",
-    String(current + 1)
-  );
+      if (found) {
+        setMatch(found);
+      }
+    }
 
-  sessionStorage.setItem(key, "true");
-}, []);
+    if (id) loadMatch();
+  }, [id, match]);
 
+  /* ==================================================
+     TRACKING (UNCHANGED)
+     ================================================== */
+  useEffect(() => {
+    const key = "raz_last_match_view";
+
+    if (sessionStorage.getItem(key)) return;
+
+    const current =
+      Number(localStorage.getItem("raz_matches_followed")) || 0;
+
+    localStorage.setItem(
+      "raz_matches_followed",
+      String(current + 1)
+    );
+
+    sessionStorage.setItem(key, "true");
+  }, []);
+
+  /* ==================================================
+     LOADING
+     ================================================== */
   if (!match) {
-  return (
-    <div className={styles.page}>
-      Loading match...
-    </div>
-  );
-}
+    return (
+      <div className={styles.page}>
+        Loading match...
+      </div>
+    );
+  }
+
+  /* ==================================================
+     🔥 CRITICAL FIX — ENSURE matchKey EXISTS
+     ================================================== */
+  if (!match.matchKey) {
+    const normalize = (v: string) =>
+      v.toLowerCase().replace(/\s+/g, "-");
+
+    match.matchKey = `${normalize(match.home.name)}-vs-${normalize(match.away.name)}`;
+  }
 
   const details = getMatchDetails(match);
 
+  /* ==================================================
+     FLAGS + META
+     ================================================== */
   const homeFlag = flagMap[match.home.country];
   const awayFlag = flagMap[match.away.country];
   const stadium = getStadiumByName(match.venue);
@@ -86,6 +97,14 @@ useEffect(() => {
 
   const hasScore = !!match.score;
 
+  const homeLeading =
+    match.score && match.score.home > match.score.away;
+  const awayLeading =
+    match.score && match.score.away > match.score.home;
+
+  /* ==================================================
+     COMMENTS
+     ================================================== */
   const handlePostComment = () => {
     if (newComment.trim() === "") return;
 
@@ -101,20 +120,31 @@ useEffect(() => {
     setNewComment("");
   };
 
+  /* ==================================================
+     UI
+     ================================================== */
   return (
     <main className={styles.page}>
-      {/* ================= TOP MATCH BAR ================= */}
+      {/* ================= HERO ================= */}
       <header className={styles.hero}>
-        <button 
+        <button
           className={styles.backButton}
-          onClick={() => navigate(`/tournaments/${tournamentSlug}`)}
+          onClick={() =>
+            navigate(`/tournaments/${tournamentSlug}`)
+          }
         >
           ← Back to Tournament
         </button>
 
         <div className={styles.teamsRow}>
-          <div className={styles.team}>
-            {homeFlag && <img src={homeFlag} alt="" className={styles.flag} />}
+          <div
+            className={`${styles.team} ${
+              homeLeading ? styles.leading : ""
+            }`}
+          >
+            {homeFlag && (
+              <img src={homeFlag} alt="" className={styles.flag} />
+            )}
             <span>{match.home.name}</span>
           </div>
 
@@ -128,16 +158,25 @@ useEffect(() => {
             )}
           </div>
 
-          <div className={styles.team}>
+          <div
+            className={`${styles.team} ${
+              awayLeading ? styles.leading : ""
+            }`}
+          >
             <span>{match.away.name}</span>
-            {awayFlag && <img src={awayFlag} alt="" className={styles.flag} />}
+            {awayFlag && (
+              <img src={awayFlag} alt="" className={styles.flag} />
+            )}
           </div>
         </div>
 
         <div className={styles.meta}>
           <span>{formattedDate}</span>
           {stadium && (
-            <a href={`/stadium/${stadium.slug}`} className={styles.stadiumLink}>
+            <a
+              href={`/stadium/${stadium.slug}`}
+              className={styles.stadiumLink}
+            >
               🏟 {stadium.name}
             </a>
           )}
@@ -147,7 +186,7 @@ useEffect(() => {
       {/* ================= EVENTS ================= */}
       <section className={styles.section}>
         <h2>Match Events</h2>
-        {details?.timeline && details.timeline.length > 0 ? (
+        {details?.timeline?.length ? (
           details.timeline.map((e: any, i: number) => (
             <div key={i} className={styles.event}>
               <strong>{e.minute}</strong> — {e.label}
@@ -161,78 +200,103 @@ useEffect(() => {
       {/* ================= LINEUPS ================= */}
       <section className={styles.section}>
         <h2>Lineups</h2>
-        
+
         <div className={styles.lineups}>
+          {/* HOME */}
           <div>
             <h3>{match.home.name} — Starting XV</h3>
-            {details?.lineups?.homeStarting && details.lineups.homeStarting.length > 0 ? (
+            {details?.lineups?.homeStarting?.length ? (
               details.lineups.homeStarting.map((p: any) => (
                 <div key={p.number} className={styles.player}>
                   {p.number}. {p.name}
                 </div>
               ))
             ) : (
-              <p>No starting lineup data yet for home team.</p>
+              <p>No starting lineup data yet.</p>
             )}
           </div>
 
+          {/* AWAY */}
           <div>
             <h3>{match.away.name} — Starting XV</h3>
-            {details?.lineups?.awayStarting && details.lineups.awayStarting.length > 0 ? (
+            {details?.lineups?.awayStarting?.length ? (
               details.lineups.awayStarting.map((p: any) => (
                 <div key={p.number} className={styles.player}>
                   {p.number}. {p.name}
                 </div>
               ))
             ) : (
-              <p>No starting lineup data yet for away team.</p>
+              <p>No starting lineup data yet.</p>
             )}
           </div>
         </div>
 
-        {/* The Bench */}
+        {/* BENCH (FIXED — BOTH TEAMS) */}
         <div className={styles.benchSection}>
           <h3>The Bench</h3>
-          {details?.lineups?.homeBench && details.lineups.homeBench.length > 0 ? (
-            details.lineups.homeBench.map((p: any) => (
-              <div key={p.number} className={styles.player}>
-                {p.number}. {p.name}
-              </div>
-            ))
-          ) : (
-            <p>No bench data yet for this match.</p>
-          )}
+
+          <div className={styles.lineups}>
+            <div>
+              <strong>{match.home.name}</strong>
+              {details?.lineups?.homeBench?.length ? (
+                details.lineups.homeBench.map((p: any) => (
+                  <div key={p.number} className={styles.player}>
+                    {p.number}. {p.name}
+                  </div>
+                ))
+              ) : (
+                <p>No bench data.</p>
+              )}
+            </div>
+
+            <div>
+              <strong>{match.away.name}</strong>
+              {details?.lineups?.awayBench?.length ? (
+                details.lineups.awayBench.map((p: any) => (
+                  <div key={p.number} className={styles.player}>
+                    {p.number}. {p.name}
+                  </div>
+                ))
+              ) : (
+                <p>No bench data.</p>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ================= PLAYER PERFORMANCES ================= */}
+      {/* ================= PERFORMANCE ================= */}
       <section className={styles.section}>
         <h2>Player Performances</h2>
-        {details?.performances && details.performances.length > 0 ? (
+        {details?.performances?.length ? (
           details.performances.map((perf: any, i: number) => (
             <div key={i} className={styles.performance}>
-              <strong>{perf.category}:</strong> {perf.player} — {perf.value}
+              <strong>{perf.category}:</strong>{" "}
+              {perf.player} — {perf.value}
             </div>
           ))
         ) : (
-          <p>No performance stats yet for this match.</p>
+          <p>No performance stats yet.</p>
         )}
       </section>
 
-      {/* ================= FAN COMMENTS (PROFESSIONAL) ================= */}
+      {/* ================= COMMENTS ================= */}
       <section className={styles.section}>
         <h2>Fan Comments</h2>
 
-        {/* Comment Input */}
         <div className={styles.commentInput}>
           <input
             type="text"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Add your comment..."
-            onKeyPress={(e) => e.key === "Enter" && handlePostComment()}
+            onKeyDown={(e) =>
+              e.key === "Enter" && handlePostComment()
+            }
           />
-          <button onClick={handlePostComment}>Post Comment</button>
+          <button onClick={handlePostComment}>
+            Post Comment
+          </button>
         </div>
 
         <div className={styles.commentsPanel}>
@@ -241,11 +305,13 @@ useEffect(() => {
               <div key={c.id} className={styles.comment}>
                 <strong>{c.author.displayName}</strong>
                 <p>{c.text}</p>
-                <small>{new Date(c.createdAt).toLocaleDateString()}</small>
+                <small>
+                  {new Date(c.createdAt).toLocaleDateString()}
+                </small>
               </div>
             ))
           ) : (
-            <p>Be the first to comment after the match!</p>
+            <p>Be the first to comment!</p>
           )}
         </div>
       </section>
