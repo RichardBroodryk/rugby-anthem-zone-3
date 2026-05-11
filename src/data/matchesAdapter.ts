@@ -111,10 +111,13 @@ async function fetchFromBackend(
   gender?: "men" | "women"
 ): Promise<MatchData[] | null> {
   try {
-    const key =
-      leagueId && gender
-        ? `${leagueId}-${gender}`
-        : "six-nations-men";
+    // 🔥 FIX — remove dangerous default
+    if (!leagueId || !gender) {
+      console.warn("RAZ BACKEND → Missing leagueId/gender → SKIPPING API FETCH");
+      return null;
+    }
+
+    const key = `${leagueId}-${gender}`;
 
     const entry = LEAGUE_API_MAP[key];
 
@@ -161,7 +164,7 @@ export async function getMatches(options?: {
   type?: "international" | "domestic";
   gender?: "men" | "women";
   leagueId?: string;
-  includeAll?: boolean; // 🔥 ADD ONLY
+  includeAll?: boolean;
 }): Promise<MatchData[]> {
   let data: MatchData[] = [];
 
@@ -170,7 +173,6 @@ export async function getMatches(options?: {
     options?.gender
   );
 
-  /* ✅ EXISTING MERGE LOGIC — UNCHANGED */
   if (!backendData || backendData.length === 0) {
     data = matches2026;
   } else {
@@ -184,18 +186,11 @@ export async function getMatches(options?: {
     data = merged;
   }
 
-  /* ==================================================
-     🔥 CRITICAL PATCH (ISOLATED)
-     ================================================== */
-
   let filtered = data.filter(isValidStructure);
 
-  // ✅ ONLY bypass competition filter when explicitly requested
   if (!options?.includeAll) {
     filtered = filtered.filter(isValidCompetition);
   }
-
-  /* ================================================== */
 
   if (options?.type === "international") {
     filtered = filtered.filter(isInternational);
@@ -205,9 +200,10 @@ export async function getMatches(options?: {
     filtered = filtered.filter(isDomestic);
   }
 
-  if (options?.leagueId && options?.gender) {
+  // 🔥 FIX — enforce league filtering always
+  if (options?.leagueId) {
     filtered = filtered.filter((m) =>
-      matchesLeague(m, options.leagueId!, options.gender!)
+      matchesLeague(m, options.leagueId!, options.gender || "men")
     );
   }
 
