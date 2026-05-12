@@ -96,7 +96,9 @@ export function convertApiSportsFixture(
 
   const status = fixture.fixture?.status?.short;
 
-  if (status === "FT") state = "final";
+ if (["FT", "AET", "FT_PEN"].includes(status)) {
+  state = "final";
+}
   else if (status === "1H" || status === "2H") state = "live";
   else if (status === "NS") state = "upcoming";
 

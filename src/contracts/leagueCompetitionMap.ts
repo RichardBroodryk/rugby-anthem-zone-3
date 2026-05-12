@@ -1,10 +1,6 @@
 // --------------------------------------------------
-// RAZ SYSTEM — LEAGUE ↔ COMPETITION MAP
+// RAZ SYSTEM — LEAGUE ↔ COMPETITION MAP (FIXED)
 // --------------------------------------------------
-
-/**
- * Maps UI league IDs → competitionId (men/women)
- */
 
 export const LEAGUE_COMPETITION_MAP: Record<
   string,
@@ -17,7 +13,7 @@ export const LEAGUE_COMPETITION_MAP: Record<
 
   premiership: {
     men: "premiership",
-    women: "premier-15s",
+    women: "premiership-women",
   },
 
   super: {
@@ -32,16 +28,16 @@ export const LEAGUE_COMPETITION_MAP: Record<
 
   japan: {
     men: "japan-league-one",
-    women: "japan-league-one", // placeholder until full women comp
+    women: "japan-league-one",
   },
 
   investec: {
     men: "champions-cup",
-    women: "champions-cup", // placeholder
+    women: "champions-cup",
   },
 
   epcr: {
     men: "challenge-cup",
-    women: "challenge-cup", // placeholder
+    women: "challenge-cup",
   },
 };

@@ -44,7 +44,31 @@ export async function fetchFixturesByLeague(
   leagueId: number,
   season: number = 2024
 ) {
-  return apiSportsFetch(`games?league=${leagueId}&season=${season}`);
+  // 🔥 Try primary endpoint
+  let data = await apiSportsFetch(
+    `games?league=${leagueId}&season=${season}`
+  );
+
+  if (data && data.length > 0) {
+    console.log("✅ GAMES endpoint working:", leagueId);
+    return data;
+  }
+
+  console.warn("⚠️ GAMES EMPTY → trying fixtures endpoint");
+
+  // 🔁 Fallback endpoint (some leagues use this)
+  data = await apiSportsFetch(
+    `fixtures?league=${leagueId}&season=${season}`
+  );
+
+  if (data && data.length > 0) {
+    console.log("✅ FIXTURES endpoint working:", leagueId);
+    return data;
+  }
+
+  console.warn("❌ NO DATA FROM API FOR LEAGUE:", leagueId);
+
+  return [];
 }
 
 /**

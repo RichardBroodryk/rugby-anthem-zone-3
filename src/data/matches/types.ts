@@ -29,12 +29,12 @@ export interface MatchData {
   home: MatchTeam;
   away: MatchTeam;
 
-  // ✅ USE THIS (NOT homeScore / awayScore)
+  // ✅ Match score structure
   score?: MatchScore;
 
   state?: "upcoming" | "starting" | "live" | "final";
   importance?: number;
 
-  // SVNS placement (5th, 7th etc.)
+  // SVNS placement matches
   placement?: number;
 }

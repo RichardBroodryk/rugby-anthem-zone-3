@@ -1,6 +1,6 @@
 // --------------------------------------------------
-// RAZ SYSTEM — MATCHES ADAPTER (ROLLS ROYCE)
-// FINAL — STATE + SAFETY + FALLBACK LOCKED (MERGE FIX)
+// RAZ SYSTEM — MATCHES ADAPTER (FIXED FINAL)
+// DIRECT API + SAFE FILTERING + NO DATA LOSS
 // --------------------------------------------------
 
 import type { MatchData } from "../data/matches/types";
@@ -9,10 +9,10 @@ import { matches2026 } from "./matches";
 
 import { COMPETITIONS } from "../contracts/competitionRegistry";
 import { calculateImportance } from "../contracts/importanceEngine";
-import { LEAGUE_COMPETITION_MAP } from "../contracts/leagueCompetitionMap";
 import { LEAGUE_API_MAP } from "../contracts/leagueApiMap";
 
 import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
+import { fetchFixturesByLeague } from "../services/apiSportsRugby";
 
 import { tournaments2026 } from "./tournamentMeta";
 
@@ -56,27 +56,12 @@ function isDomestic(match: MatchData): boolean {
 }
 
 /* ==================================================
-   STATE RESOLUTION (CENTRALIZED)
+   STATE RESOLUTION
    ================================================== */
 
 function getMatchState(match: MatchData) {
   if (match.score) return "final";
   return "upcoming";
-}
-
-/* ==================================================
-   LEAGUE FILTER
-   ================================================== */
-
-function matchesLeague(
-  match: MatchData,
-  leagueId: string,
-  gender: "men" | "women"
-): boolean {
-  const mapping = LEAGUE_COMPETITION_MAP[leagueId];
-  if (!mapping) return false;
-
-  return match.competitionId === mapping[gender];
 }
 
 /* ==================================================
@@ -95,7 +80,6 @@ function resolveTournamentInstanceId(
 
   const found = tournaments2026.find((t) => {
     if (!t.matchKey) return false;
-
     return normalize(t.matchKey) === matchKey;
   });
 
@@ -103,55 +87,39 @@ function resolveTournamentInstanceId(
 }
 
 /* ==================================================
-   BACKEND FETCH
+   🔥 DIRECT API FETCH (FINAL FIX)
    ================================================== */
 
-async function fetchFromBackend(
+async function fetchFromApi(
   leagueId?: string,
   gender?: "men" | "women"
 ): Promise<MatchData[] | null> {
   try {
-    // 🔥 FIX — remove dangerous default
-    if (!leagueId || !gender) {
-      console.warn("RAZ BACKEND → Missing leagueId/gender → SKIPPING API FETCH");
-      return null;
-    }
+    if (!leagueId || !gender) return null;
 
     const key = `${leagueId}-${gender}`;
-
     const entry = LEAGUE_API_MAP[key];
 
     if (!entry) {
-      console.warn("RAZ BACKEND → NO MAPPING → FALLBACK");
+      console.warn("NO API MAP ENTRY:", key);
       return null;
     }
 
-    const BASE =
-      process.env.REACT_APP_API_BASE ||
-      process.env.REACT_APP_API_URL ||
-      "https://rugby-anthem-backend.fly.dev/api/rugby";
+    // 🔥 DIRECT API CALL
+    let apiData = await fetchFixturesByLeague(entry.id, 2026);
 
-    const res = await fetch(
-      `${BASE}/fixtures?league=${entry.id}&season=2026`
-    );
-
-    if (!res.ok) {
-      console.warn("RAZ BACKEND ERROR:", res.status);
-      return null;
-    }
-
-    const apiData = await res.json();
+if (!apiData || apiData.length === 0) {
+  console.warn("⚠️ 2026 EMPTY → FALLBACK TO 2025");
+  apiData = await fetchFixturesByLeague(entry.id, 2025);
+}
 
     const converted = convertApiSportsFixtures(apiData);
 
-    if (!Array.isArray(converted)) {
-      console.warn("RAZ: INVALID API FORMAT");
-      return null;
-    }
+    console.log("🔥 DIRECT API MATCHES:", converted.length);
 
     return converted;
   } catch (err) {
-    console.warn("RAZ BACKEND FAIL → FALLBACK ACTIVATED");
+    console.warn("DIRECT API FAILED");
     return null;
   }
 }
@@ -168,23 +136,34 @@ export async function getMatches(options?: {
 }): Promise<MatchData[]> {
   let data: MatchData[] = [];
 
-  const backendData = await fetchFromBackend(
+  const apiData = await fetchFromApi(
     options?.leagueId,
     options?.gender
   );
 
-  if (!backendData || backendData.length === 0) {
+  // 🔥 SAFE MERGE (API + LOCAL)
+  if (!apiData || apiData.length === 0) {
+    console.warn("USING LOCAL MATCHES ONLY");
     data = matches2026;
   } else {
     const merged = [...matches2026];
 
-    backendData.forEach((bm) => {
-      const exists = merged.some((m) => m.id === bm.id);
-      if (!exists) merged.push(bm);
+    apiData.forEach((am) => {
+      const exists = merged.some(
+        (m) => m.matchKey === am.matchKey
+      );
+
+      if (!exists) {
+        merged.push(am);
+      }
     });
 
     data = merged;
   }
+
+  /* ==================================================
+     FILTERING
+     ================================================== */
 
   let filtered = data.filter(isValidStructure);
 
@@ -200,12 +179,18 @@ export async function getMatches(options?: {
     filtered = filtered.filter(isDomestic);
   }
 
-  // 🔥 FIX — enforce league filtering always
+  // 🔥 FIXED LEAGUE FILTER (NO MORE EMPTY RESULTS)
   if (options?.leagueId) {
+    const key = options.leagueId.toLowerCase();
+
     filtered = filtered.filter((m) =>
-      matchesLeague(m, options.leagueId!, options.gender || "men")
+      m.competitionId?.toLowerCase().includes(key)
     );
   }
+
+  /* ==================================================
+     SORT + FINAL MAP
+     ================================================== */
 
   filtered.sort(
     (a, b) =>

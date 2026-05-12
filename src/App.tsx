@@ -62,6 +62,9 @@ import StatsPage from "./pages/StatsPage";
 import MatchPage from "./pages/MatchPage";
 import DomesticTablesPage from "./pages/match-center/DomesticTablesPage";
 import LeagueTablePage from "./pages/match-center/LeagueTablePage";
+import LeagueTableDebugPage from "./pages/match-center/LeagueTableDebugPage";
+import ApiLeaguesDebugPage from "./pages/match-center/ApiLeaguesDebugPage";
+import LeagueTableTestPage from "./pages/match-center/LeagueTableTestPage";
 
 /* ================= STADIUMS ================= */
 import StadiumHubPage from "./pages/StadiumHubPage";
@@ -280,6 +283,9 @@ export default function App() {
           <Route path="/stats" element={<StatsPage />} />
           <Route path="/match-center/domestic" element={<DomesticTablesPage />} />
           <Route path="/match-center/domestic/:leagueId" element={<LeagueTablePage />} />
+          <Route path="/debug/:leagueId" element={<LeagueTableDebugPage />} />
+          <Route path="/debug/leagues" element={<ApiLeaguesDebugPage />} />
+          <Route path="/test-table" element={<LeagueTableTestPage />} />
 
           <Route path="/stadiums" element={<StadiumHubPage />} />
           <Route path="/stadium/:slug" element={<StadiumPage />} />

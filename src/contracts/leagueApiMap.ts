@@ -1,5 +1,5 @@
 // --------------------------------------------------
-// RAZ — API LEAGUE MAP (AUTHORITATIVE)
+// RAZ — API LEAGUE MAP (CORRECTED FINAL)
 // --------------------------------------------------
 
 export type LeagueApiEntry = {
@@ -8,10 +8,6 @@ export type LeagueApiEntry = {
   category: "international" | "domestic";
   gender: "men" | "women";
 };
-
-// --------------------------------------------------
-// 🔥 CORE LEAGUES (CONFIRMED FROM YOUR LIST)
-// --------------------------------------------------
 
 export const LEAGUE_API_MAP: Record<string, LeagueApiEntry> = {
   // ================= INTERNATIONAL =================
@@ -44,58 +40,63 @@ export const LEAGUE_API_MAP: Record<string, LeagueApiEntry> = {
     gender: "men",
   },
 
-  // ================= DOMESTIC — MEN =================
+  // ================= DOMESTIC — MEN (FIXED) =================
 
   "urc-men": {
-    id: 982,
+    id: 76,
     name: "United Rugby Championship",
     category: "domestic",
     gender: "men",
   },
 
   "premiership-men": {
-    id: 1080,
-    name: "Gallagher Premiership",
+    id: 10,
+    name: "Premiership Rugby",
     category: "domestic",
     gender: "men",
   },
 
   "top14-men": {
-    id: 1094,
+    id: 16,
     name: "Top 14",
     category: "domestic",
     gender: "men",
   },
 
   "super-rugby-men": {
-    id: 1145,
+    id: 71,
     name: "Super Rugby",
     category: "domestic",
     gender: "men",
   },
 
   "japan-league-men": {
-    id: 1138,
+    id: 27,
     name: "Japan League One",
     category: "domestic",
     gender: "men",
   },
 
-  // ================= DOMESTIC — WOMEN =================
+  "investec-men": {
+    id: 54,
+    name: "Champions Cup",
+    category: "domestic",
+    gender: "men",
+  },
+
+  "epcr-men": {
+    id: 52,
+    name: "Challenge Cup",
+    category: "domestic",
+    gender: "men",
+  },
+
+  // ================= WOMEN =================
 
   "premiership-women": {
-    id: 1205,
-    name: "Premiership Women's Rugby",
+    id: 15,
+    name: "Premier 15s",
     category: "domestic",
     gender: "women",
   },
-
-  "super-rugby-women": {
-    id: 1206,
-    name: "Super Rugby Women",
-    category: "domestic",
-    gender: "women",
-  },
-
-  // --------------------------------------------------
 };

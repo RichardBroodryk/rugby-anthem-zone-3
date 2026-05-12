@@ -1,14 +1,32 @@
 // --------------------------------------------------
-// RAZ SYSTEM — MATCHES INDEX (MASTER MERGE)
+// RAZ SYSTEM — MATCHES INDEX (MASTER MERGE + LIVE)
 // --------------------------------------------------
 
-/* ✅ IMPORT TYPE FROM SINGLE SOURCE */
+/* ==================================================
+   TYPES
+   ================================================== */
+
 import type { MatchData } from "./types";
 
-/* ✅ IMPORT DATASETS */
+/* ==================================================
+   LOCAL DATASETS
+   ================================================== */
+
 import { matches2026Men } from "./matches2026Men";
 import { matches2026Women } from "./matches2026Women";
 import { svnsMatches2026 } from "./matches2026Svns";
+
+/* ==================================================
+   🔥 API INTEGRATION (NEW)
+   ================================================== */
+
+import { fetchFixturesByLeague } from "../../services/apiSportsRugby";
+import { convertApiSportsFixtures } from "../../utils/apiSportsConverter";
+import { LEAGUE_API_MAP } from "../../contracts/leagueApiMap";
+
+/* ==================================================
+   NORMALIZERS
+   ================================================== */
 
 function normalizeKey(value: string) {
   return value
@@ -31,11 +49,12 @@ function normalizeDate(date?: string): string {
 function buildMatchKey(match: MatchData): string {
   return [
     match.competitionId,
-    normalizeDate(match.date), // 🔥 CRITICAL FIX
+    normalizeDate(match.date),
     normalizeKey(match.home.name),
     normalizeKey(match.away.name),
   ].join("_");
 }
+
 /* ==================================================
    HELPERS
    ================================================== */
@@ -52,7 +71,7 @@ const isValidMatch = (match: MatchData): boolean => {
 };
 
 /* ==================================================
-   MASTER DATASET (SAFE + SORTED)
+   LOCAL MASTER DATASET
    ================================================== */
 
 export const matches2026: MatchData[] = [
@@ -61,14 +80,14 @@ export const matches2026: MatchData[] = [
   ...svnsMatches2026,
 ]
   .map((m) => ({
-  ...m,
-  matchKey: m.matchKey || buildMatchKey(m), // 🔥 PRESERVE EXISTING KEYS
-}))
+    ...m,
+    matchKey: m.matchKey || buildMatchKey(m),
+  }))
   .filter(isValidMatch)
   .sort(sortByDate);
 
 /* ==================================================
-   HELPERS (SAFE — FUTURE USE)
+   HELPERS (SAFE)
    ================================================== */
 
 export const getMensMatches = (): MatchData[] =>
@@ -77,4 +96,40 @@ export const getMensMatches = (): MatchData[] =>
 export const getWomensMatches = (): MatchData[] =>
   matches2026Women.slice().sort(sortByDate);
 
-export const getAllMatches = (): MatchData[] => matches2026;
+/* ==================================================
+   🔥 LIVE MATCHES MERGE (FINAL FIX)
+   ================================================== */
+
+export const getAllMatches = async (): Promise<MatchData[]> => {
+  try {
+    const leagues = Object.values(LEAGUE_API_MAP);
+
+    const apiResults = await Promise.all(
+      leagues.map((l) =>
+        fetchFixturesByLeague(l.id, 2026).catch(() => [])
+      )
+    );
+
+    const flatApi = apiResults.flat();
+
+    const converted = convertApiSportsFixtures(flatApi);
+
+    // 🔥 MERGE LOCAL + API (NO DUPLICATES)
+    const merged = [...matches2026];
+
+    converted.forEach((apiMatch) => {
+      const exists = merged.some(
+        (m) => m.matchKey === apiMatch.matchKey
+      );
+
+      if (!exists) {
+        merged.push(apiMatch);
+      }
+    });
+
+    return merged.sort(sortByDate);
+  } catch (err) {
+    console.warn("⚠️ API FAILED — USING LOCAL DATA");
+    return matches2026;
+  }
+};

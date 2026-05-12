@@ -4,96 +4,100 @@ import styles from "./LeagueTablePage.module.css";
 
 import { domesticLeagues } from "../../data/domesticLeagues";
 import { tables2026 } from "../../data/tables2026";
+import { liveStandings } from "../../data/standings/liveStandings";
 
-import { LEAGUE_API_MAP } from "../../contracts/leagueApiMap";
 
-/* ==================================================
-   TYPES
-   ================================================== */
+/* ================================================== */
 
 type TableRow = {
-  position: number;
   team: string;
   coach: string;
-  pointsFor: number;
-  pointsAgainst: number;
+  played: number;
+  wins: number;
+  draws: number;
+  losses: number;
+  pointsDiff: number;
   leaguePoints: number;
 };
+
+/* ================================================== */
 
 export default function LeagueTablePage() {
   const { leagueId } = useParams<{ leagueId: string }>();
 
   const [id, gender] = (leagueId || "").split("-");
-
   const league = domesticLeagues.find((l) => l.id === id);
 
   const [table, setTable] = useState<TableRow[]>([]);
-  const [loadingTable, setLoadingTable] = useState(true);
-
-  /* ==================================================
-     HYBRID TABLE LOADER
-     ================================================== */
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadTable() {
-      const key = `${id}-${gender}`;
-      const fallback = tables2026[key] || [];
+    if (!id || !gender) return;
 
-      try {
-        const entry = LEAGUE_API_MAP[key];
+    const key = `${id}-${gender}`.toLowerCase();
+    const isWomen = gender === "women";
 
-        // ❌ No API mapping → use fallback fully
-        if (!entry) {
-          setTable(fallback);
-          setLoadingTable(false);
-          return;
-        }
+    /* ==================================================
+       🔥 1. LIVE STANDINGS (PRIMARY - MEN ONLY)
+       ================================================== */
 
-        const BASE = process.env.REACT_APP_API_BASE;
+    const standings = (liveStandings as Record<string, any[]>)[key];
 
-        const res = await fetch(
-          `${BASE}/standings?league=${entry.id}&season=2026`
-        );
+    if (
+      !isWomen &&
+      standings &&
+      standings.length > 0 &&
+      standings.some((t) => t.played > 0) // 🔥 CRITICAL FIX
+    ) {
+      const mapped: TableRow[] = standings
+        .map((t: any) => ({
+          team: t.team,
+          coach: findCoach(t.team, key),
+          played: t.played,
+          wins: t.won,
+          draws: t.drawn,
+          losses: t.lost,
+          pointsDiff: t.pd,
+          leaguePoints: t.pts,
+        }))
+        // 🔥 CRITICAL FIX — SORT BY POINTS
+        .sort((a, b) => b.leaguePoints - a.leaguePoints);
 
-        if (!res.ok) throw new Error();
-
-        const data = await res.json();
-
-        const standings =
-          data?.[0]?.league?.standings?.[0] || [];
-
-        // 🔥 HYBRID MERGE
-        const merged: TableRow[] = standings.map(
-          (row: any, index: number) => {
-            const teamName = row.team.name;
-
-            // 🔥 FIND COACH FROM YOUR DATA
-            const fallbackTeam = fallback.find(
-              (t) => t.team.toLowerCase() === teamName.toLowerCase()
-            );
-
-            return {
-              position: row.rank,
-              team: teamName,
-              coach: fallbackTeam?.coach || "—",
-              pointsFor: row.points?.for || 0,
-              pointsAgainst: row.points?.against || 0,
-              leaguePoints: row.points || 0,
-            };
-          }
-        );
-
-        setTable(merged);
-      } catch {
-        // 🔒 fallback if anything fails
-        setTable(fallback);
-      }
-
-      setLoadingTable(false);
+      setTable(mapped);
+      setLoading(false);
+      return;
     }
 
-    loadTable();
-  }, [leagueId, id, gender]);
+    /* ==================================================
+       🔁 2. FALLBACK (STATIC TABLE)
+       ================================================== */
+
+    const base = tables2026[key as keyof typeof tables2026];
+
+    if (!base) {
+      console.error("❌ NO TABLE FOUND:", key);
+      setTable([]);
+      setLoading(false);
+      return;
+    }
+
+    const fallback: TableRow[] = base
+      .map((row) => ({
+        team: row.team,
+        coach: row.coach,
+        played: 0,
+        wins: 0,
+        draws: 0,
+        losses: 0,
+        pointsDiff: row.pointsFor - row.pointsAgainst,
+        leaguePoints: row.leaguePoints,
+      }))
+      // 🔥 KEEP STATIC TABLE ORDER CORRECT
+      .sort((a, b) => b.leaguePoints - a.leaguePoints);
+
+    setTable(fallback);
+    setLoading(false);
+  }, [id, gender]);
 
   if (!league) return <div>League not found</div>;
 
@@ -105,7 +109,7 @@ export default function LeagueTablePage() {
         </h1>
 
         <p className={styles.season}>
-          Season: {league.season} • Hybrid Data
+          Season: {league.season} • Live Table
         </p>
       </section>
 
@@ -114,7 +118,7 @@ export default function LeagueTablePage() {
           Current Standings
         </h2>
 
-        {loadingTable ? (
+        {loading ? (
           <div>Loading...</div>
         ) : (
           <table className={styles.table}>
@@ -123,20 +127,26 @@ export default function LeagueTablePage() {
                 <th>Pos</th>
                 <th>Team</th>
                 <th>Coach</th>
-                <th>PF</th>
-                <th>PA</th>
+                <th>P</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>PD</th>
                 <th>Pts</th>
               </tr>
             </thead>
 
             <tbody>
-              {table.map((row) => (
-                <tr key={row.position}>
-                  <td>{row.position}</td>
+              {table.map((row, i) => (
+                <tr key={row.team}>
+                  <td>{i + 1}</td>
                   <td>{row.team}</td>
                   <td>{row.coach}</td>
-                  <td>{row.pointsFor}</td>
-                  <td>{row.pointsAgainst}</td>
+                  <td>{row.played}</td>
+                  <td>{row.wins}</td>
+                  <td>{row.draws}</td>
+                  <td>{row.losses}</td>
+                  <td>{row.pointsDiff}</td>
                   <td>{row.leaguePoints}</td>
                 </tr>
               ))}
@@ -146,4 +156,28 @@ export default function LeagueTablePage() {
       </section>
     </main>
   );
+}
+
+/* ==================================================
+   🔥 COACH RESOLVER (FIXED)
+   ================================================== */
+
+function findCoach(team: string, key: string) {
+  const base = tables2026[key as keyof typeof tables2026] || [];
+
+  const normalizeFull = (name: string) =>
+    name
+      .toLowerCase()
+      .replace(/vodacom|dhl|toyota|kubota|panasonic|suntory/g, "")
+      .replace(/rugby|club|team|stade|rc|ou|paris|tokyo/g, "")
+      .replace(/\s+/g, "")
+      .trim();
+
+  const target = normalizeFull(team);
+
+  const found = base.find(
+    (t) => normalizeFull(t.team) === target
+  );
+
+  return found?.coach || "—";
 }
