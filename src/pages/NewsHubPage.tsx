@@ -2,27 +2,56 @@ import { useEffect, useState } from "react";
 import styles from "./NewsHubPage.module.css";
 
 import newsHero from "../assets/images/raz/news-hero.png";
-import { newsData as fallbackNews, NewsItem } from "../data/newsData";
+
+/* ================= TYPES ================= */
+
+type NewsItem = {
+  id: number | string;
+  title: string;
+  excerpt: string;
+  source: string;
+  time: string;
+  url: string;
+  category: string;
+  tags: string[];
+  featured?: boolean;
+
+  // ✅ NEW FIELDS FROM BACKEND
+  publishedAt?: string | null;
+  image?: string | null;
+};
+
+/* ================= API ================= */
+
+const API_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+
+console.log("API_URL:", API_URL);
 
 export default function NewsHubPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   /* ================= FETCH ================= */
 
   const fetchNews = () => {
-    fetch("http://localhost:4000/api/news")
+    fetch(`${API_URL}/api/news`)
       .then((res) => res.json())
       .then((data) => {
+        console.log("🔥 FRONTEND RECEIVED:", data);
+
         if (Array.isArray(data) && data.length > 0) {
-          setNews(data);
-        } else {
-          setNews(fallbackNews);
-        }
+  setNews(data);
+  setLastUpdated(new Date().toLocaleTimeString());
+} else {
+  console.warn("⚠️ Empty API — keeping existing news");
+}
       })
-      .catch(() => {
-        setNews(fallbackNews);
+      .catch((err) => {
+        console.warn("🔴 Fetch failed", err);
+        setNews([]); // honest state
       })
       .finally(() => {
         setLoading(false);
@@ -32,19 +61,16 @@ export default function NewsHubPage() {
   useEffect(() => {
     fetchNews();
 
-    const interval = setInterval(fetchNews, 60000); // 🔁 auto refresh
-
+    const interval = setInterval(fetchNews, 60000);
     return () => clearInterval(interval);
   }, []);
 
-  /* ================= PRIORITY SORT ================= */
+  /* ================= SORT ================= */
 
   const sorted = [...news].sort((a, b) => {
-    if (a.featured && !b.featured) return -1;
-    if (!a.featured && b.featured) return 1;
-    if (a.category === "breaking" && b.category !== "breaking") return -1;
-    if (b.category === "breaking" && a.category !== "breaking") return 1;
-    return 0;
+    const timeA = new Date(a.publishedAt || 0).getTime();
+    const timeB = new Date(b.publishedAt || 0).getTime();
+    return timeB - timeA;
   });
 
   /* ================= FILTER ================= */
@@ -99,6 +125,13 @@ export default function NewsHubPage() {
           confirmed reports, official announcements, and major
           developments across the international game.
         </p>
+
+        {/* ✅ LAST UPDATED */}
+        {lastUpdated && (
+          <div className={styles.updated}>
+            Last updated: {lastUpdated}
+          </div>
+        )}
       </section>
 
       {/* CATEGORIES */}
@@ -124,6 +157,15 @@ export default function NewsHubPage() {
           <div className={styles.featuredGrid}>
             {featured.map((item) => (
               <article key={item.id} className={styles.featuredCard}>
+                {/* ✅ IMAGE */}
+                {item.image && (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className={styles.image}
+                  />
+                )}
+
                 <span className={styles.meta}>
                   {item.source} • {item.time}
                   {isLive(item.time) && (
@@ -131,7 +173,11 @@ export default function NewsHubPage() {
                   )}
                 </span>
 
-                <a href={item.url || "#"} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={item.url || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <h3>{item.title}</h3>
                 </a>
 
@@ -144,15 +190,28 @@ export default function NewsHubPage() {
 
       {/* FEED */}
       <section className={styles.feed}>
-        {loading && <div className={styles.empty}>Loading news...</div>}
+        {loading && (
+          <div className={styles.empty}>Loading news...</div>
+        )}
 
         {!loading && filtered.length === 0 && (
-          <div className={styles.empty}>No news available right now.</div>
+          <div className={styles.empty}>
+            No news available right now.
+          </div>
         )}
 
         {!loading &&
           filtered.map((item) => (
             <article key={item.id} className={styles.card}>
+              {/* ✅ IMAGE */}
+              {item.image && (
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className={styles.image}
+                />
+              )}
+
               <span className={styles.meta}>
                 {item.source} • {item.time}
                 {isLive(item.time) && (
@@ -160,7 +219,11 @@ export default function NewsHubPage() {
                 )}
               </span>
 
-              <a href={item.url || "#"} target="_blank" rel="noopener noreferrer">
+              <a
+                href={item.url || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <h3>{item.title}</h3>
               </a>
 

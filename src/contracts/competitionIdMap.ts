@@ -1,85 +1,76 @@
 // --------------------------------------------------
 // RAZ SYSTEM — API → INTERNAL COMPETITION MAP
-// Phase 4.3.3 — SVNS + LIVE FIX
+// PHASE 3 — CANONICAL DOMESTIC IDS
 // --------------------------------------------------
 
-/**
- * 🔒 RULE:
- * Only leagues defined here are allowed into the system
- *
- * Unknown league → REJECTED by adapter
- */
-
-export const API_TO_CONCEPT_MAP: Record<number, string> = {
+export const API_TO_CONCEPT_MAP: Record<
+  number,
+  string
+> = {
   // ==================================================
-  // 🌍 MEN — INTERNATIONAL (TIER 1)
+  // 🌍 INTERNATIONAL
   // ==================================================
 
-  51: "six-nations",
-  85: "rugby-championship",
-  69: "world-cup",
-  93: "autumn-nations",
-
-  // 🔥 HYBRID TEST SYSTEM
-  84: "international-tests",
-
-  // ==================================================
-  // 🌍 WOMEN — INTERNATIONAL
-  // ==================================================
-
+  51: "six-nations-men",
   55: "six-nations-women",
-  70: "world-cup-women",
-  97: "womens-internationals",
 
-  // ==================================================
-  // 🌏 INTERNATIONAL — TIER 2 / REGIONAL
-  // ==================================================
+  85: "rugby-championship-men",
+
+  69: "world-cup-men",
+  70: "world-cup-women",
+
+  93: "autumn-nations-men",
+
+  84: "international-tests-men",
+
+  97: "womens-internationals",
 
   90: "pacific-nations-cup",
 
   // ==================================================
-  // 🏉 DOMESTIC — MEN (TOP)
+  // 🏉 DOMESTIC — MEN
   // ==================================================
 
-  76: "urc",
-  16: "top-14",
-  13: "premiership",
-  71: "super-rugby",
-  17: "pro-d2",
+  76: "urc-men",
 
-  // 🌍 EUROPEAN CLUB
-  54: "champions-cup",
+  16: "top14-men",
 
-  // ==================================================
-  // 🏉 DOMESTIC — WOMEN
-  // ==================================================
+  13: "premiership-men",
 
-  91: "super-rugby-women",
-  136: "aupiki",
+  71: "super-men",
 
-  // ==================================================
-  // ⚡ SEVENS — WORLD CUP
-  // ==================================================
+  17: "pro-d2-men",
 
-  86: "sevens-world-cup",
-  87: "sevens-world-cup",
+  27: "japan-men",
+
+  54: "investec-men",
+
+  52: "epcr-men",
 
   // ==================================================
-  // ⚡ SVNS WORLD SERIES (CRITICAL FIX)
+  // 🏉 WOMEN
   // ==================================================
-  // ALL EVENTS → ONE SYSTEM ("svns")
 
-  110: "svns", // Australia
-  119: "svns", // Canada
-  121: "svns", // France
-  115: "svns", // Hong Kong
-  113: "svns", // New Zealand
-  120: "svns", // Singapore
-  112: "svns", // South Africa
-  130: "svns", // Spain
-  114: "svns", // USA
+  91: "super-women",
 
-  // WOMEN EVENTS (SAME SYSTEM)
+  136: "aupiki-women",
+
+  // ==================================================
+  // ⚡ SVNS
+  // ==================================================
+
+  86: "svns",
+  87: "svns",
+
+  110: "svns",
+  119: "svns",
+  121: "svns",
+  115: "svns",
+  113: "svns",
+  120: "svns",
+  112: "svns",
+  130: "svns",
+  114: "svns",
 
   123: "svns",
   126: "svns",

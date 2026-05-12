@@ -1,56 +1,41 @@
 // --------------------------------------------------
-// RAZ — API LEAGUE MAP (CORRECTED FINAL)
+// RAZ SYSTEM — LEAGUE API MAP
+// PHASE 3 — CANONICAL IDS
 // --------------------------------------------------
 
 export type LeagueApiEntry = {
   id: number;
+
+  conceptId: string;
+
   name: string;
-  category: "international" | "domestic";
+
+  category:
+    | "international"
+    | "domestic";
+
   gender: "men" | "women";
 };
 
-export const LEAGUE_API_MAP: Record<string, LeagueApiEntry> = {
-  // ================= INTERNATIONAL =================
-
-  "six-nations-men": {
-    id: 1116,
-    name: "Six Nations",
-    category: "international",
-    gender: "men",
-  },
-
-  "six-nations-women": {
-    id: 1117,
-    name: "Women's Six Nations",
-    category: "international",
-    gender: "women",
-  },
-
-  "rugby-championship": {
-    id: 1118,
-    name: "Rugby Championship",
-    category: "international",
-    gender: "men",
-  },
-
-  "world-cup": {
-    id: 1120,
-    name: "Rugby World Cup",
-    category: "international",
-    gender: "men",
-  },
-
-  // ================= DOMESTIC — MEN (FIXED) =================
+export const LEAGUE_API_MAP: Record<
+  string,
+  LeagueApiEntry
+> = {
+  // ==================================================
+  // DOMESTIC — MEN
+  // ==================================================
 
   "urc-men": {
     id: 76,
+    conceptId: "urc-men",
     name: "United Rugby Championship",
     category: "domestic",
     gender: "men",
   },
 
   "premiership-men": {
-    id: 10,
+    id: 13,
+    conceptId: "premiership-men",
     name: "Premiership Rugby",
     category: "domestic",
     gender: "men",
@@ -58,20 +43,23 @@ export const LEAGUE_API_MAP: Record<string, LeagueApiEntry> = {
 
   "top14-men": {
     id: 16,
+    conceptId: "top14-men",
     name: "Top 14",
     category: "domestic",
     gender: "men",
   },
 
-  "super-rugby-men": {
+  "super-men": {
     id: 71,
+    conceptId: "super-men",
     name: "Super Rugby",
     category: "domestic",
     gender: "men",
   },
 
-  "japan-league-men": {
+  "japan-men": {
     id: 27,
+    conceptId: "japan-men",
     name: "Japan League One",
     category: "domestic",
     gender: "men",
@@ -79,22 +67,27 @@ export const LEAGUE_API_MAP: Record<string, LeagueApiEntry> = {
 
   "investec-men": {
     id: 54,
-    name: "Champions Cup",
+    conceptId: "investec-men",
+    name: "Investec Champions Cup",
     category: "domestic",
     gender: "men",
   },
 
   "epcr-men": {
     id: 52,
-    name: "Challenge Cup",
+    conceptId: "epcr-men",
+    name: "EPCR Challenge Cup",
     category: "domestic",
     gender: "men",
   },
 
-  // ================= WOMEN =================
+  // ==================================================
+  // WOMEN
+  // ==================================================
 
   "premiership-women": {
     id: 15,
+    conceptId: "premiership-women",
     name: "Premier 15s",
     category: "domestic",
     gender: "women",
