@@ -144,3 +144,220 @@
   margin-top: 4px;
   font-weight: 700;
 }
+/* ==================================================
+   PLAYOFF STATE
+   ================================================== */
+
+.playoffGrid {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.playoffCard {
+  background: linear-gradient(
+    135deg,
+    #0f172a,
+    #1e293b
+  );
+
+  border-radius: 18px;
+
+  padding: 22px 20px;
+
+  color: white;
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.18);
+}
+
+.playoffTeams {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 14px;
+
+  font-size: 1.05rem;
+  font-weight: 800;
+
+  text-align: center;
+}
+
+.vs {
+  opacity: 0.6;
+  font-size: 0.9rem;
+}
+
+.playoffMeta {
+  margin-top: 14px;
+
+  text-align: center;
+
+  font-size: 0.88rem;
+
+  opacity: 0.82;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ==================================================
+   QUALIFIED ROWS
+   ================================================== */
+
+.qualifiedRow {
+  background:
+    rgba(34, 197, 94, 0.10) !important;
+
+  border-left:
+    4px solid #22c55e;
+}
+
+/* ==================================================
+   PLAYOFF STATUS BANNER
+   ================================================== */
+
+.playoffBanner {
+  margin-top: 8px;
+
+  background: linear-gradient(
+    135deg,
+    #7c2d12,
+    #ea580c
+  );
+
+  color: white;
+
+  border-radius: 16px;
+
+  padding: 18px 20px;
+
+  text-align: center;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.16);
+}
+
+.playoffBannerTitle {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.playoffBannerSub {
+  margin-top: 6px;
+
+  font-size: 0.88rem;
+
+  opacity: 0.92;
+}
+/* ==================================================
+   FINAL STATE
+   ================================================== */
+
+.finalBanner {
+  background: linear-gradient(
+    135deg,
+    #a16207,
+    #facc15
+  );
+
+  color: #111827;
+}
+
+/* ==================================================
+   COMPLETED STATE
+   ================================================== */
+
+.completedBanner {
+  background: linear-gradient(
+    135deg,
+    #166534,
+    #22c55e
+  );
+}
+/* ==================================================
+   QUALIFICATION CUT LINE
+   ================================================== */
+
+.cutLine td {
+  background: #0f172a;
+
+  color: white;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  text-align: center;
+
+  padding: 10px;
+
+  letter-spacing: 0.02em;
+}
+/* ==================================================
+   CHAMPION MODE
+   ================================================== */
+
+.championCard {
+  background: linear-gradient(
+    135deg,
+    #0f172a,
+    #1e293b
+  );
+
+  border-radius: 24px;
+
+  padding: 34px 28px;
+
+  text-align: center;
+
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.18);
+}
+
+.trophy {
+  font-size: 3rem;
+}
+
+.championTitle {
+  font-size: 0.85rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
+
+  opacity: 0.75;
+
+  font-weight: 700;
+}
+
+.championTeam {
+  font-size: 1.8rem;
+
+  font-weight: 900;
+
+  line-height: 1.1;
+}
+
+.runnerUp {
+  font-size: 1rem;
+
+  opacity: 0.82;
+}
+
+.finalScore {
+  margin-top: 6px;
+
+  font-size: 0.92rem;
+
+  font-weight: 700;
+
+  color: #facc15;
+}

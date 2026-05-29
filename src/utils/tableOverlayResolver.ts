@@ -36,30 +36,24 @@ export type ResolvedTableRow = {
 
 /* ==================================================
    TEAM ALIASES
-   🔒 SINGLE SOURCE OF NAME NORMALIZATION
    ================================================== */
 
 const TEAM_ALIASES: Record<string, string> = {
-  // URC
   "cardiff rugby": "cardiff",
 
-  // PREMIERSHIP
   "bristol": "bristol bears",
   "gloucester": "gloucester rugby",
   "newcastle red bulls": "newcastle falcons",
 
-  // TOP 14
   "stade francais paris": "stade français paris",
   "lyon": "lyon ou",
   "bordeaux begles": "bordeaux",
   "clermont": "clermont women",
 
-  // JAPAN
   "wild knights": "panasonic wild knights",
   "spears kubota": "kubota spears",
   "black rams": "black rams tokyo",
 
-  // SUPER
   "force": "western force",
 };
 
@@ -77,10 +71,6 @@ function normalize(value: string): string {
     .trim();
 }
 
-/* ==================================================
-   RESOLVE NAME
-   ================================================== */
-
 function resolveTeamName(name: string): string {
   const normalized = normalize(name);
 
@@ -95,9 +85,10 @@ export function applyTableOverlay(
   baseTable: LeagueTableRow[],
   standings?: LiveStanding[]
 ): ResolvedTableRow[] {
+  // 🔒 FALLBACK TO BASE TABLE
   if (!standings || standings.length === 0) {
-    return baseTable.map((row) => ({
-      position: row.position,
+    return baseTable.map((row, index) => ({
+      position: index + 1,
 
       team: row.team,
       coach: row.coach,
@@ -116,57 +107,56 @@ export function applyTableOverlay(
     }));
   }
 
-  return baseTable.map((baseRow) => {
-    const resolvedBase = resolveTeamName(
-      baseRow.team
-    );
+  /* ==========================================
+     LIVE STANDINGS DRIVE TABLE
+     ========================================== */
 
-    const live = standings.find((s) => {
-      return (
-        resolveTeamName(s.team) === resolvedBase
+  return standings
+    .map((live, index) => {
+      const resolvedLive = resolveTeamName(
+        live.team
       );
-    });
 
-    // 🔒 NO MATCH → KEEP BASELINE
-    if (!live) {
+      const baseRow = baseTable.find(
+        (b) =>
+          resolveTeamName(b.team) ===
+          resolvedLive
+      );
+
       return {
-        position: baseRow.position,
+        position: index + 1,
 
-        team: baseRow.team,
-        coach: baseRow.coach,
+        team:
+          baseRow?.team || live.team,
 
-        played: 0,
-        wins: 0,
-        draws: 0,
-        losses: 0,
+        coach:
+          baseRow?.coach || "—",
 
-        pointsFor: baseRow.pointsFor,
-        pointsAgainst: baseRow.pointsAgainst,
-        pointsDiff:
-          baseRow.pointsFor -
-          baseRow.pointsAgainst,
+        played: live.played,
+        wins: live.won,
+        draws: live.drawn,
+        losses: live.lost,
 
-        leaguePoints: baseRow.leaguePoints,
+        pointsFor: live.pf,
+        pointsAgainst: live.pa,
+        pointsDiff: live.pd,
+
+        leaguePoints: live.pts,
       };
-    }
+    })
+    .sort((a, b) => {
+      if (b.leaguePoints !== a.leaguePoints) {
+        return (
+          b.leaguePoints - a.leaguePoints
+        );
+      }
 
-    // ✅ SAFE OVERLAY
-    return {
-      position: baseRow.position,
-
-      team: baseRow.team,
-      coach: baseRow.coach,
-
-      played: live.played,
-      wins: live.won,
-      draws: live.drawn,
-      losses: live.lost,
-
-      pointsFor: live.pf,
-      pointsAgainst: live.pa,
-      pointsDiff: live.pd,
-
-      leaguePoints: live.pts,
-    };
-  });
+      return (
+        b.pointsDiff - a.pointsDiff
+      );
+    })
+    .map((row, index) => ({
+      ...row,
+      position: index + 1,
+    }));
 }
