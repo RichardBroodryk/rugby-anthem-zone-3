@@ -10,23 +10,25 @@ import type { MatchData } from "../data/matches/types";
 import styles from "./SVNSMatchesPage.module.css";
 import { svnsFlags } from "../data/flags/svnsFlags";
 
-/* ================= COUNTRY MAP ================= */
+/* ==================================================
+   FLAG HELPERS
+   ================================================== */
 
 const countryToDisplayName: Record<string, string> = {
-  "argentina": "Argentina",
-  "australia": "Australia",
-  "brazil": "Brazil",
-  "canada": "Canada",
-  "fiji": "Fiji",
-  "france": "France",
-  "germany": "Germany",
+  argentina: "Argentina",
+  australia: "Australia",
+  brazil: "Brazil",
+  canada: "Canada",
+  fiji: "Fiji",
+  france: "France",
+  germany: "Germany",
   "great-britain": "Great Britain",
-  "japan": "Japan",
-  "kenya": "Kenya",
+  japan: "Japan",
+  kenya: "Kenya",
   "new-zealand": "New Zealand",
   "south-africa": "South Africa",
-  "spain": "Spain",
-  "uruguay": "Uruguay",
+  spain: "Spain",
+  uruguay: "Uruguay",
   "united-states-of-america": "USA",
 };
 
@@ -35,51 +37,140 @@ function getFlag(country: string) {
   return name ? svnsFlags[name] || "" : "";
 }
 
+function formatTime(date: string) {
+  return new Date(date).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 function sortMatches(matches: MatchData[]) {
   return [...matches].sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    (a, b) =>
+      new Date(a.date).getTime() -
+      new Date(b.date).getTime()
   );
 }
 
-function getLabel(round?: string) {
-  switch (round) {
-    case "final":
-      return "🏆 FINAL";
-    case "third-place":
-      return "🥉 3rd Place";
-    case "fifth-place":
-      return "5th Place";
-    case "seventh-place":
-      return "7th Place";
-    case "ninth-place":
-      return "9th Place";
-    case "eleventh-place":
-      return "11th Place";
-    case "semi-final":
-      return "Semi Final";
-    default:
-      return "";
-  }
+/* ==================================================
+   MATCH ROW
+   ================================================== */
+
+function MatchRow({
+  match,
+  navigate,
+}: {
+  match: MatchData;
+  navigate: ReturnType<typeof useNavigate>;
+}) {
+  return (
+    <div
+      className={styles.matchRow}
+      onClick={() => navigate(`/match/${match.id}`)}
+    >
+      {/* HOME */}
+      <div className={styles.team}>
+        {getFlag(match.home.country) ? (
+          <img
+            src={getFlag(match.home.country)}
+            alt={match.home.name}
+            className={styles.flag}
+          />
+        ) : (
+          <div className={styles.flagPlaceholder} />
+        )}
+
+        <span>{match.home.name}</span>
+      </div>
+
+      {/* CENTER */}
+      <div className={styles.center}>
+        <div className={styles.label}>
+          {match.pool
+            ? `Pool ${match.pool}`
+            : match.round}
+        </div>
+
+        <div className={styles.score}>
+          {match.score
+            ? `${match.score.home} - ${match.score.away}`
+            : formatTime(match.date)}
+        </div>
+      </div>
+
+      {/* AWAY */}
+      <div className={styles.team}>
+        <span>{match.away.name}</span>
+
+        {getFlag(match.away.country) ? (
+          <img
+            src={getFlag(match.away.country)}
+            alt={match.away.name}
+            className={styles.flag}
+          />
+        ) : (
+          <div className={styles.flagPlaceholder} />
+        )}
+      </div>
+    </div>
+  );
 }
 
-/* ================= PAGE ================= */
+/* ==================================================
+   PAGE
+   ================================================== */
 
 export default function SVNSMatchesPage() {
   const navigate = useNavigate();
 
-  const tournament = tournaments2026.find((t) => t.conceptId === "svns");
-  const visual = getTournamentVisual("svns");
-
-  const matches = useMemo<MatchData[]>(() => svnsMatches2026, []);
-
-  const finals = matches.filter(
-    (m) => new Date(m.date).getDate() === 18
+  const tournament = tournaments2026.find(
+    (t) => t.conceptId === "svns"
   );
 
-  const womens = sortMatches(finals.filter((m) => m.gender === "women"));
-  const mens = sortMatches(finals.filter((m) => m.gender === "men"));
+  const visual = getTournamentVisual("svns");
 
-  if (!tournament) return <div>SVNS not found</div>;
+  const matches = useMemo(
+    () => svnsMatches2026,
+    []
+  );
+
+  /* ================= ACTIVE LEG ================= */
+
+  const valladolid = matches.filter(
+    (m) => m.stage === "valladolid"
+  );
+
+  const day1 = sortMatches(
+    valladolid.filter(
+      (m) =>
+        new Date(m.date).getDate() === 29
+    )
+  );
+
+  const day2 = sortMatches(
+    valladolid.filter(
+      (m) =>
+        new Date(m.date).getDate() === 30
+    )
+  );
+
+  const day3 = sortMatches(
+    valladolid.filter(
+      (m) =>
+        new Date(m.date).getDate() === 31
+    )
+  );
+
+  /* ================= ARCHIVE ================= */
+
+  const hongKong = sortMatches(
+    matches.filter(
+      (m) => m.stage === "hong-kong"
+    )
+  );
+
+  if (!tournament)
+    return <div>SVNS not found</div>;
 
   return (
     <main>
@@ -87,18 +178,26 @@ export default function SVNSMatchesPage() {
       <header
         className={`${styles.hero} ${styles.heroSVNSLayout}`}
         style={{
-          backgroundImage: `url(${visual.heroImageMen || visual.heroImageWomen})`,
+          backgroundImage: `url(${
+            visual.heroImageMen ||
+            visual.heroImageWomen
+          })`,
         }}
       >
         <div className={styles.heroContent}>
           <div>
-            <h1>{tournament.name} — Finals Day</h1>
-            <p>Hong Kong • Full placement + finals results</p>
+            <h1>
+              Valladolid — Live Tournament
+            </h1>
+
+            <p>
+              HSBC SVNS World Championship
+            </p>
           </div>
         </div>
       </header>
 
-      {/* BACK NAV */}
+      {/* BACK */}
       <div className={styles.backNav}>
         <button
           className={styles.backButton}
@@ -110,104 +209,131 @@ export default function SVNSMatchesPage() {
 
       {/* SUBTITLE */}
       <div className={styles.subHeader}>
-        Individual matches will render in the next part of this Amazing Tournament!
+        Valladolid is LIVE — Hong Kong
+        results archived below
       </div>
 
-      {/* WOMEN */}
+      {/* ==================================================
+         DAY 1
+         ================================================== */}
+
       <section className={styles.section}>
-        <h2>Women</h2>
+        <h2>Day 1 — Friday</h2>
 
-        {womens.map((match) => (
-          <div
-            key={match.id}
-            className={styles.matchRow}
-            onClick={() => navigate(`/match/${match.id}`)}
-          >
-            <div className={styles.team}>
-              {getFlag(match.home.country) ? (
-                <img
-                  src={getFlag(match.home.country)}
-                  alt={match.home.name}
-                  className={styles.flag}
-                />
-              ) : (
-                <div className={styles.flagPlaceholder} />
-              )}
-              <span>{match.home.name}</span>
-            </div>
+        <h3 className={styles.genderHeader}>
+          Women
+        </h3>
 
-            <div className={styles.center}>
-              <div className={styles.label}>{getLabel(match.round)}</div>
+        {day1
+          .filter((m) => m.gender === "women")
+          .map((match) => (
+            <MatchRow
+              key={match.id}
+              match={match}
+              navigate={navigate}
+            />
+          ))}
 
-              <div className={styles.score}>
-                {match.score
-                  ? `${match.score.home} - ${match.score.away}`
-                  : "—"}
-              </div>
-            </div>
+        <h3 className={styles.genderHeader}>
+          Men
+        </h3>
 
-            <div className={styles.team}>
-              <span>{match.away.name}</span>
-              {getFlag(match.away.country) ? (
-                <img
-                  src={getFlag(match.away.country)}
-                  alt={match.away.name}
-                  className={styles.flag}
-                />
-              ) : (
-                <div className={styles.flagPlaceholder} />
-              )}
-            </div>
-          </div>
-        ))}
+        {day1
+          .filter((m) => m.gender === "men")
+          .map((match) => (
+            <MatchRow
+              key={match.id}
+              match={match}
+              navigate={navigate}
+            />
+          ))}
       </section>
 
-      {/* MEN */}
+      {/* ==================================================
+         DAY 2
+         ================================================== */}
+
       <section className={styles.section}>
-        <h2>Men</h2>
+        <h2>Day 2 — Saturday</h2>
 
-        {mens.map((match) => (
-          <div
+        <h3 className={styles.genderHeader}>
+          Women
+        </h3>
+
+        {day2
+          .filter((m) => m.gender === "women")
+          .map((match) => (
+            <MatchRow
+              key={match.id}
+              match={match}
+              navigate={navigate}
+            />
+          ))}
+
+        <h3 className={styles.genderHeader}>
+          Men
+        </h3>
+
+        {day2
+          .filter((m) => m.gender === "men")
+          .map((match) => (
+            <MatchRow
+              key={match.id}
+              match={match}
+              navigate={navigate}
+            />
+          ))}
+      </section>
+
+      {/* ==================================================
+         DAY 3
+         ================================================== */}
+
+      <section className={styles.section}>
+        <h2>Day 3 — Finals</h2>
+
+        <h3 className={styles.genderHeader}>
+          Women
+        </h3>
+
+        {day3
+          .filter((m) => m.gender === "women")
+          .map((match) => (
+            <MatchRow
+              key={match.id}
+              match={match}
+              navigate={navigate}
+            />
+          ))}
+
+        <h3 className={styles.genderHeader}>
+          Men
+        </h3>
+
+        {day3
+          .filter((m) => m.gender === "men")
+          .map((match) => (
+            <MatchRow
+              key={match.id}
+              match={match}
+              navigate={navigate}
+            />
+          ))}
+      </section>
+
+      {/* ==================================================
+         HONG KONG ARCHIVE
+         ================================================== */}
+
+      <section className={styles.section}>
+        <h2>Hong Kong Archive</h2>
+
+        {hongKong.map((match) => (
+          <MatchRow
             key={match.id}
-            className={styles.matchRow}
-            onClick={() => navigate(`/match/${match.id}`)}
-          >
-            <div className={styles.team}>
-              {getFlag(match.home.country) ? (
-                <img
-                  src={getFlag(match.home.country)}
-                  alt={match.home.name}
-                  className={styles.flag}
-                />
-              ) : (
-                <div className={styles.flagPlaceholder} />
-              )}
-              <span>{match.home.name}</span>
-            </div>
-
-            <div className={styles.center}>
-              <div className={styles.label}>{getLabel(match.round)}</div>
-
-              <div className={styles.score}>
-                {match.score
-                  ? `${match.score.home} - ${match.score.away}`
-                  : "—"}
-              </div>
-            </div>
-
-            <div className={styles.team}>
-              <span>{match.away.name}</span>
-              {getFlag(match.away.country) ? (
-                <img
-                  src={getFlag(match.away.country)}
-                  alt={match.away.name}
-                  className={styles.flag}
-                />
-              ) : (
-                <div className={styles.flagPlaceholder} />
-              )}
-            </div>
-          </div>
+            match={match}
+            navigate={navigate}
+          />
         ))}
       </section>
     </main>

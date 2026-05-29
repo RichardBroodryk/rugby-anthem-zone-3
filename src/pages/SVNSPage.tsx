@@ -55,6 +55,10 @@ export default function SVNSPage() {
         </p>
       </div>
 
+      <div className={styles.liveBanner}>
+  🔴 LIVE NOW — Valladolid SVNS World Championship
+</div>
+
       {/* NAVIGATION */}
       <div className={styles.navContainer}>
         <div className={styles.navButtons}>
@@ -80,13 +84,13 @@ export default function SVNSPage() {
         </button>
 
         <p className={styles.subtitle}>
-          Hong Kong Leg Completed – Two more legs to crown the World Champions
-        </p>
+  Valladolid is LIVE — Bordeaux will crown the 2026 HSBC SVNS World Champions
+</p>
       </div>
 
       {/* STANDINGS */}
       <section className={styles.section}>
-        <h2>Hong Kong Leg Final Standings</h2>
+        <h2>Hong Kong — Previous Leg Results</h2>
 
         <div className={styles.standingsGrid}>
           {/* MEN */}

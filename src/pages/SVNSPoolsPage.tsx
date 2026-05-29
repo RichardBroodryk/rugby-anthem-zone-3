@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { matches2026 } from "../data/matches";
+import { svnsMatches2026 } from "../data/matches/matches2026Svns";
 import { tournaments2026 } from "../data/tournamentMeta";
 import { getTournamentVisual } from "../data/tournamentVisuals";
 
@@ -102,9 +102,11 @@ export default function SVNSPoolsPage() {
 
   const visual = getTournamentVisual("svns");
 
-  const svnsMatches = useMemo(() => {
-    return matches2026.filter((m) => m.competitionId === "svns");
-  }, []);
+ const svnsMatches = useMemo(() => {
+  return svnsMatches2026.filter(
+    (m) => m.stage === "valladolid"
+  );
+}, []);
 
   const poolMatches = svnsMatches.filter((m) => m.round === "pool");
 

@@ -182,3 +182,10 @@
   font-size: 1.1rem;
   opacity: 0.85;
 }
+.liveBanner {
+  text-align: center;
+  margin: 1rem auto 0.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
