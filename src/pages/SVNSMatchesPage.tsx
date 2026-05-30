@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { svnsMatches2026 } from "../data/matches/matches2026Svns";
