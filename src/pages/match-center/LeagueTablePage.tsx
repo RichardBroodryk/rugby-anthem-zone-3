@@ -85,7 +85,7 @@ export default function LeagueTablePage() {
   /* ==================================================
      LOAD LIVE MATCHES
      ================================================== */
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let mounted = true;
 
@@ -333,8 +333,6 @@ export default function LeagueTablePage() {
     }, [
     id,
     gender,
-    competition?.state,
-    matches,
   ]);
 
   /* ==================================================
