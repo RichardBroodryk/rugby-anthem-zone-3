@@ -10,6 +10,9 @@ import type { MatchData } from "../data/matches/types";
 import styles from "./SVNSMatchesPage.module.css";
 import { svnsFlags } from "../data/flags/svnsFlags";
 
+import { useEffect, useState } from "react";
+import { fetchSvnsMatches } from "../services/svnsService";
+
 /* ==================================================
    FLAG HELPERS
    ================================================== */
@@ -66,7 +69,11 @@ function MatchRow({
   return (
     <div
       className={styles.matchRow}
-      onClick={() => navigate(`/match/${match.id}`)}
+      onClick={() =>
+  navigate(`/match/${match.id}`, {
+    state: match,
+  })
+}
     >
       {/* HOME */}
       <div className={styles.team}>
@@ -129,10 +136,28 @@ export default function SVNSMatchesPage() {
 
   const visual = getTournamentVisual("svns");
 
-  const matches = useMemo(
-    () => svnsMatches2026,
-    []
-  );
+ const [matches, setMatches] = useState<MatchData[]>([]);
+
+useEffect(() => {
+  async function loadMatches() {
+    try {
+      const apiMatches =
+        await fetchSvnsMatches();
+
+      if (apiMatches.length) {
+        setMatches(apiMatches);
+      } else {
+        setMatches(svnsMatches2026);
+      }
+    } catch (err) {
+      console.error(err);
+
+      setMatches(svnsMatches2026);
+    }
+  }
+
+  loadMatches();
+}, []);
 
   /* ================= ACTIVE LEG ================= */
 

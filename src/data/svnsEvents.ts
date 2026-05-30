@@ -1,14 +1,16 @@
 export const SVNS_EVENTS_2026 = [
   {
     name: "Hong Kong",
-    leagueId: 115,
-    status: "live",
+    leagueId: null,
+    status: "completed",
   },
+
   {
     name: "Valladolid",
-    leagueId: null,
-    status: "coming-soon",
+    leagueId: 130,
+    status: "live",
   },
+
   {
     name: "Bordeaux",
     leagueId: null,

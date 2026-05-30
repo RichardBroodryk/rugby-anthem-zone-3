@@ -77,6 +77,15 @@ export default function SVNSPage() {
         </div>
 
         <button
+  className={styles.secondaryButton}
+  onClick={() =>
+    navigate("/svns/knockouts")
+  }
+>
+  Knockouts
+</button>
+
+        <button
           className={styles.backButton}
           onClick={() => navigate("/tournaments")}
         >

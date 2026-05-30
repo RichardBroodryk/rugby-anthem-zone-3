@@ -1,79 +1,202 @@
 // --------------------------------------------------
-// API-Sports Rugby Service (CLEAN + PRODUCTION READY)
+// API-Sports Rugby Service
+// PHASE 5 — LIVE ENGINE HARDENED
 // --------------------------------------------------
 
 const BASE_URL =
   process.env.REACT_APP_API_BASE ||
   "https://v1.rugby.api-sports.io";
 
-const API_KEY = "98844306cf41e6b4f567f722527415a2";
+const API_KEY =
+  process.env.REACT_APP_API_SPORTS_KEY || "";
 
-/**
- * Generic API-Sports request
- */
-async function apiSportsFetch(endpoint: string) {
-  const response = await fetch(`${BASE_URL}/${endpoint}`, {
-    method: "GET",
-    headers: {
-      "x-apisports-key": API_KEY,
+/* ==================================================
+   VALIDATION
+   ================================================== */
+
+if (!API_KEY) {
+  console.warn(
+    "⚠️ REACT_APP_API_SPORTS_KEY missing"
+  );
+}
+
+/* ==================================================
+   REQUEST TIMEOUT
+   ================================================== */
+
+async function fetchWithTimeout(
+  url: string,
+  options: RequestInit,
+  timeout = 15000
+) {
+  const controller =
+    new AbortController();
+
+  const timeoutId = setTimeout(
+    () => {
+      controller.abort();
     },
-  });
+    timeout
+  );
 
-  if (!response.ok) {
-    throw new Error(`API error: ${response.status}`);
+  try {
+    const response = await fetch(
+      url,
+      {
+        ...options,
+        signal:
+          controller.signal,
+      }
+    );
+
+    clearTimeout(timeoutId);
+
+    return response;
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
   }
-
-  const data = await response.json();
-
-  console.log("API SPORTS RESPONSE:", data);
-
-  return data.response ?? [];
 }
 
-/**
- * Fetch all leagues (debug / discovery)
- */
+/* ==================================================
+   GENERIC FETCH
+   ================================================== */
+
+async function apiSportsFetch(
+  endpoint: string
+) {
+  try {
+    const response =
+      await fetchWithTimeout(
+        `${BASE_URL}/${endpoint}`,
+        {
+          method: "GET",
+
+          headers: {
+            "x-apisports-key":
+              API_KEY,
+          },
+        }
+      );
+
+    if (!response.ok) {
+      console.error(
+        "API ERROR:",
+        response.status,
+        endpoint
+      );
+
+      throw new Error(
+        `API error: ${response.status}`
+      );
+    }
+
+    const data =
+      await response.json();
+
+    console.log(
+      "🏉 API RESPONSE:",
+      endpoint,
+      data
+    );
+
+    return data.response ?? [];
+  } catch (err) {
+    console.error(
+      "API FETCH FAILED:",
+      endpoint,
+      err
+    );
+
+    return [];
+  }
+}
+
+/* ==================================================
+   LEAGUES
+   ================================================== */
+
 export async function fetchRugbyLeagues() {
-  return apiSportsFetch("leagues");
+  return apiSportsFetch(
+    "leagues"
+  );
 }
 
-/**
- * 🔥 GENERIC FIXTURES BY LEAGUE (MAIN ENTRY POINT)
- */
+/* ==================================================
+   FIXTURES BY LEAGUE
+   ================================================== */
+
 export async function fetchFixturesByLeague(
   leagueId: number,
-  season: number = 2024
+  season: number = 2026,
+  cacheBust?: number
 ) {
-  // 🔥 Try primary endpoint
-  let data = await apiSportsFetch(
-    `games?league=${leagueId}&season=${season}`
+  console.log(
+    "🏉 FETCHING LEAGUE:",
+    leagueId,
+    "SEASON:",
+    season
   );
 
-  if (data && data.length > 0) {
-    console.log("✅ GAMES endpoint working:", leagueId);
+  /* ==========================================
+     PRIMARY — GAMES
+     ========================================== */
+
+  let data =
+  await apiSportsFetch(
+    `games?league=${leagueId}&season=${season}&_=${cacheBust || Date.now()}`
+  );
+
+  if (
+    data &&
+    data.length > 0
+  ) {
+    console.log(
+      "✅ GAMES ENDPOINT OK:",
+      leagueId
+    );
+
     return data;
   }
 
-  console.warn("⚠️ GAMES EMPTY → trying fixtures endpoint");
-
-  // 🔁 Fallback endpoint (some leagues use this)
-  data = await apiSportsFetch(
-    `fixtures?league=${leagueId}&season=${season}`
+  console.warn(
+    "⚠️ GAMES EMPTY → TRYING FIXTURES"
   );
 
-  if (data && data.length > 0) {
-    console.log("✅ FIXTURES endpoint working:", leagueId);
+  /* ==========================================
+     FALLBACK — FIXTURES
+     ========================================== */
+
+ data =
+  await apiSportsFetch(
+    `fixtures?league=${leagueId}&season=${season}&_=${cacheBust || Date.now()}`
+  );
+
+  if (
+    data &&
+    data.length > 0
+  ) {
+    console.log(
+      "✅ FIXTURES ENDPOINT OK:",
+      leagueId
+    );
+
     return data;
   }
 
-  console.warn("❌ NO DATA FROM API FOR LEAGUE:", leagueId);
+  console.warn(
+    "❌ NO API DATA:",
+    leagueId,
+    season
+  );
 
   return [];
 }
 
-/**
- * 🔥 SVNS LEAGUES (CORRECTED)
- */
+/* ==================================================
+   SVNS LEAGUES
+   ================================================== */
+
 export const SVNS_LEAGUES = [
   110, // Australia
   119, // Canada
@@ -86,7 +209,9 @@ export const SVNS_LEAGUES = [
   114, // USA
 ];
 
-/**
- * 🔥 SIX NATIONS WOMEN
- */
-export const SIX_NATIONS_WOMEN_LEAGUE = 55;
+/* ==================================================
+   SIX NATIONS WOMEN
+   ================================================== */
+
+export const SIX_NATIONS_WOMEN_LEAGUE =
+  55;

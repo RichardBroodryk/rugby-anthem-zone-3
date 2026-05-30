@@ -8,90 +8,32 @@ import { getTournamentVisual } from "../data/tournamentVisuals";
 import type { MatchData } from "../data/matches/types";
 
 import styles from "./SVNSPoolsPage.module.css";
-import { svnsFlags } from "../data/flags/svnsFlags";   // ← Added for flags
 
-/* ================= POOL ENGINE ================= */
+import { svnsFlags } from "../data/flags/svnsFlags";
 
-type PoolRow = {
-  team: string;
-  country: string;
-  played: number;
-  pf: number;
-  pa: number;
-  pd: number;
-  points: number;
-};
+import {
+  buildSvnsStandings,
+} from "../utils/svns/buildSvnsStandings";
 
-function buildPoolTable(matches: MatchData[]): PoolRow[] {
-  const table: Record<string, PoolRow> = {};
-
-  matches.forEach((match) => {
-    if (!match.pool) return;
-
-    [match.home, match.away].forEach((team) => {
-      if (!table[team.name]) {
-        table[team.name] = {
-          team: team.name,
-          country: team.country,
-          played: 0,
-          pf: 0,
-          pa: 0,
-          pd: 0,
-          points: 0,
-        };
-      }
-    });
-
-    if (!match.score) return;
-
-    const home = table[match.home.name];
-    const away = table[match.away.name];
-
-    if (!home || !away) return;
-
-    home.played++;
-    away.played++;
-
-    home.pf += match.score.home;
-    home.pa += match.score.away;
-
-    away.pf += match.score.away;
-    away.pa += match.score.home;
-
-    if (match.score.home > match.score.away) {
-      home.points += 3;
-    } else if (match.score.away > match.score.home) {
-      away.points += 3;
-    }
-  });
-
-  return Object.values(table)
-    .map((t) => ({ ...t, pd: t.pf - t.pa }))
-    .sort((a, b) => b.points - a.points || b.pd - a.pd);
-}
+/* ==================================================
+   GET POOL MATCHES
+   ================================================== */
 
 function getPools(
   matches: MatchData[],
   gender: "men" | "women"
-): Record<string, MatchData[]> {
-  const pools: Record<string, MatchData[]> = {};
-
-  matches
-    .filter((m) => m.gender === gender && m.round === "pool")
-    .forEach((m) => {
-      if (!m.pool) return;
-
-      if (!pools[m.pool]) {
-        pools[m.pool] = [];
-      }
-
-      pools[m.pool].push(m);
-    });
-
-  return pools;
+) {
+  return matches.filter(
+    (m) =>
+      m.gender === gender &&
+      m.round === "pool" &&
+      m.pool
+  );
 }
 
-/* ================= PAGE ================= */
+/* ==================================================
+   PAGE
+   ================================================== */
 
 export default function SVNSPoolsPage() {
   const navigate = useNavigate();
@@ -100,18 +42,54 @@ export default function SVNSPoolsPage() {
     (t) => t.conceptId === "svns"
   );
 
-  const visual = getTournamentVisual("svns");
+  const visual =
+    getTournamentVisual("svns");
 
- const svnsMatches = useMemo(() => {
-  return svnsMatches2026.filter(
-    (m) => m.stage === "valladolid"
+  const valladolidMatches =
+    useMemo(() => {
+      return svnsMatches2026.filter(
+        (m) =>
+          m.stage === "valladolid"
+      );
+    }, []);
+
+  const womenMatches = getPools(
+    valladolidMatches,
+    "women"
   );
-}, []);
 
-  const poolMatches = svnsMatches.filter((m) => m.round === "pool");
+  const menMatches = getPools(
+    valladolidMatches,
+    "men"
+  );
 
-  const womensPools = getPools(poolMatches, "women");
-  const mensPools = getPools(poolMatches, "men");
+  const womensPools = {
+    A: womenMatches.filter(
+      (m) => m.pool === "A"
+    ),
+
+    B: womenMatches.filter(
+      (m) => m.pool === "B"
+    ),
+
+    C: womenMatches.filter(
+      (m) => m.pool === "C"
+    ),
+  };
+
+  const mensPools = {
+    A: menMatches.filter(
+      (m) => m.pool === "A"
+    ),
+
+    B: menMatches.filter(
+      (m) => m.pool === "B"
+    ),
+
+    C: menMatches.filter(
+      (m) => m.pool === "C"
+    ),
+  };
 
   if (!tournament) {
     return <div>SVNS not found</div>;
@@ -119,135 +97,267 @@ export default function SVNSPoolsPage() {
 
   return (
     <main>
-      {/* HERO - UNCHANGED */}
+      {/* HERO */}
+
       <header
         className={`${styles.hero} ${styles.heroSVNSLayout}`}
         style={{
           backgroundImage: `url(${
-            visual.heroImageMen || visual.heroImageWomen
+            visual.heroImageMen ||
+            visual.heroImageWomen
           })`,
         }}
       >
         <div className={styles.heroContent}>
           <div>
-            <h1>{tournament.name} Pools</h1>
-            <p>{tournament.heroSubtitle}</p>
+            <h1>
+              Valladolid Pool Standings
+            </h1>
+
+            <p>
+              HSBC SVNS World Championship
+            </p>
           </div>
         </div>
       </header>
 
-      {/* BACK - UNCHANGED */}
+      {/* BACK */}
+
       <div className={styles.backNav}>
         <button
           className={styles.backButton}
-          onClick={() => navigate("/svns")}
+          onClick={() =>
+            navigate("/svns")
+          }
         >
           ← Back to SVNS
         </button>
       </div>
 
-      <div className={styles.poolsNotice}>
-  Pools - Played / Won / Lost / Points For / Points Against / Points will render with the next Amazing leg
-</div>
+      {/* WOMEN */}
 
-      {/* ================= WOMEN ================= */}
       <section className={styles.section}>
         <h2>Women</h2>
 
         <div className={styles.poolsGrid}>
-          {["A", "B", "C"].map((poolKey) => {
-            const matches = womensPools[poolKey];
-            if (!matches) return null;
-
-            const table = buildPoolTable(matches);
+          {(
+            ["A", "B", "C"] as const
+          ).map((poolKey) => {
+            const table =
+              buildSvnsStandings(
+                womensPools[poolKey]
+              );
 
             return (
-              <div key={poolKey} className={styles.poolCard}>
-                <h3>Pool {poolKey}</h3>
+              <div
+                key={poolKey}
+                className={
+                  styles.poolCard
+                }
+              >
+                <h3>
+                  Pool {poolKey}
+                </h3>
 
-                <div className={styles.tableHeader}>
+                <div
+                  className={
+                    styles.tableHeader
+                  }
+                >
                   <span>#</span>
                   <span>Team</span>
                   <span>P</span>
+                  <span>W</span>
+                  <span>L</span>
                   <span>PF</span>
                   <span>PA</span>
                   <span>PD</span>
                   <span>Pts</span>
                 </div>
 
-                {table.map((row, i) => {
-                  const cleanName = row.team.replace(/ 7s/i, "");
-                  return (
-                    <div key={row.team} className={styles.tableRow}>
-                      <span>{i + 1}</span>
-                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <img 
-                          src={svnsFlags[cleanName]} 
-                          alt={cleanName} 
-                          className={styles.flag} 
+                {table.map(
+                  (row, i) => (
+                    <div
+                      key={row.team}
+                      className={
+                        styles.tableRow
+                      }
+                    >
+                      <span>
+                        {i + 1}
+                      </span>
+
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems:
+                            "center",
+
+                          gap: "8px",
+                        }}
+                      >
+                        <img
+                          src={
+                            svnsFlags[
+                              row.team
+                            ]
+                          }
+                          alt={row.team}
+                          className={
+                            styles.flag
+                          }
                         />
-                        <span>{row.team}</span>
+
+                        <span>
+                          {row.team}
+                        </span>
                       </div>
-                      <span>{row.played}</span>
-                      <span>{row.pf}</span>
-                      <span>{row.pa}</span>
-                      <span>{row.pd}</span>
-                      <span>{row.points}</span>
+
+                      <span>
+                        {row.played}
+                      </span>
+
+                      <span>
+                        {row.won}
+                      </span>
+
+                      <span>
+                        {row.lost}
+                      </span>
+
+                      <span>
+                        {row.pf}
+                      </span>
+
+                      <span>
+                        {row.pa}
+                      </span>
+
+                      <span>
+                        {row.pd}
+                      </span>
+
+                      <span>
+                        {row.points}
+                      </span>
                     </div>
-                  );
-                })}
+                  )
+                )}
               </div>
             );
           })}
         </div>
       </section>
 
-      {/* ================= MEN ================= */}
+      {/* MEN */}
+
       <section className={styles.section}>
         <h2>Men</h2>
 
         <div className={styles.poolsGrid}>
-          {["A", "B", "C"].map((poolKey) => {
-            const matches = mensPools[poolKey];
-            if (!matches) return null;
-
-            const table = buildPoolTable(matches);
+          {(
+            ["A", "B", "C"] as const
+          ).map((poolKey) => {
+            const table =
+              buildSvnsStandings(
+                mensPools[poolKey]
+              );
 
             return (
-              <div key={poolKey} className={styles.poolCard}>
-                <h3>Pool {poolKey}</h3>
+              <div
+                key={poolKey}
+                className={
+                  styles.poolCard
+                }
+              >
+                <h3>
+                  Pool {poolKey}
+                </h3>
 
-                <div className={styles.tableHeader}>
+                <div
+                  className={
+                    styles.tableHeader
+                  }
+                >
                   <span>#</span>
                   <span>Team</span>
                   <span>P</span>
+                  <span>W</span>
+                  <span>L</span>
                   <span>PF</span>
                   <span>PA</span>
                   <span>PD</span>
                   <span>Pts</span>
                 </div>
 
-                {table.map((row, i) => {
-                  const cleanName = row.team.replace(/ 7s/i, "");
-                  return (
-                    <div key={row.team} className={styles.tableRow}>
-                      <span>{i + 1}</span>
-                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <img 
-                          src={svnsFlags[cleanName]} 
-                          alt={cleanName} 
-                          className={styles.flag} 
+                {table.map(
+                  (row, i) => (
+                    <div
+                      key={row.team}
+                      className={
+                        styles.tableRow
+                      }
+                    >
+                      <span>
+                        {i + 1}
+                      </span>
+
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems:
+                            "center",
+
+                          gap: "8px",
+                        }}
+                      >
+                        <img
+                          src={
+                            svnsFlags[
+                              row.team
+                            ]
+                          }
+                          alt={row.team}
+                          className={
+                            styles.flag
+                          }
                         />
-                        <span>{row.team}</span>
+
+                        <span>
+                          {row.team}
+                        </span>
                       </div>
-                      <span>{row.played}</span>
-                      <span>{row.pf}</span>
-                      <span>{row.pa}</span>
-                      <span>{row.pd}</span>
-                      <span>{row.points}</span>
+
+                      <span>
+                        {row.played}
+                      </span>
+
+                      <span>
+                        {row.won}
+                      </span>
+
+                      <span>
+                        {row.lost}
+                      </span>
+
+                      <span>
+                        {row.pf}
+                      </span>
+
+                      <span>
+                        {row.pa}
+                      </span>
+
+                      <span>
+                        {row.pd}
+                      </span>
+
+                      <span>
+                        {row.points}
+                      </span>
                     </div>
-                  );
-                })}
+                  )
+                )}
               </div>
             );
           })}

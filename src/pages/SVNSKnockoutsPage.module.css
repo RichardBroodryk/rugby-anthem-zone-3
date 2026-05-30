@@ -1,0 +1,287 @@
+.page {
+  min-height: 100vh;
+  background: #f4f6f8;
+}
+
+/* ==================================================
+   HERO
+   ================================================== */
+
+.hero {
+  position: relative;
+
+  min-height: 320px;
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: flex-end;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.25)
+    );
+}
+
+.heroContent {
+  position: relative;
+
+  z-index: 2;
+
+  padding: 32px;
+
+  color: white;
+}
+
+.heroContent h1 {
+  font-size: 42px;
+  font-weight: 800;
+
+  margin-bottom: 8px;
+}
+
+.heroContent p {
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+/* ==================================================
+   BACK
+   ================================================== */
+
+.backNav {
+  padding: 20px 24px;
+}
+
+.backButton {
+  border: none;
+
+  background: black;
+  color: white;
+
+  padding: 12px 18px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-weight: 700;
+}
+
+/* ==================================================
+   SECTION
+   ================================================== */
+
+.section {
+  padding: 24px;
+}
+
+.section h2 {
+  margin-bottom: 22px;
+
+  font-size: 28px;
+  font-weight: 800;
+}
+
+/* ==================================================
+   GRID
+   ================================================== */
+
+.matchesGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(260px, 1fr)
+    );
+
+  gap: 20px;
+}
+
+/* ==================================================
+   CARD
+   ================================================== */
+
+.matchCard {
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 22px;
+
+  box-shadow:
+    0 8px 24px
+    rgba(0, 0, 0, 0.08);
+}
+
+.matchTitle {
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  opacity: 0.6;
+
+  margin-bottom: 18px;
+}
+
+/* ==================================================
+   TEAM
+   ================================================== */
+
+.team {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  font-weight: 700;
+}
+
+.flag {
+  width: 28px;
+  height: 20px;
+
+  object-fit: cover;
+
+  border-radius: 4px;
+}
+
+/* ==================================================
+   VS
+   ================================================== */
+
+.vs {
+  text-align: center;
+
+  margin: 16px 0;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  opacity: 0.5;
+}
+
+/* ==================================================
+   MOBILE
+   ================================================== */
+
+@media (max-width: 768px) {
+  .heroContent h1 {
+    font-size: 32px;
+  }
+
+  .matchesGrid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ==================================================
+   STATUS BADGES
+   ================================================== */
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.liveBadge {
+  background: #dc2626;
+  color: white;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+}
+
+.projected {
+  background: #111827;
+  color: white;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+}
+
+/* ==================================================
+   QUALIFIED
+   ================================================== */
+
+.qualifiedGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(220px, 1fr)
+    );
+
+  gap: 16px;
+}
+
+.qualifiedCard {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  box-shadow:
+    0 6px 20px
+    rgba(0, 0, 0, 0.08);
+}
+
+.qfBadge {
+  background: #16a34a;
+  color: white;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.qualifiedBadge {
+  background: #16a34a;
+  color: white;
+
+  padding: 2px 8px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 800;
+}

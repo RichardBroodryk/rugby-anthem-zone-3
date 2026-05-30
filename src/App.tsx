@@ -48,6 +48,7 @@ import TournamentPage from "./pages/TournamentPage";
 import SVNSPage from "./pages/SVNSPage";
 import SVNSMatchesPage from "./pages/SVNSMatchesPage";
 import SVNSPoolsPage from "./pages/SVNSPoolsPage";
+import SVNSKnockoutsPage from "./pages/SVNSKnockoutsPage";
 
 /* ================= RANKINGS ================= */
 import RankingsMenPage from "./pages/RankingsMenPage";
@@ -271,6 +272,7 @@ export default function App() {
           <Route path="/svns" element={<SVNSPage />} />
           <Route path="/svns/matches" element={<SVNSMatchesPage />} />
           <Route path="/svns/pools" element={<SVNSPoolsPage />} />
+          <Route path="/svns/knockouts" element={<SVNSKnockoutsPage />} />
 
           <Route path="/rankings/men" element={<RankingsMenPage />} />
           <Route path="/rankings/women" element={<RankingsWomenPage />} />

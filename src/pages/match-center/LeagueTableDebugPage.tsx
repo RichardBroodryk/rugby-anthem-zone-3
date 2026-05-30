@@ -1,88 +1,451 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
-import { getMatches } from "../../data/matchesAdapter";
-import { buildStandings } from "../../utils/standings/standingsEngine";
+import {
+  useParams,
+} from "react-router-dom";
 
-import type { MatchData } from "../../data/matches/types";
+import {
+  getMatches,
+} from "../../data/matchesAdapter";
+
+import {
+  buildStandings,
+} from "../../utils/standings/standingsEngine";
+
+import type {
+  MatchData,
+} from "../../data/matches/types";
 
 export default function LeagueTableDebugPage() {
-  const { leagueId } = useParams<{ leagueId: string }>();
+  const { leagueId } =
+    useParams<{
+      leagueId: string;
+    }>();
 
-  const [matches, setMatches] = useState<MatchData[]>([]);
-  const [standings, setStandings] = useState<any[]>([]);
+  const [matches, setMatches] =
+    useState<MatchData[]>([]);
 
-  const [id, gender] = (leagueId || "").split("-");
+  const [loading, setLoading] =
+    useState(true);
+
+  const [lastUpdated, setLastUpdated] =
+    useState<string>("");
+
+  const [id, gender] = (
+    leagueId || ""
+  ).split("-");
+
+  /* ==================================================
+     LOAD
+     ================================================== */
 
   useEffect(() => {
+    let mounted = true;
+
     async function load() {
-      if (!id || !gender) return;
+      if (!id || !gender) {
+        return;
+      }
 
-      const data = await getMatches({
-        type: "domestic",
-        leagueId: id,
-        gender: gender as "men" | "women",
-      });
+      try {
+        setLoading(true);
 
-      console.log("🔥 RAW MATCHES:", data);
+        const data =
+          await getMatches({
+            type: "domestic",
 
-      const withScores = data.filter((m) => m.score);
+            leagueId: id,
 
-      console.log("🔥 MATCHES WITH SCORES:", withScores);
+            gender:
+              gender as
+                | "men"
+                | "women",
+          });
 
-      setMatches(data);
+        if (!mounted) {
+          return;
+        }
 
-      if (withScores.length > 0) {
-        const table = buildStandings(withScores);
-        console.log("🔥 STANDINGS:", table);
-        setStandings(table);
+        console.log(
+          "🔥 DEBUG MATCHES:",
+          data
+        );
+
+        setMatches(data);
+
+        setLastUpdated(
+          new Date().toLocaleTimeString()
+        );
+      } catch (err) {
+        console.error(
+          "DEBUG LOAD FAILED",
+          err
+        );
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
       }
     }
 
     load();
+
+    /* ==========================================
+       AUTO REFRESH
+       ========================================== */
+
+    const interval =
+      setInterval(() => {
+        load();
+      }, 60000);
+
+    return () => {
+      mounted = false;
+
+      clearInterval(interval);
+    };
   }, [id, gender]);
 
+  /* ==================================================
+     FILTERS
+     ================================================== */
+
+  const finalMatches =
+    useMemo(() => {
+      return matches.filter(
+        (m) =>
+          m.state === "final"
+      );
+    }, [matches]);
+
+  const liveMatches =
+    useMemo(() => {
+      return matches.filter(
+        (m) =>
+          m.state === "live"
+      );
+    }, [matches]);
+
+  const upcomingMatches =
+    useMemo(() => {
+      return matches.filter(
+        (m) =>
+          m.state === "upcoming"
+      );
+    }, [matches]);
+
+  /* ==================================================
+     STANDINGS
+     ================================================== */
+
+  const standings =
+    useMemo(() => {
+      return buildStandings(
+        finalMatches
+      );
+    }, [finalMatches]);
+
+  /* ==================================================
+     RENDER
+     ================================================== */
+
   return (
-    <div style={{ padding: 20 }}>
-      <h1>DEBUG — {leagueId}</h1>
+    <div
+      style={{
+        padding: 24,
 
-      <h2>Matches: {matches.length}</h2>
+        background: "#0b1020",
 
-      <h3>Sample Matches</h3>
-      <pre style={{ maxHeight: 300, overflow: "auto", background: "#111", color: "#0f0", padding: 10 }}>
-        {JSON.stringify(matches.slice(0, 5), null, 2)}
-      </pre>
+        color: "white",
 
-      <h2>Standings (Computed)</h2>
+        minHeight: "100vh",
 
-      {standings.length === 0 ? (
-        <div>No standings computed</div>
-      ) : (
-        <table border={1} cellPadding={8}>
-          <thead>
-            <tr>
-              <th>Team</th>
-              <th>P</th>
-              <th>W</th>
-              <th>L</th>
-              <th>PD</th>
-              <th>Pts</th>
-            </tr>
-          </thead>
-          <tbody>
-            {standings.map((t) => (
-              <tr key={t.team}>
-                <td>{t.team}</td>
-                <td>{t.played}</td>
-                <td>{t.won}</td>
-                <td>{t.lost}</td>
-                <td>{t.pointsDiff}</td>
-                <td>{t.points}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        fontFamily:
+          "system-ui",
+      }}
+    >
+      <h1>
+        🏉 LIVE LEAGUE DEBUG
+      </h1>
+
+      <h2>
+        {leagueId}
+      </h2>
+
+      <div
+        style={{
+          marginBottom: 20,
+        }}
+      >
+        <strong>
+          Last Updated:
+        </strong>{" "}
+        {lastUpdated}
+      </div>
+
+      {loading && (
+        <div>
+          Loading live data...
+        </div>
       )}
+
+      {/* ==========================================
+         HEALTH
+         ========================================== */}
+
+      <section
+        style={{
+          marginBottom: 40,
+        }}
+      >
+        <h2>
+          SYSTEM HEALTH
+        </h2>
+
+        <div>
+          Total Matches:{" "}
+          {matches.length}
+        </div>
+
+        <div>
+          Final Matches:{" "}
+          {
+            finalMatches.length
+          }
+        </div>
+
+        <div>
+          Live Matches:{" "}
+          {
+            liveMatches.length
+          }
+        </div>
+
+        <div>
+          Upcoming Matches:{" "}
+          {
+            upcomingMatches.length
+          }
+        </div>
+
+        <div>
+          Computed Teams:{" "}
+          {
+            standings.length
+          }
+        </div>
+      </section>
+
+      {/* ==========================================
+         LIVE MATCHES
+         ========================================== */}
+
+      <section
+        style={{
+          marginBottom: 40,
+        }}
+      >
+        <h2>
+          🔴 LIVE MATCHES
+        </h2>
+
+        {liveMatches.length ===
+        0 ? (
+          <div>
+            No live matches
+          </div>
+        ) : (
+          <div>
+            {liveMatches.map(
+              (match) => (
+                <div
+                  key={
+                    match.matchKey
+                  }
+                  style={{
+                    padding: 12,
+
+                    marginBottom: 12,
+
+                    background:
+                      "#1f2937",
+
+                    borderRadius: 10,
+                  }}
+                >
+                  <div>
+                    {
+                      match.home
+                        .name
+                    }{" "}
+                    vs{" "}
+                    {
+                      match.away
+                        .name
+                    }
+                  </div>
+
+                  <div>
+                    {match.score
+                      ? `${match.score.home} - ${match.score.away}`
+                      : "No Score"}
+                  </div>
+
+                  <div>
+                    {
+                      match.date
+                    }
+                  </div>
+
+                  <div>
+                    State:{" "}
+                    {
+                      match.state
+                    }
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        )}
+      </section>
+
+      {/* ==========================================
+         STANDINGS
+         ========================================== */}
+
+      <section
+        style={{
+          marginBottom: 40,
+        }}
+      >
+        <h2>
+          📊 COMPUTED STANDINGS
+        </h2>
+
+        {standings.length ===
+        0 ? (
+          <div>
+            No standings
+            computed
+          </div>
+        ) : (
+          <table
+            style={{
+              width: "100%",
+
+              borderCollapse:
+                "collapse",
+            }}
+          >
+            <thead>
+              <tr>
+                <th>Pos</th>
+                <th>Team</th>
+                <th>P</th>
+                <th>W</th>
+                <th>L</th>
+                <th>PD</th>
+                <th>Pts</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {standings.map(
+                (
+                  team,
+                  index
+                ) => (
+                  <tr
+                    key={
+                      team.team
+                    }
+                  >
+                    <td>
+                      {index + 1}
+                    </td>
+
+                    <td>
+                      {
+                        team.team
+                      }
+                    </td>
+
+                    <td>
+                      {
+                        team.played
+                      }
+                    </td>
+
+                    <td>
+                      {
+                        team.won
+                      }
+                    </td>
+
+                    <td>
+                      {
+                        team.lost
+                      }
+                    </td>
+
+                    <td>
+                      {
+                        team.pointsDiff
+                      }
+                    </td>
+
+                    <td>
+                      {
+                        team.points
+                      }
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        )}
+      </section>
+
+      {/* ==========================================
+         RAW MATCH SAMPLE
+         ========================================== */}
+
+      <section>
+        <h2>
+          🧪 RAW MATCH SAMPLE
+        </h2>
+
+        <pre
+          style={{
+            background:
+              "#111827",
+
+            padding: 20,
+
+            overflow:
+              "auto",
+
+            borderRadius: 12,
+
+            maxHeight: 500,
+          }}
+        >
+          {JSON.stringify(
+            matches.slice(
+              0,
+              5
+            ),
+            null,
+            2
+          )}
+        </pre>
+      </section>
     </div>
   );
 }

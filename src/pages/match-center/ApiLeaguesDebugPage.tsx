@@ -18,7 +18,12 @@ export default function ApiLeaguesDebugPage() {
 
       console.log("🔥 ALL LEAGUES:", json);
 
-      setData(json.response || []);
+      const leagues = json.response || [];
+
+setData(leagues);
+
+// 🔥 expose globally for console debug
+(window as any).apiLeagues = leagues;
     }
 
     load();

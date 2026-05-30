@@ -6,91 +6,130 @@ import { fetchFixturesByLeague } from "./apiSportsRugby";
 import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
 
 /* ==================================================
-   SVNS SERVICE — CHAMPIONSHIP ONLY (CLEAN + STABLE)
+   SVNS SERVICE — LIVE API + SAFE FALLBACK
    ================================================== */
 
 export async function fetchSvnsMatches(): Promise<MatchData[]> {
   try {
+    /* ==================================================
+       STEP 1 — ACTIVE EVENTS
+       ================================================== */
+
     const activeEvents = SVNS_EVENTS_2026.filter(
       (event) => event.status === "live" && event.leagueId
     );
 
+    console.log("ACTIVE SVNS EVENTS:", activeEvents);
+
     if (!activeEvents.length) {
-      console.warn("No active SVNS championship events");
+      console.warn("No active SVNS events");
       return [];
     }
+
+    /* ==================================================
+       STEP 2 — LEAGUE IDS
+       ================================================== */
 
     const leagueIds = activeEvents.map(
       (e) => e.leagueId as number
     );
 
+    console.log("SVNS LEAGUE IDS:", leagueIds);
+
+    /* ==================================================
+       STEP 3 — FETCH FIXTURES
+       ================================================== */
+
     const responses = await Promise.all(
       leagueIds.map((leagueId) =>
-        fetchFixturesByLeague(leagueId, 2024)
+        fetchFixturesByLeague(leagueId, 2026)
       )
     );
 
     const rawFixtures = responses.flat();
 
     console.log("SVNS RAW FIXTURES:", rawFixtures);
+    console.log(
+      "SVNS RAW FIXTURE COUNT:",
+      rawFixtures.length
+    );
 
     if (!rawFixtures.length) {
-      console.warn("SVNS API returned no fixtures");
+      console.warn(
+        "SVNS API returned zero fixtures"
+      );
+
       return [];
     }
 
     /* ==================================================
-       STEP 1 — CONVERT + DROP INVALID
+       STEP 4 — CONVERT API FIXTURES
        ================================================== */
-    const converted = convertApiSportsFixtures(rawFixtures);
+
+    const converted =
+      convertApiSportsFixtures(rawFixtures);
+
+    console.log("SVNS CONVERTED:", converted);
+
+    if (!converted.length) {
+      console.warn(
+        "SVNS conversion returned zero matches"
+      );
+
+      return [];
+    }
 
     /* ==================================================
-       STEP 2 — HARD FILTER (ISOLATION)
+       STEP 5 — ENRICH MATCHES
        ================================================== */
-    const svnsMatches = converted.filter(
-      (m) => m.competitionId === "svns"
-    );
 
-    console.log("SVNS matches:", svnsMatches.length);
-
-    /* ==================================================
-       STEP 3 — ENRICH WITH REAL STRUCTURE
-       ================================================== */
-    const enhancedMatches: MatchData[] = svnsMatches.map(
-      (match) => ({
+    const enhancedMatches: MatchData[] =
+      converted.map((match) => ({
         ...match,
+
+        competitionId: "svns",
 
         gender: inferGender(match),
 
         round: inferRound(match.stage),
 
         pool: extractPool(match.stage),
-      })
-    );
+      }));
 
-    console.log("SVNS enriched:", enhancedMatches);
+    console.log(
+      "SVNS ENHANCED MATCHES:",
+      enhancedMatches
+    );
 
     return enhancedMatches;
   } catch (err) {
-    console.error("SVNS fetch failed", err);
+    console.error("SVNS fetch failed:", err);
+
     return [];
   }
 }
 
 /* ==================================================
-   HELPERS — CLEAN + USED
+   HELPERS
    ================================================== */
 
-function inferGender(match: MatchData): "men" | "women" {
+function inferGender(
+  match: MatchData
+): "men" | "women" {
   const teams = [
     match.home.name.toLowerCase(),
     match.away.name.toLowerCase(),
   ];
 
-  // crude but works for now — SVNS women teams overlap but we split later
   if (
     teams.some((t) =>
-      ["brazil", "japan"].includes(t)
+      [
+        "brazil",
+        "japan",
+        "canada",
+        "france",
+        "australia",
+      ].includes(t)
     )
   ) {
     return "women";
@@ -99,25 +138,41 @@ function inferGender(match: MatchData): "men" | "women" {
   return "men";
 }
 
-function inferRound(stage?: string): MatchData["round"] {
+function inferRound(
+  stage?: string
+): MatchData["round"] {
   if (!stage) return "pool";
 
   const s = stage.toLowerCase();
 
-  if (s.includes("quarter")) return "quarter-final";
-  if (s.includes("semi")) return "semi-final";
-  if (s.includes("final")) return "final";
+  if (s.includes("quarter"))
+    return "quarter-final";
+
+  if (s.includes("semi"))
+    return "semi-final";
+
+  if (
+    s.includes("final") &&
+    !s.includes("semi") &&
+    !s.includes("quarter")
+  ) {
+    return "final";
+  }
 
   return "pool";
 }
 
-function extractPool(stage?: string): string | undefined {
+function extractPool(
+  stage?: string
+): string | undefined {
   if (!stage) return undefined;
 
   const s = stage.toLowerCase();
 
   if (s.includes("pool a")) return "A";
+
   if (s.includes("pool b")) return "B";
+
   if (s.includes("pool c")) return "C";
 
   return undefined;

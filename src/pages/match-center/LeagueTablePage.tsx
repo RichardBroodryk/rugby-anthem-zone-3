@@ -1,5 +1,7 @@
 import React, {
+  useEffect,
   useMemo,
+  useState,
 } from "react";
 
 import {
@@ -15,40 +17,60 @@ import {
   tables2026,
 } from "../../data/tables2026";
 
-import { liveStandings } from "../../data/standings/liveStandings";
-
 import {
-  applyTableOverlay,
-} from "../../utils/tableOverlayResolver";
-
-import { competitionState } from "../../data/competitionState";
+  competitionState,
+} from "../../data/competitionState";
 
 import {
   competitionQualification,
 } from "../../data/competitionQualification";
 
 import {
-  competitionActivity,
-} from "../../data/competitionActivity";
+  getMatches,
+} from "../../data/matchesAdapter";
+
+import {
+  buildStandings,
+} from "../../utils/standings/standingsEngine";
+
+import {
+  applyTableOverlay,
+} from "../../utils/tableOverlayResolver";
+
+import type {
+  MatchData,
+} from "../../data/matches/types";
 
 /* ==================================================
    PAGE
    ================================================== */
 
 export default function LeagueTablePage() {
-  const { leagueId } = useParams<{
-    leagueId: string;
-  }>();
+  const { leagueId } =
+    useParams<{
+      leagueId: string;
+    }>();
 
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
+
+  const [matches, setMatches] =
+    useState<MatchData[]>([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [lastUpdated, setLastUpdated] =
+    useState("");
 
   const [id, gender] = (
     leagueId || ""
   ).split("-");
 
-  const league = domesticLeagues.find(
-    (l) => l.id === id
-  );
+  const league =
+    domesticLeagues.find(
+      (l) => l.id === id
+    );
 
   const key =
     `${id}-${gender}`;
@@ -59,53 +81,332 @@ export default function LeagueTablePage() {
   const qualification =
     competitionQualification[key];
 
-  const activity =
-    competitionActivity[key];
 
-  const table = useMemo(() => {
-    if (!id || !gender) return [];
+  /* ==================================================
+     LOAD LIVE MATCHES
+     ================================================== */
 
-    const normalizedKey =
-      `${id}-${gender}`.toLowerCase();
+  useEffect(() => {
+    let mounted = true;
 
-    const baseTable =
-      tables2026[
-        normalizedKey as keyof typeof tables2026
-      ];
+    async function load() {
+      if (!id || !gender) {
+        return;
+      }
 
-    if (
-      !baseTable ||
-      baseTable.length === 0
-    ) {
-      console.error(
-        "❌ NO TABLE FOUND:",
-        normalizedKey
-      );
+      try {
+        setLoading(true);
 
-      return [];
+        const data =
+          await getMatches({
+            type: "domestic",
+
+            leagueId: id,
+
+            gender:
+              gender as
+                | "men"
+                | "women",
+          });
+
+        if (!mounted) {
+          return;
+        }
+
+        setMatches(data);
+
+        setLastUpdated(
+          new Date().toLocaleTimeString()
+        );
+      } catch (err) {
+        console.error(
+          "LIVE TABLE LOAD FAILED",
+          err
+        );
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
     }
 
-    const standings =
-      (
-        liveStandings as Record<
-          string,
-          any[]
-        >
-      )[normalizedKey];
+    load();
 
-    return applyTableOverlay(
+        /* ==========================================
+       SMART POLLING
+       ========================================== */
+
+    let refreshRate =
+      300000;
+
+    /* ======================================
+       COMPLETED COMPETITION
+       ====================================== */
+
+    if (
+      competition?.state ===
+      "completed"
+    ) {
+      refreshRate = 0;
+    }
+
+    /* ======================================
+       LIVE MATCH DETECTED
+       ====================================== */
+
+    else if (
+      matches.some(
+        (m) =>
+          m.state === "live"
+      )
+    ) {
+      refreshRate = 30000;
+    }
+
+    /* ======================================
+       UPCOMING TODAY
+       ====================================== */
+
+    else {
+      const now = Date.now();
+
+      const upcomingSoon =
+        matches.some((m) => {
+          if (
+            m.state !==
+            "upcoming"
+          ) {
+            return false;
+          }
+
+          const matchTime =
+            new Date(
+              m.date
+            ).getTime();
+
+          const diff =
+            matchTime - now;
+
+          return (
+            diff > 0 &&
+            diff <
+              1000 *
+                60 *
+                60 *
+                6
+          );
+        });
+
+      if (upcomingSoon) {
+        refreshRate = 120000;
+      }
+    }
+
+    /* ======================================
+       START POLLING
+       ====================================== */
+
+    let interval:
+      | NodeJS.Timeout
+      | undefined;
+
+    if (refreshRate > 0) {
+      console.log(
+        "🏉 POLLING RATE:",
+        refreshRate
+      );
+
+      interval =
+        setInterval(() => {
+          load();
+        }, refreshRate);
+    }
+
+        return () => {
+      mounted = false;
+
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [
+    id,
+    gender,
+    competition?.state,
+  ]);
+  
+
+  /* ==================================================
+     FINAL MATCHES
+     ================================================== */
+
+  const finalMatches =
+    useMemo(() => {
+      return matches.filter(
+        (m) =>
+          m.state === "final"
+      );
+    }, [matches]);
+  /* ==================================================
+     RECENT RESULTS
+     ================================================== */
+
+  const recentResults =
+    useMemo(() => {
+      return matches
+        .filter(
+          (m) =>
+            m.state === "final"
+        )
+        .sort(
+          (a, b) =>
+            new Date(
+              b.date
+            ).getTime() -
+            new Date(
+              a.date
+            ).getTime()
+        )
+        .slice(0, 8);
+    }, [matches]);
+
+  /* ==================================================
+     UPCOMING FIXTURES
+     ================================================== */
+
+  const upcomingFixtures =
+    useMemo(() => {
+      return matches
+        .filter(
+          (m) =>
+            m.state ===
+            "upcoming"
+        )
+        .sort(
+          (a, b) =>
+            new Date(
+              a.date
+            ).getTime() -
+            new Date(
+              b.date
+            ).getTime()
+        )
+        .slice(0, 8);
+    }, [matches]);
+
+  /* ==================================================
+     LIVE MATCHES
+     ================================================== */
+
+  const liveMatches =
+    useMemo(() => {
+      return matches.filter(
+        (m) =>
+          m.state === "live"
+      );
+    }, [matches]);
+  /* ==================================================
+     COMPUTED STANDINGS
+     ================================================== */
+
+  const computedStandings =
+    useMemo(() => {
+      return buildStandings(
+        finalMatches
+      );
+    }, [finalMatches]);
+
+  /* ==================================================
+     BASE TABLE
+     ================================================== */
+
+  const baseTable =
+    useMemo(() => {
+      const normalizedKey =
+        `${id}-${gender}`.toLowerCase();
+
+      return (
+        tables2026[
+          normalizedKey as keyof typeof tables2026
+        ] || []
+      );
+    }, [
+    id,
+    gender,
+    competition?.state,
+    matches,
+  ]);
+
+  /* ==================================================
+     LIVE TABLE
+     ================================================== */
+
+  const table =
+    useMemo(() => {
+      if (
+        computedStandings.length ===
+        0
+      ) {
+        return applyTableOverlay(
+          baseTable,
+          undefined
+        );
+      }
+
+      const liveRows =
+        computedStandings.map(
+          (team) => ({
+            team: team.team,
+
+            played:
+              team.played,
+
+            won: team.won,
+
+            drawn:
+              team.drawn,
+
+            lost: team.lost,
+
+            pf:
+              team.pointsFor,
+
+            pa:
+              team.pointsAgainst,
+
+            pts: team.points,
+
+            pd:
+              team.pointsDiff,
+          })
+        );
+
+      return applyTableOverlay(
+        baseTable,
+        liveRows
+      );
+    }, [
       baseTable,
-      standings
-    );
-  }, [id, gender]);
+      computedStandings,
+    ]);
+
+  /* ==================================================
+     NOT FOUND
+     ================================================== */
 
   if (!league) {
     return (
       <main className={styles.page}>
-        <div>League not found</div>
+        <div>
+          League not found
+        </div>
       </main>
     );
   }
+
+  /* ==================================================
+     PAGE
+     ================================================== */
 
   return (
     <main className={styles.page}>
@@ -119,18 +420,31 @@ export default function LeagueTablePage() {
             )
           }
         >
-          ← Back to Domestic Leagues
+          ← Back to Domestic
         </button>
       </div>
 
       {/* HEADER */}
       <section className={styles.section}>
         <h1 className={styles.title}>
-          {league.name} ({gender})
+          {league.name} (
+          {gender})
         </h1>
 
         <p className={styles.season}>
-          Season: {league.season}
+          Season:{" "}
+          {league.season}
+        </p>
+
+        <p
+          style={{
+            opacity: 0.7,
+            marginTop: 8,
+          }}
+        >
+          Last Updated:{" "}
+          {lastUpdated ||
+            "Loading..."}
         </p>
 
         {competition && (
@@ -171,15 +485,24 @@ export default function LeagueTablePage() {
       {/* STANDINGS */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>
-          Current Standings
+          Live Standings
         </h2>
 
-        {table.length === 0 ? (
+        {loading ? (
           <div>
-            No standings available
+            Loading live
+            standings...
+          </div>
+        ) : table.length ===
+          0 ? (
+          <div>
+            No standings
+            available
           </div>
         ) : (
-          <table className={styles.table}>
+          <table
+            className={styles.table}
+          >
             <thead>
               <tr>
                 <th>Pos</th>
@@ -211,39 +534,65 @@ export default function LeagueTablePage() {
                     }
                   >
                     <td>
-                      {row.position}
-                    </td>
-
-                    <td>{row.team}</td>
-
-                    <td>{row.coach}</td>
-
-                    <td>
-                      {row.played}
-                    </td>
-
-                    <td>{row.wins}</td>
-
-                    <td>{row.draws}</td>
-
-                    <td>
-                      {row.losses}
+                      {
+                        row.position
+                      }
                     </td>
 
                     <td>
-                      {row.pointsFor}
+                      {row.team}
                     </td>
 
                     <td>
-                      {row.pointsAgainst}
+                      {
+                        row.coach
+                      }
                     </td>
 
                     <td>
-                      {row.pointsDiff}
+                      {
+                        row.played
+                      }
                     </td>
 
                     <td>
-                      {row.leaguePoints}
+                      {row.wins}
+                    </td>
+
+                    <td>
+                      {
+                        row.draws
+                      }
+                    </td>
+
+                    <td>
+                      {
+                        row.losses
+                      }
+                    </td>
+
+                    <td>
+                      {
+                        row.pointsFor
+                      }
+                    </td>
+
+                    <td>
+                      {
+                        row.pointsAgainst
+                      }
+                    </td>
+
+                    <td>
+                      {
+                        row.pointsDiff
+                      }
+                    </td>
+
+                    <td>
+                      {
+                        row.leaguePoints
+                      }
                     </td>
                   </tr>
 
@@ -255,7 +604,11 @@ export default function LeagueTablePage() {
                           styles.cutLine
                         }
                       >
-                        <td colSpan={11}>
+                        <td
+                          colSpan={
+                            11
+                          }
+                        >
                           {
                             qualification.label
                           }
@@ -269,32 +622,33 @@ export default function LeagueTablePage() {
         )}
       </section>
 
-      {/* RECENT RESULTS */}
-      {activity?.recentResults && (
+            {/* LIVE MATCHES */}
+      {liveMatches.length > 0 && (
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>
-            Recent Results
+            🔴 Live Matches
           </h2>
 
           <div className={styles.matchesList}>
-            {activity.recentResults.map(
-              (match: any) => (
+            {liveMatches.map(
+              (match) => (
                 <div
-                  key={`${match.home}-${match.away}`}
+                  key={match.matchKey}
                   className={styles.matchItem}
                 >
                   <div
                     className={styles.matchTeams}
                   >
-                    {match.home} vs{" "}
-                    {match.away}
+                    {match.home.name} vs{" "}
+                    {match.away.name}
                   </div>
 
                   <div
                     className={styles.matchScore}
                   >
-                    {match.homeScore} -{" "}
-                    {match.awayScore}
+                    {match.score
+                      ? `${match.score.home} - ${match.score.away}`
+                      : "LIVE"}
                   </div>
 
                   <div
@@ -309,29 +663,101 @@ export default function LeagueTablePage() {
         </section>
       )}
 
-      {/* UPCOMING FIXTURES */}
-      {activity?.upcomingFixtures && (
+      {/* RECENT RESULTS */}
+            {recentResults.length > 0 && (
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>
-            Upcoming Fixtures
+            Recent Results
           </h2>
 
-          <div className={styles.matchesList}>
-            {activity.upcomingFixtures.map(
-              (match: any) => (
+          <div
+            className={
+              styles.matchesList
+            }
+          >
+                       {recentResults.map(
+              (
+                match: any
+              ) => (
                 <div
                   key={`${match.home}-${match.away}`}
-                  className={styles.matchItem}
+                  className={
+                    styles.matchItem
+                  }
                 >
                   <div
-                    className={styles.matchTeams}
+                    className={
+                      styles.matchTeams
+                    }
                   >
                     {match.home} vs{" "}
                     {match.away}
                   </div>
 
                   <div
-                    className={styles.matchMeta}
+                    className={
+                      styles.matchScore
+                    }
+                  >
+                    {
+                      match.homeScore
+                    }{" "}
+                    -{" "}
+                    {
+                      match.awayScore
+                    }
+                  </div>
+
+                  <div
+                    className={
+                      styles.matchMeta
+                    }
+                  >
+                    {match.date}
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* UPCOMING */}
+            {upcomingFixtures.length >
+        0 && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>
+            Upcoming Fixtures
+          </h2>
+
+          <div
+            className={
+              styles.matchesList
+            }
+          >
+                        {upcomingFixtures.map(
+              (
+                match: any
+              ) => (
+                <div
+                  key={`${match.home}-${match.away}`}
+                  className={
+                    styles.matchItem
+                  }
+                >
+                  <div
+                    className={
+                      styles.matchTeams
+                    }
+                  >
+                    {match.home} vs{" "}
+                    {match.away}
+                  </div>
+
+                  <div
+                    className={
+                      styles.matchMeta
+                    }
                   >
                     {match.date}
                   </div>
@@ -352,7 +778,9 @@ export default function LeagueTablePage() {
           </h2>
 
           <div
-            className={styles.playoffGrid}
+            className={
+              styles.playoffGrid
+            }
           >
             {competition.fixtures.map(
               (match) => (
@@ -368,7 +796,9 @@ export default function LeagueTablePage() {
                     }
                   >
                     <span>
-                      {match.home}
+                      {
+                        match.home
+                      }
                     </span>
 
                     <span
@@ -380,7 +810,9 @@ export default function LeagueTablePage() {
                     </span>
 
                     <span>
-                      {match.away}
+                      {
+                        match.away
+                      }
                     </span>
                   </div>
 
@@ -390,11 +822,15 @@ export default function LeagueTablePage() {
                     }
                   >
                     <div>
-                      {match.date}
+                      {
+                        match.date
+                      }
                     </div>
 
                     <div>
-                      {match.venue}
+                      {
+                        match.venue
+                      }
                     </div>
                   </div>
                 </div>
@@ -404,7 +840,7 @@ export default function LeagueTablePage() {
         </section>
       )}
 
-      {/* CHAMPION CARD */}
+      {/* CHAMPION */}
       {competition?.state ===
         "completed" && (
         <section className={styles.section}>
@@ -414,7 +850,9 @@ export default function LeagueTablePage() {
             }
           >
             <div
-              className={styles.trophy}
+              className={
+                styles.trophy
+              }
             >
               🏆
             </div>
