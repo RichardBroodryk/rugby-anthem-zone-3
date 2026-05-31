@@ -1,45 +1,111 @@
 import type { MatchData } from "../../data/matches/types";
+
 import { buildStandings } from "../standings/standingsEngine";
 
-type Team = {
+export type QualifiedTeam = {
   name: string;
+
   country: string;
+
+  pool: string;
+
+  points: number;
+
+  pointsDiff: number;
 };
 
-export function getPoolQualifiers(matches: MatchData[]) {
-  const pools = ["A", "B", "C"];
+export function getPoolQualifiers(
+  matches: MatchData[]
+) {
+  const pools = [
+    "A",
+    "B",
+    "C",
+  ];
 
-  const result: Record<string, Team[]> = {};
+  const winners: QualifiedTeam[] =
+    [];
+
+  const runnersUp: QualifiedTeam[] =
+    [];
+
+  const thirdPlace: QualifiedTeam[] =
+    [];
 
   pools.forEach((pool) => {
-    const poolMatches = matches.filter(
-      (m) => m.pool === pool
-    );
-
-    if (!poolMatches.length) return;
-
-    const standings = buildStandings(poolMatches);
-
-    result[pool] = standings.slice(0, 2).map((t) => {
-      // 🔍 Find a match where this team appears
-      const match = poolMatches.find(
+    const poolMatches =
+      matches.filter(
         (m) =>
-          m.home.name === t.team ||
-          m.away.name === t.team
+          m.pool === pool &&
+          m.round === "pool"
       );
 
-      // 🔍 Resolve correct team object
-      const teamData =
-        match?.home.name === t.team
-          ? match.home
-          : match?.away;
+    if (!poolMatches.length) {
+      return;
+    }
 
-      return {
-        name: t.team,
-        country: teamData?.country || "unknown",
-      };
-    });
+    const standings =
+      buildStandings(
+        poolMatches
+      );
+
+    standings.forEach(
+      (team, index) => {
+        const match =
+          poolMatches.find(
+            (m) =>
+              m.home.name ===
+                team.team ||
+              m.away.name ===
+                team.team
+          );
+
+        const resolvedTeam =
+          match?.home.name ===
+          team.team
+            ? match.home
+            : match?.away;
+
+        const enriched = {
+          name: team.team,
+
+          country:
+            resolvedTeam?.country ||
+            "unknown",
+
+          pool,
+
+          points:
+            team.points,
+
+          pointsDiff:
+            team.pointsDiff,
+        };
+
+        if (index === 0) {
+          winners.push(
+            enriched
+          );
+        }
+
+        if (index === 1) {
+          runnersUp.push(
+            enriched
+          );
+        }
+
+        if (index === 2) {
+          thirdPlace.push(
+            enriched
+          );
+        }
+      }
+    );
   });
 
-  return result;
+  return {
+    winners,
+    runnersUp,
+    thirdPlace,
+  };
 }

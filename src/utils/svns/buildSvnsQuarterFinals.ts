@@ -1,103 +1,113 @@
-// src/utils/svns/buildSvnsQuarterFinals.ts
-
-import type {
-  QualifiedTeam,
-} from "./getSvnsQualifiedTeams";
-
-export type QuarterFinal = {
-  id: string;
-
-  home: QualifiedTeam;
-
-  away: QualifiedTeam;
+type Team = {
+  name: string;
+  country: string;
 };
 
+type RankedTeam = Team & {
+  pool: string;
+  points?: number;
+  pointsDiff?: number;
+};
+
+export type QuarterFinalMatch = {
+  id: string;
+
+  home: Team;
+  away: Team;
+
+  score?: {
+    home: number;
+    away: number;
+  };
+};
+
+function safeTeam(
+  team?: RankedTeam
+): Team {
+  return (
+    team || {
+      name: "TBD",
+      country: "unknown",
+    }
+  );
+}
+
 /* ==================================================
-   BUILD QUARTER FINALS
+   BUILD SVNS QUARTER FINALS
    ================================================== */
 
 export function buildSvnsQuarterFinals(
-  teams: QualifiedTeam[]
-): QuarterFinal[] {
-  const winners = teams.filter(
-    (t) => t.position === 1
+  poolWinners: RankedTeam[],
+  runnersUp: RankedTeam[],
+  thirdPlace: RankedTeam[]
+): QuarterFinalMatch[] {
+  const sortedSeconds = [
+    ...runnersUp,
+  ].sort(
+    (a, b) =>
+      (b.points || 0) -
+        (a.points || 0) ||
+      (b.pointsDiff || 0) -
+        (a.pointsDiff || 0)
   );
 
-  const runners = teams.filter(
-    (t) => t.position === 2
+  const sortedThirds = [
+    ...thirdPlace,
+  ].sort(
+    (a, b) =>
+      (b.points || 0) -
+        (a.points || 0) ||
+      (b.pointsDiff || 0) -
+        (a.pointsDiff || 0)
   );
-
-  const thirds = teams.filter(
-    (t) => t.position === 3
-  );
-
-  const A1 = winners.find(
-    (t) => t.pool === "A"
-  );
-
-  const B1 = winners.find(
-    (t) => t.pool === "B"
-  );
-
-  const C1 = winners.find(
-    (t) => t.pool === "C"
-  );
-
-  const A2 = runners.find(
-    (t) => t.pool === "A"
-  );
-
-  const B2 = runners.find(
-    (t) => t.pool === "B"
-  );
-
-  const C2 = runners.find(
-    (t) => t.pool === "C"
-  );
-
-  const T1 = thirds[0];
-  const T2 = thirds[1];
-
-  if (
-    !A1 ||
-    !B1 ||
-    !C1 ||
-    !A2 ||
-    !B2 ||
-    !C2 ||
-    !T1 ||
-    !T2
-  ) {
-    return [];
-  }
 
   return [
     {
       id: "QF1",
 
-      home: A1,
-      away: T2,
+      home: safeTeam(
+        poolWinners[0]
+      ),
+
+      away: safeTeam(
+        sortedSeconds[0]
+      ),
     },
 
     {
       id: "QF2",
 
-      home: B1,
-      away: C2,
+      home: safeTeam(
+        poolWinners[1]
+      ),
+
+      away: safeTeam(
+        sortedThirds[0]
+      ),
     },
 
     {
       id: "QF3",
 
-      home: C1,
-      away: B2,
+      home: safeTeam(
+        poolWinners[2]
+      ),
+
+      away: safeTeam(
+        sortedThirds[1]
+      ),
     },
 
     {
       id: "QF4",
 
-      home: T1,
-      away: A2,
+      home: safeTeam(
+        sortedSeconds[1]
+      ),
+
+      away: safeTeam(
+        sortedThirds[2]
+      ),
     },
   ];
 }

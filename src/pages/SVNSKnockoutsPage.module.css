@@ -10,24 +10,26 @@
 .hero {
   position: relative;
 
-  min-height: 320px;
+  min-height: 340px;
 
   background-size: cover;
   background-position: center;
 
   display: flex;
   align-items: flex-end;
+
+  overflow: hidden;
 }
 
-.heroOverlay {
+.overlay {
   position: absolute;
   inset: 0;
 
   background:
     linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.7),
-      rgba(0, 0, 0, 0.25)
+      rgba(255, 255, 255, 0.92),
+      rgba(255, 255, 255, 0.45)
     );
 }
 
@@ -36,44 +38,95 @@
 
   z-index: 2;
 
-  padding: 32px;
+  width: 100%;
 
+  padding:
+    0 32px
+    46px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #111827;
   color: white;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 18px;
 }
 
 .heroContent h1 {
-  font-size: 42px;
-  font-weight: 800;
+  font-size: 52px;
+  font-weight: 900;
 
-  margin-bottom: 8px;
+  line-height: 1.05;
+
+  color: #111827;
+
+  margin-bottom: 12px;
 }
 
 .heroContent p {
   font-size: 18px;
-  opacity: 0.95;
+  font-weight: 600;
+
+  color: #1f2937;
+
+  max-width: 680px;
+
+  line-height: 1.5;
 }
 
 /* ==================================================
    BACK
    ================================================== */
 
-.backNav {
-  padding: 20px 24px;
+.backWrap {
+  display: flex;
+  justify-content: center;
+
+  padding:
+    28px 24px
+    8px;
 }
 
 .backButton {
   border: none;
 
-  background: black;
+  background: #111827;
   color: white;
 
-  padding: 12px 18px;
+  padding:
+    14px 26px;
 
-  border-radius: 12px;
+  border-radius: 999px;
 
   cursor: pointer;
 
-  font-weight: 700;
+  font-weight: 800;
+  font-size: 14px;
+
+  letter-spacing: 0.3px;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.backButton:hover {
+  transform: translateY(-1px);
+
+  opacity: 0.92;
 }
 
 /* ==================================================
@@ -81,27 +134,39 @@
    ================================================== */
 
 .section {
-  padding: 24px;
+  padding:
+    22px 24px
+    8px;
 }
 
-.section h2 {
-  margin-bottom: 22px;
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  font-size: 28px;
-  font-weight: 800;
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.sectionHeader h2 {
+  font-size: 30px;
+  font-weight: 900;
+
+  color: #111827;
 }
 
 /* ==================================================
    GRID
    ================================================== */
 
-.matchesGrid {
+.grid {
   display: grid;
 
   grid-template-columns:
     repeat(
       auto-fit,
-      minmax(260px, 1fr)
+      minmax(280px, 1fr)
     );
 
   gap: 20px;
@@ -114,63 +179,111 @@
 .matchCard {
   background: white;
 
-  border-radius: 20px;
+  border-radius: 24px;
 
   padding: 22px;
 
   box-shadow:
-    0 8px 24px
+    0 10px 30px
     rgba(0, 0, 0, 0.08);
+
+  border:
+    1px solid
+    rgba(0, 0, 0, 0.04);
 }
 
-.matchTitle {
+.matchTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.matchStage {
   font-size: 13px;
   font-weight: 800;
 
-  letter-spacing: 1px;
-
   text-transform: uppercase;
 
-  opacity: 0.6;
+  letter-spacing: 1px;
 
-  margin-bottom: 18px;
+  color: #6b7280;
+}
+
+.status {
+  padding:
+    6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: 0.5px;
+}
+
+.final {
+  background: #dc2626;
+  color: white;
+}
+
+.upcoming {
+  background: #111827;
+  color: white;
 }
 
 /* ==================================================
-   TEAM
+   TEAM ROW
    ================================================== */
 
-.team {
+.teamRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding:
+    12px 0;
+}
+
+.teamLeft {
   display: flex;
   align-items: center;
 
   gap: 12px;
 
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 800;
+
+  color: #111827;
+}
+
+.winner .teamLeft {
+  color: #16a34a;
 }
 
 .flag {
-  width: 28px;
-  height: 20px;
+  width: 30px;
+  height: 22px;
 
   object-fit: cover;
 
   border-radius: 4px;
+
+  box-shadow:
+    0 2px 6px
+    rgba(0, 0, 0, 0.15);
 }
 
-/* ==================================================
-   VS
-   ================================================== */
+.score {
+  font-size: 22px;
+  font-weight: 900;
 
-.vs {
-  text-align: center;
-
-  margin: 16px 0;
-
-  font-size: 13px;
-  font-weight: 800;
-
-  opacity: 0.5;
+  color: #111827;
 }
 
 /* ==================================================
@@ -178,110 +291,33 @@
    ================================================== */
 
 @media (max-width: 768px) {
-  .heroContent h1 {
-    font-size: 32px;
+  .hero {
+    min-height: 280px;
   }
 
-  .matchesGrid {
+  .heroContent {
+    padding:
+      0 20px
+      34px;
+  }
+
+  .heroContent h1 {
+    font-size: 36px;
+  }
+
+  .heroContent p {
+    font-size: 15px;
+  }
+
+  .sectionHeader h2 {
+    font-size: 24px;
+  }
+
+  .grid {
     grid-template-columns: 1fr;
   }
-}
-/* ==================================================
-   STATUS BADGES
-   ================================================== */
 
-.sectionHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 12px;
-
-  margin-bottom: 18px;
-}
-
-.liveBadge {
-  background: #dc2626;
-  color: white;
-
-  padding: 6px 12px;
-
-  border-radius: 999px;
-
-  font-size: 12px;
-  font-weight: 800;
-
-  letter-spacing: 0.5px;
-}
-
-.projected {
-  background: #111827;
-  color: white;
-
-  padding: 6px 12px;
-
-  border-radius: 999px;
-
-  font-size: 12px;
-  font-weight: 800;
-
-  letter-spacing: 0.5px;
-}
-
-/* ==================================================
-   QUALIFIED
-   ================================================== */
-
-.qualifiedGrid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      auto-fit,
-      minmax(220px, 1fr)
-    );
-
-  gap: 16px;
-}
-
-.qualifiedCard {
-  background: white;
-
-  border-radius: 18px;
-
-  padding: 18px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 12px;
-
-  box-shadow:
-    0 6px 20px
-    rgba(0, 0, 0, 0.08);
-}
-
-.qfBadge {
-  background: #16a34a;
-  color: white;
-
-  padding: 6px 10px;
-
-  border-radius: 999px;
-
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.qualifiedBadge {
-  background: #16a34a;
-  color: white;
-
-  padding: 2px 8px;
-
-  border-radius: 999px;
-
-  font-size: 10px;
-  font-weight: 800;
+  .backWrap {
+    padding-top: 22px;
+  }
 }

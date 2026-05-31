@@ -6,8 +6,13 @@ import {
   buildSvnsStandings,
 } from "./buildSvnsStandings";
 
+/* ==================================================
+   TYPES
+   ================================================== */
+
 export type QualifiedTeam = {
   team: string;
+
   country: string;
 
   pool: string;
@@ -32,7 +37,7 @@ export type QualificationResult = {
 };
 
 /* ==================================================
-   BUILD QUALIFIERS
+   GET SVNS QUALIFIED TEAMS
    ================================================== */
 
 export function getSvnsQualifiedTeams(
@@ -55,7 +60,7 @@ export function getSvnsQualifiedTeams(
     [];
 
   /* ==================================================
-     BUILD POOL TABLES
+     BUILD EACH POOL TABLE
      ================================================== */
 
   poolKeys.forEach((pool) => {
@@ -72,55 +77,77 @@ export function getSvnsQualifiedTeams(
         poolMatches
       );
 
-    standings.forEach((row, index) => {
-      const sourceMatch =
-        poolMatches.find(
-          (m) =>
-            m.home.name ===
-              row.team ||
-            m.away.name === row.team
-        );
+    standings.forEach(
+      (row, index) => {
+        const sourceMatch =
+          poolMatches.find(
+            (m) =>
+              m.home.name ===
+                row.team ||
+              m.away.name ===
+                row.team
+          );
 
-      const country =
-        sourceMatch?.home.name ===
-        row.team
-          ? sourceMatch.home.country
-          : sourceMatch?.away
-              .country || "unknown";
+        const country =
+          sourceMatch?.home.name ===
+          row.team
+            ? sourceMatch.home.country
+            : sourceMatch?.away
+                .country ||
+              "unknown";
 
-      const team: QualifiedTeam = {
-        team: row.team,
-        country,
+        const team: QualifiedTeam =
+          {
+            team: row.team,
 
-        pool,
+            country,
 
-        position: index + 1,
+            pool,
 
-        points: row.points,
+            position:
+              index + 1,
 
-        pd: row.pd,
+            points:
+              row.points,
 
-        pf: row.pf,
-      };
+            pd:
+              row.pointsDiff,
 
-      /* ================= WINNERS ================= */
+            pf:
+              row.pointsFor,
+          };
 
-      if (index === 0) {
-        poolWinners.push(team);
+        /* ======================================
+           POOL WINNER
+           ====================================== */
+
+        if (index === 0) {
+          poolWinners.push(
+            team
+          );
+        }
+
+        /* ======================================
+           RUNNER UP
+           ====================================== */
+
+        else if (index === 1) {
+          runnersUp.push(
+            team
+          );
+        }
+
+        /* ======================================
+           THIRD PLACE
+           ====================================== */
+
+        else if (index === 2) {
+          thirdPlaceTeams.push(
+            team
+          );
+        }
       }
-
-      /* ================= RUNNERS UP ================= */
-
-      else if (index === 1) {
-        runnersUp.push(team);
-      }
-
-      /* ================= THIRD PLACE ================= */
-
-      else if (index === 2) {
-        thirdPlaceTeams.push(team);
-      }
-    });
+    );
   });
 
   /* ==================================================
@@ -131,7 +158,8 @@ export function getSvnsQualifiedTeams(
     thirdPlaceTeams
       .sort((a, b) => {
         if (
-          b.points !== a.points
+          b.points !==
+          a.points
         ) {
           return (
             b.points -
@@ -139,16 +167,22 @@ export function getSvnsQualifiedTeams(
           );
         }
 
-        if (b.pd !== a.pd) {
-          return b.pd - a.pd;
+        if (
+          b.pd !== a.pd
+        ) {
+          return (
+            b.pd - a.pd
+          );
         }
 
-        return b.pf - a.pf;
+        return (
+          b.pf - a.pf
+        );
       })
       .slice(0, 2);
 
   /* ==================================================
-     FINAL QF TEAMS
+     FINALISTS
      ================================================== */
 
   const quarterFinalists = [

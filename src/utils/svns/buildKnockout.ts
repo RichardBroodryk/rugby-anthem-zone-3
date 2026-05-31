@@ -1,28 +1,68 @@
-type Team = {
-  name: string;
-  country: string;
-};
+import type { MatchData } from "../../data/matches/types";
 
-function safeTeam(team?: Team): Team {
-  return team || { name: "TBD", country: "unknown" };
-}
+import { getPoolQualifiers } from "./getPoolQualifiers";
 
-export function buildQuarterFinals(qualifiers: Record<string, Team[]>) {
-  return [
-    {
-      id: "QF1",
-      home: safeTeam(qualifiers.A?.[0]),
-      away: safeTeam(qualifiers.B?.[1]),
-    },
-    {
-      id: "QF2",
-      home: safeTeam(qualifiers.B?.[0]),
-      away: safeTeam(qualifiers.C?.[1]),
-    },
-    {
-      id: "QF3",
-      home: safeTeam(qualifiers.C?.[0]),
-      away: safeTeam(qualifiers.A?.[1]),
-    },
-  ];
+import { buildSvnsQuarterFinals } from "./buildSvnsQuarterFinals";
+
+import {
+  buildSvnsSemiFinals,
+  buildSvnsBronzeFinal,
+  buildSvnsFinal,
+  buildSvnsFifthPlaceFinal,
+  buildSvnsSeventhPlaceFinal,
+} from "./buildSemiFinals";
+
+/* ==================================================
+   BUILD FULL SVNS KNOCKOUT
+   ================================================== */
+
+export function buildKnockout(
+  matches: MatchData[]
+) {
+  const qualifiers =
+    getPoolQualifiers(
+      matches
+    );
+
+  const quarterFinals =
+    buildSvnsQuarterFinals(
+      qualifiers.winners,
+      qualifiers.runnersUp,
+      qualifiers.thirdPlace
+    );
+
+  const semiFinals =
+    buildSvnsSemiFinals(
+      quarterFinals
+    );
+
+  const bronzeFinal =
+    buildSvnsBronzeFinal(
+      semiFinals
+    );
+
+  const grandFinal =
+    buildSvnsFinal(
+      semiFinals
+    );
+
+  const fifthPlaceFinal =
+    buildSvnsFifthPlaceFinal();
+
+  const seventhPlaceFinal =
+    buildSvnsSeventhPlaceFinal();
+
+  return {
+    quarterFinals,
+
+    semiFinals,
+
+    bronzeFinal,
+
+    grandFinal,
+
+    fifthPlaceFinal,
+
+    seventhPlaceFinal,
+  };
 }
