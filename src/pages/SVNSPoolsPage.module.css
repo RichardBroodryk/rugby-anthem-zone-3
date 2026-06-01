@@ -9,16 +9,23 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-}
 
+  background:
+    linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.55)
+    );
+}
 .heroContent {
   position: relative;
-  z-index: 2;
-  color: white;
-  padding: 24px;
-}
 
+  z-index: 2;
+
+  padding: 32px;
+
+  color: #111111;
+}
 .backNav {
   display: flex;
   justify-content: center;
