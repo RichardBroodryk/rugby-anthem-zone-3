@@ -16,19 +16,21 @@ export default function SVNSPage() {
 
   if (!tournament) return <div>SVNS not found</div>;
 
-  const menFinalStandings = [
-    { rank: 1, team: "South Africa", points: 20 },
-    { rank: 2, team: "Argentina", points: 18 },
-    { rank: 3, team: "Fiji", points: 16 },
-    { rank: 4, team: "New Zealand", points: 14 },
-  ];
+ const menFinalStandings = [
+  { rank: 1, team: "South Africa", points: 38 },
+  { rank: 2, team: "Argentina", points: 34 },
+  { rank: 3, team: "Australia", points: 30 },
+  { rank: 4, team: "New Zealand", points: 28 },
+  { rank: 5, team: "Spain", points: 24 },
+];
 
-  const womenFinalStandings = [
-    { rank: 1, team: "New Zealand", points: 20 },
-    { rank: 2, team: "Australia", points: 18 },
-    { rank: 3, team: "France", points: 16 },
-    { rank: 4, team: "Canada", points: 14 },
-  ];
+const womenFinalStandings = [
+  { rank: 1, team: "Australia", points: 38 },
+  { rank: 2, team: "New Zealand", points: 36 },
+  { rank: 3, team: "USA", points: 32 },
+  { rank: 4, team: "France", points: 27 },
+  { rank: 5, team: "Canada", points: 27 },
+];
 
   return (
     <main className={styles.page}>
@@ -56,7 +58,7 @@ export default function SVNSPage() {
       </div>
 
       <div className={styles.liveBanner}>
-  🔴 LIVE NOW — Valladolid SVNS World Championship
+  🏆 Valladolid Complete — Bordeaux Grand Final Next
 </div>
 
       {/* NAVIGATION */}
@@ -93,18 +95,20 @@ export default function SVNSPage() {
         </button>
 
         <p className={styles.subtitle}>
-  Valladolid is LIVE — Bordeaux will crown the 2026 HSBC SVNS World Champions
+  Australia wins both Valladolid titles — Bordeaux now decides the world championship
 </p>
       </div>
 
       {/* STANDINGS */}
       <section className={styles.section}>
-        <h2>Hong Kong — Previous Leg Results</h2>
+        <h2>World Championship Standings After Valladolid</h2>
 
         <div className={styles.standingsGrid}>
           {/* MEN */}
           <div>
-            <h3 className={styles.subHeader}>Men</h3>
+            <h3 className={styles.subHeader}>
+  Men — Australia win Valladolid
+</h3>
             <div className={styles.standingsPreview}>
               {menFinalStandings.map((row) => (
                 <div key={row.rank} className={styles.previewRow}>
@@ -129,7 +133,9 @@ export default function SVNSPage() {
 
           {/* WOMEN */}
           <div>
-            <h3 className={styles.subHeader}>Women</h3>
+            <h3 className={styles.subHeader}>
+  Women — Australia win Valladolid
+</h3>
             <div className={styles.standingsPreview}>
               {womenFinalStandings.map((row) => (
                 <div key={row.rank} className={styles.previewRow}>

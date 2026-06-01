@@ -1,10 +1,10 @@
-// src/pages/SVNSKnockoutsPage.tsx
-
 import { useMemo } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import styles from "./SVNSKnockoutsPage.module.css";
+
+import { svnsMatches2026 } from "../data/matches/matches2026Svns";
 
 import { tournaments2026 } from "../data/tournamentMeta";
 
@@ -13,117 +13,91 @@ import { getTournamentVisual } from "../data/tournamentVisuals";
 import { svnsFlags } from "../data/flags/svnsFlags";
 
 /* ==================================================
-   TYPES
-   ================================================== */
-
-type KnockoutMatch = {
-  id: string;
-
-  stage: string;
-
-  home: string;
-
-  away: string;
-
-  homeScore?: number;
-
-  awayScore?: number;
-
-  winner?: string;
-
-  status: "final" | "upcoming";
-};
-
-/* ==================================================
-   TEAM ROW
-   ================================================== */
-
-function TeamRow({
-  team,
-  score,
-  winner,
-}: {
-  team: string;
-
-  score?: number;
-
-  winner?: boolean;
-}) {
-  return (
-    <div
-      className={`${styles.teamRow} ${
-        winner ? styles.winner : ""
-      }`}
-    >
-      <div className={styles.teamLeft}>
-        <img
-          src={svnsFlags[team]}
-          alt={team}
-          className={styles.flag}
-        />
-
-        <span>{team}</span>
-      </div>
-
-      <div className={styles.score}>
-        {score ?? "-"}
-      </div>
-    </div>
-  );
-}
-
-/* ==================================================
    MATCH CARD
    ================================================== */
 
 function MatchCard({
   match,
 }: {
-  match: KnockoutMatch;
+  match: any;
 }) {
   const homeWon =
-    match.homeScore !== undefined &&
-    match.awayScore !== undefined &&
-    match.homeScore >
-      match.awayScore;
+    match.score?.home >
+    match.score?.away;
 
   const awayWon =
-    match.homeScore !== undefined &&
-    match.awayScore !== undefined &&
-    match.awayScore >
-      match.homeScore;
+    match.score?.away >
+    match.score?.home;
 
   return (
     <div className={styles.matchCard}>
       <div className={styles.matchTop}>
         <div className={styles.matchStage}>
-          {match.stage}
+          {match.round}
         </div>
 
         <div
-          className={`${styles.status} ${
-            match.status === "final"
-              ? styles.final
-              : styles.upcoming
-          }`}
+          className={`${styles.status} ${styles.final}`}
         >
-          {match.status === "final"
-            ? "FINAL"
-            : "UPCOMING"}
+          FINAL
         </div>
       </div>
 
-      <TeamRow
-        team={match.home}
-        score={match.homeScore}
-        winner={homeWon}
-      />
+      {/* HOME */}
 
-      <TeamRow
-        team={match.away}
-        score={match.awayScore}
-        winner={awayWon}
-      />
+      <div
+        className={`${styles.teamRow} ${
+          homeWon ? styles.winner : ""
+        }`}
+      >
+        <div className={styles.teamLeft}>
+          <img
+            src={
+              svnsFlags[
+                match.home.name
+              ]
+            }
+            alt={match.home.name}
+            className={styles.flag}
+          />
+
+          <span>
+            {match.home.name}
+          </span>
+        </div>
+
+        <div className={styles.score}>
+          {match.score.home}
+        </div>
+      </div>
+
+      {/* AWAY */}
+
+      <div
+        className={`${styles.teamRow} ${
+          awayWon ? styles.winner : ""
+        }`}
+      >
+        <div className={styles.teamLeft}>
+          <img
+            src={
+              svnsFlags[
+                match.away.name
+              ]
+            }
+            alt={match.away.name}
+            className={styles.flag}
+          />
+
+          <span>
+            {match.away.name}
+          </span>
+        </div>
+
+        <div className={styles.score}>
+          {match.score.away}
+        </div>
+      </div>
     </div>
   );
 }
@@ -132,13 +106,13 @@ function MatchCard({
    SECTION
    ================================================== */
 
-function Section({
+function BracketSection({
   title,
   matches,
 }: {
   title: string;
 
-  matches: KnockoutMatch[];
+  matches: any[];
 }) {
   if (!matches.length) {
     return null;
@@ -163,213 +137,97 @@ function Section({
 }
 
 /* ==================================================
-   WOMEN DATA
-   ================================================== */
-
-const womenQuarterFinals: KnockoutMatch[] =
-  [
-    {
-      id: "w-qf-1",
-
-      stage: "Quarter-final 1",
-
-      home: "USA",
-
-      away: "Fiji",
-
-      homeScore: 40,
-
-      awayScore: 12,
-
-      winner: "USA",
-
-      status: "final",
-    },
-
-    {
-      id: "w-qf-2",
-
-      stage: "Quarter-final 2",
-
-      home: "New Zealand",
-
-      away: "Spain",
-
-      homeScore: 33,
-
-      awayScore: 7,
-
-      winner: "New Zealand",
-
-      status: "final",
-    },
-
-    {
-      id: "w-qf-3",
-
-      stage: "Quarter-final 3",
-
-      home: "Australia",
-
-      away: "France",
-
-      homeScore: 21,
-
-      awayScore: 5,
-
-      winner: "Australia",
-
-      status: "final",
-    },
-
-    {
-      id: "w-qf-4",
-
-      stage: "Quarter-final 4",
-
-      home: "Canada",
-
-      away: "Japan",
-
-      homeScore: 40,
-
-      awayScore: 5,
-
-      winner: "Canada",
-
-      status: "final",
-    },
-  ];
-
-/* ==================================================
-   WOMEN SEMIS
-   ================================================== */
-
-const womenSemiFinals: KnockoutMatch[] =
-  [
-    {
-      id: "w-sf-1",
-
-      stage: "Semi-final 1",
-
-      home: "USA",
-
-      away: "New Zealand",
-
-      status: "upcoming",
-    },
-
-    {
-      id: "w-sf-2",
-
-      stage: "Semi-final 2",
-
-      home: "Australia",
-
-      away: "Canada",
-
-      status: "upcoming",
-    },
-  ];
-
-/* ==================================================
-   MEN DATA
-   ================================================== */
-
-const menQuarterFinals: KnockoutMatch[] =
-  [
-    {
-      id: "m-qf-1",
-
-      stage: "Quarter-final 1",
-
-      home: "South Africa",
-
-      away: "Spain",
-
-      homeScore: 14,
-
-      awayScore: 12,
-
-      winner: "South Africa",
-
-      status: "final",
-    },
-
-    {
-      id: "m-qf-2",
-
-      stage: "Quarter-final 2",
-
-      home: "New Zealand",
-
-      away: "France",
-
-      status: "upcoming",
-    },
-
-    {
-      id: "m-qf-3",
-
-      stage: "Quarter-final 3",
-
-      home: "Australia",
-
-      away: "Fiji",
-
-      status: "upcoming",
-    },
-
-    {
-      id: "m-qf-4",
-
-      stage: "Quarter-final 4",
-
-      home: "Argentina",
-
-      away: "Great Britain",
-
-      status: "upcoming",
-    },
-  ];
-
-/* ==================================================
-   MEN SEMIS
-   ================================================== */
-
-const menSemiFinals: KnockoutMatch[] =
-  [
-    {
-      id: "m-sf-1",
-
-      stage: "Semi-final 1",
-
-      home: "South Africa",
-
-      away: "Argentina",
-
-      status: "upcoming",
-    },
-  ];
-
-/* ==================================================
    PAGE
    ================================================== */
 
 export default function SVNSKnockoutsPage() {
   const navigate = useNavigate();
 
-  const tournament = useMemo(
-    () =>
-      tournaments2026.find(
-        (t) =>
-          t.conceptId === "svns"
-      ),
-    []
+  const tournament = tournaments2026.find(
+    (t) => t.conceptId === "svns"
   );
 
   const visual =
     getTournamentVisual("svns");
+
+  /* ==================================================
+     VALLADOLID MATCHES
+     ================================================== */
+
+  const valladolidMatches =
+    useMemo(() => {
+      return svnsMatches2026.filter(
+        (m) =>
+          m.stage === "valladolid"
+      );
+    }, []);
+
+  /* ==================================================
+     WOMEN
+     ================================================== */
+
+  const womenQuarterFinals =
+    valladolidMatches.filter(
+      (m) =>
+        m.gender === "women" &&
+        m.round === "quarter-final"
+    );
+
+  const womenSemiFinals =
+    valladolidMatches.filter(
+      (m) =>
+        m.gender === "women" &&
+        m.round === "semi-final"
+    );
+
+  const womenBronze =
+    valladolidMatches.filter(
+      (m) =>
+        m.gender === "women" &&
+        m.round === "bronze-final"
+    );
+
+  const womenFinal =
+  valladolidMatches.filter(
+    (m) =>
+      m.gender === "women" &&
+      m.round === "final" &&
+      m.stage === "valladolid"
+  );
+
+  /* ==================================================
+     MEN
+     ================================================== */
+
+  const menQuarterFinals =
+    valladolidMatches.filter(
+      (m) =>
+        m.gender === "men" &&
+        m.round === "quarter-final"
+    );
+
+  const menSemiFinals =
+    valladolidMatches.filter(
+      (m) =>
+        m.gender === "men" &&
+        m.round === "semi-final"
+    );
+
+  const menFifth =
+    valladolidMatches.filter(
+      (m) =>
+        m.gender === "men" &&
+        m.round ===
+          "5th-place-final"
+    );
+
+ const menFinal =
+  valladolidMatches.filter(
+    (m) =>
+      m.gender === "men" &&
+      m.round === "final" &&
+      m.stage === "valladolid"
+  );
 
   if (!tournament) {
     return (
@@ -394,16 +252,19 @@ export default function SVNSKnockoutsPage() {
 
         <div className={styles.heroContent}>
           <div className={styles.badge}>
-            HSBC SVNS
+            VALLADOLID COMPLETE
           </div>
 
           <h1>
-            Valladolid Knockouts
+            SVNS Knockout Finals
           </h1>
 
           <p>
-            Day 2 completed —
-            quarter-finals locked
+            Australia sweeps both
+            titles in Valladolid as
+            the HSBC SVNS World
+            Championship heads to
+            Bordeaux.
           </p>
         </div>
       </header>
@@ -423,32 +284,50 @@ export default function SVNSKnockoutsPage() {
 
       {/* WOMEN */}
 
-      <Section
+      <BracketSection
         title="Women — Quarter-finals"
         matches={
           womenQuarterFinals
         }
       />
 
-      <Section
+      <BracketSection
         title="Women — Semi-finals"
-        matches={
-          womenSemiFinals
-        }
+        matches={womenSemiFinals}
+      />
+
+      <BracketSection
+        title="Women — Bronze Final"
+        matches={womenBronze}
+      />
+
+      <BracketSection
+        title="Women — Final"
+        matches={womenFinal}
       />
 
       {/* MEN */}
 
-      <Section
+      <BracketSection
         title="Men — Quarter-finals"
         matches={
           menQuarterFinals
         }
       />
 
-      <Section
+      <BracketSection
         title="Men — Semi-finals"
         matches={menSemiFinals}
+      />
+
+      <BracketSection
+        title="Men — 5th Place Final"
+        matches={menFifth}
+      />
+
+      <BracketSection
+        title="Men — Final"
+        matches={menFinal}
       />
     </main>
   );

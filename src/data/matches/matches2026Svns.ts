@@ -1722,6 +1722,360 @@ const rawMatches: Omit<
       away: 12,
     },
   },
+
+  {
+  id: 32102,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+
+  stage: "valladolid",
+
+  gender: "men",
+
+  round: "quarter-final",
+
+  date: "2026-05-30T18:00:00",
+
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "New Zealand",
+    country: "new-zealand",
+  },
+
+  away: {
+    name: "France",
+    country: "france",
+  },
+
+  score: {
+    home: 21,
+    away: 14,
+  },
+
+  state: "final",
+},
+
+{
+  id: 32103,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+
+  stage: "valladolid",
+
+  gender: "men",
+
+  round: "quarter-final",
+
+  date: "2026-05-30T18:30:00",
+
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "Australia",
+    country: "australia",
+  },
+
+  away: {
+    name: "Fiji",
+    country: "fiji",
+  },
+
+  score: {
+    home: 19,
+    away: 17,
+  },
+
+  state: "final",
+},
+
+{
+  id: 32104,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+
+  stage: "valladolid",
+
+  gender: "men",
+
+  round: "quarter-final",
+
+  date: "2026-05-30T19:00:00",
+
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "Argentina",
+    country: "argentina",
+  },
+
+  away: {
+    name: "Great Britain",
+    country: "great-britain",
+  },
+
+  score: {
+    home: 28,
+    away: 12,
+  },
+
+  state: "final",
+},
+{
+  id: 32201,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+
+  stage: "valladolid",
+
+  gender: "men",
+
+  round: "semi-final",
+
+  date: "2026-05-31T17:00:00",
+
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "South Africa",
+    country: "south-africa",
+  },
+
+  away: {
+    name: "Argentina",
+    country: "argentina",
+  },
+
+  score: {
+    home: 21,
+    away: 14,
+  },
+
+  state: "final",
+},
+
+{
+  id: 32202,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+
+  stage: "valladolid",
+
+  gender: "men",
+
+  round: "semi-final",
+
+  date: "2026-05-31T17:30:00",
+
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "Australia",
+    country: "australia",
+  },
+
+  away: {
+    name: "Fiji",
+    country: "fiji",
+  },
+
+  score: {
+    home: 24,
+    away: 19,
+  },
+
+  state: "final",
+},
+  /* ==================================================
+   VALLADOLID — DAY 3 FINALS
+   ================================================== */
+
+/* ================= WOMEN ================= */
+
+{
+  id: 31301,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "valladolid",
+  gender: "women",
+  round: "semi-final",
+  date: "2026-05-31T13:00:00",
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "Australia",
+    country: "australia",
+  },
+
+  away: {
+    name: "New Zealand",
+    country: "new-zealand",
+  },
+
+  score: {
+    home: 28,
+    away: 26,
+  },
+
+  state: "final",
+},
+
+{
+  id: 31302,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "valladolid",
+  gender: "women",
+  round: "semi-final",
+  date: "2026-05-31T13:30:00",
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "USA",
+    country: "united-states-of-america",
+  },
+
+  away: {
+    name: "Canada",
+    country: "canada",
+  },
+
+  score: {
+    home: 14,
+    away: 12,
+  },
+
+  state: "final",
+},
+
+{
+  id: 31303,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "valladolid",
+  gender: "women",
+  round: "bronze-final",
+  date: "2026-05-31T16:00:00",
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "New Zealand",
+    country: "new-zealand",
+  },
+
+  away: {
+    name: "Canada",
+    country: "canada",
+  },
+
+  score: {
+    home: 50,
+    away: 14,
+  },
+
+  state: "final",
+},
+
+{
+  id: 31304,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "valladolid",
+  gender: "women",
+  round: "final",
+  date: "2026-05-31T18:00:00",
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "Australia",
+    country: "australia",
+  },
+
+  away: {
+    name: "USA",
+    country: "united-states-of-america",
+  },
+
+  score: {
+    home: 27,
+    away: 14,
+  },
+
+  placement: 1,
+
+  state: "final",
+},
+
+/* ================= MEN ================= */
+
+{
+  id: 32301,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "valladolid",
+  gender: "men",
+  round: "5th-place-final",
+  date: "2026-05-31T14:00:00",
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "New Zealand",
+    country: "new-zealand",
+  },
+
+  away: {
+    name: "Spain",
+    country: "spain",
+  },
+
+  score: {
+    home: 22,
+    away: 12,
+  },
+
+  state: "final",
+},
+
+{
+  id: 32302,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship 2026",
+  tournamentInstanceId: "svns-2026",
+  stage: "valladolid",
+  gender: "men",
+  round: "final",
+  date: "2026-05-31T20:00:00",
+  venue: "Estadio José Zorrilla",
+
+  home: {
+    name: "Australia",
+    country: "australia",
+  },
+
+  away: {
+    name: "South Africa",
+    country: "south-africa",
+  },
+
+  score: {
+    home: 26,
+    away: 19,
+  },
+
+  placement: 1,
+
+  state: "final",
+},
 ];
 
 /* ==================================================
