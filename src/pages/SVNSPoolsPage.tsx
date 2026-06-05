@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { svnsMatches2026 } from "../data/matches/matches2026Svns";
+import { allSvnsMatches } from "../data/svns/allSvnsMatches";
 import { tournaments2026 } from "../data/tournamentMeta";
 import { getTournamentVisual } from "../data/tournamentVisuals";
 
@@ -49,23 +49,48 @@ function PoolTable({
   matches,
 }: {
   title: string;
-
   matches: MatchData[];
 }) {
-  const table =
-    buildSvnsStandings(
-      matches
-    );
+  const standings =
+  buildSvnsStandings(matches);
+
+const table =
+  standings.length > 0
+    ? standings
+    : Array.from(
+        new Set([
+          ...matches.map(
+            (m) => m.home.name
+          ),
+          ...matches.map(
+            (m) => m.away.name
+          ),
+        ])
+      ).map((team) => ({
+        team,
+
+        played: 0,
+
+        won: 0,
+
+        lost: 0,
+
+        drawn: 0,
+
+        pointsFor: 0,
+
+        pointsAgainst: 0,
+
+        pointsDiff: 0,
+
+        points: 0,
+
+        form: [],
+      }));
 
   return (
-    <div
-      className={styles.poolCard}
-    >
-      <div
-        className={
-          styles.poolHeader
-        }
-      >
+    <div className={styles.poolCard}>
+      <div className={styles.poolHeader}>
         <h3>{title}</h3>
 
         <div
@@ -73,7 +98,7 @@ function PoolTable({
             styles.liveBadge
           }
         >
-          FINAL
+          LIVE
         </div>
       </div>
 
@@ -103,9 +128,7 @@ function PoolTable({
                 : ""
             }`}
           >
-            <span>
-              {i + 1}
-            </span>
+            <span>{i + 1}</span>
 
             <div
               className={
@@ -142,16 +165,16 @@ function PoolTable({
             </span>
 
             <span>
-  {row.pointsFor}
-</span>
+              {row.pointsFor}
+            </span>
 
-<span>
-  {row.pointsAgainst}
-</span>
+            <span>
+              {row.pointsAgainst}
+            </span>
 
-<span>
-  {row.pointsDiff}
-</span>
+            <span>
+              {row.pointsDiff}
+            </span>
 
             <span
               className={
@@ -188,15 +211,15 @@ export default function SVNSPoolsPage() {
     );
 
   /* ==================================================
-     VALLADOLID ONLY
+     BORDEAUX ACTIVE TOURNAMENT
      ================================================== */
 
-  const valladolidMatches =
+  const bordeauxMatches =
     useMemo(() => {
-      return svnsMatches2026.filter(
+      return allSvnsMatches.filter(
         (m) =>
           m.stage ===
-          "valladolid"
+          "bordeaux"
       );
     }, []);
 
@@ -206,7 +229,7 @@ export default function SVNSPoolsPage() {
 
   const womenMatches =
     getPools(
-      valladolidMatches,
+      bordeauxMatches,
       "women"
     );
 
@@ -233,7 +256,7 @@ export default function SVNSPoolsPage() {
 
   const menMatches =
     getPools(
-      valladolidMatches,
+      bordeauxMatches,
       "men"
     );
 
@@ -307,15 +330,15 @@ export default function SVNSPoolsPage() {
           </div>
 
           <h1>
-            Valladolid Pool
+            Bordeaux Pool
             Standings
           </h1>
 
           <p>
-            Final standings
-            after completion
-            of pool play in
-            Spain
+            Live pool standings
+            from the HSBC SVNS
+            World Championship
+            Final in France
           </p>
         </div>
       </header>
@@ -360,7 +383,7 @@ export default function SVNSPoolsPage() {
               styles.sectionTag
             }
           >
-            DAY 2 COMPLETE
+            LIVE
           </div>
         </div>
 
@@ -410,7 +433,7 @@ export default function SVNSPoolsPage() {
               styles.sectionTag
             }
           >
-            DAY 2 COMPLETE
+            LIVE
           </div>
         </div>
 

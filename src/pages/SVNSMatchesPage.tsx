@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { svnsMatches2026 } from "../data/matches/matches2026Svns";
+import { allSvnsMatches } from "../data/svns/allSvnsMatches";
 import { tournaments2026 } from "../data/tournamentMeta";
 import { getTournamentVisual } from "../data/tournamentVisuals";
 
@@ -69,12 +69,11 @@ function MatchRow({
     <div
       className={styles.matchRow}
       onClick={() =>
-  navigate(`/match/${match.id}`, {
-    state: match,
-  })
-}
+        navigate(`/match/${match.id}`, {
+          state: match,
+        })
+      }
     >
-      {/* HOME */}
       <div className={styles.team}>
         {getFlag(match.home.country) ? (
           <img
@@ -89,7 +88,6 @@ function MatchRow({
         <span>{match.home.name}</span>
       </div>
 
-      {/* CENTER */}
       <div className={styles.center}>
         <div className={styles.label}>
           {match.pool
@@ -104,7 +102,6 @@ function MatchRow({
         </div>
       </div>
 
-      {/* AWAY */}
       <div className={styles.team}>
         <span>{match.away.name}</span>
 
@@ -133,72 +130,90 @@ export default function SVNSMatchesPage() {
     (t) => t.conceptId === "svns"
   );
 
-  const visual = getTournamentVisual("svns");
+  const visual =
+    getTournamentVisual("svns");
 
- const [matches, setMatches] = useState<MatchData[]>([]);
+  const [matches, setMatches] =
+    useState<MatchData[]>([]);
 
-useEffect(() => {
-  async function loadMatches() {
-    try {
-      const apiMatches =
-        await fetchSvnsMatches();
+  useEffect(() => {
+    async function loadMatches() {
+      try {
+        const apiMatches =
+          await fetchSvnsMatches();
 
-      if (apiMatches.length) {
-        setMatches(apiMatches);
-      } else {
-        setMatches(svnsMatches2026);
+        if (apiMatches.length) {
+          setMatches(apiMatches);
+        } else {
+          setMatches(allSvnsMatches);
+        }
+      } catch (err) {
+        console.error(err);
+
+        setMatches(allSvnsMatches);
       }
-    } catch (err) {
-      console.error(err);
-
-      setMatches(svnsMatches2026);
     }
-  }
 
-  loadMatches();
-}, []);
+    loadMatches();
+  }, []);
 
-  /* ================= ACTIVE LEG ================= */
+  /* ==================================================
+     ACTIVE TOURNAMENT
+     ================================================== */
 
-  const valladolid = matches.filter(
-    (m) => m.stage === "valladolid"
+  const bordeaux = matches.filter(
+    (m) => m.stage === "bordeaux"
   );
 
   const day1 = sortMatches(
-    valladolid.filter(
+    bordeaux.filter(
       (m) =>
-        new Date(m.date).getDate() === 29
+        new Date(m.date).getDate() === 5
     )
   );
 
   const day2 = sortMatches(
-    valladolid.filter(
+    bordeaux.filter(
       (m) =>
-        new Date(m.date).getDate() === 30
+        new Date(m.date).getDate() === 6
     )
   );
 
   const day3 = sortMatches(
-    valladolid.filter(
+    bordeaux.filter(
       (m) =>
-        new Date(m.date).getDate() === 31
+        new Date(m.date).getDate() === 7
     )
   );
 
-  /* ================= ARCHIVE ================= */
+  /* ==================================================
+     ARCHIVES
+     ================================================== */
 
-  const hongKong = sortMatches(
-    matches.filter(
-      (m) => m.stage === "hong-kong"
-    )
-  );
+  const valladolidArchive =
+    sortMatches(
+      matches.filter(
+        (m) =>
+          m.stage === "valladolid"
+      )
+    );
 
-  if (!tournament)
+  const hongKong =
+    sortMatches(
+      matches.filter(
+        (m) =>
+          m.stage === "hong-kong"
+      )
+    );
+
+  if (!tournament) {
     return <div>SVNS not found</div>;
+  }
 
   return (
     <main>
       {/* HERO */}
+
       <header
         className={`${styles.hero} ${styles.heroSVNSLayout}`}
         style={{
@@ -211,7 +226,7 @@ useEffect(() => {
         <div className={styles.heroContent}>
           <div>
             <h1>
-              Valladolid — Live Tournament
+              Bordeaux — World Championship Final
             </h1>
 
             <p>
@@ -222,24 +237,27 @@ useEffect(() => {
       </header>
 
       {/* BACK */}
+
       <div className={styles.backNav}>
         <button
           className={styles.backButton}
-          onClick={() => navigate("/svns")}
+          onClick={() =>
+            navigate("/svns")
+          }
         >
           ← Back to SVNS
         </button>
       </div>
 
       {/* SUBTITLE */}
+
       <div className={styles.subHeader}>
-        Valladolid is LIVE — Hong Kong
-        results archived below
+        Bordeaux is LIVE —
+        Valladolid and Hong Kong
+        archived below
       </div>
 
-      {/* ==================================================
-         DAY 1
-         ================================================== */}
+      {/* DAY 1 */}
 
       <section className={styles.section}>
         <h2>Day 1 — Friday</h2>
@@ -249,7 +267,9 @@ useEffect(() => {
         </h3>
 
         {day1
-          .filter((m) => m.gender === "women")
+          .filter(
+            (m) => m.gender === "women"
+          )
           .map((match) => (
             <MatchRow
               key={match.id}
@@ -263,7 +283,9 @@ useEffect(() => {
         </h3>
 
         {day1
-          .filter((m) => m.gender === "men")
+          .filter(
+            (m) => m.gender === "men"
+          )
           .map((match) => (
             <MatchRow
               key={match.id}
@@ -273,9 +295,7 @@ useEffect(() => {
           ))}
       </section>
 
-      {/* ==================================================
-         DAY 2
-         ================================================== */}
+      {/* DAY 2 */}
 
       <section className={styles.section}>
         <h2>Day 2 — Saturday</h2>
@@ -285,7 +305,9 @@ useEffect(() => {
         </h3>
 
         {day2
-          .filter((m) => m.gender === "women")
+          .filter(
+            (m) => m.gender === "women"
+          )
           .map((match) => (
             <MatchRow
               key={match.id}
@@ -299,7 +321,9 @@ useEffect(() => {
         </h3>
 
         {day2
-          .filter((m) => m.gender === "men")
+          .filter(
+            (m) => m.gender === "men"
+          )
           .map((match) => (
             <MatchRow
               key={match.id}
@@ -309,9 +333,7 @@ useEffect(() => {
           ))}
       </section>
 
-      {/* ==================================================
-         DAY 3
-         ================================================== */}
+      {/* DAY 3 */}
 
       <section className={styles.section}>
         <h2>Day 3 — Finals</h2>
@@ -321,7 +343,9 @@ useEffect(() => {
         </h3>
 
         {day3
-          .filter((m) => m.gender === "women")
+          .filter(
+            (m) => m.gender === "women"
+          )
           .map((match) => (
             <MatchRow
               key={match.id}
@@ -335,7 +359,9 @@ useEffect(() => {
         </h3>
 
         {day3
-          .filter((m) => m.gender === "men")
+          .filter(
+            (m) => m.gender === "men"
+          )
           .map((match) => (
             <MatchRow
               key={match.id}
@@ -345,9 +371,23 @@ useEffect(() => {
           ))}
       </section>
 
-      {/* ==================================================
-         HONG KONG ARCHIVE
-         ================================================== */}
+      {/* VALLADOLID ARCHIVE */}
+
+      <section className={styles.section}>
+        <h2>Valladolid Archive</h2>
+
+        {valladolidArchive.map(
+          (match) => (
+            <MatchRow
+              key={match.id}
+              match={match}
+              navigate={navigate}
+            />
+          )
+        )}
+      </section>
+
+      {/* HONG KONG ARCHIVE */}
 
       <section className={styles.section}>
         <h2>Hong Kong Archive</h2>
