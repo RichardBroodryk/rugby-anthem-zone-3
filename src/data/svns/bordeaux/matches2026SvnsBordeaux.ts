@@ -5,121 +5,83 @@ import type {
 } from "../../matches/types";
 
 export const matches2026SvnsBordeaux: MatchData[] = [
-  /* ==================================================
-     WOMEN DAY 1
-     ================================================== */
-
-  {
-    id: 30001,
-
-    competitionId: "svns",
-
-    tournament: "HSBC SVNS World Championship",
-
-    tournamentInstanceId:
-      "svns-bordeaux-2026",
-
-    stage: "bordeaux",
-
-    gender: "women",
-
-    round: "pool",
-
-    pool: "A",
-
-    date: "2026-06-05T09:05:00",
-
-    venue:
-      "Stade Atlantique Bordeaux Métropole",
-
-    home: {
-      name: "New Zealand",
-      country: "New Zealand",
-    },
-
-    away: {
-      name: "Argentina",
-      country: "Argentina",
-    },
-
-    state: "upcoming",
+ {
+  id: 30001,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship",
+  tournamentInstanceId: "svns-bordeaux-2026",
+  stage: "bordeaux",
+  gender: "women",
+  round: "pool",
+  pool: "A",
+  date: "2026-06-05T09:05:00",
+  venue: "Stade Atlantique Bordeaux Métropole",
+  home: {
+    name: "New Zealand",
+    country: "New Zealand",
   },
-
-  {
-    id: 30002,
-
-    competitionId: "svns",
-
-    tournament: "HSBC SVNS World Championship",
-
-    tournamentInstanceId:
-      "svns-bordeaux-2026",
-
-    stage: "bordeaux",
-
-    gender: "women",
-
-    round: "pool",
-
-    pool: "B",
-
-    date: "2026-06-05T09:28:00",
-
-    venue:
-      "Stade Atlantique Bordeaux Métropole",
-
-    home: {
-      name: "Australia",
-      country: "Australia",
-    },
-
-    away: {
-      name: "Brazil",
-      country: "Brazil",
-    },
-
-    state: "upcoming",
+  away: {
+    name: "Argentina",
+    country: "Argentina",
   },
-
-  {
-    id: 30003,
-
-    competitionId: "svns",
-
-    tournament: "HSBC SVNS World Championship",
-
-    tournamentInstanceId:
-      "svns-bordeaux-2026",
-
-    stage: "bordeaux",
-
-    gender: "women",
-
-    round: "pool",
-
-    pool: "C",
-
-    date: "2026-06-05T09:51:00",
-
-    venue:
-      "Stade Atlantique Bordeaux Métropole",
-
-    home: {
-      name: "USA",
-      country: "USA",
-    },
-
-    away: {
-      name: "Great Britain",
-      country: "Great Britain",
-    },
-
-    state: "upcoming",
+  state: "final",
+  score: {
+    home: 49,
+    away: 5,
   },
+},
 
-  /* ==================================================
-   WOMEN DAY 1
-   ================================================== */
+{
+  id: 30002,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship",
+  tournamentInstanceId: "svns-bordeaux-2026",
+  stage: "bordeaux",
+  gender: "women",
+  round: "pool",
+  pool: "B",
+  date: "2026-06-05T09:28:00",
+  venue: "Stade Atlantique Bordeaux Métropole",
+  home: {
+    name: "Australia",
+    country: "Australia",
+  },
+  away: {
+    name: "Brazil",
+    country: "Brazil",
+  },
+  state: "final",
+  score: {
+    home: 45,
+    away: 7,
+  },
+},
+
+{
+  id: 30003,
+  competitionId: "svns",
+  tournament: "HSBC SVNS World Championship",
+  tournamentInstanceId: "svns-bordeaux-2026",
+  stage: "bordeaux",
+  gender: "women",
+  round: "pool",
+  pool: "C",
+  date: "2026-06-05T09:51:00",
+  venue: "Stade Atlantique Bordeaux Métropole",
+  home: {
+    name: "USA",
+    country: "USA",
+  },
+  away: {
+    name: "Great Britain",
+    country: "Great Britain",
+  },
+  state: "final",
+  score: {
+    home: 31,
+    away: 7,
+  },
+},
 
 {
   id: 30004,
@@ -140,7 +102,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "South Africa",
     country: "South Africa",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 22,
+    away: 7,
+  },
 },
 
 {
@@ -162,7 +128,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Fiji",
     country: "Fiji",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 12,
+    away: 24,
+  },
 },
 
 {
@@ -184,7 +154,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Spain",
     country: "Spain",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 14,
+    away: 12,
+  },
 },
 
 {
@@ -206,7 +180,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "South Africa",
     country: "South Africa",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 42,
+    away: 0,
+  },
 },
 
 {
@@ -228,7 +206,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Fiji",
     country: "Fiji",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 19,
+    away: 7,
+  },
 },
 
 {
@@ -250,7 +232,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Spain",
     country: "Spain",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 19,
+    away: 15,
+  },
 },
 
 {
@@ -272,7 +258,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Argentina",
     country: "Argentina",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 27,
+    away: 10,
+  },
 },
 
 {
@@ -294,7 +284,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Brazil",
     country: "Brazil",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 29,
+    away: 14,
+  },
 },
 
 {
@@ -316,7 +310,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Great Britain",
     country: "Great Britain",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 35,
+    away: 14,
+  },
 },
 
 /* ==================================================
@@ -342,7 +340,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Kenya",
     country: "Kenya",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 26,
+    away: 5,
+  },
 },
 
 {
@@ -364,7 +366,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Uruguay",
     country: "Uruguay",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 43,
+    away: 12,
+  },
 },
 
 {
@@ -386,7 +392,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Germany",
     country: "Germany",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 35,
+    away: 19,
+  },
 },
 
 {
@@ -408,7 +418,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Great Britain",
     country: "Great Britain",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 26,
+    away: 12,
+  },
 },
 
 {
@@ -430,7 +444,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "USA",
     country: "USA",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 19,
+    away: 24,
+  },
 },
 
 {
@@ -452,7 +470,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "France",
     country: "France",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 26,
+    away: 21,
+  },
 },
 
 {
@@ -474,7 +496,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Great Britain",
     country: "Great Britain",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 14,
+    away: 19,
+  },
 },
 
 {
@@ -496,7 +522,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "USA",
     country: "USA",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 17,
+    away: 19,
+  },
 },
 
 {
@@ -518,7 +548,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "France",
     country: "France",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 14,
+    away: 22,
+  },
 },
 
 {
@@ -540,7 +574,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Kenya",
     country: "Kenya",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 31,
+    away: 12,
+  },
 },
 
 {
@@ -562,7 +600,11 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Uruguay",
     country: "Uruguay",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 42,
+    away: 17,
+  },
 },
 
 {
@@ -584,9 +626,12 @@ export const matches2026SvnsBordeaux: MatchData[] = [
     name: "Germany",
     country: "Germany",
   },
-  state: "upcoming",
+  state: "final",
+  score: {
+    home: 33,
+    away: 7,
+  },
 },
-
 /* ==================================================
    WOMEN DAY 2
    FINAL POOL MATCHES
