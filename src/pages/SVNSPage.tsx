@@ -108,8 +108,9 @@ export default function SVNSPage() {
       {/* LIVE STATUS */}
 
       <div className={styles.liveBanner}>
-        🇫🇷 Bordeaux Grand Final LIVE —
-        HSBC SVNS World Championship
+        <div className={styles.liveBanner}>
+  🏆 South Africa crowned 2026 Men's World Champions — Women's title to be decided on Championship Sunday
+</div>
       </div>
 
       {/* NAV */}
@@ -159,12 +160,43 @@ export default function SVNSPage() {
           ← Back to Tournaments
         </button>
 
-        <p className={styles.subtitle}>
-          Bordeaux is now the active
-          tournament. World Championship
-          titles will be decided in France.
-        </p>
+       <p className={styles.subtitle}>
+  South Africa have secured the Men's HSBC SVNS World Championship.
+  Australia, New Zealand, USA and Canada remain in contention for the Women's title.
+</p>
       </div>
+
+      {/* NEWS */}
+
+      <section className={styles.section}>
+        <h2>Latest News</h2>
+
+        <div className={styles.standingsGrid}>
+          <div className={styles.standingsPreview}>
+            <h3 className={styles.subHeader}>
+              🏆 South Africa Clinch World Title
+            </h3>
+
+            <p>
+              The Blitzboks secured the 2026 HSBC SVNS World Championship
+              after defeating Fiji 14–12 in the Bordeaux quarter-finals.
+              Argentina and Australia were both eliminated from title contention.
+            </p>
+          </div>
+
+          <div className={styles.standingsPreview}>
+            <h3 className={styles.subHeader}>
+              🔥 USA Dream Run Continues
+            </h3>
+
+            <p>
+              Both USA teams reached Championship Sunday.
+              The women defeated France 12–0 in the quarter-finals,
+              while the men completed a perfect pool stage before advancing to the semi-finals.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* STANDINGS */}
 
