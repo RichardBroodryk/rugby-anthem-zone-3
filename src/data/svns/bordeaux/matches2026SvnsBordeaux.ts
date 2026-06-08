@@ -1036,63 +1036,90 @@ export const matches2026SvnsBordeaux: MatchData[] = [
 {
   id: 30037,
   competitionId: "svns",
-  tournament: "HSBC SVNS World Championship",
   tournamentInstanceId: "svns-bordeaux-2026",
+  tournament: "HSBC SVNS World Championship",
   stage: "bordeaux",
   gender: "women",
   round: "quarter-final",
   date: "2026-06-06T12:04:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+
+  home: { name: "Canada", country: "Canada" },
+  away: { name: "Fiji", country: "Fiji" },
+
+  score: {
+    home: 29,
+    away: 14,
+  },
+
+  state: "final",
 },
 
 {
   id: 30038,
   competitionId: "svns",
-  tournament: "HSBC SVNS World Championship",
   tournamentInstanceId: "svns-bordeaux-2026",
+  tournament: "HSBC SVNS World Championship",
   stage: "bordeaux",
   gender: "women",
   round: "quarter-final",
   date: "2026-06-06T12:27:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+
+  home: { name: "New Zealand", country: "New Zealand" },
+  away: { name: "Japan", country: "Japan" },
+
+  score: {
+    home: 35,
+    away: 22,
+  },
+
+  state: "final",
 },
 
 {
   id: 30039,
   competitionId: "svns",
-  tournament: "HSBC SVNS World Championship",
   tournamentInstanceId: "svns-bordeaux-2026",
+  tournament: "HSBC SVNS World Championship",
   stage: "bordeaux",
   gender: "women",
   round: "quarter-final",
   date: "2026-06-06T12:50:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+
+  home: { name: "USA", country: "USA" },
+  away: { name: "France", country: "France" },
+
+  score: {
+    home: 12,
+    away: 0,
+  },
+
+  state: "final",
 },
 
 {
   id: 30040,
   competitionId: "svns",
-  tournament: "HSBC SVNS World Championship",
   tournamentInstanceId: "svns-bordeaux-2026",
+  tournament: "HSBC SVNS World Championship",
   stage: "bordeaux",
   gender: "women",
   round: "quarter-final",
   date: "2026-06-06T13:13:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
-},
 
+  home: { name: "Australia", country: "Australia" },
+  away: { name: "Spain", country: "Spain" },
+
+  score: {
+    home: 14,
+    away: 0,
+  },
+
+  state: "final",
+},
 /* ==================================================
    MEN QUARTER FINALS
    ================================================== */
@@ -1257,64 +1284,68 @@ export const matches2026SvnsBordeaux: MatchData[] = [
    WOMEN FINALS DAY
    ================================================== */
 
-{
+ {
   id: 30045,
   competitionId: "svns",
-  tournamentInstanceId: "svns-bordeaux-2026",
   tournament: "HSBC SVNS World Championship",
+  tournamentInstanceId: "svns-bordeaux-2026",
   stage: "bordeaux",
   gender: "women",
-  round: "semi-final",
-  date: "2026-06-07T10:32:00",
+  round: "11th-place-playoff",
+  date: "2026-06-07T09:00:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+  home: { name: "Brazil", country: "Brazil" },
+  away: { name: "South Africa", country: "South Africa" },
+  score: { home: 24, away: 17 },
+  state: "final",
 },
 
 {
   id: 30046,
   competitionId: "svns",
-  tournamentInstanceId: "svns-bordeaux-2026",
   tournament: "HSBC SVNS World Championship",
+  tournamentInstanceId: "svns-bordeaux-2026",
   stage: "bordeaux",
   gender: "women",
-  round: "semi-final",
-  date: "2026-06-07T10:55:00",
+  round: "9th-place-playoff",
+  date: "2026-06-07T09:23:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+  home: { name: "Great Britain", country: "Great Britain" },
+  away: { name: "Argentina", country: "Argentina" },
+  score: { home: 19, away: 31 },
+  state: "final",
 },
 
 {
   id: 30047,
   competitionId: "svns",
-  tournamentInstanceId: "svns-bordeaux-2026",
   tournament: "HSBC SVNS World Championship",
+  tournamentInstanceId: "svns-bordeaux-2026",
   stage: "bordeaux",
   gender: "women",
-  round: "bronze-final",
-  date: "2026-06-07T12:14:00",
+  round: "7th-place-playoff",
+  date: "2026-06-07T09:46:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+  home: { name: "Spain", country: "Spain" },
+  away: { name: "Japan", country: "Japan" },
+  score: { home: 7, away: 19 },
+  state: "final",
 },
 
 {
   id: 30048,
   competitionId: "svns",
-  tournamentInstanceId: "svns-bordeaux-2026",
   tournament: "HSBC SVNS World Championship",
+  tournamentInstanceId: "svns-bordeaux-2026",
   stage: "bordeaux",
   gender: "women",
-  round: "final",
-  date: "2026-06-07T13:00:00",
+  round: "5th-place-playoff",
+  date: "2026-06-07T10:09:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+  home: { name: "Fiji", country: "Fiji" },
+  away: { name: "France", country: "France" },
+  score: { home: 12, away: 24 },
+  state: "final",
 },
 
 /* ==================================================
@@ -1327,13 +1358,23 @@ export const matches2026SvnsBordeaux: MatchData[] = [
   tournamentInstanceId: "svns-bordeaux-2026",
   tournament: "HSBC SVNS World Championship",
   stage: "bordeaux",
-  gender: "men",
+  gender: "women",
   round: "semi-final",
-  date: "2026-06-07T11:18:00",
+  date: "2026-06-07T10:32:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+  home: {
+    name: "USA",
+    country: "USA",
+  },
+  away: {
+    name: "Australia",
+    country: "Australia",
+  },
+  score: {
+    home: 7,
+    away: 21,
+  },
+  state: "final",
 },
 
 {
@@ -1342,13 +1383,23 @@ export const matches2026SvnsBordeaux: MatchData[] = [
   tournamentInstanceId: "svns-bordeaux-2026",
   tournament: "HSBC SVNS World Championship",
   stage: "bordeaux",
-  gender: "men",
+  gender: "women",
   round: "semi-final",
-  date: "2026-06-07T11:41:00",
+  date: "2026-06-07T10:55:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+  home: {
+    name: "Canada",
+    country: "Canada",
+  },
+  away: {
+    name: "New Zealand",
+    country: "New Zealand",
+  },
+  score: {
+    home: 17,
+    away: 19,
+  },
+  state: "final",
 },
 
 {
@@ -1357,13 +1408,23 @@ export const matches2026SvnsBordeaux: MatchData[] = [
   tournamentInstanceId: "svns-bordeaux-2026",
   tournament: "HSBC SVNS World Championship",
   stage: "bordeaux",
-  gender: "men",
+  gender: "women",
   round: "bronze-final",
-  date: "2026-06-07T12:37:00",
+  date: "2026-06-07T12:14:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+  home: {
+    name: "Canada",
+    country: "Canada",
+  },
+  away: {
+    name: "USA",
+    country: "USA",
+  },
+  score: {
+    home: 21,
+    away: 19,
+  },
+  state: "final",
 },
 
 {
@@ -1372,12 +1433,122 @@ export const matches2026SvnsBordeaux: MatchData[] = [
   tournamentInstanceId: "svns-bordeaux-2026",
   tournament: "HSBC SVNS World Championship",
   stage: "bordeaux",
+  gender: "women",
+  round: "final",
+  date: "2026-06-07T13:00:00",
+  venue: "Stade Atlantique Bordeaux Métropole",
+  home: {
+    name: "Australia",
+    country: "Australia",
+  },
+  away: {
+    name: "New Zealand",
+    country: "New Zealand",
+  },
+  score: {
+    home: 26,
+    away: 19,
+  },
+  state: "final",
+},
+
+{
+  id: 30053,
+  competitionId: "svns",
+  tournamentInstanceId: "svns-bordeaux-2026",
+  tournament: "HSBC SVNS World Championship",
+  stage: "bordeaux",
+  gender: "men",
+  round: "semi-final",
+  date: "2026-06-07T11:18:00",
+  venue: "Stade Atlantique Bordeaux Métropole",
+  home: {
+    name: "France",
+    country: "France",
+  },
+  away: {
+    name: "South Africa",
+    country: "South Africa",
+  },
+  score: {
+    home: 21,
+    away: 12,
+  },
+  state: "final",
+},
+
+{
+  id: 30054,
+  competitionId: "svns",
+  tournamentInstanceId: "svns-bordeaux-2026",
+  tournament: "HSBC SVNS World Championship",
+  stage: "bordeaux",
+  gender: "men",
+  round: "semi-final",
+  date: "2026-06-07T11:41:00",
+  venue: "Stade Atlantique Bordeaux Métropole",
+  home: {
+    name: "New Zealand",
+    country: "New Zealand",
+  },
+  away: {
+    name: "Spain",
+    country: "Spain",
+  },
+  score: {
+    home: 24,
+    away: 12,
+  },
+  state: "final",
+},
+
+{
+  id: 30055,
+  competitionId: "svns",
+  tournamentInstanceId: "svns-bordeaux-2026",
+  tournament: "HSBC SVNS World Championship",
+  stage: "bordeaux",
+  gender: "men",
+  round: "bronze-final",
+  date: "2026-06-07T12:37:00",
+  venue: "Stade Atlantique Bordeaux Métropole",
+  home: {
+    name: "South Africa",
+    country: "South Africa",
+  },
+  away: {
+    name: "Spain",
+    country: "Spain",
+  },
+  score: {
+    home: 14,
+    away: 40,
+  },
+  state: "final",
+},
+
+{
+  id: 30056,
+  competitionId: "svns",
+  tournamentInstanceId: "svns-bordeaux-2026",
+  tournament: "HSBC SVNS World Championship",
+  stage: "bordeaux",
   gender: "men",
   round: "final",
   date: "2026-06-07T13:30:00",
   venue: "Stade Atlantique Bordeaux Métropole",
-  home: { name: "TBD", country: "TBD" },
-  away: { name: "TBD", country: "TBD" },
-  state: "upcoming",
+  home: {
+    name: "France",
+    country: "France",
+  },
+  away: {
+    name: "New Zealand",
+    country: "New Zealand",
+  },
+  score: {
+    home: 14,
+    away: 5,
+  },
+  state: "final",
 },
 ];

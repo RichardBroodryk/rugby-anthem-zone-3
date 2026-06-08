@@ -105,12 +105,12 @@ export default function SVNSPage() {
         </p>
       </div>
 
-      {/* LIVE STATUS */}
+      {/* CHAMPIONS BANNER */}
 
       <div className={styles.liveBanner}>
-        <div className={styles.liveBanner}>
-  🏆 South Africa crowned 2026 Men's World Champions — Women's title to be decided on Championship Sunday
-</div>
+        🏆 2025/26 HSBC SVNS Complete —
+        South Africa Men & Australia Women
+        crowned World Champions
       </div>
 
       {/* NAV */}
@@ -160,39 +160,81 @@ export default function SVNSPage() {
           ← Back to Tournaments
         </button>
 
-       <p className={styles.subtitle}>
-  South Africa have secured the Men's HSBC SVNS World Championship.
-  Australia, New Zealand, USA and Canada remain in contention for the Women's title.
-</p>
+        <p className={styles.subtitle}>
+          The 2025/26 HSBC SVNS season has
+          concluded. South Africa secured
+          the Men's World Championship,
+          while Australia captured both
+          the Bordeaux title and the
+          Women's World Championship
+          crown.
+        </p>
       </div>
 
-      {/* NEWS */}
+      {/* SEASON NEWS */}
 
       <section className={styles.section}>
-        <h2>Latest News</h2>
+        <h2>Season Finale</h2>
 
-        <div className={styles.standingsGrid}>
-          <div className={styles.standingsPreview}>
-            <h3 className={styles.subHeader}>
-              🏆 South Africa Clinch World Title
+        <div
+          className={
+            styles.standingsGrid
+          }
+        >
+          <div
+            className={
+              styles.standingsPreview
+            }
+          >
+            <h3
+              className={
+                styles.subHeader
+              }
+            >
+              🏆 South Africa Crowned
+              Men's World Champions
             </h3>
 
             <p>
-              The Blitzboks secured the 2026 HSBC SVNS World Championship
-              after defeating Fiji 14–12 in the Bordeaux quarter-finals.
-              Argentina and Australia were both eliminated from title contention.
+              The Blitzboks secured the
+              2025/26 HSBC SVNS World
+              Championship after a
+              remarkable season that
+              included victories in Hong
+              Kong and New York together
+              with consistent performances
+              across the series. Although
+              France won the Bordeaux
+              tournament, South Africa
+              finished the season as
+              overall World Champions.
             </p>
           </div>
 
-          <div className={styles.standingsPreview}>
-            <h3 className={styles.subHeader}>
-              🔥 USA Dream Run Continues
+          <div
+            className={
+              styles.standingsPreview
+            }
+          >
+            <h3
+              className={
+                styles.subHeader
+              }
+            >
+              🇦🇺 Australia Complete
+              Women's Double
             </h3>
 
             <p>
-              Both USA teams reached Championship Sunday.
-              The women defeated France 12–0 in the quarter-finals,
-              while the men completed a perfect pool stage before advancing to the semi-finals.
+              Australia defeated New
+              Zealand 26–19 in the
+              Bordeaux Final to secure
+              both the tournament title
+              and the 2025/26 HSBC SVNS
+              Women's World Championship.
+              Canada finished third after
+              defeating the USA in the
+              bronze medal match.
             </p>
           </div>
         </div>
@@ -202,7 +244,7 @@ export default function SVNSPage() {
 
       <section className={styles.section}>
         <h2>
-          Pre-Bordeaux World
+          Final HSBC SVNS World
           Championship Standings
         </h2>
 
@@ -219,7 +261,7 @@ export default function SVNSPage() {
                 styles.subHeader
               }
             >
-              Men
+              🏆 Men's World Champions
             </h3>
 
             <div
@@ -286,7 +328,7 @@ export default function SVNSPage() {
                 styles.subHeader
               }
             >
-              Women
+              🏆 Women's World Champions
             </h3>
 
             <div

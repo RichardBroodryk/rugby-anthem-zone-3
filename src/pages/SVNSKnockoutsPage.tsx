@@ -1,13 +1,11 @@
 import { useMemo } from "react";
-
 import { useNavigate } from "react-router-dom";
 
 import styles from "./SVNSKnockoutsPage.module.css";
 
-import { svnsMatches2026 } from "../data/matches/matches2026Svns";
+import { allSvnsMatches } from "../data/svns/allSvnsMatches";
 
 import { tournaments2026 } from "../data/tournamentMeta";
-
 import { getTournamentVisual } from "../data/tournamentVisuals";
 
 import { svnsFlags } from "../data/flags/svnsFlags";
@@ -43,8 +41,6 @@ function MatchCard({
         </div>
       </div>
 
-      {/* HOME */}
-
       <div
         className={`${styles.teamRow} ${
           homeWon ? styles.winner : ""
@@ -67,11 +63,9 @@ function MatchCard({
         </div>
 
         <div className={styles.score}>
-          {match.score.home}
+          {match.score?.home}
         </div>
       </div>
-
-      {/* AWAY */}
 
       <div
         className={`${styles.teamRow} ${
@@ -95,7 +89,7 @@ function MatchCard({
         </div>
 
         <div className={styles.score}>
-          {match.score.away}
+          {match.score?.away}
         </div>
       </div>
     </div>
@@ -111,7 +105,6 @@ function BracketSection({
   matches,
 }: {
   title: string;
-
   matches: any[];
 }) {
   if (!matches.length) {
@@ -151,14 +144,14 @@ export default function SVNSKnockoutsPage() {
     getTournamentVisual("svns");
 
   /* ==================================================
-     VALLADOLID MATCHES
+     BORDEAUX
      ================================================== */
 
-  const valladolidMatches =
+  const bordeauxMatches =
     useMemo(() => {
-      return svnsMatches2026.filter(
+      return allSvnsMatches.filter(
         (m) =>
-          m.stage === "valladolid"
+          m.stage === "bordeaux"
       );
     }, []);
 
@@ -167,67 +160,64 @@ export default function SVNSKnockoutsPage() {
      ================================================== */
 
   const womenQuarterFinals =
-    valladolidMatches.filter(
+    bordeauxMatches.filter(
       (m) =>
         m.gender === "women" &&
         m.round === "quarter-final"
     );
 
   const womenSemiFinals =
-    valladolidMatches.filter(
+    bordeauxMatches.filter(
       (m) =>
         m.gender === "women" &&
         m.round === "semi-final"
     );
 
   const womenBronze =
-    valladolidMatches.filter(
+    bordeauxMatches.filter(
       (m) =>
         m.gender === "women" &&
         m.round === "bronze-final"
     );
 
   const womenFinal =
-  valladolidMatches.filter(
-    (m) =>
-      m.gender === "women" &&
-      m.round === "final" &&
-      m.stage === "valladolid"
-  );
+    bordeauxMatches.filter(
+      (m) =>
+        m.gender === "women" &&
+        m.round === "final"
+    );
 
   /* ==================================================
      MEN
      ================================================== */
 
   const menQuarterFinals =
-    valladolidMatches.filter(
+    bordeauxMatches.filter(
       (m) =>
         m.gender === "men" &&
         m.round === "quarter-final"
     );
 
   const menSemiFinals =
-    valladolidMatches.filter(
+    bordeauxMatches.filter(
       (m) =>
         m.gender === "men" &&
         m.round === "semi-final"
     );
 
-  const menFifth =
-    valladolidMatches.filter(
+  const menBronze =
+    bordeauxMatches.filter(
       (m) =>
         m.gender === "men" &&
-        m.round ===
-          "5th-place-final"
+        m.round === "bronze-final"
     );
 
- const menFinal =
-  valladolidMatches.filter(
-    (m) =>
-      m.gender === "men" &&
-      m.round === "final" &&
-      m.stage === "valladolid"
-  );
+  const menFinal =
+    bordeauxMatches.filter(
+      (m) =>
+        m.gender === "men" &&
+        m.round === "final"
+    );
 
   if (!tournament) {
     return (
@@ -252,19 +242,20 @@ export default function SVNSKnockoutsPage() {
 
         <div className={styles.heroContent}>
           <div className={styles.badge}>
-            VALLADOLID COMPLETE
+            BORDEAUX COMPLETE
           </div>
 
           <h1>
-            SVNS Knockout Finals
+            HSBC SVNS World Championship Finals
           </h1>
 
           <p>
-            Australia sweeps both
-            titles in Valladolid as
-            the HSBC SVNS World
-            Championship heads to
-            Bordeaux.
+            France win the Bordeaux title
+            on home soil while Australia
+            secure the Women's World
+            Championship. South Africa are
+            crowned 2026 Men's HSBC SVNS
+            World Champions.
           </p>
         </div>
       </header>
@@ -293,7 +284,9 @@ export default function SVNSKnockoutsPage() {
 
       <BracketSection
         title="Women — Semi-finals"
-        matches={womenSemiFinals}
+        matches={
+          womenSemiFinals
+        }
       />
 
       <BracketSection
@@ -302,7 +295,7 @@ export default function SVNSKnockoutsPage() {
       />
 
       <BracketSection
-        title="Women — Final"
+        title="Women — Cup Final"
         matches={womenFinal}
       />
 
@@ -321,12 +314,12 @@ export default function SVNSKnockoutsPage() {
       />
 
       <BracketSection
-        title="Men — 5th Place Final"
-        matches={menFifth}
+        title="Men — Bronze Final"
+        matches={menBronze}
       />
 
       <BracketSection
-        title="Men — Final"
+        title="Men — Cup Final"
         matches={menFinal}
       />
     </main>
