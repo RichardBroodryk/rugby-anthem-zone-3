@@ -29,12 +29,12 @@ export default function WhatYouGetPage() {
     return null;
   }
 
-  const continuePath =
-    tier === "freemium"
-      ? "/signup/free"
-      : tier === "premium"
-      ? "/signup/premium"
-      : "/signup/super";
+ const continuePath =
+  tier === "freemium"
+    ? "/checkout"
+    : tier === "premium"
+    ? "/signup/premium"
+    : "/signup/super";
 
   return (
     <section className={styles.page}>
@@ -86,23 +86,15 @@ export default function WhatYouGetPage() {
 function FreemiumContent() {
   return (
     <>
-      <Section title="Included Access">
+      <Section title="Trial Period Has Passed">
         <Item
-          title="Anthems"
-          description="Cultural entry into the game through national anthems and ceremony."
-        />
-        <Item
-          title="Tournaments"
-          description="Visibility into men’s and women’s international tournaments."
-        />
-        <Item
-          title="Calendar"
-          description="Basic access to the global rugby calendar."
+          title="Premium Access Required"
+          description="Trial access has ended. Upgrade to Premium or Super Premium to continue enjoying Rugby Anthem Zone."
         />
       </Section>
 
       <Note>
-        Additional sections and deeper access are available on paid tiers.
+        Select Premium or Super Premium to continue.
       </Note>
     </>
   );

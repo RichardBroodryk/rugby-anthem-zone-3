@@ -83,7 +83,7 @@ const CheckoutPage = () => {
               }
 
               console.warn("⚠️ Tier never updated — fallback to free");
-              window.location.href = "/home-free";
+              window.location.href = "/home";
             };
 
             checkTierAndRedirect();

@@ -88,7 +88,7 @@ if (freshTier === "super") {
 } else if (freshTier === "premium") {
   navigate("/home");
 } else {
-  navigate("/home-free");
+  navigate("/checkout");
 }
 
     } catch (err) {

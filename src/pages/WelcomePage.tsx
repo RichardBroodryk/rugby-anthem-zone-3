@@ -11,12 +11,12 @@ export default function WelcomePage() {
   const navigate = useNavigate();
 
   // 🔒 Tier routing
-  const goFreemium = () => navigate("/what-you-get/freemium");
+  const goFreemium = () => navigate("/checkout");
   const goPremium = () => navigate("/what-you-get/premium");
   const goSuper = () => navigate("/what-you-get/super");
 
   // 🔐 Login routing (tier-aware)
-  const goLoginFree = () => navigate("/login");
+  const goLoginFree = () => navigate("/checkout");
 
   const goLoginPremium = () =>
     navigate("/login", {
@@ -30,7 +30,7 @@ export default function WelcomePage() {
 
   const goToTerms = () =>
   navigate("/terms", {
-    state: { tier: "freemium" }, // ✅ SAFE DEFAULT
+    state: { tier: "premium" }, // ✅ SAFE DEFAULT
   });
 
   return (
@@ -53,21 +53,23 @@ export default function WelcomePage() {
         <div className={styles.cards}>
           {/* FREEMIUM */}
           <div className={styles.card}>
-            <h3>Freemium</h3>
-            <p className={styles.tagline}>
-              Explore Rugby Anthem Zone.
-            </p>
-            <p className={styles.description}>
-              A permanent free way to engage with the platform and follow the
-              game at a casual level.
-            </p>
+           <h3>Trial Expired</h3>
+
+<p className={styles.tagline}>
+  Trial access is no longer available.
+</p>
+
+<p className={styles.description}>
+  Your trial period has passed. Continue with Premium or Super Premium
+  to access Rugby Anthem Zone.
+</p>
 
             <button
-              className={styles.secondaryButton}
-              onClick={goFreemium}
-            >
-              Explore Free
-            </button>
+  className={styles.secondaryButton}
+  onClick={goFreemium}
+>
+  Upgrade Now
+</button>
 
             <button
               className={styles.loginButton}

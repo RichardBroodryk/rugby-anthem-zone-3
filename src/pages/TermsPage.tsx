@@ -29,10 +29,10 @@ export default function TermsPage() {
   const isReadOnly = tier === "freemium" && !state?.country;
 
   const acceptTerms = async () => {
-    if (tier === "freemium") {
-      navigate("/home-free", { replace: true });
-      return;
-    }
+   if (tier === "freemium") {
+  navigate("/checkout", { replace: true });
+  return;
+}
 
     const token = getToken();
     if (!token) {
@@ -94,14 +94,14 @@ export default function TermsPage() {
 
         {/* 🟢 FREEMIUM TERMS */}
         <div className={styles.block}>
-          <h2>Freemium Access</h2>
-          <ul>
-            <li>Freemium access is provided at no cost and remains permanently available.</li>
-            <li>Content and features are limited compared to subscription tiers.</li>
-            <li>The experience may include advertising or promotional placements.</li>
-            <li>Access is provided on an “as available” basis and may change over time.</li>
-            <li>No payment details are required for Freemium access.</li>
-          </ul>
+          <h2>Trial Access</h2>
+
+<ul>
+  <li>Trial access has ended.</li>
+  <li>Premium or Super Premium access is required.</li>
+  <li>Subscriptions unlock the full Rugby Anthem Zone experience.</li>
+  <li>All payments are processed securely.</li>
+</ul>
         </div>
 
         {/* 🔵 SUBSCRIPTION TERMS */}
