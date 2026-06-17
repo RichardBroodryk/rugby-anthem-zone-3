@@ -122,7 +122,7 @@ export default function TermsPage() {
   <h2>Subscription Summary</h2>
 
   <p className={styles.price}>
-    {isPremium ? "$2.49 / month" : "$3.49 / month"}
+    {isPremium ? "$1.49 / month" : "$2.49 / month"}
   </p>
 
   <p className={styles.note}>
