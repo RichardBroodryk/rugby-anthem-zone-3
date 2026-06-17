@@ -4,7 +4,6 @@ import styles from "./MatchPage.module.css";
 
 import { getMatches } from "../data/matchesAdapter";
 import { flagMap } from "../data/flagMap";
-import { getStadiumByName } from "../utils/stadiumResolver";
 import { getMatchDetails } from "../utils/matchDetailsResolver";
 
 export default function MatchPage() {
@@ -138,11 +137,6 @@ export default function MatchPage() {
       match.away.country
     ];
 
-  const stadium =
-    getStadiumByName(
-      match.venue
-    );
-
   const formattedDate =
     match.date
       ? new Date(
@@ -160,16 +154,6 @@ export default function MatchPage() {
 
   const hasScore =
     !!match.score;
-
-  const homeLeading =
-    match.score &&
-    match.score.home >
-      match.score.away;
-
-  const awayLeading =
-    match.score &&
-    match.score.away >
-      match.score.home;
 
   /* ==================================================
      COMMENTS
@@ -215,6 +199,54 @@ export default function MatchPage() {
       {/* ================= HERO ================= */}
 
       <header className={styles.hero}>
+        <div
+          className={styles.heroLeft}
+          style={{
+            backgroundImage: `url(${homeFlag})`,
+          }}
+        />
+
+        <div
+          className={styles.heroRight}
+          style={{
+            backgroundImage: `url(${awayFlag})`,
+          }}
+        />
+
+        <div
+          className={styles.heroOverlay}
+        />
+
+        <div
+          className={styles.heroContent}
+        >
+          <div
+            className={styles.heroNation}
+          >
+            {match.home.name}
+          </div>
+
+          <div
+            className={styles.heroVs}
+          >
+            {hasScore
+              ? `${match.score.home} - ${match.score.away}`
+              : "VS"}
+          </div>
+
+          <div
+            className={styles.heroNation}
+          >
+            {match.away.name}
+          </div>
+        </div>
+      </header>
+
+      {/* ================= BACK BUTTON ================= */}
+
+      <div
+        className={styles.backWrap}
+      >
         <button
           className={
             styles.backButton
@@ -227,119 +259,31 @@ export default function MatchPage() {
         >
           ← Back to Tournament
         </button>
+      </div>
 
+      {/* ================= MATCH INFO CARD ================= */}
+
+      <section
+        className={
+          styles.matchInfoCard
+        }
+      >
         <div
           className={
-            styles.teamsRow
+            styles.matchDate
           }
         >
-          <div
-            className={`${
-              styles.team
-            } ${
-              homeLeading
-                ? styles.leading
-                : ""
-            }`}
-          >
-            {homeFlag && (
-              <img
-                src={homeFlag}
-                alt=""
-                className={
-                  styles.flag
-                }
-              />
-            )}
-
-            <span>
-              {
-                match.home.name
-              }
-            </span>
-          </div>
-
-          <div
-            className={
-              styles.center
-            }
-          >
-            {hasScore ? (
-              <div
-                className={
-                  styles.score
-                }
-              >
-                {
-                  match.score
-                    .home
-                }{" "}
-                -{" "}
-                {
-                  match.score
-                    .away
-                }
-              </div>
-            ) : (
-              <div
-                className={
-                  styles.vs
-                }
-              >
-                VS
-              </div>
-            )}
-          </div>
-
-          <div
-            className={`${
-              styles.team
-            } ${
-              awayLeading
-                ? styles.leading
-                : ""
-            }`}
-          >
-            <span>
-              {
-                match.away.name
-              }
-            </span>
-
-            {awayFlag && (
-              <img
-                src={awayFlag}
-                alt=""
-                className={
-                  styles.flag
-                }
-              />
-            )}
-          </div>
+          📅 {formattedDate}
         </div>
 
         <div
           className={
-            styles.meta
+            styles.matchVenue
           }
         >
-          <span>
-            {formattedDate}
-          </span>
-
-          {stadium && (
-            <a
-              href={`/stadium/${stadium.slug}`}
-              className={
-                styles.stadiumLink
-              }
-            >
-              🏟{" "}
-              {stadium.name}
-            </a>
-          )}
+          🏟 {match.venue}
         </div>
-      </header>
+      </section>
 
       {/* ================= EVENTS ================= */}
 
@@ -470,9 +414,7 @@ export default function MatchPage() {
 
       {!isSvns && (
         <section
-          className={
-            styles.section
-          }
+          className={styles.section}
         >
           <h2>Lineups</h2>
 
@@ -666,9 +608,7 @@ export default function MatchPage() {
 
       {!isSvns && (
         <section
-          className={
-            styles.section
-          }
+          className={styles.section}
         >
           <h2>
             Player

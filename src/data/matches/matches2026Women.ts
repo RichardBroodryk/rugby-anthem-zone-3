@@ -1,9 +1,6 @@
 import type { MatchData } from "./types";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const PACIFIC_FOUR_2026 = "pacific-four-2026";
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const WXV1_2026 = "wxv1-2026";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -209,4 +206,180 @@ export const matches2026Women: MatchData[] = [
     home: { name: "Wales W", country: "wales" },
     away: { name: "Italy W", country: "italy" },
   },
+
+  {
+  id: 100,
+  competitionId: "womens-internationals",
+  tournamentInstanceId: "womens-tests-2026",
+  tournament: "Women's International Tests 2026",
+  date: "2026-07-04",
+  venue: "Ellis Park, Johannesburg",
+  home: { name: "South Africa W", country: "south-africa" },
+  away: { name: "USA W", country: "united-states-of-america" },
+},
+{
+  id: 101,
+  competitionId: "womens-internationals",
+  tournamentInstanceId: "womens-tests-2026",
+  tournament: "Women's International Tests 2026",
+  date: "2026-07-11",
+  venue: "Loftus Versfeld, Pretoria",
+  home: { name: "South Africa W", country: "south-africa" },
+  away: { name: "USA W", country: "united-states-of-america" },
+},
+{
+  id: 102,
+  competitionId: "womens-internationals",
+  tournamentInstanceId: "womens-tests-2026",
+  tournament: "Women's International Tests 2026",
+  date: "2026-10-24",
+  venue: "Athlone Stadium, Cape Town",
+  home: { name: "South Africa W", country: "south-africa" },
+  away: { name: "Ireland W", country: "ireland" },
+},
+{
+  id: 103,
+  competitionId: "womens-internationals",
+  tournamentInstanceId: "womens-tests-2026",
+  tournament: "Women's International Tests 2026",
+  date: "2026-10-31",
+  venue: "Athlone Stadium, Cape Town",
+  home: { name: "South Africa W", country: "south-africa" },
+  away: { name: "Ireland W", country: "ireland" },
+},
+
+/* ================= WXV GLOBAL SERIES 2026 ================= */
+
+{
+  id: 200,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-09-12",
+  venue: "CorpAcq Stadium, Salford",
+  home: { name: "England W", country: "england" },
+  away: { name: "Australia W", country: "australia" },
+},
+
+{
+  id: 201,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-09-12",
+  venue: "Scotland",
+  home: { name: "Scotland W", country: "scotland" },
+  away: { name: "Canada W", country: "canada" },
+},
+
+{
+  id: 202,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-09-12",
+  venue: "Matmut Stadium de Gerland, Lyon",
+  home: { name: "France W", country: "france" },
+  away: { name: "New Zealand W", country: "new-zealand" },
+},
+
+{
+  id: 203,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-09-19",
+  venue: "Sandy Park, Exeter",
+  home: { name: "England W", country: "england" },
+  away: { name: "Canada W", country: "canada" },
+},
+
+{
+  id: 204,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-09-19",
+  venue: "Scotland",
+  home: { name: "Scotland W", country: "scotland" },
+  away: { name: "New Zealand W", country: "new-zealand" },
+},
+
+{
+  id: 205,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-09-26",
+  venue: "Allianz Stadium, London",
+  home: { name: "England W", country: "england" },
+  away: { name: "New Zealand W", country: "new-zealand" },
+},
+
+{
+  id: 206,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-09-26",
+  venue: "Scotland",
+  home: { name: "Scotland W", country: "scotland" },
+  away: { name: "Australia W", country: "australia" },
+},
+
+{
+  id: 207,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-10-16",
+  venue: "BMO Field, Toronto",
+  home: { name: "Canada W", country: "canada" },
+  away: { name: "England W", country: "england" },
+},
+
+{
+  id: 208,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-10-17",
+  venue: "Waikato Stadium, Hamilton",
+  home: { name: "New Zealand W", country: "new-zealand" },
+  away: { name: "France W", country: "france" },
+},
+
+{
+  id: 209,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-10-23",
+  venue: "TD Place, Ottawa",
+  home: { name: "Canada W", country: "canada" },
+  away: { name: "England W", country: "england" },
+},
+
+{
+  id: 210,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-10-24",
+  venue: "Okara Park, Whangārei",
+  home: { name: "New Zealand W", country: "new-zealand" },
+  away: { name: "France W", country: "france" },
+},
+
+{
+  id: 211,
+  competitionId: "wxv1",
+  tournamentInstanceId: "wxv1-2026",
+  tournament: "WXV Global Series 2026",
+  date: "2026-10-31",
+  venue: "Te Kaha, Christchurch",
+  home: { name: "New Zealand W", country: "new-zealand" },
+  away: { name: "France W", country: "france" },
+},
+
 ];

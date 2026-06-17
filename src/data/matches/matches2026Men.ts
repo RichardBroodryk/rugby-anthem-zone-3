@@ -190,6 +190,17 @@ export const matches2026Men: MatchData[] = [
     score: { home: 28, away: 17 },
   },
 
+  {
+  id: 2999,
+  competitionId: "international-tests",
+  tournamentInstanceId: INTERNATIONAL_TESTS_2026,
+  tournament: "Men's International Tests 2026",
+  date: "2026-06-20",
+  venue: "Nelson Mandela Bay Stadium, Gqeberha",
+  home: { name: "South Africa", country: "south-africa" },
+  away: { name: "Barbarians", country: "barbarians" },
+},
+
   // ================= NATIONS CHAMPIONSHIP =================
 
   // ROUND 1
@@ -199,7 +210,7 @@ export const matches2026Men: MatchData[] = [
     tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
     tournament: "Nations Championship 2026",
     date: "2026-07-04",
-    venue: "Pretoria",
+    venue: "Ellis Park, Johannesburg",
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "England", country: "england" },
   },
@@ -301,7 +312,7 @@ export const matches2026Men: MatchData[] = [
     tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
     tournament: "Nations Championship 2026",
     date: "2026-07-11",
-    venue: "Cape Town",
+    venue: "Loftus Versfeld, Pretoria",
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "Scotland", country: "scotland" },
   },
@@ -347,6 +358,17 @@ export const matches2026Men: MatchData[] = [
     home: { name: "Australia", country: "australia" },
     away: { name: "Italy", country: "italy" },
   },
+
+  {
+  id: 3023,
+  competitionId: "nations-championship",
+  tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
+  tournament: "Nations Championship 2026",
+  date: "2026-07-18",
+  venue: "Kings Park, Durban",
+  home: { name: "South Africa", country: "south-africa" },
+  away: { name: "Wales", country: "wales" },
+},
 
   // SEMI FINAL
   {

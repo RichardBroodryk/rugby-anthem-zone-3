@@ -5,66 +5,111 @@
   padding: 20px;
 }
 
-/* ================= MATCH HERO / TOP BAR ================= */
+/* ================= HERO ================= */
 .hero {
-  background: #0f172a;
+  position: relative;
+  height: 340px;
+  overflow: hidden;
+  border-radius: 24px;
+  margin-bottom: 0;
+}
+
+.heroLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  clip-path: polygon(0 0, 100% 0, 75% 100%, 0 100%);
+}
+
+.heroRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 60%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65));
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 5;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
   color: white;
-  padding: 24px;
-  border-radius: 12px;
-  margin-bottom: 40px;
-  text-align: center;
+  padding: 0 20px;
+}
+
+.heroNation {
+  font-size: 2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.heroVs {
+  font-size: 3rem;
+  font-weight: 900;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ================= BACK BUTTON WRAP ================= */
+.backWrap {
+  padding: 20px 0 8px 0;
+  display: flex;
+  justify-content: center;
 }
 
 .backButton {
-  background: #1e293b;
+  background: #0f172a;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-bottom: 20px;
   font-size: 1rem;
+  transition: background 0.2s ease;
 }
 
 .backButton:hover {
-  background: #334155;
+  background: #1e293b;
 }
 
-.teamsRow {
+/* ================= MATCH INFO CARD ================= */
+.matchInfoCard {
+  background: white;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 40px;
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 60px;
-  margin: 24px 0;
-  font-size: 1.5rem;
-  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  font-size: 1.05rem;
+  flex-wrap: wrap;
 }
 
-.team {
+.matchDate,
+.matchVenue {
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-
-.center {
-  font-size: 2.8rem;
-  font-weight: 800;
-}
-
-.score {
-  color: #22c55e;
-}
-
-.vs {
-  color: #94a3b8;
-}
-
-.meta {
-  display: flex;
-  justify-content: center;
-  gap: 32px;
-  font-size: 1.05rem;
-  opacity: 0.9;
+  gap: 8px;
+  color: #1e293b;
 }
 
 /* ================= SECTIONS ================= */
@@ -103,66 +148,6 @@
   font-size: 1.05rem;
 }
 
-/* ================= BEST PERFORMANCES ================= */
-.bestPerf {
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 10px;
-  font-size: 1.1rem;
-}
-
-.bestPerf div {
-  margin-bottom: 12px;
-}
-
-/* ================= FAN COMMENTS ================= */
-.commentsPanel {
-  max-height: 340px;
-  overflow-y: auto;
-  border: 1px solid #e2e8f0;
-  padding: 20px;
-  border-radius: 10px;
-  background: #fafafa;
-}
-
-.comment {
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.comment strong {
-  color: #0f172a;
-}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-  .teamsRow {
-    gap: 30px;
-    font-size: 1.3rem;
-  }
-
-  .center {
-    font-size: 2.2rem;
-  }
-
-  .meta {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .lineups {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-}
-.flag {
-  width: 32px;
-  height: 22px;
-  object-fit: cover;
-  border-radius: 3px;
-}
-
 .benchSection {
   margin-top: 40px;
   background: #f8fafc;
@@ -174,93 +159,8 @@
   color: #64748b;
   font-style: italic;
 }
-.flag {
-  width: 32px;
-  height: 22px;
-  object-fit: cover;
-  border-radius: 3px;
-}
 
-.stadiumLink {
-  color: white;
-  text-decoration: none;
-}
-
-.stadiumLink:hover {
-  text-decoration: underline;
-}
-
-.benchSection {
-  margin-top: 40px;
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.benchNote {
-  color: #64748b;
-  font-style: italic;
-}
-.flag {
-  width: 32px;
-  height: 22px;
-  object-fit: cover;
-  border-radius: 3px;
-}
-
-.stadiumLink {
-  color: white;
-  text-decoration: none;
-}
-
-.stadiumLink:hover {
-  text-decoration: underline;
-}
-
-.benchSection {
-  margin-top: 40px;
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.benchNote {
-  color: #64748b;
-  font-style: italic;
-}
-.flag {
-  width: 32px;
-  height: 22px;
-  object-fit: cover;
-  border-radius: 3px;
-}
-
-.stadiumLink {
-  color: white;
-  text-decoration: none;
-}
-
-.stadiumLink:hover {
-  text-decoration: underline;
-}
-
-.benchSection {
-  margin-top: 40px;
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.benchNote {
-  color: #64748b;
-  font-style: italic;
-}
-.bestPerf {
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 10px;
-  line-height: 1.6;
-}
+/* ================= PERFORMANCE ================= */
 .performance {
   padding: 8px 0;
   border-bottom: 1px solid #eee;
@@ -269,6 +169,8 @@
 .performance:last-child {
   border-bottom: none;
 }
+
+/* ================= FAN COMMENTS ================= */
 .commentInput {
   display: flex;
   gap: 12px;
@@ -320,98 +222,64 @@
   color: #64748b;
   font-size: 0.9rem;
 }
-/* ==================================================
-   SVNS REPORTING
-   ================================================== */
 
+/* ================= SVNS REPORTING ================= */
 .reportCard {
   background: white;
-
   border-radius: 22px;
-
   padding: 28px;
-
-  box-shadow:
-    0 8px 24px
-    rgba(0, 0, 0, 0.08);
-
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-
   gap: 18px;
 }
 
 .reportText {
   font-size: 16px;
   line-height: 1.7;
-
   color: #111827;
 }
 
-/* ==================================================
-   HERO IMPROVEMENTS
-   ================================================== */
-
-.hero {
-  position: relative;
-
-  overflow: hidden;
-}
-
-.hero::before {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.55),
-      rgba(0, 0, 0, 0.65)
-    );
-
-  z-index: 1;
-}
-
-.hero > * {
-  position: relative;
-  z-index: 2;
-}
-
-/* ==================================================
-   SCORE ENHANCEMENT
-   ================================================== */
-
-.score {
-  font-size: 54px;
-  font-weight: 900;
-
-  letter-spacing: 2px;
-}
-
-.vs {
-  font-size: 26px;
-  font-weight: 800;
-
-  opacity: 0.75;
-}
-
-/* ==================================================
-   TEAM HIGHLIGHT
-   ================================================== */
-
-.leading {
-  transform: scale(1.03);
-
-  transition: 0.25s ease;
-}
-
-/* ==================================================
-   MOBILE
-   ================================================== */
-
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
+  .hero {
+    height: 260px;
+  }
+
+  .heroLeft {
+    width: 55%;
+  }
+
+  .heroRight {
+    width: 55%;
+  }
+
+  .heroContent {
+    gap: 20px;
+    padding: 0 12px;
+  }
+
+  .heroNation {
+    font-size: 1.2rem;
+  }
+
+  .heroVs {
+    font-size: 1.8rem;
+  }
+
+  .matchInfoCard {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .lineups {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
   .reportCard {
     padding: 22px;
   }
@@ -420,7 +288,43 @@
     font-size: 15px;
   }
 
-  .score {
-    font-size: 40px;
+  .backButton {
+    font-size: 0.9rem;
+    padding: 10px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 200px;
+    border-radius: 16px;
+  }
+
+  .heroNation {
+    font-size: 0.9rem;
+  }
+
+  .heroVs {
+    font-size: 1.4rem;
+  }
+
+  .heroLeft {
+    width: 50%;
+  }
+
+  .heroRight {
+    width: 50%;
+  }
+
+  .heroContent {
+    gap: 12px;
+  }
+
+  .commentInput {
+    flex-direction: column;
+  }
+
+  .commentInput button {
+    width: 100%;
   }
 }

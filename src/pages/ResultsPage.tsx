@@ -132,8 +132,7 @@ export default function ResultsPage() {
               key={match.id}
               home={match.home}
               away={match.away}
-              metaLeft={match.venue}
-              metaRight={formatDate(match.date)}
+              metaLeft={`${match.venue} • ${formatDate(match.date)}`}
               state="final"
               score={match.score}
             />

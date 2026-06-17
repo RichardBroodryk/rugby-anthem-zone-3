@@ -85,6 +85,27 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier1",
   },
+  {
+  conceptId: "greatest-rivalry",
+  name: "SA vs NZ Rivalry",
+  category: "international",
+  gender: "men",
+  tier: "tier1",
+},
+  {
+  conceptId: "nations-championship",
+  name: "Nations Championship",
+  category: "international",
+  gender: "men",
+  tier: "tier1",
+},
+{
+  conceptId: "bledisloe-cup",
+  name: "Bledisloe Cup",
+  category: "international",
+  gender: "men",
+  tier: "tier1",
+},
 
   // ==================================================
   // 🌍 WOMEN — INTERNATIONAL
@@ -242,6 +263,13 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier2",
   },
+  {
+  conceptId: "pacific-nations",
+  name: "Pacific Nations Cup",
+  category: "international",
+  gender: "men",
+  tier: "tier2",
+},
 
   // ==================================================
   // ⚡ SEVENS — GLOBAL SYSTEM

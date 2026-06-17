@@ -40,7 +40,7 @@ function isUpcoming(match: MatchData) {
   return (
     matchDate >= now &&
     !match.score &&
-    (match as any).state !== "final"
+    match.state !== "final"
   );
 }
 

@@ -133,18 +133,6 @@ export const tournaments2026: TournamentMeta[] = [
   },
 
   {
-    conceptId: "pacific-four",
-    instanceId: "pacific-four-2026",
-    name: "Pacific Four Series",
-    year: 2026,
-    gender: "women",
-    type: "regional",
-    status: "active",
-    matchKey: "Pacific Four Series 2026",
-    route: "/tournaments/women/pacific-four-2026",
-  },
-
-  {
     conceptId: "wxv1",
     instanceId: "wxv1-2026",
     name: "WXV 1",
@@ -157,8 +145,8 @@ export const tournaments2026: TournamentMeta[] = [
   },
 
   {
-    conceptId: "womens-tests",
-    instanceId: "womens-tests-2026",
+  conceptId: "womens-internationals",
+  instanceId: "womens-tests-2026",
     name: "Women's International Tests",
     year: 2026,
     gender: "women",

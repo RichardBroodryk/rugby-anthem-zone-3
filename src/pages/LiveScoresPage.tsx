@@ -25,10 +25,6 @@ const isToday = (dateStr: string) => {
 const isWomenTournament = (tournament: string) =>
   tournament.toLowerCase().includes("women");
 
-/* 🔥 STRICT FILTER */
-const isWomensSixNations = (m: MatchData) =>
-  m.competitionId === "six-nations-women";
-
 /* Placeholder */
 const isLive = (_matchId: number) => false;
 
@@ -54,12 +50,20 @@ export default function LiveScoresPage() {
     async function fetchData() {
       try {
         setLoading(true);
+
         const data = await getMatches();
-        if (mounted) setMatches(data);
+
+        if (mounted) {
+          setMatches(data);
+        }
       } catch {
-        if (mounted) setError("Failed to load matches");
+        if (mounted) {
+          setError("Failed to load matches");
+        }
       } finally {
-        if (mounted) setLoading(false);
+        if (mounted) {
+          setLoading(false);
+        }
       }
     }
 
@@ -129,6 +133,7 @@ export default function LiveScoresPage() {
         {men.length > 0 && (
           <div className={styles.subBlock}>
             <div className={styles.subHeader}>MEN</div>
+
             {men.map((m) => (
               <LiveScoreRow
                 key={m.id}
@@ -147,6 +152,7 @@ export default function LiveScoresPage() {
         {women.length > 0 && (
           <div className={styles.subBlock}>
             <div className={styles.subHeader}>WOMEN</div>
+
             {women.map((m) => (
               <LiveScoreRow
                 key={m.id}
@@ -165,8 +171,7 @@ export default function LiveScoresPage() {
     );
   };
 
-  /* 🔥 STRICT WOMEN'S SIX NATIONS UPCOMING */
-  const womensUpcoming = upcoming.filter(isWomensSixNations);
+  const upcomingMatches = upcoming.slice(0, 20);
 
   return (
     <main className={styles.page}>
@@ -176,8 +181,10 @@ export default function LiveScoresPage() {
         style={{ backgroundImage: `url(${heroBg})` }}
       >
         <div className={styles.heroOverlay} />
+
         <div className={styles.heroContent}>
           <h1>Live Scores</h1>
+
           <p>
             Scores and match states from across world rugby —
             <br />
@@ -199,6 +206,7 @@ export default function LiveScoresPage() {
       {/* LIVE */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitleCenter}>Live Now</h2>
+
         {live.length === 0 ? (
           <div className={styles.empty}>
             No matches live right now.
@@ -208,17 +216,18 @@ export default function LiveScoresPage() {
         )}
       </section>
 
-      {/* RESULTS */}
+      {/* RECENT RESULTS */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitleCenter}>
           Recent Results
         </h2>
+
         {recentFinals.length === 0 ? (
           <div className={styles.empty}>
             No completed matches available.
           </div>
         ) : (
-          renderGroup(recentFinals.slice(0, 10)) // 🔥 LIMIT
+          renderGroup(recentFinals.slice(0, 10))
         )}
       </section>
 
@@ -227,6 +236,7 @@ export default function LiveScoresPage() {
         <h2 className={styles.sectionTitleMutedCenter}>
           Today
         </h2>
+
         {today.length === 0 ? (
           <div className={styles.empty}>
             No matches today.
@@ -242,16 +252,17 @@ export default function LiveScoresPage() {
           Upcoming
         </h2>
 
-        {womensUpcoming.length === 0 ? (
+        {upcomingMatches.length === 0 ? (
           <div className={styles.empty}>
-            No upcoming key fixtures.
+            No upcoming fixtures available.
           </div>
         ) : (
           <div className={styles.subBlock}>
             <div className={styles.subHeader}>
-              WOMEN'S SIX NATIONS
+              UPCOMING INTERNATIONAL FIXTURES
             </div>
-            {womensUpcoming.map((m) => (
+
+            {upcomingMatches.map((m) => (
               <LiveScoreRow
                 key={m.id}
                 matchId={m.id}
@@ -259,6 +270,7 @@ export default function LiveScoresPage() {
                 away={m.away}
                 phase="Upcoming"
                 tournament={m.tournament}
+                venue={m.venue}
               />
             ))}
           </div>

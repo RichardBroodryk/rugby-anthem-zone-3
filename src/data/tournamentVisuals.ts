@@ -8,7 +8,6 @@ import sixNationsWomen from "../assets/images/tournaments/six-nations-women-2026
 import nationsChampionship from "../assets/images/tournaments/nations-championship-2026.jpg";
 
 import pacificMen from "../assets/images/tournaments/pacific-men.jpg";
-import pacificFour from "../assets/images/tournaments/pacific-four.jpg";
 
 import bledisloe from "../assets/images/tournaments/bledisloe.jpg";
 
@@ -91,15 +90,6 @@ export const tournamentVisuals: TournamentVisual[] = [
     anthemMode: "global",
   },
 
-  // ================= PACIFIC FOUR (WOMEN) =================
-  {
-    conceptId: "pacific-four",
-    heroImageWomen: pacificFour,
-    logo: pacificFour,
-    heroLayout: "contained",
-    anthemMode: "global",
-  },
-
   // ================= BLEDISLOE =================
   {
     conceptId: "bledisloe-cup",
@@ -124,14 +114,6 @@ export const tournamentVisuals: TournamentVisual[] = [
     conceptId: "international-tests",
     heroImageMen: internationalTestsMen,
     heroImageWomen: internationalTestsWomen,
-    heroLayout: "contained",
-    anthemMode: "global",
-  },
-
-  {
-    conceptId: "womens-tests",
-    heroImageWomen: internationalTestsWomen,
-    logo: internationalTestsWomen,
     heroLayout: "contained",
     anthemMode: "global",
   },
