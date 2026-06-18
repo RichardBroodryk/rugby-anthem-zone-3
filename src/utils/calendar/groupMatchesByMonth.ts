@@ -46,16 +46,48 @@ export function groupMatchesByMonth(
     });
   });
 
-  return Array.from(map.values())
-    .sort((a, b) =>
-      a.year !== b.year
-        ? a.year - b.year
-        : a.month - b.month
-    )
-    .map((group) => ({
-      ...group,
-      matches: group.matches.sort(
-        (a, b) => a.date.getTime() - b.date.getTime()
-      ),
-    }));
+ const now = new Date();
+
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth();
+
+const groups = Array.from(map.values());
+
+groups.sort((a, b) => {
+  const aPast =
+    a.year < currentYear ||
+    (a.year === currentYear &&
+      a.month < currentMonth);
+
+  const bPast =
+    b.year < currentYear ||
+    (b.year === currentYear &&
+      b.month < currentMonth);
+
+  /* Future/current months first */
+  if (aPast !== bPast) {
+    return aPast ? 1 : -1;
+  }
+
+  /* Future months ascending */
+  if (!aPast && !bPast) {
+    return a.year !== b.year
+      ? a.year - b.year
+      : a.month - b.month;
+  }
+
+  /* Past months descending */
+  return a.year !== b.year
+    ? b.year - a.year
+    : b.month - a.month;
+});
+
+return groups.map((group) => ({
+  ...group,
+  matches: group.matches.sort(
+    (a, b) =>
+      a.date.getTime() -
+      b.date.getTime()
+  ),
+}));
 }
