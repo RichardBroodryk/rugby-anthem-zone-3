@@ -6,6 +6,7 @@ import razLight from "../assets/images/raz/raz-light.jpg";
 import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";
 import InfoBar from "../components/navigation/InfoBar";
+import FeaturedMatchCard from "../components/homepage/FeaturedMatchCard";
 import AutoContentRail from "../components/ui/AutoContentRail";
 
 /* DATA */
@@ -58,6 +59,8 @@ export default function SuperHomePage() {
       <HeroCard variant="super" />
 
       <InfoBar variant="super" />
+
+      <FeaturedMatchCard />
 
       {/* 🔥 SUPER MASTER RAIL */}
       <section className={styles.railSection}>

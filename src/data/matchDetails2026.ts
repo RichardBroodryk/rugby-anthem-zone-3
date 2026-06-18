@@ -31,6 +31,95 @@ export type MatchDetails = {
 };
 
 export const matchDetails2026: MatchDetails[] = [
+
+  {
+    matchKey: "south-africa-vs-barbarians",
+
+    timeline: [
+      { minute: "0'", label: "Kick-off — Nelson Mandela Bay Stadium" },
+      { minute: "40'", label: "Half Time" },
+      { minute: "80'", label: "Full Time" },
+    ],
+
+    lineups: {
+      homeStarting: [
+        { number: 1, name: "Ox Nche" },
+        { number: 2, name: "Andre-Hugo Venter" },
+        { number: 3, name: "Carlu Sadie" },
+        { number: 4, name: "Riley Norton" },
+        { number: 5, name: "Franco Mostert" },
+        { number: 6, name: "Siya Kolisi (C)" },
+        { number: 7, name: "Pieter-Steph du Toit" },
+        { number: 8, name: "Jasper Wiese" },
+        { number: 9, name: "Grant Williams" },
+        { number: 10, name: "Quan Horn" },
+        { number: 11, name: "Edwill van der Merwe" },
+        { number: 12, name: "Andre Esterhuizen" },
+        { number: 13, name: "Jesse Kriel" },
+        { number: 14, name: "Cheslin Kolbe" },
+        { number: 15, name: "Aphelele Fassi" },
+      ],
+
+      homeBench: [
+        { number: 16, name: "JJ Kotze" },
+        { number: 17, name: "Ntuthuko Mchunu" },
+        { number: 18, name: "Zachary Porthen" },
+        { number: 19, name: "Ben-Jason Dixon" },
+        { number: 20, name: "Paul de Villiers" },
+        { number: 21, name: "Evan Roos" },
+        { number: 22, name: "Faf de Klerk" },
+        { number: 23, name: "Vusi Moyo" },
+      ],
+
+      awayStarting: [
+        { number: 1, name: "Mayco Vivas" },
+        { number: 2, name: "Elliot Dee" },
+        { number: 3, name: "D'Arcy Rae" },
+        { number: 4, name: "Franco Molina" },
+        { number: 5, name: "Alex Moon" },
+        { number: 6, name: "Guido Petti" },
+        { number: 7, name: "Lachlan Boshier" },
+        { number: 8, name: "Miracle Fai'ilagi" },
+        { number: 9, name: "TJ Perenara (C)" },
+        { number: 10, name: "Tomás Albornoz" },
+        { number: 11, name: "Duhan van der Merwe" },
+        { number: 12, name: "Alex Nankivell" },
+        { number: 13, name: "Virimi Vakatawa" },
+        { number: 14, name: "Andrew Kellaway" },
+        { number: 15, name: "Warrick Gelant" },
+      ],
+
+      awayBench: [
+        { number: 16, name: "Leonel Oviedo" },
+        { number: 17, name: "Oli Kebble" },
+        { number: 18, name: "Pedro Delgado" },
+        { number: 19, name: "Izack Rodda" },
+        { number: 20, name: "Liam McConnell" },
+        { number: 21, name: "Santiago Arata" },
+        { number: 22, name: "Harry Plummer" },
+        { number: 23, name: "Tuidraki Samusamuvodre" },
+      ],
+    },
+
+    performances: [
+      {
+        category: "Captain",
+        player: "Siya Kolisi",
+        value: "South Africa",
+      },
+      {
+        category: "Captain",
+        player: "TJ Perenara",
+        value: "Barbarians",
+      },
+      {
+        category: "Venue",
+        player: "Nelson Mandela Bay Stadium",
+        value: "Gqeberha",
+      },
+    ],
+  },
+
   // ================= ROUND 1 =================
 
   // France W vs Italy W

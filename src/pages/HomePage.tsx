@@ -6,6 +6,7 @@ import razLight from "../assets/images/raz/raz-light.jpg";
 import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";
 import InfoBar from "../components/navigation/InfoBar";
+import FeaturedMatchCard from "../components/homepage/FeaturedMatchCard";
 import AutoContentRail from "../components/ui/AutoContentRail";
 
 import { tournaments2026 } from "../data/tournamentMeta";
@@ -56,6 +57,8 @@ export default function HomePage() {
       <HeroCard variant="premium" />
 
       <InfoBar variant="premium" />
+
+      <FeaturedMatchCard />
 
       {/* 🔥 PRIMARY CONTENT RAIL — ALL HUBS */}
       <section className={styles.railSection}>

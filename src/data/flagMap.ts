@@ -25,6 +25,7 @@ import tonga from "../assets/images/flags/tonga.jpg";
 import usa from "../assets/images/flags/united-states-of-america.jpg";
 import uruguay from "../assets/images/flags/uruguay.jpg";
 import wales from "../assets/images/flags/wales.jpg";
+import barbarians from "../assets/images/logos/solid/barbarians.jpg";
 
 export const flagMap: Record<string, string> = {
   "argentina": argentina,
@@ -54,6 +55,7 @@ export const flagMap: Record<string, string> = {
   "united-states-of-america": usa,
   "uruguay": uruguay,
   "wales": wales,
+  "barbarians": barbarians,
 
   /* TEMP FIX */
   "great-britain": england,
