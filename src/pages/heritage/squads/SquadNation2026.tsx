@@ -75,17 +75,6 @@ type NationData = {
   womenCoach: Coach;
 };
 
-type SquadData = {
-  captain?: string;
-  squadSize?: number;
-  uncappedPlayers?: string[];
-  keyReturnees?: string[];
-  playersToWatch?: string[];
-  forwards?: string[];
-  backs?: string[];
-  selectionNotes?: string[];
-};
-
 const nations: Record<string, NationData> = {
 
   "south-africa": {
