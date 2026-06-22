@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./SquadNation2026.module.css";
+import { squads2026 } from "../../../data/heritage/squads2026";
 
 /* FLAGS */
 
@@ -74,6 +75,17 @@ type NationData = {
   womenCoach: Coach;
 };
 
+type SquadData = {
+  captain?: string;
+  squadSize?: number;
+  uncappedPlayers?: string[];
+  keyReturnees?: string[];
+  playersToWatch?: string[];
+  forwards?: string[];
+  backs?: string[];
+  selectionNotes?: string[];
+};
+
 const nations: Record<string, NationData> = {
 
   "south-africa": {
@@ -86,7 +98,7 @@ const nations: Record<string, NationData> = {
       name: "Rassie Erasmus",
       era: "2018–Present",
       image: erasmus,
-      bio: "Architect of South Africa’s modern rugby era."
+      bio: "Architect of South Africa's modern rugby era."
     },
     womenCoach: {
       name: "Swys de Bruin",
@@ -126,7 +138,7 @@ const nations: Record<string, NationData> = {
       name: "Steve Borthwick",
       era: "2022–Present",
       image: borthwick,
-      bio: "Rebuilding England’s tactical structure and depth."
+      bio: "Rebuilding England's tactical structure and depth."
     },
     womenCoach: {
       name: "John Mitchell",
@@ -146,13 +158,13 @@ const nations: Record<string, NationData> = {
       name: "Fabien Galthié",
       era: "2020–Present",
       image: galthie,
-      bio: "Architect of France’s modern resurgence."
+      bio: "Architect of France's modern resurgence."
     },
     womenCoach: {
       name: "François Ratier",
       era: "2019–Present",
       image: ratier,
-      bio: "Long-time architect of the French women’s national programme."
+      bio: "Long-time architect of the French women's national programme."
     }
   },
 
@@ -186,7 +198,7 @@ const nations: Record<string, NationData> = {
       name: "Gregor Townsend",
       era: "2017–Present",
       image: townsend,
-      bio: "Oversaw Scotland’s rise as a competitive international side."
+      bio: "Oversaw Scotland's rise as a competitive international side."
     },
     womenCoach: {
       name: "Sione Fukofuka",
@@ -226,13 +238,13 @@ const nations: Record<string, NationData> = {
       name: "Gonzalo Quesada",
       era: "2024–Present",
       image: quesada,
-      bio: "Shaping Italy’s next competitive phase."
+      bio: "Shaping Italy's next competitive phase."
     },
     womenCoach: {
       name: "Fabio Roselli",
       era: "2017–Present",
       image: roselli,
-      bio: "Key figure in Italy’s women’s rugby development."
+      bio: "Key figure in Italy's women's rugby development."
     }
   },
 
@@ -271,7 +283,7 @@ const nations: Record<string, NationData> = {
     womenCoach: {
       name: "Argentina Women Programme",
       era: "Developing",
-      bio: "Argentina’s women’s programme continues to grow."
+      bio: "Argentina's women's programme continues to grow."
     }
   },
 
@@ -290,7 +302,7 @@ const nations: Record<string, NationData> = {
     womenCoach: {
       name: "Japan Women Programme",
       era: "Developing",
-      bio: "Japan’s women’s programme continues to expand."
+      bio: "Japan's women's programme continues to expand."
     }
   },
 
@@ -303,7 +315,7 @@ const nations: Record<string, NationData> = {
     menCoach: {
       name: "Mick Byrne",
       era: "2023–Present",
-      bio: "Former All Blacks skills coach leading Fiji’s programme."
+      bio: "Former All Blacks skills coach leading Fiji's programme."
     },
     womenCoach: {
       name: "Fijiana Programme",
@@ -321,13 +333,28 @@ export default function SquadNation2026() {
 
   const gender = window.location.pathname.includes("/women") ? "women" : "men";
 
-  const data = nation ? nations[nation] : undefined;
+const data = nation ? nations[nation] : undefined;
 
-  if (!data) return <div>Nation not found</div>;
+if (!data) return <div>Nation not found</div>;
 
-  const coach = gender === "women" ? data.womenCoach : data.menCoach;
-  const nickname = gender === "women" ? data.nicknameWomen : data.nicknameMen;
+const squadKey = nation
+  ? gender === "women"
+    ? `${nation}-women`
+    : nation
+  : "";
 
+const squad = squadKey ? squads2026[squadKey] : undefined;
+
+const coach =
+  gender === "women"
+    ? data.womenCoach
+    : data.menCoach;
+
+const nickname =
+  gender === "women"
+    ? data.nicknameWomen
+    : data.nicknameMen;
+    
   return (
     <main className={styles.page}>
 
@@ -352,7 +379,7 @@ export default function SquadNation2026() {
             navigate(`/heritage/squads/${gender}`)
           }
         >
-          ← Back to {gender === "women" ? "Women’s" : "Men’s"} Squads
+          ← Back to {gender === "women" ? "Women's" : "Men's"} Squads
         </button>
       </div>
 
@@ -388,15 +415,119 @@ export default function SquadNation2026() {
 
       </section>
 
-      <section className={styles.sectionAlt}>
-        <h2>Playing Squad · 2026</h2>
+     {squad && squad.squadSize !== undefined && squad.squadSize > 0 ? (
+  <>
+    <section className={styles.sectionAlt}>
 
-        <p>
-          Official international squad will appear here once confirmed
-          by the national union.
-        </p>
+      <h2>2026 Squad Overview</h2>
 
-      </section>
+      <div className={styles.overviewGrid}>
+
+        <div className={styles.infoCard}>
+          <h3>Captain</h3>
+          <p>{squad.captain || "TBC"}</p>
+        </div>
+
+        <div className={styles.infoCard}>
+          <h3>Squad Size</h3>
+          <p>{squad.squadSize} Players</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section className={styles.section}>
+
+      <h2>Uncapped Players</h2>
+
+      <div className={styles.playerGrid}>
+        {squad.uncappedPlayers?.map((player: string) => (
+          <div key={player} className={styles.playerChip}>
+            {player}
+          </div>
+        ))}
+      </div>
+
+    </section>
+
+    <section className={styles.section}>
+
+      <h2>Key Returnees</h2>
+
+      <div className={styles.playerGrid}>
+        {squad.keyReturnees?.map((player: string) => (
+          <div key={player} className={styles.playerChip}>
+            {player}
+          </div>
+        ))}
+      </div>
+
+    </section>
+
+    <section className={styles.section}>
+
+  <h2>Players To Watch</h2>
+
+  <div className={styles.playerGrid}>
+    {squad.playersToWatch?.map((player: string) => (
+      <div key={player} className={styles.playerChip}>
+        {player}
+      </div>
+    ))}
+  </div>
+
+</section>
+
+    <section className={styles.section}>
+
+      <h2>Forwards</h2>
+
+      <div className={styles.playerGrid}>
+        {squad.forwards?.map((player: string) => (
+          <div key={player} className={styles.playerChip}>
+            {player}
+          </div>
+        ))}
+      </div>
+
+    </section>
+
+    <section className={styles.section}>
+
+      <h2>Backs</h2>
+
+      <div className={styles.playerGrid}>
+        {squad.backs?.map((player: string) => (
+          <div key={player} className={styles.playerChip}>
+            {player}
+          </div>
+        ))}
+      </div>
+
+    </section>
+
+    <section className={styles.sectionAlt}>
+
+      <h2>Selection Notes</h2>
+
+      <div className={styles.notesList}>
+        {squad.selectionNotes?.map((note: string) => (
+          <p key={note}>{note}</p>
+        ))}
+      </div>
+
+    </section>
+  </>
+) : (
+  <section className={styles.sectionAlt}>
+    <h2>Playing Squad · 2026</h2>
+
+    <p>
+      Official squad announcement pending.
+    </p>
+  </section>
+)}
 
     </main>
   );
