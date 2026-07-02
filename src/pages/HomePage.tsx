@@ -7,6 +7,7 @@ import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";
 import InfoBar from "../components/navigation/InfoBar";
 import FeaturedMatchCard from "../components/homepage/FeaturedMatchCard";
+import WeekendMatchesRail from "../components/homepage/WeekendMatchesRail";
 import AutoContentRail from "../components/ui/AutoContentRail";
 
 import { tournaments2026 } from "../data/tournamentMeta";
@@ -44,173 +45,166 @@ import calendarImage from "../assets/images/raz/calendar-hero.jpg";
 import merchImage from "../assets/images/raz/Merch.png";
 
 export default function HomePage() {
-
   const featuredTournament =
     tournaments2026.find((t) => t.status === "active") ??
     tournaments2026.find((t) => t.status === "upcoming") ??
     tournaments2026[0];
 
-
   return (
-  <PageWrapper imageUrl={razLight}>
-    <main className={styles.page}>
-      <HeroCard variant="premium" />
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        <HeroCard variant="premium" />
 
-      <InfoBar variant="premium" />
+        <InfoBar variant="premium" />
 
-      <FeaturedMatchCard />
+        <FeaturedMatchCard />
 
-      {/* 🔥 PRIMARY CONTENT RAIL — ALL HUBS */}
-      <section className={styles.railSection}>
-        <AutoContentRail autoAdvance>
-          {/* Featured */}
-          {featuredTournament && (
+        <WeekendMatchesRail />
+
+        <section className={styles.railSection}>
+          <AutoContentRail autoAdvance>
+            {featuredTournament && (
+              <HubCard
+                title={featuredTournament.name}
+                image={featuredTournamentImage}
+                to={featuredTournament.route}
+                features={[
+                  {
+                    label:
+                      featuredTournament.heroBadge ||
+                      "FEATURED TOURNAMENT",
+                    icon: <AwardIcon />,
+                  },
+                  {
+                    label:
+                      featuredTournament.heroSubtitle ||
+                      "Global focus",
+                    icon: <StarIcon />,
+                  },
+                ]}
+              />
+            )}
+
             <HubCard
-              title={featuredTournament.name}
-              image={featuredTournamentImage}
-              to={featuredTournament.route}
+              title="Notifications"
+              image={newsImage}
+              to="/notifications"
               features={[
                 {
-                  label:
-                    featuredTournament.heroBadge ||
-                    "FEATURED TOURNAMENT",
-                  icon: <AwardIcon />,
+                  label: "Match alerts & key rugby moments",
+                  icon: <CalendarIcon />,
                 },
                 {
-                  label:
-                    featuredTournament.heroSubtitle ||
-                    "Global focus",
+                  label: "Tournament updates you opt into",
                   icon: <StarIcon />,
                 },
               ]}
             />
-          )}
 
-          <HubCard
-            title="Notifications"
-            image={newsImage}
-            to="/notifications"
-            features={[
-              {
-                label: "Match alerts & key rugby moments",
-                icon: <CalendarIcon />,
-              },
-              {
-                label: "Tournament updates you opt into",
-                icon: <StarIcon />,
-              },
-            ]}
-          />
+            <HubCard
+              title="Anthems"
+              image={anthemsImage}
+              to="/anthems"
+              features={[
+                { label: "National Anthems", icon: <MusicIcon /> },
+              ]}
+            />
 
-          {/* Core */}
-          <HubCard
-            title="Anthems"
-            image={anthemsImage}
-            to="/anthems"
-            features={[
-              { label: "National Anthems", icon: <MusicIcon /> },
-            ]}
-          />
+            <HubCard
+              title="Tournaments"
+              image={tournamentsImage}
+              to="/tournaments"
+              features={[
+                { label: "Men’s Tournaments", icon: <AwardIcon /> },
+                { label: "Women’s Tournaments", icon: <GridIcon /> },
+              ]}
+            />
 
-          <HubCard
-            title="Tournaments"
-            image={tournamentsImage}
-            to="/tournaments"
-            features={[
-              { label: "Men’s Tournaments", icon: <AwardIcon /> },
-              { label: "Women’s Tournaments", icon: <GridIcon /> },
-            ]}
-          />
+            <HubCard
+              title="Match Center"
+              image={matchCenterImage}
+              to="/match-center"
+              features={[
+                { label: "Live Scores", icon: <LiveScoresIcon /> },
+                { label: "Fixtures", icon: <FixturesIcon /> },
+                { label: "Results", icon: <ResultsIcon /> },
+                { label: "Stats", icon: <StatsIcon /> },
+              ]}
+            />
 
-          {/* Matchday */}
-          <HubCard
-            title="Match Center"
-            image={matchCenterImage}
-            to="/match-center"
-            features={[
-              { label: "Live Scores", icon: <LiveScoresIcon /> },
-              { label: "Fixtures", icon: <FixturesIcon /> },
-              { label: "Results", icon: <ResultsIcon /> },
-              { label: "Stats", icon: <StatsIcon /> },
-            ]}
-          />
+            <HubCard
+              title="Matchday Journeys"
+              image={matchDayImage}
+              to="/matchday-journeys"
+              features={[
+                { label: "Flights", icon: <AirplaneIcon /> },
+                { label: "Tickets", icon: <TicketIcon /> },
+                { label: "Transport", icon: <TruckIcon /> },
+              ]}
+            />
 
-          <HubCard
-            title="Matchday Journeys"
-            image={matchDayImage}
-            to="/matchday-journeys"
-            features={[
-              { label: "Flights", icon: <AirplaneIcon /> },
-              { label: "Tickets", icon: <TicketIcon /> },
-              { label: "Transport", icon: <TruckIcon /> },
-            ]}
-          />
+            <HubCard
+              title="The Rugby Studio"
+              image={rugbyStudioImage}
+              to="/media"
+              features={[
+                { label: "Match Videos", icon: <VideoIcon /> },
+                { label: "Podcasts & Audio", icon: <VideoIcon /> },
+              ]}
+            />
 
-          {/* Experience */}
-          <HubCard
-            title="The Rugby Studio"
-            image={rugbyStudioImage}
-            to="/media"
-            features={[
-              { label: "Match Videos", icon: <VideoIcon /> },
-              { label: "Podcasts & Audio", icon: <VideoIcon /> },
-            ]}
-          />
+            <HubCard
+              title="Fanzone"
+              image={fanzoneImage}
+              to="/fanzone"
+              features={[
+                { label: "Community & Loyalty", icon: <UsersIcon /> },
+              ]}
+            />
 
-          <HubCard
-            title="Fanzone"
-            image={fanzoneImage}
-            to="/fanzone"
-            features={[
-              { label: "Community & Loyalty", icon: <UsersIcon /> },
-            ]}
-          />
+            <HubCard
+              title="News"
+              image={newsImage}
+              to="/news"
+              features={[
+                { label: "Headlines & Analysis", icon: <FileTextIcon /> },
+              ]}
+            />
 
-          {/* Insight */}
-          <HubCard
-            title="News"
-            image={newsImage}
-            to="/news"
-            features={[
-              { label: "Headlines & Analysis", icon: <FileTextIcon /> },
-            ]}
-          />
+            <HubCard
+              title="Inside the Game"
+              image={insideTheGameImage}
+              to="/inside-the-game"
+              features={[
+                { label: "Laws & Referees", icon: <BookOpenIcon /> },
+                { label: "Fantasy & Analysis", icon: <StarIcon /> },
+              ]}
+            />
 
-          <HubCard
-            title="Inside the Game"
-            image={insideTheGameImage}
-            to="/inside-the-game"
-            features={[
-              { label: "Laws & Referees", icon: <BookOpenIcon /> },
-              { label: "Fantasy & Analysis", icon: <StarIcon /> },
-            ]}
-          />
+            <HubCard
+              title="Calendar"
+              image={calendarImage}
+              to="/calendar"
+              features={[
+                {
+                  label:
+                    "Global fixtures, key dates & iconic stadiums",
+                  icon: <CalendarIcon />,
+                },
+              ]}
+            />
 
-          {/* Commerce */}
-          <HubCard
-            title="Calendar"
-            image={calendarImage}
-            to="/calendar"
-            features={[
-              {
-                label:
-                  "Global fixtures, key dates & iconic stadiums",
-                icon: <CalendarIcon />,
-              },
-            ]}
-          />
-
-          <HubCard
-            title="Merch"
-            image={merchImage}
-            to="/merch"
-            features={[
-              { label: "Official Team Gear", icon: <ShoppingBagIcon /> },
-            ]}
-          />
-        </AutoContentRail>
-      </section>
-    </main>
-  </PageWrapper>
-);
+            <HubCard
+              title="Merch"
+              image={merchImage}
+              to="/merch"
+              features={[
+                { label: "Official Team Gear", icon: <ShoppingBagIcon /> },
+              ]}
+            />
+          </AutoContentRail>
+        </section>
+      </main>
+    </PageWrapper>
+  );
 }

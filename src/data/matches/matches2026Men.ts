@@ -204,11 +204,15 @@ export const matches2026Men: MatchData[] = [
   // ================= NATIONS CHAMPIONSHIP =================
 
   // ROUND 1
+    // ================= NATIONS CHAMPIONSHIP =================
+
+  // ROUND 1
   {
     id: 3001,
     competitionId: "nations-championship",
     tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
     tournament: "Nations Championship 2026",
+    round: "Round 1",
     date: "2026-07-04",
     venue: "Ellis Park, Johannesburg",
     home: { name: "South Africa", country: "south-africa" },
@@ -219,8 +223,9 @@ export const matches2026Men: MatchData[] = [
     competitionId: "nations-championship",
     tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
     tournament: "Nations Championship 2026",
+    round: "Round 1",
     date: "2026-07-04",
-    venue: "Auckland",
+    venue: "One New Zealand Stadium, Christchurch",
     home: { name: "New Zealand", country: "new-zealand" },
     away: { name: "France", country: "france" },
   },
@@ -229,8 +234,9 @@ export const matches2026Men: MatchData[] = [
     competitionId: "nations-championship",
     tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
     tournament: "Nations Championship 2026",
+    round: "Round 1",
     date: "2026-07-04",
-    venue: "Sydney",
+    venue: "Allianz Stadium, Sydney",
     home: { name: "Australia", country: "australia" },
     away: { name: "Ireland", country: "ireland" },
   },
@@ -239,8 +245,9 @@ export const matches2026Men: MatchData[] = [
     competitionId: "nations-championship",
     tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
     tournament: "Nations Championship 2026",
+    round: "Round 1",
     date: "2026-07-04",
-    venue: "Tokyo",
+    venue: "Prince Chichibu Memorial Rugby Ground, Tokyo",
     home: { name: "Japan", country: "japan" },
     away: { name: "Italy", country: "italy" },
   },
@@ -249,8 +256,9 @@ export const matches2026Men: MatchData[] = [
     competitionId: "nations-championship",
     tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
     tournament: "Nations Championship 2026",
+    round: "Round 1",
     date: "2026-07-04",
-    venue: "Suva",
+    venue: "Cardiff City Stadium, Cardiff",
     home: { name: "Fiji", country: "fiji" },
     away: { name: "Wales", country: "wales" },
   },
@@ -259,12 +267,12 @@ export const matches2026Men: MatchData[] = [
     competitionId: "nations-championship",
     tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,
     tournament: "Nations Championship 2026",
+    round: "Round 1",
     date: "2026-07-04",
-    venue: "Buenos Aires",
+    venue: "Estadio Mario Alberto Kempes, Cordoba",
     home: { name: "Argentina", country: "argentina" },
     away: { name: "Scotland", country: "scotland" },
   },
-
   // ---------- ROUND 2 ----------
   {
     id: 3010,

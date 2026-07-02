@@ -45,6 +45,19 @@ export default function FeaturedMatchCard() {
 
     const now = new Date();
 
+    const southAfricaEngland = matches.find(
+      (m) =>
+        m.competitionId === "nations-championship" &&
+        m.home.country === "south-africa" &&
+        m.away.country === "england" &&
+        !m.score &&
+        new Date(m.date).getTime() >= now.getTime()
+    );
+
+    if (southAfricaEngland) {
+      return southAfricaEngland;
+    }
+
     const upcoming = matches
       .filter(
         (m) =>

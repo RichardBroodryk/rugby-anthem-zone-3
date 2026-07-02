@@ -1,10 +1,11 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import styles from "./MatchPage.module.css";
 
 import { getMatches } from "../data/matchesAdapter";
 import { flagMap } from "../data/flagMap";
 import { getMatchDetails } from "../utils/matchDetailsResolver";
+import { tournaments2026 } from "../data/tournamentMeta";
 
 export default function MatchPage() {
   const location = useLocation();
@@ -20,9 +21,6 @@ export default function MatchPage() {
 
   const [newComment, setNewComment] =
     useState("");
-
-  const tournamentSlug =
-    match?.tournamentSlug || "";
 
   /* ==================================================
      SVNS EDITORIAL MODE
@@ -93,6 +91,34 @@ export default function MatchPage() {
      LOADING
      ================================================== */
 
+const resolvedTournamentRoute =
+    useMemo(() => {
+      if (!match) return "/tournaments";
+
+      if (match.tournamentSlug) {
+        return `/tournaments/${match.tournamentSlug}`;
+      }
+
+      const tournament =
+        tournaments2026.find(
+          (t) =>
+            t.conceptId ===
+              match.competitionId ||
+            t.route ===
+              match.competitionId ||
+            t.route?.includes(
+              match.competitionId
+            )
+        );
+
+      if (tournament?.route) {
+        return tournament.route;
+      }
+
+      return "/tournaments";
+    }, [match]);
+
+
   if (!match) {
     return (
       <div className={styles.page}>
@@ -123,6 +149,7 @@ export default function MatchPage() {
   const details =
     getMatchDetails(match);
 
+  
   /* ==================================================
      FLAGS + META
      ================================================== */
@@ -253,7 +280,7 @@ export default function MatchPage() {
           }
           onClick={() =>
             navigate(
-              `/tournaments/${tournamentSlug}`
+              resolvedTournamentRoute
             )
           }
         >

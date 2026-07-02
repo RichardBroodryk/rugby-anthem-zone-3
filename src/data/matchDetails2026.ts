@@ -31,7 +31,6 @@ export type MatchDetails = {
 };
 
 export const matchDetails2026: MatchDetails[] = [
-
   {
     matchKey: "south-africa-vs-barbarians",
 
@@ -120,9 +119,245 @@ export const matchDetails2026: MatchDetails[] = [
     ],
   },
 
-  // ================= ROUND 1 =================
+  // ================= NATIONS CHAMPIONSHIP 2026 — ROUND 1 =================
 
-  // France W vs Italy W
+  {
+    matchKey: "south-africa-vs-england",
+    timeline: [
+      { minute: "0'", label: "Kick-off — Ellis Park, Johannesburg" },
+      { minute: "40'", label: "Half Time" },
+      { minute: "80'", label: "Full Time" },
+    ],
+    lineups: {
+      homeStarting: [
+        { number: 1, name: "Ox Nche" },
+        { number: 2, name: "Malcolm Marx" },
+        { number: 3, name: "Frans Malherbe" },
+        { number: 4, name: "Eben Etzebeth" },
+        { number: 5, name: "Lood de Jager" },
+        { number: 6, name: "Siya Kolisi (C)" },
+        { number: 7, name: "Pieter-Steph du Toit" },
+        { number: 8, name: "Jasper Wiese" },
+        { number: 9, name: "Grant Williams" },
+        { number: 10, name: "Manie Libbok" },
+        { number: 11, name: "Kurt-Lee Arendse" },
+        { number: 12, name: "Damian de Allende" },
+        { number: 13, name: "Jesse Kriel" },
+        { number: 14, name: "Cheslin Kolbe" },
+        { number: 15, name: "Damian Willemse" },
+      ],
+      homeBench: [],
+      awayStarting: [],
+      awayBench: [],
+    },
+    performances: [
+      {
+        category: "Captain",
+        player: "Siya Kolisi",
+        value: "South Africa",
+      },
+      {
+        category: "Venue",
+        player: "Ellis Park",
+        value: "Johannesburg",
+      },
+      {
+        category: "Status",
+        player: "England team",
+        value: "To be confirmed",
+      },
+    ],
+  },
+
+  {
+    matchKey: "new-zealand-vs-france",
+    timeline: [
+      { minute: "0'", label: "Kick-off — One New Zealand Stadium, Christchurch" },
+      { minute: "40'", label: "Half Time" },
+      { minute: "80'", label: "Full Time" },
+    ],
+    lineups: {
+      homeStarting: [
+        { number: 1, name: "Ethan de Groot" },
+        { number: 2, name: "Codie Taylor" },
+        { number: 3, name: "Fletcher Newell" },
+        { number: 4, name: "Josh Lord" },
+        { number: 5, name: "Sam Darry" },
+        { number: 6, name: "Peter Lakai" },
+        { number: 7, name: "Luke Jacobson" },
+        { number: 8, name: "Ardie Savea (C)" },
+        { number: 9, name: "Cam Roigard" },
+        { number: 10, name: "Ruben Love" },
+        { number: 11, name: "Caleb Clarke" },
+        { number: 12, name: "Jordie Barrett" },
+        { number: 13, name: "Quinn Tupaea" },
+        { number: 14, name: "Will Jordan" },
+        { number: 15, name: "Damian McKenzie" },
+      ],
+      homeBench: [
+        { number: 16, name: "Asafo Aumua" },
+        { number: 17, name: "Xavier Numia" },
+      ],
+      awayStarting: [],
+      awayBench: [],
+    },
+    performances: [
+      {
+        category: "Captain",
+        player: "Ardie Savea",
+        value: "New Zealand",
+      },
+      {
+        category: "First-choice flyhalf",
+        player: "Ruben Love",
+        value: "Starting at 10",
+      },
+      {
+        category: "Status",
+        player: "France team",
+        value: "To be confirmed",
+      },
+    ],
+  },
+
+  {
+    matchKey: "australia-vs-ireland",
+    timeline: [
+      { minute: "0'", label: "Kick-off — Allianz Stadium, Sydney" },
+      { minute: "40'", label: "Half Time" },
+      { minute: "80'", label: "Full Time" },
+    ],
+    lineups: {
+      homeStarting: [
+        { number: 9, name: "Ryan Lonergan" },
+        { number: 10, name: "Carter Gordon" },
+        { number: 15, name: "Jock Campbell" },
+        { number: 8, name: "Harry Wilson (C)" },
+      ],
+      homeBench: [
+        { number: 19, name: "Lachlan Shaw" },
+        { number: 22, name: "Ben Donaldson" },
+      ],
+      awayStarting: [],
+      awayBench: [],
+    },
+    performances: [
+      {
+        category: "Captain",
+        player: "Harry Wilson",
+        value: "Australia",
+      },
+      {
+        category: "Selection note",
+        player: "Jock Campbell",
+        value: "Returns at fullback",
+      },
+      {
+        category: "Status",
+        player: "Ireland team",
+        value: "To be confirmed",
+      },
+    ],
+  },
+
+  {
+    matchKey: "japan-vs-italy",
+    timeline: [
+      { minute: "0'", label: "Kick-off — Prince Chichibu Memorial Rugby Ground, Tokyo" },
+      { minute: "40'", label: "Half Time" },
+      { minute: "80'", label: "Full Time" },
+    ],
+    lineups: {
+      homeStarting: [],
+      homeBench: [],
+      awayStarting: [],
+      awayBench: [],
+    },
+    performances: [
+      {
+        category: "Venue",
+        player: "Prince Chichibu Memorial Rugby Ground",
+        value: "Tokyo",
+      },
+      {
+        category: "Status",
+        player: "Japan team",
+        value: "To be confirmed",
+      },
+      {
+        category: "Status",
+        player: "Italy team",
+        value: "To be confirmed",
+      },
+    ],
+  },
+
+  {
+    matchKey: "fiji-vs-wales",
+    timeline: [
+      { minute: "0'", label: "Kick-off — Cardiff City Stadium, Cardiff" },
+      { minute: "40'", label: "Half Time" },
+      { minute: "80'", label: "Full Time" },
+    ],
+    lineups: {
+      homeStarting: [],
+      homeBench: [],
+      awayStarting: [],
+      awayBench: [],
+    },
+    performances: [
+      {
+        category: "Venue",
+        player: "Cardiff City Stadium",
+        value: "Cardiff",
+      },
+      {
+        category: "Status",
+        player: "Fiji team",
+        value: "To be confirmed",
+      },
+      {
+        category: "Status",
+        player: "Wales team",
+        value: "To be confirmed",
+      },
+    ],
+  },
+
+  {
+    matchKey: "argentina-vs-scotland",
+    timeline: [
+      { minute: "0'", label: "Kick-off — Estadio Mario Alberto Kempes, Cordoba" },
+      { minute: "40'", label: "Half Time" },
+      { minute: "80'", label: "Full Time" },
+    ],
+    lineups: {
+      homeStarting: [],
+      homeBench: [],
+      awayStarting: [],
+      awayBench: [],
+    },
+    performances: [
+      {
+        category: "Venue",
+        player: "Estadio Mario Alberto Kempes",
+        value: "Cordoba",
+      },
+      {
+        category: "Status",
+        player: "Argentina team",
+        value: "To be confirmed",
+      },
+      {
+        category: "Status",
+        player: "Scotland team",
+        value: "To be confirmed",
+      },
+    ],
+  },
+
+  // ================= WOMEN'S SIX NATIONS / OTHER EXISTING DATA =================
+
   {
     matchKey: "france-w-vs-italy-w",
     timeline: [
@@ -198,7 +433,6 @@ export const matchDetails2026: MatchDetails[] = [
     ],
   },
 
-  // England W vs Ireland W
   {
     matchKey: "england-w-vs-ireland-w",
     timeline: [
@@ -272,7 +506,6 @@ export const matchDetails2026: MatchDetails[] = [
     ],
   },
 
-  // Wales W vs Scotland W
   {
     matchKey: "wales-w-vs-scotland-w",
     timeline: [
@@ -344,9 +577,6 @@ export const matchDetails2026: MatchDetails[] = [
     ],
   },
 
-  // ================= ROUND 2 =================
-
-  // Scotland W vs England W (7-84)
   {
     matchKey: "scotland-w-vs-england-w",
     timeline: [
@@ -420,7 +650,6 @@ export const matchDetails2026: MatchDetails[] = [
     ],
   },
 
-  // Wales W vs France W (7-38)
   {
     matchKey: "wales-w-vs-france-w",
     timeline: [
@@ -492,7 +721,6 @@ export const matchDetails2026: MatchDetails[] = [
     ],
   },
 
-  // Ireland W vs Italy W (57-20)
   {
     matchKey: "ireland-w-vs-italy-w",
     timeline: [
@@ -566,271 +794,326 @@ export const matchDetails2026: MatchDetails[] = [
   },
 
   {
-  matchKey: "england-w-vs-wales-w",
-  timeline: [
-    { minute: "6'", label: "TRY: England W - A. Breach" },
-    { minute: "18'", label: "TRY: Wales W" },
-    { minute: "29'", label: "TRY: England W - E. Scarratt" },
-    { minute: "41'", label: "TRY: England W - H. Aitchison" },
-    { minute: "55'", label: "TRY: England W - M. Rowland" },
-    { minute: "70'", label: "TRY: England W - L. Riley" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "C. Botterman" },
-      { number: 2, name: "L. Atkin-Davies" },
-      { number: 3, name: "S. Scarratt" },
-      { number: 4, name: "Z. Aldcroft" },
-      { number: 5, name: "A. Ward" },
-      { number: 6, name: "Z. Harrison" },
-      { number: 7, name: "M. Cleall" },
-      { number: 8, name: "S. Hunter" },
-      { number: 9, name: "L. Riley" },
-      { number: 10, name: "H. Aitchison" },
-      { number: 11, name: "A. Breach" },
-      { number: 12, name: "E. Scarratt" },
-      { number: 13, name: "H. Rowland" },
-      { number: 14, name: "J. Breach" },
-      { number: 15, name: "E. Kildunne" },
+    matchKey: "england-w-vs-wales-w",
+    timeline: [
+      { minute: "6'", label: "TRY: England W - A. Breach" },
+      { minute: "18'", label: "TRY: Wales W" },
+      { minute: "29'", label: "TRY: England W - E. Scarratt" },
+      { minute: "41'", label: "TRY: England W - H. Aitchison" },
+      { minute: "55'", label: "TRY: England W - M. Rowland" },
+      { minute: "70'", label: "TRY: England W - L. Riley" },
     ],
-    homeBench: [
-      { number: 16, name: "Reserve 1" },
-      { number: 17, name: "Reserve 2" },
-    ],
-    awayStarting: [
-      { number: 1, name: "C. Thomas" },
-      { number: 2, name: "K. Jones" },
-      { number: 3, name: "C. Lewis" },
-      { number: 4, name: "G. Evans" },
-      { number: 5, name: "A. Fleming" },
-      { number: 6, name: "B. Lewis" },
-      { number: 7, name: "M. John" },
-      { number: 8, name: "S. Lillicrap" },
-      { number: 9, name: "K. Bevan" },
-      { number: 10, name: "E. Snowsill" },
-      { number: 11, name: "L. Neumann" },
-      { number: 12, name: "H. Jones" },
-      { number: 13, name: "K. Lake" },
-      { number: 14, name: "J. Joyce" },
-      { number: 15, name: "C. Williams" },
-    ],
-    awayBench: [
-      { number: 16, name: "Reserve A" },
-      { number: 17, name: "Reserve B" },
+    lineups: {
+      homeStarting: [
+        { number: 1, name: "C. Botterman" },
+        { number: 2, name: "L. Atkin-Davies" },
+        { number: 3, name: "S. Scarratt" },
+        { number: 4, name: "Z. Aldcroft" },
+        { number: 5, name: "A. Ward" },
+        { number: 6, name: "Z. Harrison" },
+        { number: 7, name: "M. Cleall" },
+        { number: 8, name: "S. Hunter" },
+        { number: 9, name: "L. Riley" },
+        { number: 10, name: "H. Aitchison" },
+        { number: 11, name: "A. Breach" },
+        { number: 12, name: "E. Scarratt" },
+        { number: 13, name: "H. Rowland" },
+        { number: 14, name: "J. Breach" },
+        { number: 15, name: "E. Kildunne" },
+      ],
+      homeBench: [
+        { number: 16, name: "Reserve 1" },
+        { number: 17, name: "Reserve 2" },
+      ],
+      awayStarting: [
+        { number: 1, name: "C. Thomas" },
+        { number: 2, name: "K. Jones" },
+        { number: 3, name: "C. Lewis" },
+        { number: 4, name: "G. Evans" },
+        { number: 5, name: "A. Fleming" },
+        { number: 6, name: "B. Lewis" },
+        { number: 7, name: "M. John" },
+        { number: 8, name: "S. Lillicrap" },
+        { number: 9, name: "K. Bevan" },
+        { number: 10, name: "E. Snowsill" },
+        { number: 11, name: "L. Neumann" },
+        { number: 12, name: "H. Jones" },
+        { number: 13, name: "K. Lake" },
+        { number: 14, name: "J. Joyce" },
+        { number: 15, name: "C. Williams" },
+      ],
+      awayBench: [
+        { number: 16, name: "Reserve A" },
+        { number: 17, name: "Reserve B" },
+      ],
+    },
+    performances: [
+      { category: "Most Meters", player: "A. Breach", value: "165m" },
+      { category: "Most Tackles", player: "Z. Harrison", value: "20 tackles" },
     ],
   },
-  performances: [
-    { category: "Most Meters", player: "A. Breach", value: "165m" },
-    { category: "Most Tackles", player: "Z. Harrison", value: "20 tackles" },
-  ],
-},
 
-{
-  matchKey: "italy-w-vs-scotland-w",
-  timeline: [
-    { minute: "9'", label: "TRY: Italy W" },
-    { minute: "22'", label: "TRY: Scotland W" },
-    { minute: "34'", label: "TRY: Italy W" },
-    { minute: "48'", label: "TRY: Italy W" },
-    { minute: "60'", label: "TRY: Scotland W" },
-    { minute: "72'", label: "TRY: Italy W" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "S. Seye" }, { number: 2, name: "V. Vecchi" },
-      { number: 3, name: "L. Gai" }, { number: 4, name: "G. Duca" },
-      { number: 5, name: "E. Stevanin" }, { number: 6, name: "F. Sgorbini" },
-      { number: 7, name: "I. Locatelli" }, { number: 8, name: "M. V. V." },
-      { number: 9, name: "S. Stefan" }, { number: 10, name: "V. Rigoni" },
-      { number: 11, name: "A. Masi" }, { number: 12, name: "B. Rigoni" },
-      { number: 13, name: "M. Sillari" }, { number: 14, name: "A. Masi" },
-      { number: 15, name: "V. Ostuni" },
+  {
+    matchKey: "italy-w-vs-scotland-w",
+    timeline: [
+      { minute: "9'", label: "TRY: Italy W" },
+      { minute: "22'", label: "TRY: Scotland W" },
+      { minute: "34'", label: "TRY: Italy W" },
+      { minute: "48'", label: "TRY: Italy W" },
+      { minute: "60'", label: "TRY: Scotland W" },
+      { minute: "72'", label: "TRY: Italy W" },
     ],
-    homeBench: [{ number: 16, name: "Reserve ITA" }],
-    awayStarting: [
-      { number: 1, name: "M. Wright" }, { number: 2, name: "E. Martin" },
-      { number: 3, name: "C. Belisle" }, { number: 4, name: "E. Wassell" },
-      { number: 5, name: "L. McMillan" }, { number: 6, name: "R. McIntosh" },
-      { number: 7, name: "R. McCormick" }, { number: 8, name: "E. Gallagher" },
-      { number: 9, name: "M. McDonald" }, { number: 10, name: "H. Nelson" },
-      { number: 11, name: "C. Rollie" }, { number: 12, name: "L. Thomson" },
-      { number: 13, name: "M. Smith" }, { number: 14, name: "R. Lloyd" },
-      { number: 15, name: "C. Grant" },
+    lineups: {
+      homeStarting: [
+        { number: 1, name: "S. Seye" },
+        { number: 2, name: "V. Vecchi" },
+        { number: 3, name: "L. Gai" },
+        { number: 4, name: "G. Duca" },
+        { number: 5, name: "E. Stevanin" },
+        { number: 6, name: "F. Sgorbini" },
+        { number: 7, name: "I. Locatelli" },
+        { number: 8, name: "M. V. V." },
+        { number: 9, name: "S. Stefan" },
+        { number: 10, name: "V. Rigoni" },
+        { number: 11, name: "A. Masi" },
+        { number: 12, name: "B. Rigoni" },
+        { number: 13, name: "M. Sillari" },
+        { number: 14, name: "A. Masi" },
+        { number: 15, name: "V. Ostuni" },
+      ],
+      homeBench: [{ number: 16, name: "Reserve ITA" }],
+      awayStarting: [
+        { number: 1, name: "M. Wright" },
+        { number: 2, name: "E. Martin" },
+        { number: 3, name: "C. Belisle" },
+        { number: 4, name: "E. Wassell" },
+        { number: 5, name: "L. McMillan" },
+        { number: 6, name: "R. McIntosh" },
+        { number: 7, name: "R. McCormick" },
+        { number: 8, name: "E. Gallagher" },
+        { number: 9, name: "M. McDonald" },
+        { number: 10, name: "H. Nelson" },
+        { number: 11, name: "C. Rollie" },
+        { number: 12, name: "L. Thomson" },
+        { number: 13, name: "M. Smith" },
+        { number: 14, name: "R. Lloyd" },
+        { number: 15, name: "C. Grant" },
+      ],
+      awayBench: [{ number: 16, name: "Reserve SCO" }],
+    },
+    performances: [
+      { category: "Most Meters", player: "C. Rollie", value: "140m" },
     ],
-    awayBench: [{ number: 16, name: "Reserve SCO" }],
   },
-  performances: [
-    { category: "Most Meters", player: "C. Rollie", value: "140m" },
-  ],
-},
 
-{
-  matchKey: "france-w-vs-ireland-w",
-  timeline: [
-    { minute: "6'", label: "TRY: France W" },
-    { minute: "19'", label: "TRY: Ireland W" },
-    { minute: "30'", label: "TRY: France W" },
-    { minute: "47'", label: "TRY: France W" },
-    { minute: "63'", label: "TRY: France W" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "A. Deshayes" }, { number: 2, name: "A. Sochat" },
-      { number: 3, name: "C. Castets" }, { number: 4, name: "M. Fall" },
-      { number: 5, name: "M. Diallo" }, { number: 6, name: "M. Ménager" },
-      { number: 7, name: "L. Drouin" }, { number: 8, name: "C. Gros" },
-      { number: 9, name: "A. Chambon" }, { number: 10, name: "C. Le Duff" },
-      { number: 11, name: "B. Vernier" }, { number: 12, name: "N. Piquemal" },
-      { number: 13, name: "M. Ménager" }, { number: 14, name: "M. Ménager" },
-      { number: 15, name: "M. Ménager" },
+  {
+    matchKey: "france-w-vs-ireland-w",
+    timeline: [
+      { minute: "6'", label: "TRY: France W" },
+      { minute: "19'", label: "TRY: Ireland W" },
+      { minute: "30'", label: "TRY: France W" },
+      { minute: "47'", label: "TRY: France W" },
+      { minute: "63'", label: "TRY: France W" },
     ],
-    homeBench: [{ number: 16, name: "Reserve FRA" }],
-    awayStarting: [
-      { number: 1, name: "L. Djougang" }, { number: 2, name: "N. Jones" },
-      { number: 3, name: "S. McGrath" }, { number: 4, name: "B. Hogan" },
-      { number: 5, name: "S. Monaghan" }, { number: 6, name: "G. Moore" },
-      { number: 7, name: "B. McCormack" }, { number: 8, name: "D. Wall" },
-      { number: 9, name: "M. Scuffil" }, { number: 10, name: "N. Cronin" },
-      { number: 11, name: "A. Doyle" }, { number: 12, name: "S. Naoupu" },
-      { number: 13, name: "E. Higgins" }, { number: 14, name: "L. Muldoon" },
-      { number: 15, name: "E. Murphy" },
+    lineups: {
+      homeStarting: [
+        { number: 1, name: "A. Deshayes" },
+        { number: 2, name: "A. Sochat" },
+        { number: 3, name: "C. Castets" },
+        { number: 4, name: "M. Fall" },
+        { number: 5, name: "M. Diallo" },
+        { number: 6, name: "M. Ménager" },
+        { number: 7, name: "L. Drouin" },
+        { number: 8, name: "C. Gros" },
+        { number: 9, name: "A. Chambon" },
+        { number: 10, name: "C. Le Duff" },
+        { number: 11, name: "B. Vernier" },
+        { number: 12, name: "N. Piquemal" },
+        { number: 13, name: "M. Ménager" },
+        { number: 14, name: "M. Ménager" },
+        { number: 15, name: "M. Ménager" },
+      ],
+      homeBench: [{ number: 16, name: "Reserve FRA" }],
+      awayStarting: [
+        { number: 1, name: "L. Djougang" },
+        { number: 2, name: "N. Jones" },
+        { number: 3, name: "S. McGrath" },
+        { number: 4, name: "B. Hogan" },
+        { number: 5, name: "S. Monaghan" },
+        { number: 6, name: "G. Moore" },
+        { number: 7, name: "B. McCormack" },
+        { number: 8, name: "D. Wall" },
+        { number: 9, name: "M. Scuffil" },
+        { number: 10, name: "N. Cronin" },
+        { number: 11, name: "A. Doyle" },
+        { number: 12, name: "S. Naoupu" },
+        { number: 13, name: "E. Higgins" },
+        { number: 14, name: "L. Muldoon" },
+        { number: 15, name: "E. Murphy" },
+      ],
+      awayBench: [{ number: 16, name: "Reserve IRE" }],
+    },
+    performances: [
+      { category: "Most Tackles", player: "C. Gros", value: "21 tackles" },
     ],
-    awayBench: [{ number: 16, name: "Reserve IRE" }],
   },
-  performances: [
-    { category: "Most Tackles", player: "C. Gros", value: "21 tackles" },
-  ],
-},
 
-{
-  matchKey: "italy-w-vs-england-w",
-  timeline: [
-    { minute: "5'", label: "TRY: England W" },
-    { minute: "20'", label: "TRY: Italy W" },
-    { minute: "33'", label: "TRY: England W" },
-    { minute: "48'", label: "TRY: England W" },
-    { minute: "60'", label: "TRY: Italy W" },
-    { minute: "72'", label: "TRY: England W" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "S. Seye" },
-      { number: 2, name: "V. Vecchi" },
-      { number: 3, name: "L. Gai" },
-      { number: 4, name: "G. Duca" },
-      { number: 5, name: "E. Stevanin" },
-      { number: 6, name: "F. Sgorbini" },
-      { number: 7, name: "I. Locatelli" },
-      { number: 8, name: "M. V. V." },
-      { number: 9, name: "S. Stefan" },
-      { number: 10, name: "V. Rigoni" },
-      { number: 11, name: "A. Masi" },
-      { number: 12, name: "B. Rigoni" },
-      { number: 13, name: "M. Sillari" },
-      { number: 14, name: "A. Masi" },
-      { number: 15, name: "V. Ostuni" },
+  {
+    matchKey: "italy-w-vs-england-w",
+    timeline: [
+      { minute: "5'", label: "TRY: England W" },
+      { minute: "20'", label: "TRY: Italy W" },
+      { minute: "33'", label: "TRY: England W" },
+      { minute: "48'", label: "TRY: England W" },
+      { minute: "60'", label: "TRY: Italy W" },
+      { minute: "72'", label: "TRY: England W" },
     ],
-    homeBench: [{ number: 16, name: "Reserve ITA" }],
-    awayStarting: [
-      { number: 1, name: "C. Botterman" },
-      { number: 2, name: "L. Atkin-Davies" },
-      { number: 3, name: "S. Scarratt" },
-      { number: 4, name: "Z. Aldcroft" },
-      { number: 5, name: "A. Ward" },
-      { number: 6, name: "Z. Harrison" },
-      { number: 7, name: "M. Cleall" },
-      { number: 8, name: "S. Hunter" },
-      { number: 9, name: "L. Riley" },
-      { number: 10, name: "H. Aitchison" },
-      { number: 11, name: "A. Breach" },
-      { number: 12, name: "E. Scarratt" },
-      { number: 13, name: "H. Rowland" },
-      { number: 14, name: "J. Breach" },
-      { number: 15, name: "E. Kildunne" },
+    lineups: {
+      homeStarting: [
+        { number: 1, name: "S. Seye" },
+        { number: 2, name: "V. Vecchi" },
+        { number: 3, name: "L. Gai" },
+        { number: 4, name: "G. Duca" },
+        { number: 5, name: "E. Stevanin" },
+        { number: 6, name: "F. Sgorbini" },
+        { number: 7, name: "I. Locatelli" },
+        { number: 8, name: "M. V. V." },
+        { number: 9, name: "S. Stefan" },
+        { number: 10, name: "V. Rigoni" },
+        { number: 11, name: "A. Masi" },
+        { number: 12, name: "B. Rigoni" },
+        { number: 13, name: "M. Sillari" },
+        { number: 14, name: "A. Masi" },
+        { number: 15, name: "V. Ostuni" },
+      ],
+      homeBench: [{ number: 16, name: "Reserve ITA" }],
+      awayStarting: [
+        { number: 1, name: "C. Botterman" },
+        { number: 2, name: "L. Atkin-Davies" },
+        { number: 3, name: "S. Scarratt" },
+        { number: 4, name: "Z. Aldcroft" },
+        { number: 5, name: "A. Ward" },
+        { number: 6, name: "Z. Harrison" },
+        { number: 7, name: "M. Cleall" },
+        { number: 8, name: "S. Hunter" },
+        { number: 9, name: "L. Riley" },
+        { number: 10, name: "H. Aitchison" },
+        { number: 11, name: "A. Breach" },
+        { number: 12, name: "E. Scarratt" },
+        { number: 13, name: "H. Rowland" },
+        { number: 14, name: "J. Breach" },
+        { number: 15, name: "E. Kildunne" },
+      ],
+      awayBench: [{ number: 16, name: "Reserve ENG" }],
+    },
+    performances: [
+      { category: "Most Meters", player: "E. Kildunne", value: "172m" },
     ],
-    awayBench: [{ number: 16, name: "Reserve ENG" }],
   },
-  performances: [
-    { category: "Most Meters", player: "E. Kildunne", value: "172m" },
-  ],
-},
 
-{
-  matchKey: "scotland-w-vs-france-w",
-  timeline: [
-    { minute: "8'", label: "TRY: France W" },
-    { minute: "16'", label: "TRY: Scotland W" },
-    { minute: "29'", label: "TRY: France W" },
-    { minute: "50'", label: "TRY: France W" },
-    { minute: "65'", label: "TRY: France W" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "M. Wright" }, { number: 2, name: "E. Martin" },
-      { number: 3, name: "C. Belisle" }, { number: 4, name: "E. Wassell" },
-      { number: 5, name: "L. McMillan" }, { number: 6, name: "R. McIntosh" },
-      { number: 7, name: "R. McCormick" }, { number: 8, name: "E. Gallagher" },
-      { number: 9, name: "M. McDonald" }, { number: 10, name: "H. Nelson" },
-      { number: 11, name: "C. Rollie" }, { number: 12, name: "L. Thomson" },
-      { number: 13, name: "M. Smith" }, { number: 14, name: "R. Lloyd" },
-      { number: 15, name: "C. Grant" },
+  {
+    matchKey: "scotland-w-vs-france-w",
+    timeline: [
+      { minute: "8'", label: "TRY: France W" },
+      { minute: "16'", label: "TRY: Scotland W" },
+      { minute: "29'", label: "TRY: France W" },
+      { minute: "50'", label: "TRY: France W" },
+      { minute: "65'", label: "TRY: France W" },
     ],
-    homeBench: [{ number: 16, name: "Reserve SCO" }],
-    awayStarting: [
-      { number: 1, name: "A. Deshayes" }, { number: 2, name: "A. Sochat" },
-      { number: 3, name: "C. Castets" }, { number: 4, name: "M. Fall" },
-      { number: 5, name: "M. Diallo" }, { number: 6, name: "M. Ménager" },
-      { number: 7, name: "L. Drouin" }, { number: 8, name: "C. Gros" },
-      { number: 9, name: "A. Chambon" }, { number: 10, name: "C. Le Duff" },
-      { number: 11, name: "B. Vernier" }, { number: 12, name: "N. Piquemal" },
-      { number: 13, name: "M. Ménager" }, { number: 14, name: "M. Ménager" },
-      { number: 15, name: "M. Ménager" },
+    lineups: {
+      homeStarting: [
+        { number: 1, name: "M. Wright" },
+        { number: 2, name: "E. Martin" },
+        { number: 3, name: "C. Belisle" },
+        { number: 4, name: "E. Wassell" },
+        { number: 5, name: "L. McMillan" },
+        { number: 6, name: "R. McIntosh" },
+        { number: 7, name: "R. McCormick" },
+        { number: 8, name: "E. Gallagher" },
+        { number: 9, name: "M. McDonald" },
+        { number: 10, name: "H. Nelson" },
+        { number: 11, name: "C. Rollie" },
+        { number: 12, name: "L. Thomson" },
+        { number: 13, name: "M. Smith" },
+        { number: 14, name: "R. Lloyd" },
+        { number: 15, name: "C. Grant" },
+      ],
+      homeBench: [{ number: 16, name: "Reserve SCO" }],
+      awayStarting: [
+        { number: 1, name: "A. Deshayes" },
+        { number: 2, name: "A. Sochat" },
+        { number: 3, name: "C. Castets" },
+        { number: 4, name: "M. Fall" },
+        { number: 5, name: "M. Diallo" },
+        { number: 6, name: "M. Ménager" },
+        { number: 7, name: "L. Drouin" },
+        { number: 8, name: "C. Gros" },
+        { number: 9, name: "A. Chambon" },
+        { number: 10, name: "C. Le Duff" },
+        { number: 11, name: "B. Vernier" },
+        { number: 12, name: "N. Piquemal" },
+        { number: 13, name: "M. Ménager" },
+        { number: 14, name: "M. Ménager" },
+        { number: 15, name: "M. Ménager" },
+      ],
+      awayBench: [{ number: 16, name: "Reserve FRA" }],
+    },
+    performances: [
+      { category: "Most Meters", player: "B. Vernier", value: "160m" },
     ],
-    awayBench: [{ number: 16, name: "Reserve FRA" }],
   },
-  performances: [
-    { category: "Most Meters", player: "B. Vernier", value: "160m" },
-  ],
-},
 
-{
-  matchKey: "ireland-w-vs-wales-w",
-  timeline: [
-    { minute: "10'", label: "TRY: Ireland W" },
-    { minute: "28'", label: "TRY: Wales W" },
-    { minute: "40'", label: "TRY: Ireland W" },
-    { minute: "55'", label: "TRY: Ireland W" },
-    { minute: "70'", label: "TRY: Ireland W" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "L. Djougang" }, { number: 2, name: "N. Jones" },
-      { number: 3, name: "S. McGrath" }, { number: 4, name: "B. Hogan" },
-      { number: 5, name: "S. Monaghan" }, { number: 6, name: "G. Moore" },
-      { number: 7, name: "B. McCormack" }, { number: 8, name: "D. Wall" },
-      { number: 9, name: "M. Scuffil" }, { number: 10, name: "N. Cronin" },
-      { number: 11, name: "A. Doyle" }, { number: 12, name: "S. Naoupu" },
-      { number: 13, name: "E. Higgins" }, { number: 14, name: "L. Muldoon" },
-      { number: 15, name: "E. Murphy" },
+  {
+    matchKey: "ireland-w-vs-wales-w",
+    timeline: [
+      { minute: "10'", label: "TRY: Ireland W" },
+      { minute: "28'", label: "TRY: Wales W" },
+      { minute: "40'", label: "TRY: Ireland W" },
+      { minute: "55'", label: "TRY: Ireland W" },
+      { minute: "70'", label: "TRY: Ireland W" },
     ],
-    homeBench: [{ number: 16, name: "Reserve IRE" }],
-    awayStarting: [
-      { number: 1, name: "C. Thomas" }, { number: 2, name: "K. Jones" },
-      { number: 3, name: "C. Lewis" }, { number: 4, name: "G. Evans" },
-      { number: 5, name: "A. Fleming" }, { number: 6, name: "B. Lewis" },
-      { number: 7, name: "M. John" }, { number: 8, name: "S. Lillicrap" },
-      { number: 9, name: "K. Bevan" }, { number: 10, name: "E. Snowsill" },
-      { number: 11, name: "L. Neumann" }, { number: 12, name: "H. Jones" },
-      { number: 13, name: "K. Lake" }, { number: 14, name: "J. Joyce" },
-      { number: 15, name: "C. Williams" },
+    lineups: {
+      homeStarting: [
+        { number: 1, name: "L. Djougang" },
+        { number: 2, name: "N. Jones" },
+        { number: 3, name: "S. McGrath" },
+        { number: 4, name: "B. Hogan" },
+        { number: 5, name: "S. Monaghan" },
+        { number: 6, name: "G. Moore" },
+        { number: 7, name: "B. McCormack" },
+        { number: 8, name: "D. Wall" },
+        { number: 9, name: "M. Scuffil" },
+        { number: 10, name: "N. Cronin" },
+        { number: 11, name: "A. Doyle" },
+        { number: 12, name: "S. Naoupu" },
+        { number: 13, name: "E. Higgins" },
+        { number: 14, name: "L. Muldoon" },
+        { number: 15, name: "E. Murphy" },
+      ],
+      homeBench: [{ number: 16, name: "Reserve IRE" }],
+      awayStarting: [
+        { number: 1, name: "C. Thomas" },
+        { number: 2, name: "K. Jones" },
+        { number: 3, name: "C. Lewis" },
+        { number: 4, name: "G. Evans" },
+        { number: 5, name: "A. Fleming" },
+        { number: 6, name: "B. Lewis" },
+        { number: 7, name: "M. John" },
+        { number: 8, name: "S. Lillicrap" },
+        { number: 9, name: "K. Bevan" },
+        { number: 10, name: "E. Snowsill" },
+        { number: 11, name: "L. Neumann" },
+        { number: 12, name: "H. Jones" },
+        { number: 13, name: "K. Lake" },
+        { number: 14, name: "J. Joyce" },
+        { number: 15, name: "C. Williams" },
+      ],
+      awayBench: [{ number: 16, name: "Reserve WAL" }],
+    },
+    performances: [
+      { category: "Most Tackles", player: "B. McCormack", value: "22 tackles" },
     ],
-    awayBench: [{ number: 16, name: "Reserve WAL" }],
   },
-  performances: [
-    { category: "Most Tackles", player: "B. McCormack", value: "22 tackles" },
-  ],
-},
-
 ];
 
 export const getMatchDetails = (match: any): MatchDetails | undefined => {
@@ -839,8 +1122,6 @@ export const getMatchDetails = (match: any): MatchDetails | undefined => {
   const home = (match.home?.name || "").toLowerCase().replace(/\s+/g, "-");
   const away = (match.away?.name || "").toLowerCase().replace(/\s+/g, "-");
   const expectedKey = `${home}-vs-${away}`;
-
-  console.log("Trying to match key:", expectedKey);
 
   return matchDetails2026.find((d) => d.matchKey === expectedKey);
 };
