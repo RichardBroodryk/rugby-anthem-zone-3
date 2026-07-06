@@ -6,26 +6,37 @@
 import type { MatchData } from "../data/matches/types";
 
 import { matches2026 } from "./matches";
-
 import { COMPETITIONS } from "../contracts/competitionRegistry";
-
 import { calculateImportance } from "../contracts/importanceEngine";
-
 import { LEAGUE_API_MAP } from "../contracts/leagueApiMap";
-
 import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
-
 import { fetchFixturesByLeague } from "../services/apiSportsRugby";
-
 import { tournaments2026 } from "./tournamentMeta";
+
+/* ==================================================
+   TYPES
+   ================================================== */
+
+type MatchType = "international" | "domestic";
+
+type GetMatchesOptions = {
+  type?: MatchType;
+  gender?: "men" | "women";
+  leagueId?: string;
+  includeAll?: boolean;
+};
+
+type LeagueMapEntry = {
+  id: number;
+  competitionId?: string;
+  gender?: "men" | "women";
+};
 
 /* ==================================================
    VALIDATION
    ================================================== */
 
-function isValidStructure(
-  match: MatchData
-): boolean {
+function isValidStructure(match: MatchData): boolean {
   return (
     !!match.id &&
     !!match.date &&
@@ -35,41 +46,26 @@ function isValidStructure(
   );
 }
 
-function isValidCompetition(
-  match: MatchData
-): boolean {
+function isValidCompetition(match: MatchData): boolean {
   return (
-    match.competitionId !==
-      "unknown" &&
-    COMPETITIONS.some(
-      (c) =>
-        c.conceptId ===
-        match.competitionId
-    )
+    match.competitionId !== "unknown" &&
+    COMPETITIONS.some((c) => c.conceptId === match.competitionId)
   );
 }
 
-function isInternational(
-  match: MatchData
-): boolean {
+function isInternational(match: MatchData): boolean {
   return COMPETITIONS.some(
     (comp) =>
-      comp.conceptId ===
-        match.competitionId &&
-      comp.category ===
-        "international"
+      comp.conceptId === match.competitionId &&
+      comp.category === "international"
   );
 }
 
-function isDomestic(
-  match: MatchData
-): boolean {
+function isDomestic(match: MatchData): boolean {
   return COMPETITIONS.some(
     (comp) =>
-      comp.conceptId ===
-        match.competitionId &&
-      comp.category ===
-        "domestic"
+      comp.conceptId === match.competitionId &&
+      comp.category === "domestic"
   );
 }
 
@@ -84,110 +80,112 @@ function resolveTournamentInstanceId(
     return undefined;
   }
 
-  const normalize = (
-    str: string
-  ) =>
-    str
-      .toLowerCase()
-      .replace(/\s+/g, "");
+  const normalize = (str: string) =>
+    str.toLowerCase().replace(/\s+/g, "");
 
-  const matchKey = normalize(
-    match.tournament
-  );
+  const matchKey = normalize(match.tournament);
 
-  const found =
-    tournaments2026.find((t) => {
-      if (!t.matchKey) {
-        return false;
-      }
-
-      return (
-        normalize(t.matchKey) ===
-        matchKey
-      );
-    });
+  const found = tournaments2026.find((t) => {
+    if (!t.matchKey) return false;
+    return normalize(t.matchKey) === matchKey;
+  });
 
   return found?.instanceId;
+}
+
+/* ==================================================
+   API LEAGUE ENTRY RESOLVER
+   ================================================== */
+
+function getLeagueEntriesForOptions(
+  options?: GetMatchesOptions
+): Array<[string, LeagueMapEntry]> {
+  const entries = Object.entries(
+    LEAGUE_API_MAP as Record<string, LeagueMapEntry>
+  );
+
+  return entries.filter(([mapKey, entry]) => {
+    if (!entry?.id) return false;
+
+    if (options?.gender && entry.gender && entry.gender !== options.gender) {
+      return false;
+    }
+
+    if (!options?.leagueId) {
+      return true;
+    }
+
+    const requestedLeagueId = options.leagueId.toLowerCase();
+
+    return (
+      entry.competitionId?.toLowerCase() === requestedLeagueId ||
+      mapKey.toLowerCase() === requestedLeagueId ||
+      String(entry.id) === options.leagueId
+    );
+  });
 }
 
 /* ==================================================
    API FETCH
    ================================================== */
 
+async function fetchLeagueFixtures(
+  leagueApiId: number
+): Promise<MatchData[]> {
+  try {
+    const timestamp = Date.now();
+
+    let apiData = await fetchFixturesByLeague(
+      leagueApiId,
+      2026,
+      timestamp
+    );
+
+    if (!apiData || apiData.length === 0) {
+      console.warn(
+        `⚠️ 2026 EMPTY FOR LEAGUE ${leagueApiId} → FALLBACK TO 2025`
+      );
+
+      apiData = await fetchFixturesByLeague(
+        leagueApiId,
+        2025,
+        timestamp
+      );
+    }
+
+    return convertApiSportsFixtures(apiData || []);
+  } catch (err) {
+    console.warn("DIRECT API FAILED:", leagueApiId, err);
+    return [];
+  }
+}
+
 async function fetchFromApi(
-  leagueId?: string,
-  gender?: "men" | "women"
+  options?: GetMatchesOptions
 ): Promise<MatchData[] | null> {
   try {
-    if (!leagueId || !gender) {
+    const entries = getLeagueEntriesForOptions(options);
+
+    if (entries.length === 0) {
       return null;
     }
 
-    const key =
-      `${leagueId}-${gender}`;
-
-    const entry =
-      LEAGUE_API_MAP[key];
-
-    if (!entry) {
-      console.warn(
-        "NO API MAP ENTRY:",
-        key
-      );
-
-      return null;
-    }
-
-    /* ==========================================
-       PRIMARY SEASON
-       ========================================== */
-
-    const timestamp =
-  Date.now();
-
-let apiData =
-  await fetchFixturesByLeague(
-    entry.id,
-    2026,
-    timestamp
-  );
-
-    /* ==========================================
-       FALLBACK SEASON
-       ========================================== */
-
-    if (
-      !apiData ||
-      apiData.length === 0
-    ) {
-      console.warn(
-        "⚠️ 2026 EMPTY → FALLBACK TO 2025"
-      );
-
-     apiData =
-  await fetchFixturesByLeague(
-    entry.id,
-    2025,
-    timestamp
-  );
-    }
-
-    const converted =
-      convertApiSportsFixtures(
-        apiData
-      );
-
-    console.log(
-      "🔥 DIRECT API MATCHES:",
-      converted.length
+    const results = await Promise.all(
+      entries.map(([, entry]) =>
+        fetchLeagueFixtures(entry.id).catch(() => [])
+      )
     );
 
-    return converted;
+    const flat = results.flat();
+
+    if (!flat.length) {
+      return null;
+    }
+
+    console.log("🔥 DIRECT API MATCHES:", flat.length);
+    return flat;
   } catch (err) {
-    console.warn(
-      "DIRECT API FAILED"
-    );
-
+    console.warn("DIRECT API FAILED", err);
     return null;
   }
 }
@@ -200,54 +198,24 @@ function mergeMatches(
   localMatches: MatchData[],
   apiMatches: MatchData[]
 ): MatchData[] {
-  const mergedMap = new Map<
-    string,
-    MatchData
-  >();
+  const mergedMap = new Map<string, MatchData>();
 
-  /* ==========================================
-     START WITH LOCAL
-     ========================================== */
-
+  // Start with local
   localMatches.forEach((match) => {
-  if (!match.matchKey) return;
+    if (!match.matchKey) return;
+    mergedMap.set(match.matchKey, match);
+  });
 
-  mergedMap.set(
-    match.matchKey,
-    match
-  );
-});
-
-  /* ==========================================
-     API OVERRIDES LOCAL
-     ========================================== */
-
+  // API overrides local when it has better state / score
   apiMatches.forEach((apiMatch) => {
-    if (!apiMatch.matchKey) {
-  return;
-}
+    if (!apiMatch.matchKey) return;
 
-const existing =
-  mergedMap.get(
-    apiMatch.matchKey
-  );
-
-    /* ======================================
-       NEW MATCH
-       ====================================== */
+    const existing = mergedMap.get(apiMatch.matchKey);
 
     if (!existing) {
-      mergedMap.set(
-        apiMatch.matchKey,
-        apiMatch
-      );
-
+      mergedMap.set(apiMatch.matchKey, apiMatch);
       return;
     }
-
-    /* ======================================
-       API HAS LIVE/FINAL DATA
-       ====================================== */
 
     const apiHasPriority =
       apiMatch.state === "live" ||
@@ -255,33 +223,20 @@ const existing =
       !!apiMatch.score;
 
     if (apiHasPriority) {
-      mergedMap.set(
-        apiMatch.matchKey,
-        {
-          ...existing,
-          ...apiMatch,
-        }
-      );
-
+      mergedMap.set(apiMatch.matchKey, {
+        ...existing,
+        ...apiMatch,
+      });
       return;
     }
 
-    /* ======================================
-       PRESERVE EXISTING OTHERWISE
-       ====================================== */
-
-    mergedMap.set(
-      apiMatch.matchKey,
-      {
-        ...apiMatch,
-        ...existing,
-      }
-    );
+    mergedMap.set(apiMatch.matchKey, {
+      ...apiMatch,
+      ...existing,
+    });
   });
 
-  return Array.from(
-    mergedMap.values()
-  );
+  return Array.from(mergedMap.values());
 }
 
 /* ==================================================
@@ -289,141 +244,129 @@ const existing =
    ================================================== */
 
 export async function getMatches(
-  options?: {
-    type?:
-      | "international"
-      | "domestic";
-
-    gender?:
-      | "men"
-      | "women";
-
-    leagueId?: string;
-
-    includeAll?: boolean;
-  }
+  options?: GetMatchesOptions
 ): Promise<MatchData[]> {
   let data: MatchData[] = [];
 
-  const apiData =
-    await fetchFromApi(
-      options?.leagueId,
-      options?.gender
-    );
+  const apiData = await fetchFromApi(options);
 
-  /* ==========================================
-     MERGE
-     ========================================== */
-
-  if (
-    !apiData ||
-    apiData.length === 0
-  ) {
-    console.warn(
-      "USING LOCAL MATCHES ONLY"
-    );
-
+  if (!apiData || apiData.length === 0) {
+    console.warn("USING LOCAL MATCHES ONLY");
     data = matches2026;
   } else {
-    data = mergeMatches(
-      matches2026,
-      apiData
-    );
+    data = mergeMatches(matches2026, apiData);
   }
 
-  /* ==========================================
-     FILTERING
-     ========================================== */
-
-  let filtered =
-    data.filter(
-      isValidStructure
-    );
+  let filtered = data.filter(isValidStructure);
 
   if (!options?.includeAll) {
-    filtered =
-      filtered.filter(
-        isValidCompetition
-      );
+    filtered = filtered.filter(isValidCompetition);
   }
 
-  if (
-    options?.type ===
-    "international"
-  ) {
-    filtered =
-      filtered.filter(
-        isInternational
-      );
+  if (options?.type === "international") {
+    filtered = filtered.filter(isInternational);
   }
 
-  if (
-    options?.type ===
-    "domestic"
-  ) {
-    filtered =
-      filtered.filter(
-        isDomestic
-      );
+  if (options?.type === "domestic") {
+    filtered = filtered.filter(isDomestic);
   }
 
-  /* ==========================================
-     LEAGUE FILTER
-     ========================================== */
+  if (options?.gender) {
+    filtered = filtered.filter((match) => {
+      if (options.gender === "women") {
+        return (
+          match.gender === "women" ||
+          match.home.name.includes(" W") ||
+          match.away.name.includes(" W") ||
+          match.competitionId.includes("women") ||
+          match.tournament.toLowerCase().includes("women")
+        );
+      }
+
+      return !(
+        match.gender === "women" ||
+        match.home.name.includes(" W") ||
+        match.away.name.includes(" W") ||
+        match.competitionId.includes("women") ||
+        match.tournament.toLowerCase().includes("women")
+      );
+    });
+  }
 
   if (options?.leagueId) {
-    const key =
-      options.leagueId.toLowerCase();
+    const key = options.leagueId.toLowerCase();
 
     filtered = filtered.filter(
       (m) =>
-        m.competitionId
-          ?.toLowerCase()
-          .includes(key)
+        m.competitionId?.toLowerCase() === key ||
+        m.tournamentInstanceId?.toLowerCase() === key ||
+        m.tournament?.toLowerCase().replace(/\s+/g, "-") === key
     );
   }
 
-  /* ==========================================
-     SORT
-     ========================================== */
-
   filtered.sort(
     (a, b) =>
-      new Date(
-        a.date
-      ).getTime() -
-      new Date(
-        b.date
-      ).getTime()
+      new Date(a.date).getTime() - new Date(b.date).getTime()
   );
 
-  /* ==========================================
-     FINAL MAP
-     ========================================== */
+  return filtered.map((match) => {
+    const tournamentInstanceId =
+      match.tournamentInstanceId ||
+      resolveTournamentInstanceId(match);
 
-  return filtered.map(
-    (match) => {
-      const tournamentInstanceId =
-        match.tournamentInstanceId ||
-        resolveTournamentInstanceId(
-          match
-        );
+    return {
+      ...match,
+      tournamentInstanceId,
+      importance: calculateImportance(match),
+      state: match.state || (match.score ? "final" : "upcoming"),
+    };
+  });
+}
 
-      return {
-        ...match,
+/* ==================================================
+   TOURNAMENT HELPER
+   ================================================== */
 
-        tournamentInstanceId,
+export async function getTournamentMatches(
+  tournament: {
+    conceptId: string;
+    gender?: "men" | "women" | "mixed";
+    instanceId?: string;
+    name?: string;
+  }
+): Promise<MatchData[]> {
+  const allMatches = await getMatches({
+    includeAll: true,
+    gender:
+      tournament.gender === "mixed"
+        ? undefined
+        : tournament.gender,
+  });
 
-        importance:
-          calculateImportance(
-            match
-          ),
+  return allMatches
+    .filter((match) => {
+      if (match.competitionId === tournament.conceptId) {
+        return true;
+      }
 
-        // 🔥 PRESERVE TRUE API STATE
-        state:
-          match.state ||
-          "upcoming",
-      };
-    }
-  );
+      if (
+        tournament.instanceId &&
+        match.tournamentInstanceId === tournament.instanceId
+      ) {
+        return true;
+      }
+
+      if (
+        tournament.name &&
+        match.tournament.toLowerCase() === tournament.name.toLowerCase()
+      ) {
+        return true;
+      }
+
+      return false;
+    })
+    .sort(
+      (a, b) =>
+        new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
 }

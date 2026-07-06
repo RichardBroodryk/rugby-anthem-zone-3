@@ -10,6 +10,25 @@ import MatchRow from "../components/match/MatchRow";
 
 import heroBg from "../assets/images/raz/Results.png";
 
+/* ================= FILTERS ================= */
+
+const CURRENT_TIER1_COMPETITIONS = new Set<string>([
+  "nations-championship",
+  "international-tests",
+  "bledisloe-cup",
+  "sa-nz-rival-tour",
+  "pacific-nations",
+]);
+
+const TIER2_COMPETITIONS = new Set<string>([
+  "world-rugby-nations-cup",
+]);
+
+const LEGACY_COMPETITIONS = new Set<string>([
+  "six-nations",
+  "six-nations-women",
+]);
+
 /* ================= UTIL ================= */
 
 function formatDate(dateStr: string) {
@@ -21,19 +40,34 @@ function formatDate(dateStr: string) {
   });
 }
 
+function isCompleted(match: MatchData) {
+  return match.state === "final" || !!match.score;
+}
+
+function isBarbariansMatch(match: MatchData) {
+  return (
+    match.home.country === "barbarians" ||
+    match.away.country === "barbarians" ||
+    match.home.name.toLowerCase() === "barbarians" ||
+    match.away.name.toLowerCase() === "barbarians"
+  );
+}
+
 function groupByTournament(matches: MatchData[]) {
   const map = new Map<string, MatchData[]>();
 
-  matches
-    .filter((m) => m.score)
-    .forEach((match) => {
-      if (!map.has(match.tournament)) {
-        map.set(match.tournament, []);
-      }
-      map.get(match.tournament)!.push(match);
-    });
+  matches.forEach((match) => {
+    if (!map.has(match.tournament)) {
+      map.set(match.tournament, []);
+    }
+    map.get(match.tournament)!.push(match);
+  });
 
-  return Array.from(map.entries());
+  return Array.from(map.entries()).sort((a, b) => {
+    const firstDateA = a[1][0]?.date || "";
+    const firstDateB = b[1][0]?.date || "";
+    return new Date(firstDateB).getTime() - new Date(firstDateA).getTime();
+  });
 }
 
 /* ================= PAGE ================= */
@@ -67,15 +101,30 @@ export default function ResultsPage() {
     };
   }, []);
 
-  /* 🔥 PRIORITIZE WOMEN'S SIX NATIONS */
-  const grouped = useMemo(() => {
-    const groups = groupByTournament(matches);
+  const {
+    tier1Groups,
+    tier2Groups,
+    legacyGroups,
+  } = useMemo(() => {
+    const completed = matches.filter(isCompleted);
 
-    return groups.sort(([a], [b]) => {
-      if (a === "Women's Six Nations") return -1;
-      if (b === "Women's Six Nations") return 1;
-      return 0;
-    });
+    const tier1 = completed
+      .filter((m) => CURRENT_TIER1_COMPETITIONS.has(m.competitionId))
+      .filter((m) => !isBarbariansMatch(m));
+
+    const tier2 = completed.filter((m) =>
+      TIER2_COMPETITIONS.has(m.competitionId)
+    );
+
+    const legacy = completed.filter((m) =>
+      LEGACY_COMPETITIONS.has(m.competitionId)
+    );
+
+    return {
+      tier1Groups: groupByTournament(tier1),
+      tier2Groups: groupByTournament(tier2),
+      legacyGroups: groupByTournament(legacy),
+    };
   }, [matches]);
 
   if (loading) {
@@ -96,7 +145,6 @@ export default function ResultsPage() {
 
   return (
     <main className={styles.page}>
-      {/* HERO */}
       <header
         className={styles.hero}
         style={{ backgroundImage: `url(${heroBg})` }}
@@ -112,7 +160,6 @@ export default function ResultsPage() {
         </div>
       </header>
 
-      {/* BACK */}
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -122,23 +169,80 @@ export default function ResultsPage() {
         </button>
       </div>
 
-      {/* RESULTS */}
-      {grouped.map(([tournament, matches]) => (
-        <section key={tournament} className={styles.section}>
-          <h2 className={styles.sectionTitle}>{tournament}</h2>
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Current International Results</h2>
 
-          {matches.map((match) => (
-            <MatchRow
-              key={match.id}
-              home={match.home}
-              away={match.away}
-              metaLeft={`${match.venue} • ${formatDate(match.date)}`}
-              state="final"
-              score={match.score}
-            />
-          ))}
-        </section>
-      ))}
+        {tier1Groups.length === 0 ? (
+          <div className={styles.empty}>No current Tier 1 results available.</div>
+        ) : (
+          tier1Groups.map(([tournament, tournamentMatches]) => (
+            <div key={tournament} className={styles.groupBlock}>
+              <h3 className={styles.sectionTitle}>{tournament}</h3>
+
+              {tournamentMatches.map((match) => (
+                <MatchRow
+                  key={match.id}
+                  home={match.home}
+                  away={match.away}
+                  metaLeft={`${match.venue} • ${formatDate(match.date)}`}
+                  state="final"
+                  score={match.score}
+                />
+              ))}
+            </div>
+          ))
+        )}
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Tier 2 / Emerging Nations Results</h2>
+
+        {tier2Groups.length === 0 ? (
+          <div className={styles.empty}>No Tier 2 results available yet.</div>
+        ) : (
+          tier2Groups.map(([tournament, tournamentMatches]) => (
+            <div key={tournament} className={styles.groupBlock}>
+              <h3 className={styles.sectionTitle}>{tournament}</h3>
+
+              {tournamentMatches.map((match) => (
+                <MatchRow
+                  key={match.id}
+                  home={match.home}
+                  away={match.away}
+                  metaLeft={`${match.venue} • ${formatDate(match.date)}`}
+                  state="final"
+                  score={match.score}
+                />
+              ))}
+            </div>
+          ))
+        )}
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Legacy Championship Results</h2>
+
+        {legacyGroups.length === 0 ? (
+          <div className={styles.empty}>No legacy results available.</div>
+        ) : (
+          legacyGroups.map(([tournament, tournamentMatches]) => (
+            <div key={tournament} className={styles.groupBlock}>
+              <h3 className={styles.sectionTitle}>{tournament}</h3>
+
+              {tournamentMatches.map((match) => (
+                <MatchRow
+                  key={match.id}
+                  home={match.home}
+                  away={match.away}
+                  metaLeft={`${match.venue} • ${formatDate(match.date)}`}
+                  state="final"
+                  score={match.score}
+                />
+              ))}
+            </div>
+          ))
+        )}
+      </section>
     </main>
   );
 }

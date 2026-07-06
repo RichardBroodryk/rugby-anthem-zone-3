@@ -9,9 +9,43 @@ import LiveScoreRow from "../components/match/LiveScoreRow";
 
 import heroBg from "../assets/images/raz/Livescores.png";
 
-/* ================= UTILITIES ================= */
+/* ================= CURRENT TIER 1 FILTERS ================= */
 
-const isToday = (dateStr: string) => {
+const CURRENT_TIER1_COMPETITIONS = new Set<string>([
+  "nations-championship",
+  "international-tests",
+  "bledisloe-cup",
+  "sa-nz-rival-tour",
+  "pacific-nations",
+]);
+
+const LEGACY_COMPETITIONS = new Set<string>([
+  "six-nations",
+  "six-nations-women",
+]);
+
+const TIER2_COMPETITIONS = new Set<string>([
+  "world-rugby-nations-cup",
+]);
+
+function isBarbariansMatch(match: MatchData) {
+  return (
+    match.home.country === "barbarians" ||
+    match.away.country === "barbarians" ||
+    match.home.name.toLowerCase() === "barbarians" ||
+    match.away.name.toLowerCase() === "barbarians"
+  );
+}
+
+function isCompleted(match: MatchData) {
+  return match.state === "final" || !!match.score;
+}
+
+function isCurrentTier1Match(match: MatchData) {
+  return CURRENT_TIER1_COMPETITIONS.has(match.competitionId);
+}
+
+function isToday(dateStr: string) {
   const d = new Date(dateStr);
   const now = new Date();
 
@@ -20,20 +54,25 @@ const isToday = (dateStr: string) => {
     d.getMonth() === now.getMonth() &&
     d.getDate() === now.getDate()
   );
-};
+}
 
-const isWomenTournament = (tournament: string) =>
-  tournament.toLowerCase().includes("women");
+function isWomenTournament(tournament: string) {
+  return tournament.toLowerCase().includes("women");
+}
 
-/* Placeholder */
-const isLive = (_matchId: number) => false;
+function splitByGender(matches: MatchData[]) {
+  return {
+    men: matches.filter((m) => !isWomenTournament(m.tournament)),
+    women: matches.filter((m) => isWomenTournament(m.tournament)),
+  };
+}
 
-/* ================= SPLIT ================= */
+type LivePhase = "Upcoming" | "1st Half" | "2nd Half" | "HT" | "ET" | "Final";
 
-const splitByGender = (matches: MatchData[]) => ({
-  men: matches.filter((m) => !isWomenTournament(m.tournament)),
-  women: matches.filter((m) => isWomenTournament(m.tournament)),
-});
+function getPhase(match: MatchData): LivePhase {
+  if (match.state === "final" || match.score) return "Final";
+  return "Upcoming";
+}
 
 /* ================= PAGE ================= */
 
@@ -50,7 +89,6 @@ export default function LiveScoresPage() {
     async function fetchData() {
       try {
         setLoading(true);
-
         const data = await getMatches();
 
         if (mounted) {
@@ -75,26 +113,43 @@ export default function LiveScoresPage() {
   }, []);
 
   const { live, recentFinals, today, upcoming } = useMemo(() => {
-    const liveMatches = matches.filter((m) => isLive(m.id));
+    const cleaned = matches.filter((match) => {
+      if (isBarbariansMatch(match)) return false;
+      if (LEGACY_COMPETITIONS.has(match.competitionId)) return false;
+      if (TIER2_COMPETITIONS.has(match.competitionId)) return false;
+      return isCurrentTier1Match(match);
+    });
 
-    const finals = matches
-      .filter((m) => m.score && !isLive(m.id))
-      .sort(
-        (a, b) =>
-          new Date(b.date).getTime() -
-          new Date(a.date).getTime()
-      );
-
-    const todayMatches = matches.filter(
-      (m) => !m.score && isToday(m.date)
+    const liveMatches = cleaned.filter(
+      (m) => m.state === "live" || m.state === "starting"
     );
 
-    const upcomingMatches = matches
-      .filter((m) => !m.score && !isToday(m.date))
+    const finals = cleaned
+      .filter((m) => isCompleted(m) && m.state !== "live" && m.state !== "starting")
       .sort(
         (a, b) =>
-          new Date(a.date).getTime() -
-          new Date(b.date).getTime()
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+
+    const todayMatches = cleaned.filter(
+      (m) =>
+        !isCompleted(m) &&
+        m.state !== "live" &&
+        m.state !== "starting" &&
+        isToday(m.date)
+    );
+
+    const upcomingMatches = cleaned
+      .filter(
+        (m) =>
+          !isCompleted(m) &&
+          m.state !== "live" &&
+          m.state !== "starting" &&
+          !isToday(m.date)
+      )
+      .sort(
+        (a, b) =>
+          new Date(a.date).getTime() - new Date(b.date).getTime()
       );
 
     return {
@@ -108,9 +163,7 @@ export default function LiveScoresPage() {
   if (loading) {
     return (
       <main className={styles.page}>
-        <div className={styles.empty}>
-          Loading live matches...
-        </div>
+        <div className={styles.empty}>Loading live matches...</div>
       </main>
     );
   }
@@ -122,8 +175,6 @@ export default function LiveScoresPage() {
       </main>
     );
   }
-
-  /* ================= RENDER ================= */
 
   const renderGroup = (group: MatchData[]) => {
     const { men, women } = splitByGender(group);
@@ -141,7 +192,7 @@ export default function LiveScoresPage() {
                 home={m.home}
                 away={m.away}
                 score={m.score}
-                phase={m.score ? "Final" : "Upcoming"}
+                phase={getPhase(m)}
                 tournament={m.tournament}
                 venue={m.venue}
               />
@@ -160,7 +211,7 @@ export default function LiveScoresPage() {
                 home={m.home}
                 away={m.away}
                 score={m.score}
-                phase={m.score ? "Final" : "Upcoming"}
+                phase={getPhase(m)}
                 tournament={m.tournament}
                 venue={m.venue}
               />
@@ -175,7 +226,6 @@ export default function LiveScoresPage() {
 
   return (
     <main className={styles.page}>
-      {/* HERO */}
       <header
         className={styles.hero}
         style={{ backgroundImage: `url(${heroBg})` }}
@@ -184,7 +234,6 @@ export default function LiveScoresPage() {
 
         <div className={styles.heroContent}>
           <h1>Live Scores</h1>
-
           <p>
             Scores and match states from across world rugby —
             <br />
@@ -193,7 +242,6 @@ export default function LiveScoresPage() {
         </div>
       </header>
 
-      {/* BACK */}
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -203,59 +251,41 @@ export default function LiveScoresPage() {
         </button>
       </div>
 
-      {/* LIVE */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitleCenter}>Live Now</h2>
 
         {live.length === 0 ? (
-          <div className={styles.empty}>
-            No matches live right now.
-          </div>
+          <div className={styles.empty}>No matches live right now.</div>
         ) : (
           renderGroup(live)
         )}
       </section>
 
-      {/* RECENT RESULTS */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitleCenter}>
-          Recent Results
-        </h2>
+        <h2 className={styles.sectionTitleCenter}>Recent Results</h2>
 
         {recentFinals.length === 0 ? (
-          <div className={styles.empty}>
-            No completed matches available.
-          </div>
+          <div className={styles.empty}>No completed matches available.</div>
         ) : (
           renderGroup(recentFinals.slice(0, 10))
         )}
       </section>
 
-      {/* TODAY */}
       <section className={styles.sectionMuted}>
-        <h2 className={styles.sectionTitleMutedCenter}>
-          Today
-        </h2>
+        <h2 className={styles.sectionTitleMutedCenter}>Today</h2>
 
         {today.length === 0 ? (
-          <div className={styles.empty}>
-            No matches today.
-          </div>
+          <div className={styles.empty}>No matches today.</div>
         ) : (
           renderGroup(today)
         )}
       </section>
 
-      {/* UPCOMING */}
       <section className={styles.sectionMuted}>
-        <h2 className={styles.sectionTitleMutedCenter}>
-          Upcoming
-        </h2>
+        <h2 className={styles.sectionTitleMutedCenter}>Upcoming</h2>
 
         {upcomingMatches.length === 0 ? (
-          <div className={styles.empty}>
-            No upcoming fixtures available.
-          </div>
+          <div className={styles.empty}>No upcoming fixtures available.</div>
         ) : (
           <div className={styles.subBlock}>
             <div className={styles.subHeader}>

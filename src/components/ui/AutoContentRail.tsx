@@ -8,7 +8,9 @@ type AutoContentRailProps = {
 
 const CARD_WIDTH = 280;
 const GAP = 16;
-const GLIDE_SPEED = 0.35;
+
+/* Slightly faster than before */
+const GLIDE_SPEED = 0.6;
 
 export default function AutoContentRail({
   children,
@@ -22,26 +24,31 @@ export default function AutoContentRail({
   const startXRef = useRef(0);
   const startScrollRef = useRef(0);
 
-  // 🔥 Duplicate children to guarantee overflow
-  const loopChildren = useMemo(() => {
-    const array = React.Children.toArray(children);
-    return [...array, ...array];
-  }, [children]);
+  const baseChildren = useMemo(
+    () => React.Children.toArray(children),
+    [children]
+  );
 
-  // ✅ Continuous glide (robust loop)
+  // Duplicate once for looping
+  const loopChildren = useMemo(
+    () => [...baseChildren, ...baseChildren],
+    [baseChildren]
+  );
+
   useEffect(() => {
     const el = containerRef.current;
-    if (!el || !autoAdvance) return;
+    if (!el || !autoAdvance || baseChildren.length === 0) return;
 
     let rafId: number;
+    const loopWidth = baseChildren.length * (CARD_WIDTH + GAP);
 
     const step = () => {
       if (!isPaused && !isDraggingRef.current) {
         el.scrollLeft += GLIDE_SPEED;
 
-        // 🔥 HARD LOOP RESET (more reliable than half-width math)
-        if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 2) {
-          el.scrollLeft = 0;
+        // Smooth loop reset halfway through duplicated content
+        if (el.scrollLeft >= loopWidth) {
+          el.scrollLeft -= loopWidth;
         }
       }
 
@@ -50,9 +57,8 @@ export default function AutoContentRail({
 
     rafId = requestAnimationFrame(step);
     return () => cancelAnimationFrame(rafId);
-  }, [autoAdvance, isPaused]);
+  }, [autoAdvance, isPaused, baseChildren.length]);
 
-  // ✅ Mouse drag handlers
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = containerRef.current;
     if (!el) return;

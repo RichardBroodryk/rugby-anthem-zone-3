@@ -8,6 +8,7 @@ import HubCard from "../components/homepage/HubCard";
 import InfoBar from "../components/navigation/InfoBar";
 import FeaturedMatchCard from "../components/homepage/FeaturedMatchCard";
 import WeekendMatchesRail from "../components/homepage/WeekendMatchesRail";
+import CurrentInternationalRail from "../components/homepage/CurrentInternationalRail";
 import AutoContentRail from "../components/ui/AutoContentRail";
 
 import { tournaments2026 } from "../data/tournamentMeta";
@@ -32,7 +33,6 @@ import CalendarIcon from "../components/icons/CalendarIcon";
 import ShoppingBagIcon from "../components/icons/ShoppingBagIcon";
 
 /* IMAGES */
-import featuredTournamentImage from "../assets/images/tournaments/six-nations-men-2026.jpg";
 import anthemsImage from "../assets/images/raz/anthems-page.png";
 import tournamentsImage from "../assets/images/raz/tournament-hub-page.png";
 import matchCenterImage from "../assets/images/raz/Match-center.png";
@@ -46,6 +46,7 @@ import merchImage from "../assets/images/raz/Merch.png";
 
 export default function HomePage() {
   const featuredTournament =
+    tournaments2026.find((t) => t.conceptId === "nations-championship") ??
     tournaments2026.find((t) => t.status === "active") ??
     tournaments2026.find((t) => t.status === "upcoming") ??
     tournaments2026[0];
@@ -61,12 +62,14 @@ export default function HomePage() {
 
         <WeekendMatchesRail />
 
+        <CurrentInternationalRail />
+
         <section className={styles.railSection}>
           <AutoContentRail autoAdvance>
             {featuredTournament && (
               <HubCard
                 title={featuredTournament.name}
-                image={featuredTournamentImage}
+                image={tournamentsImage}
                 to={featuredTournament.route}
                 features={[
                   {

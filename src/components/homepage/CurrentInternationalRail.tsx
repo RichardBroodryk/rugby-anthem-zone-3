@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import styles from "./WeekendMatchesRail.module.css";
+import styles from "./CurrentInternationalRail.module.css";
 
 import AutoContentRail from "../ui/AutoContentRail";
 import WeekendMatchRailCard from "./WeekendMatchRailCard";
@@ -7,7 +7,14 @@ import WeekendMatchRailCard from "./WeekendMatchRailCard";
 import { getMatches } from "../../data/matchesAdapter";
 import type { MatchData } from "../../data/matches/types";
 
-export default function WeekendMatchesRail() {
+const SECONDARY_RAIL_COMPETITIONS = new Set<string>([
+  "world-rugby-nations-cup",
+  "pacific-nations",
+  "womens-internationals",
+  "wxv1",
+]);
+
+export default function CurrentInternationalRail() {
   const [matches, setMatches] = useState<MatchData[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,20 +43,24 @@ export default function WeekendMatchesRail() {
     };
   }, []);
 
-  const currentRoundMatches = useMemo(() => {
+  const currentMatches = useMemo(() => {
     return matches
-      .filter(
-        (match) =>
-          match.competitionId === "nations-championship" &&
-          match.round === "Round 2"
-      )
+      .filter((match) => {
+        if (!SECONDARY_RAIL_COMPETITIONS.has(match.competitionId)) {
+          return false;
+        }
+
+        // Show completed + upcoming current-cycle matches
+        // but ignore legacy women's six nations here
+        return match.competitionId !== "six-nations-women";
+      })
       .sort(
         (a, b) =>
           new Date(a.date).getTime() - new Date(b.date).getTime()
       );
   }, [matches]);
 
-  if (loading || currentRoundMatches.length === 0) {
+  if (loading || currentMatches.length === 0) {
     return null;
   }
 
@@ -57,13 +68,15 @@ export default function WeekendMatchesRail() {
     <section className={styles.section}>
       <div className={styles.header}>
         <div>
-          <h2>Weekend Test Matches</h2>
-          <p>Round 2 of the Nations Championship</p>
+          <h2>Tier 2 & Women’s International Rugby</h2>
+          <p>
+            Emerging nations, Pacific competition and the current women’s international cycle
+          </p>
         </div>
       </div>
 
       <AutoContentRail autoAdvance className={styles.rail}>
-        {currentRoundMatches.map((match) => (
+        {currentMatches.map((match) => (
           <WeekendMatchRailCard
             key={match.id}
             match={match}

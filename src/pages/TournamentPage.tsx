@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./TournamentPage.module.css";
 
 import { tournaments2026 } from "../data/tournamentMeta";
 import { getTournamentVisual } from "../data/tournamentVisuals";
-import { buildStandings, type TeamStanding } from "../utils/standings/standingsEngine";
+import {
+  buildStandings,
+  type TeamStanding,
+} from "../utils/standings/standingsEngine";
 import { flagMap } from "../data/flagMap";
 import type { MatchData } from "../data/matches/types";
 
 import MatchRow from "../components/match/MatchRow";
 import { getStadiumByName } from "../utils/stadiumResolver";
-
-import { fetchSixNationsWomenMatches } from "../services/sixNationsWomenService";
-import { matches2026 } from "../data/matches";
-
-/* 🔥 ADD FLAG COMPONENT */
+import { getTournamentMatches } from "../data/matchesAdapter";
 import Flag from "../components/images/Flag";
+
+import defaultTournamentHero from "../assets/images/tournaments/default-tournament.jpg";
 
 export default function TournamentPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -23,62 +24,122 @@ export default function TournamentPage() {
 
   const [matches, setMatches] = useState<MatchData[]>([]);
   const [loading, setLoading] = useState(true);
-  // ✅ TRACK TOURNAMENT VISIT (SAFE)
-useEffect(() => {
-  const key = "raz_last_tournament_view";
 
-  // prevent double count (React Strict Mode)
-  if (sessionStorage.getItem(key)) return;
+  /* ==================================================
+     TRACK TOURNAMENT VISIT
+     ================================================== */
+  useEffect(() => {
+    const key = "raz_last_tournament_view";
 
-  const current =
-    Number(localStorage.getItem("raz_tournaments_followed")) || 0;
+    if (sessionStorage.getItem(key)) return;
 
-  localStorage.setItem(
-    "raz_tournaments_followed",
-    String(current + 1)
+    const current =
+      Number(localStorage.getItem("raz_tournaments_followed")) || 0;
+
+    localStorage.setItem(
+      "raz_tournaments_followed",
+      String(current + 1)
+    );
+
+    sessionStorage.setItem(key, "true");
+  }, []);
+
+  /* ==================================================
+     TOURNAMENT RESOLUTION
+     ================================================== */
+
+  const tournament = useMemo(
+    () =>
+      tournaments2026.find(
+        (t) =>
+          t.instanceId === slug ||
+          t.conceptId === slug ||
+          t.route?.endsWith(`/${slug}`)
+      ),
+    [slug]
   );
 
-  sessionStorage.setItem(key, "true");
-}, []);
+  const visual = tournament
+    ? getTournamentVisual(tournament.conceptId)
+    : null;
 
-  const tournament = tournaments2026.find((t) =>
-    t.route?.includes(slug || "") || t.conceptId === slug || t.route === slug
-  );
-
-  const visual = tournament ? getTournamentVisual(tournament.conceptId) : null;
-  const heroImage = tournament?.gender === "women"
-    ? visual?.heroImageWomen
-    : visual?.heroImageMen || visual?.logo;
+  const heroImage = tournament
+    ? tournament.gender === "women"
+      ? visual?.heroImageWomen ||
+        visual?.heroImageMen ||
+        visual?.logo ||
+        defaultTournamentHero
+      : visual?.heroImageMen ||
+        visual?.heroImageWomen ||
+        visual?.logo ||
+        defaultTournamentHero
+    : defaultTournamentHero;
 
   const hasStandings = !["svns"].includes(tournament?.conceptId || "");
 
+  /* ==================================================
+     LOAD TOURNAMENT MATCHES
+     ================================================== */
+
   useEffect(() => {
+    let mounted = true;
+
     async function load() {
-      if (!tournament) return;
-      setLoading(true);
+      if (!tournament) {
+        if (mounted) {
+          setMatches([]);
+          setLoading(false);
+        }
+        return;
+      }
 
       try {
-        if (tournament.conceptId === "six-nations-women") {
-          const data = await fetchSixNationsWomenMatches();
+        setLoading(true);
+
+        const data = await getTournamentMatches({
+          conceptId: tournament.conceptId,
+          gender: tournament.gender,
+          instanceId: tournament.instanceId,
+          name: tournament.name,
+        });
+
+        if (mounted) {
           setMatches(data);
-        } else {
-          const local = matches2026
-            .filter((m) => m.competitionId === tournament.conceptId)
-            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-          setMatches(local);
         }
-      } catch (e) {
-        console.error(e);
-        setMatches([]);
+      } catch (error) {
+        console.error("Failed to load tournament matches", error);
+        if (mounted) {
+          setMatches([]);
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
       }
-      setLoading(false);
     }
+
     load();
+
+    return () => {
+      mounted = false;
+    };
   }, [tournament]);
 
-  if (!tournament) return <div className={styles.page}>Tournament not found</div>;
+  if (!tournament) {
+    return <div className={styles.page}>Tournament not found</div>;
+  }
 
-  const standings: TeamStanding[] = hasStandings ? buildStandings(matches) : [];
+  /* ==================================================
+     STANDINGS
+     ================================================== */
+
+  const standings: TeamStanding[] = hasStandings
+    ? buildStandings(matches)
+    : [];
+
+  /* ==================================================
+     GROUP MATCHES BY ROUND / STAGE
+     ================================================== */
 
   const grouped = matches.reduce<Record<string, MatchData[]>>((acc, match) => {
     const key = match.round || match.stage || "All Matches";
@@ -87,10 +148,19 @@ useEffect(() => {
     return acc;
   }, {});
 
-  const rounds = Object.keys(grouped).sort();
+  const rounds = Object.keys(grouped).sort((a: string, b: string) => {
+    const roundA = Number(a.replace(/[^\d]/g, ""));
+    const roundB = Number(b.replace(/[^\d]/g, ""));
+
+    if (!Number.isNaN(roundA) && !Number.isNaN(roundB)) {
+      return roundA - roundB;
+    }
+
+    return a.localeCompare(b);
+  });
 
   /* ==================================================
-     🔥 ANTHEM TEAMS (SAFE — NO PLACEHOLDERS)
+     ANTHEM TEAMS
      ================================================== */
 
   const anthemTeams = Array.from(
@@ -104,28 +174,33 @@ useEffect(() => {
     (team) =>
       team.country &&
       team.country !== "unknown" &&
-      flagMap[team.country] // only show nations we actually support
+      flagMap[team.country]
   );
 
   return (
     <main className={styles.page}>
-      <header className={styles.hero} style={{ backgroundImage: `url(${heroImage})` }}>
+      <header
+        className={styles.hero}
+        style={{ backgroundImage: `url(${heroImage})` }}
+      >
         <div className={styles.heroContent}>
-          <h1>{tournament.name} {tournament.year}</h1>
-          <p>{tournament.heroSubtitle}</p>
+          <h1>
+            {tournament.name} {tournament.year}
+          </h1>
+          {tournament.heroSubtitle && <p>{tournament.heroSubtitle}</p>}
         </div>
       </header>
 
       <div className={styles.backNav}>
-        <button className={styles.backButton} onClick={() => navigate("/tournaments")}>
+        <button
+          className={styles.backButton}
+          onClick={() => navigate("/tournaments")}
+        >
           ← Back to Tournaments
         </button>
       </div>
 
-      {/* ==================================================
-          🔥 ANTHEMS SECTION (INSERTED — SAFE)
-         ================================================== */}
-
+      {/* ================= ANTHEMS ================= */}
       {anthemTeams.length > 0 && (
         <section className={styles.section}>
           <h2>Anthems</h2>
@@ -145,9 +220,11 @@ useEffect(() => {
         </section>
       )}
 
-      {hasStandings && (
+      {/* ================= STANDINGS ================= */}
+      {hasStandings && standings.length > 0 && (
         <section className={styles.section}>
           <h2>Standings</h2>
+
           <table className={styles.standingsTable}>
             <thead>
               <tr>
@@ -162,16 +239,24 @@ useEffect(() => {
                 <th>Form</th>
               </tr>
             </thead>
+
             <tbody>
               {standings.map((t, i) => {
-                const countryKey = t.country || t.team.toLowerCase().replace(/ w$/, "");
+                const countryKey =
+                  t.country || t.team.toLowerCase().replace(/ w$/, "");
                 const flag = flagMap[countryKey];
 
                 return (
                   <tr key={t.team}>
                     <td>{i + 1}</td>
                     <td className={styles.teamCell}>
-                      {flag && <img src={flag} alt="" className={styles.flag} />}
+                      {flag && (
+                        <img
+                          src={flag}
+                          alt=""
+                          className={styles.flag}
+                        />
+                      )}
                       <span>{t.team}</span>
                     </td>
                     <td>{t.played}</td>
@@ -184,7 +269,13 @@ useEffect(() => {
                       {t.form.map((f, idx) => (
                         <span
                           key={idx}
-                          className={f === "W" ? styles.win : f === "L" ? styles.loss : styles.draw}
+                          className={
+                            f === "W"
+                              ? styles.win
+                              : f === "L"
+                              ? styles.loss
+                              : styles.draw
+                          }
                         >
                           {f}
                         </span>
@@ -198,30 +289,45 @@ useEffect(() => {
         </section>
       )}
 
+      {/* ================= MATCHES ================= */}
       {loading && <div className={styles.section}>Loading matches...</div>}
 
-      {!loading && rounds.map((round) => (
-        <section key={round} className={styles.section}>
-          <h2>{round}</h2>
-          <div className={styles.matches}>
-            {grouped[round].map((match) => {
-              const stadium = getStadiumByName(match.venue);
-              return (
-                <MatchRow
-                  key={match.id}
-                  home={match.home}
-                  away={match.away}
-                  state={match.state || "upcoming"}
-                  score={match.score}
-                  metaLeft={new Date(match.date).toLocaleDateString("en-GB")}
-                  metaRight={stadium?.slug}
-                  onClick={() => navigate(`/match/${match.id}`, { state: { ...match, tournamentSlug: slug } })}
-                />
-              );
-            })}
-          </div>
-        </section>
-      ))}
+      {!loading &&
+        rounds.map((round) => (
+          <section key={round} className={styles.section}>
+            <h2>{round}</h2>
+
+            <div className={styles.matches}>
+              {grouped[round].map((match) => {
+                const stadium = getStadiumByName(match.venue);
+                const stadiumSlug =
+                  stadium && stadium.slug && stadium.slug !== "unknown"
+                    ? stadium.slug
+                    : undefined;
+
+                return (
+                  <MatchRow
+                    key={match.id}
+                    home={match.home}
+                    away={match.away}
+                    state={match.state || "upcoming"}
+                    score={match.score}
+                    metaLeft={new Date(match.date).toLocaleDateString("en-GB")}
+                    metaRight={stadiumSlug}
+                    onClick={() =>
+                      navigate(`/match/${match.id}`, {
+                        state: {
+                          ...match,
+                          tournamentSlug: slug,
+                        },
+                      })
+                    }
+                  />
+                );
+              })}
+            </div>
+          </section>
+        ))}
     </main>
   );
 }

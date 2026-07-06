@@ -1,12 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import styles from "./FixturesPage.module.css";
 
-/* ✅ CHANGE HERE */
-import { matches2026 } from "../data/matches";
-
-/* ✅ TYPE */
+import { getMatches } from "../data/matchesAdapter";
 import type { MatchData } from "../data/matches/types";
 
 import FixtureRow from "../components/fixtures/FixtureRow";
@@ -18,8 +15,14 @@ import womensHero from "../assets/images/raz/womens-tournaments.png";
 
 /* ================= UTIL ================= */
 
-function isWomenTournament(tournament: string) {
-  return tournament.toLowerCase().includes("women");
+function isWomenMatch(match: MatchData) {
+  return (
+    match.gender === "women" ||
+    match.competitionId.includes("women") ||
+    match.tournament.toLowerCase().includes("women") ||
+    match.home.name.includes(" W") ||
+    match.away.name.includes(" W")
+  );
 }
 
 function formatDate(dateStr: string) {
@@ -32,15 +35,15 @@ function formatDate(dateStr: string) {
   });
 }
 
-/* ✅ CLEAN UPCOMING RULE */
 function isUpcoming(match: MatchData) {
-  const now = new Date();
-  const matchDate = new Date(match.date);
+  return !match.score && match.state !== "final";
+}
 
+function buildTournamentRoute(match: MatchData) {
   return (
-    matchDate >= now &&
-    !match.score &&
-    match.state !== "final"
+    match.tournamentInstanceId
+      ? `/tournaments/${match.tournamentInstanceId}`
+      : `/tournament/${match.tournament.toLowerCase().replace(/\s+/g, "-")}`
   );
 }
 
@@ -52,34 +55,57 @@ export default function FixturesPage() {
   const [matches, setMatches] = useState<MatchData[]>([]);
   const [loading, setLoading] = useState(true);
 
-  /* ================= LOAD (STATIC) ================= */
-
   useEffect(() => {
-    // ✅ NO API — direct load
-    setMatches(matches2026);
-    setLoading(false);
+    let mounted = true;
+
+    async function loadFixtures() {
+      try {
+        const data = await getMatches({
+          type: "international",
+          includeAll: true,
+        });
+
+        if (mounted) {
+          setMatches(data);
+        }
+      } catch (err) {
+        console.error("Failed to load fixtures", err);
+        if (mounted) {
+          setMatches([]);
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadFixtures();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
+
+  const { mensFixtures, womensFixtures } = useMemo(() => {
+    const upcoming = matches
+      .filter(isUpcoming)
+      .sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+
+    return {
+      mensFixtures: upcoming.filter((m) => !isWomenMatch(m)),
+      womensFixtures: upcoming.filter(isWomenMatch),
+    };
+  }, [matches]);
 
   if (loading) {
     return <div className={styles.empty}>Loading fixtures...</div>;
   }
 
-  /* ================= UPCOMING ================= */
-
-  const upcoming = matches.filter(isUpcoming);
-
-  const mensFixtures = upcoming.filter(
-    (m) => !isWomenTournament(m.tournament)
-  );
-
-  const womensFixtures = upcoming.filter((m) =>
-    isWomenTournament(m.tournament)
-  );
-
   return (
     <main className={styles.page}>
-      {/* ================= MAIN HERO ================= */}
-
       <header
         className={styles.hero}
         style={{ backgroundImage: `url(${heroBg})` }}
@@ -96,8 +122,6 @@ export default function FixturesPage() {
         </div>
       </header>
 
-      {/* ================= BACK ================= */}
-
       <div className={styles.backWrap}>
         <button
           className={styles.back}
@@ -107,8 +131,6 @@ export default function FixturesPage() {
         </button>
       </div>
 
-      {/* ================= MEN ================= */}
-
       <section className={styles.section}>
         <FixturesSectionHero
           title="Men’s International Fixtures"
@@ -116,9 +138,7 @@ export default function FixturesPage() {
         />
 
         {mensFixtures.length === 0 ? (
-          <div className={styles.empty}>
-            No upcoming men’s fixtures.
-          </div>
+          <div className={styles.empty}>No upcoming men’s fixtures.</div>
         ) : (
           <div className={styles.group}>
             {mensFixtures.map((m) => (
@@ -129,16 +149,12 @@ export default function FixturesPage() {
                 away={m.away}
                 venue={m.venue}
                 tournament={m.tournament}
-                tournamentRoute={`/tournament/${m.tournament
-                  .toLowerCase()
-                  .replace(/\s+/g, "-")}`}
+                tournamentRoute={buildTournamentRoute(m)}
               />
             ))}
           </div>
         )}
       </section>
-
-      {/* ================= WOMEN ================= */}
 
       <section className={styles.section}>
         <FixturesSectionHero
@@ -148,9 +164,7 @@ export default function FixturesPage() {
         />
 
         {womensFixtures.length === 0 ? (
-          <div className={styles.empty}>
-            No upcoming women’s fixtures.
-          </div>
+          <div className={styles.empty}>No upcoming women’s fixtures.</div>
         ) : (
           <div className={styles.group}>
             {womensFixtures.map((m) => (
@@ -161,9 +175,7 @@ export default function FixturesPage() {
                 away={m.away}
                 venue={m.venue}
                 tournament={m.tournament}
-                tournamentRoute={`/tournament/${m.tournament
-                  .toLowerCase()
-                  .replace(/\s+/g, "-")}`}
+                tournamentRoute={buildTournamentRoute(m)}
               />
             ))}
           </div>

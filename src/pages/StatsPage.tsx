@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./StatsPage.module.css";
 
 import TeamComparisonTable from "../components/stats/TeamComparisonTable";
 import Flag from "../components/images/Flag";
+import MatchRow from "../components/match/MatchRow";
 
 import heroBg from "../assets/images/raz/Stats3.png";
 
@@ -25,7 +26,44 @@ type TeamStats = {
   tablePoints: number;
 };
 
+/* ================= FILTERS ================= */
+
+/**
+ * CURRENT TIER 1 = the live/current top-level international cycle.
+ * Barbarians / standalone exhibition tests must NOT distort this table.
+ */
+const CURRENT_TIER1_COMPETITIONS = new Set<string>([
+  "nations-championship",
+  "bledisloe-cup",
+  "sa-nz-rival-tour",
+  "pacific-nations",
+]);
+
+/**
+ * Standalone test window / exhibition-style internationals.
+ * We keep these visible in their own block, not in the main Tier 1 table.
+ */
+const STANDALONE_TEST_COMPETITIONS = new Set<string>([
+  "international-tests",
+]);
+
+const CURRENT_TIER2_COMPETITIONS = new Set<string>([
+  "world-rugby-nations-cup",
+]);
+
+const LEGACY_MENS_COMPETITIONS = new Set<string>(["six-nations"]);
+const LEGACY_WOMENS_COMPETITIONS = new Set<string>(["six-nations-women"]);
+
 /* ================= HELPERS ================= */
+
+function formatDate(dateStr: string) {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
 
 function buildStats(matches: MatchData[]): TeamStats[] {
   const map = new Map<string, TeamStats>();
@@ -98,81 +136,143 @@ function buildStats(matches: MatchData[]): TeamStats[] {
 export default function StatsPage() {
   const navigate = useNavigate();
 
-  const [mensStats, setMensStats] = useState<TeamStats[]>([]);
-  const [womensStats, setWomensStats] = useState<TeamStats[]>([]);
-  const [comparisonMatch, setComparisonMatch] =
-    useState<MatchData | null>(null);
-
+  const [matches, setMatches] = useState<MatchData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadStats() {
-      const matches = await getMatches();
-
-      const mens = matches.filter(
-        (m) => m.competitionId === "six-nations" && m.score
-      );
-
-      const womens = matches.filter(
-        (m) => m.competitionId === "six-nations-women" && m.score
-      );
-
-      setMensStats(buildStats(mens));
-      setWomensStats(buildStats(womens));
-
-      const last = matches
-        .filter((m) => m.score)
-        .sort(
-          (a, b) =>
-            new Date(b.date).getTime() -
-            new Date(a.date).getTime()
-        )[0];
-
-      setComparisonMatch(last || null);
-
-      setLoading(false);
+      try {
+        const data = await getMatches();
+        setMatches(data);
+      } catch (error) {
+        console.error("Failed to load stats matches:", error);
+        setMatches([]);
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadStats();
   }, []);
 
-  const renderTable = (data: TeamStats[]) => (
-    <div className={styles.tableWrap}>
-      <table className={styles.statsTable}>
-        <thead>
-          <tr>
-            <th className={styles.left}>Team</th>
-            <th>P</th>
-            <th>W</th>
-            <th>L</th>
-            <th>PF</th>
-            <th>PA</th>
-            <th>+/-</th>
-            <th>Pts</th>
-          </tr>
-        </thead>
+  const {
+    currentTier1Stats,
+    currentTier2Stats,
+    legacyMensStats,
+    legacyWomensStats,
+    standaloneTestResults,
+    comparisonMatch,
+  } = useMemo(() => {
+    const completed = matches.filter((m) => !!m.score);
 
-        <tbody>
-          {data.map((t) => (
-            <tr key={t.team}>
-              <td className={`${styles.teamCell} ${styles.left}`}>
-                <Flag country={t.country} size="small" />
-                <span className={styles.teamName}>{t.team}</span>
-              </td>
+    /**
+     * CURRENT TIER 1
+     * Only the current top-tier nation-vs-nation competitions.
+     * No Barbarians / standalone tests in here.
+     */
+    const currentTier1 = completed.filter((m) =>
+      CURRENT_TIER1_COMPETITIONS.has(m.competitionId)
+    );
 
-              <td>{t.played}</td>
-              <td>{t.won}</td>
-              <td>{t.lost}</td>
-              <td>{t.pointsFor}</td>
-              <td>{t.pointsAgainst}</td>
-              <td>{t.difference}</td>
-              <td>{t.tablePoints}</td>
+    /**
+     * TIER 2 / EMERGING
+     */
+    const currentTier2 = completed.filter((m) =>
+      CURRENT_TIER2_COMPETITIONS.has(m.competitionId)
+    );
+
+    /**
+     * LEGACY
+     */
+    const legacyMens = completed.filter((m) =>
+      LEGACY_MENS_COMPETITIONS.has(m.competitionId)
+    );
+
+    const legacyWomens = completed.filter((m) =>
+      LEGACY_WOMENS_COMPETITIONS.has(m.competitionId)
+    );
+
+    /**
+     * STANDALONE TEST RESULTS
+     * Only show completed international tests that are outside the current
+     * Tier 1 ladder logic. Right now that is effectively the Barbarians tests.
+     *
+     * If later you add more one-off tests under "international-tests",
+     * they will render here as well.
+     */
+    const standaloneTests = completed
+      .filter((m) => STANDALONE_TEST_COMPETITIONS.has(m.competitionId))
+      .sort(
+        (a, b) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+
+    /**
+     * COMPARISON MATCH
+     * Use the latest CURRENT TIER 1 completed match, not a Barbarians fixture
+     * and not Tier 2 / legacy.
+     */
+    const latestCurrentTier1 =
+      currentTier1
+        .slice()
+        .sort(
+          (a, b) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime()
+        )[0] || null;
+
+    return {
+      currentTier1Stats: buildStats(currentTier1),
+      currentTier2Stats: buildStats(currentTier2),
+      legacyMensStats: buildStats(legacyMens),
+      legacyWomensStats: buildStats(legacyWomens),
+      standaloneTestResults: standaloneTests,
+      comparisonMatch: latestCurrentTier1,
+    };
+  }, [matches]);
+
+  const renderTable = (data: TeamStats[]) => {
+    if (data.length === 0) {
+      return <p className={styles.empty}>No completed matches available yet.</p>;
+    }
+
+    return (
+      <div className={styles.tableWrap}>
+        <table className={styles.statsTable}>
+          <thead>
+            <tr>
+              <th className={styles.left}>Team</th>
+              <th>P</th>
+              <th>W</th>
+              <th>L</th>
+              <th>PF</th>
+              <th>PA</th>
+              <th>+/-</th>
+              <th>Pts</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+          </thead>
+
+          <tbody>
+            {data.map((t) => (
+              <tr key={t.team}>
+                <td className={`${styles.teamCell} ${styles.left}`}>
+                  <Flag country={t.country} size="small" />
+                  <span className={styles.teamName}>{t.team}</span>
+                </td>
+
+                <td>{t.played}</td>
+                <td>{t.won}</td>
+                <td>{t.lost}</td>
+                <td>{t.pointsFor}</td>
+                <td>{t.pointsAgainst}</td>
+                <td>{t.difference}</td>
+                <td>{t.tablePoints}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
 
   return (
     <main className={styles.page}>
@@ -186,20 +286,65 @@ export default function StatsPage() {
         </div>
       </header>
 
-      <div className={styles.backWrap}>
-        <button onClick={() => navigate("/match-center")}>
-          ← Back
-        </button>
-      </div>
+     <div className={styles.backWrap}>
+  <button
+    className={styles.back}
+    onClick={() => navigate("/match-center")}
+  >
+    ← Back
+  </button>
+</div>
 
       <section className={styles.section}>
-        <h2>Six Nations (Men)</h2>
-        {loading ? <p>Loading...</p> : renderTable(mensStats)}
+        <h2>Current International Stats</h2>
+        <p className={styles.sectionIntro}>
+          Current Tier 1 international form across the active 2026 cycle.
+        </p>
+        {loading ? <p>Loading...</p> : renderTable(currentTier1Stats)}
       </section>
 
       <section className={styles.section}>
-        <h2>Six Nations (Women)</h2>
-        {loading ? <p>Loading...</p> : renderTable(womensStats)}
+        <h2>Tier 2 / Emerging Nations Stats</h2>
+        <p className={styles.sectionIntro}>
+          Current form across the 2026 World Rugby Nations Cup cycle.
+        </p>
+        {loading ? <p>Loading...</p> : renderTable(currentTier2Stats)}
+      </section>
+
+      <section className={styles.section}>
+        <h2>Standalone International Tests</h2>
+        <p className={styles.sectionIntro}>
+          Completed one-off international test matches outside the current Tier 1 standings cycle.
+        </p>
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : standaloneTestResults.length === 0 ? (
+          <p className={styles.empty}>No completed standalone tests available.</p>
+        ) : (
+          <div className={styles.matchesList}>
+            {standaloneTestResults.map((match) => (
+              <MatchRow
+                key={match.id}
+                home={match.home}
+                away={match.away}
+                metaLeft={`${match.venue} • ${formatDate(match.date)}`}
+                state="final"
+                score={match.score}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className={styles.section}>
+        <h2>Legacy Six Nations (Men)</h2>
+        {loading ? <p>Loading...</p> : renderTable(legacyMensStats)}
+      </section>
+
+      <section className={styles.section}>
+        <h2>Legacy Six Nations (Women)</h2>
+        {loading ? <p>Loading...</p> : renderTable(legacyWomensStats)}
       </section>
 
       {comparisonMatch && comparisonMatch.score && (

@@ -1,4 +1,4 @@
-// -------------------------------------------------- 
+// --------------------------------------------------
 // RAZ SYSTEM — TOURNAMENT META 2026 (FULLY NORMALIZED)
 // --------------------------------------------------
 
@@ -7,7 +7,7 @@ export interface TournamentMeta {
   instanceId: string;
   name: string;
   year: number;
-  gender: "men" | "women" | "mixed"; // ✅ EXTENDED (NON-BREAKING)
+  gender: "men" | "women" | "mixed";
   type: string;
   status: string;
   matchKey: string;
@@ -22,7 +22,6 @@ export interface TournamentMeta {
    ================================================== */
 
 export const tournaments2026: TournamentMeta[] = [
-
   // ================= MEN =================
 
   {
@@ -50,6 +49,20 @@ export const tournaments2026: TournamentMeta[] = [
   },
 
   {
+    conceptId: "world-rugby-nations-cup",
+    instanceId: "world-rugby-nations-cup-2026",
+    name: "World Rugby Nations Cup",
+    year: 2026,
+    gender: "men",
+    type: "international",
+    status: "active",
+    matchKey: "World Rugby Nations Cup 2026",
+    heroBadge: "EMERGING NATIONS",
+    heroSubtitle: "Tier 2 International Championship",
+    route: "/tournaments/men/world-rugby-nations-cup-2026",
+  },
+
+  {
     conceptId: "pacific-nations",
     instanceId: "pacific-nations-2026",
     name: "Pacific Nations Cup",
@@ -68,7 +81,7 @@ export const tournaments2026: TournamentMeta[] = [
     year: 2026,
     gender: "men",
     type: "test",
-    status: "planned",
+    status: "active",
     matchKey: "Men's International Tests 2026",
     route: "/tournaments/men/international-tests-2026",
   },
@@ -108,7 +121,7 @@ export const tournaments2026: TournamentMeta[] = [
     instanceId: "svns-2026",
     name: "HSBC SVNS World Championship",
     year: 2026,
-    gender: "mixed", // ✅ KEY
+    gender: "mixed",
     type: "sevens",
     status: "active",
     matchKey: "HSBC SVNS World Championship 2026",
@@ -127,7 +140,7 @@ export const tournaments2026: TournamentMeta[] = [
     year: 2026,
     gender: "women",
     type: "tournament",
-    status: "active",
+    status: "completed",
     matchKey: "Women's Six Nations 2026",
     route: "/tournaments/women/six-nations-women-2026",
   },
@@ -140,18 +153,18 @@ export const tournaments2026: TournamentMeta[] = [
     gender: "women",
     type: "global",
     status: "active",
-    matchKey: "WXV 1 2026",
+    matchKey: "WXV Global Series 2026",
     route: "/tournaments/women/wxv1-2026",
   },
 
   {
-  conceptId: "womens-internationals",
-  instanceId: "womens-tests-2026",
+    conceptId: "womens-internationals",
+    instanceId: "womens-tests-2026",
     name: "Women's International Tests",
     year: 2026,
     gender: "women",
     type: "test",
-    status: "planned",
+    status: "active",
     matchKey: "Women's International Tests 2026",
     route: "/tournaments/women/womens-tests-2026",
   },

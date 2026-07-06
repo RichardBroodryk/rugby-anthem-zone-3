@@ -1,6 +1,6 @@
 // --------------------------------------------------
 // RAZ SYSTEM — MASTER COMPETITION REGISTRY
-// Phase 4.3.1 — COMPLETE GLOBAL RUGBY MAP
+// Phase 4.3.2 — GLOBAL RUGBY MAP (NORMALIZED)
 // --------------------------------------------------
 
 export type CompetitionCategory =
@@ -16,12 +16,9 @@ export type CompetitionTier =
 export interface Competition {
   conceptId: string;
   name: string;
-
   category: CompetitionCategory;
   gender: "men" | "women" | "mixed";
-
   tier?: CompetitionTier;
-
   region?: string;
 }
 
@@ -70,7 +67,7 @@ export const COMPETITIONS: Competition[] = [
     tier: "tier1",
   },
 
-  // 🔥 YOUR SYSTEM CORE
+  // 🔥 RAZ CORE MEN'S INTERNATIONALS
   {
     conceptId: "international-tests",
     name: "International Tests",
@@ -79,33 +76,45 @@ export const COMPETITIONS: Competition[] = [
     tier: "tier1",
   },
   {
-    conceptId: "greatest-rivalry",
-    name: "SA vs NZ Rivalry",
+    conceptId: "nations-championship",
+    name: "Nations Championship",
     category: "international",
     gender: "men",
     tier: "tier1",
   },
   {
-  conceptId: "greatest-rivalry",
-  name: "SA vs NZ Rivalry",
-  category: "international",
-  gender: "men",
-  tier: "tier1",
-},
+    conceptId: "bledisloe-cup",
+    name: "Bledisloe Cup",
+    category: "international",
+    gender: "men",
+    tier: "tier1",
+  },
   {
-  conceptId: "nations-championship",
-  name: "Nations Championship",
-  category: "international",
-  gender: "men",
-  tier: "tier1",
-},
-{
-  conceptId: "bledisloe-cup",
-  name: "Bledisloe Cup",
-  category: "international",
-  gender: "men",
-  tier: "tier1",
-},
+    conceptId: "sa-nz-rival-tour",
+    name: "The Rivalry Tour",
+    category: "international",
+    gender: "men",
+    tier: "tier1",
+  },
+
+  // ==================================================
+  // 🌍 MEN — INTERNATIONAL (TIER 2 / DEVELOPMENT)
+  // ==================================================
+
+  {
+    conceptId: "world-rugby-nations-cup",
+    name: "World Rugby Nations Cup",
+    category: "international",
+    gender: "men",
+    tier: "tier2",
+  },
+  {
+    conceptId: "pacific-nations",
+    name: "Pacific Nations Cup",
+    category: "international",
+    gender: "men",
+    tier: "tier2",
+  },
 
   // ==================================================
   // 🌍 WOMEN — INTERNATIONAL
@@ -132,9 +141,16 @@ export const COMPETITIONS: Competition[] = [
     gender: "women",
     tier: "tier1",
   },
+  {
+    conceptId: "wxv1",
+    name: "WXV 1",
+    category: "international",
+    gender: "women",
+    tier: "tier1",
+  },
 
   // ==================================================
-  // 🏉 DOMESTIC — MEN (TOP 7 CORE)
+  // 🏉 DOMESTIC — MEN
   // ==================================================
 
   {
@@ -232,7 +248,7 @@ export const COMPETITIONS: Competition[] = [
   },
 
   // ==================================================
-  // 🌍 EUROPEAN CLUB (CRITICAL MISSING — NOW FIXED)
+  // 🌍 EUROPEAN CLUB
   // ==================================================
 
   {
@@ -251,25 +267,6 @@ export const COMPETITIONS: Competition[] = [
     tier: "tier1",
     region: "europe",
   },
-
-  // ==================================================
-  // 🌏 PACIFIC / REGIONAL
-  // ==================================================
-
-  {
-    conceptId: "pacific-nations-cup",
-    name: "Pacific Nations Cup",
-    category: "international",
-    gender: "men",
-    tier: "tier2",
-  },
-  {
-  conceptId: "pacific-nations",
-  name: "Pacific Nations Cup",
-  category: "international",
-  gender: "men",
-  tier: "tier2",
-},
 
   // ==================================================
   // ⚡ SEVENS — GLOBAL SYSTEM

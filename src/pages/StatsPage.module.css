@@ -37,12 +37,20 @@
   text-align: center;
 }
 
+.heroContent h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
 /* ================= BACK ================= */
 
 .backWrap {
   display: flex;
   justify-content: center;
-  margin: 24px 0 48px;
+  margin: 24px 0 8px;
 }
 
 .back {
@@ -59,29 +67,41 @@
   text-decoration: underline;
 }
 
-
-/* SECTIONS */
+/* ================= SECTIONS ================= */
 
 .section {
   padding: 0 24px;
 }
 
-.sectionTitle {
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 18px;
+.section h2 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #111827;
 }
 
-.centered {
-  text-align: center;
+.sectionIntro {
+  margin: 0 0 18px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #6b7280;
 }
 
-/* TABLE */
+.empty {
+  padding: 18px 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+/* ================= TABLE ================= */
 
 .tableWrap {
   background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
 }
 
 .statsTable {
@@ -89,14 +109,31 @@
   border-collapse: collapse;
 }
 
+.statsTable thead {
+  background: #f8fafc;
+}
+
 .statsTable th,
 .statsTable td {
   padding: 14px 16px;
   text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.statsTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.statsTable th {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #475569;
 }
 
 .left {
-  text-align: left;
+  text-align: left !important;
 }
 
 .teamCell {
@@ -104,9 +141,22 @@
   align-items: center;
   gap: 8px;
   font-weight: 700;
+  color: #111827;
 }
 
-/* SNAPSHOT */
+.teamName {
+  white-space: nowrap;
+}
+
+/* ================= MATCH LIST ================= */
+
+.matchesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ================= SNAPSHOT / COMPARISON SUPPORT ================= */
 
 .snapshot {
   text-align: center;
@@ -134,4 +184,52 @@
   margin-top: 6px;
   font-size: 0.8rem;
   color: #6b7280;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .page {
+    gap: 48px;
+  }
+
+  .section {
+    padding: 0 16px;
+  }
+
+  .statsTable th,
+  .statsTable td {
+    padding: 12px 10px;
+    font-size: 0.9rem;
+  }
+
+  .teamName {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 240px;
+  }
+
+  .heroContent {
+    padding: 0 16px;
+  }
+
+  .section h2 {
+    font-size: 1.08rem;
+  }
+
+  .sectionIntro {
+    font-size: 0.9rem;
+  }
+
+  .tableWrap {
+    overflow-x: auto;
+  }
+
+  .statsTable {
+    min-width: 720px;
+  }
 }
