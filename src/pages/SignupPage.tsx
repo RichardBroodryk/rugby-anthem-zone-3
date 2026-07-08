@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./FreemiumSignupPage.module.css";
+import styles from "./AccessPage.module.css";
 import { registerUser } from "../services/auth";
+
+/**
+ * SIGNUP PAGE — WAVE 3
+ * --------------------------------------------------
+ * Single Rugby Anthem Zone signup page for the
+ * one-tier paid model.
+ */
 
 const COUNTRIES = [
   "South Africa",
@@ -13,10 +20,19 @@ const COUNTRIES = [
   "France",
   "Japan",
   "United States",
+  "Fiji",
+  "Samoa",
+  "Georgia",
+  "Scotland",
+  "Wales",
+  "Spain",
+  "Portugal",
+  "Namibia",
+  "Zimbabwe",
   "Other",
 ];
 
-export default function PremiumSignupPage() {
+export default function SignupPage() {
   const navigate = useNavigate();
 
   const [country, setCountry] = useState("");
@@ -27,7 +43,7 @@ export default function PremiumSignupPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
+  const isValidEmail = (value: string) => /\S+@\S+\.\S+/.test(value);
 
   const handleSignup = async () => {
     if (!country) {
@@ -49,27 +65,26 @@ export default function PremiumSignupPage() {
     setError("");
 
     try {
-      // ✅ ONE CALL ONLY (handles register OR login)
       await registerUser(email, password);
 
-      // ✅ ALWAYS CONTINUE FLOW (NO ERROR FOR EXISTING USERS)
       navigate("/terms", {
         state: {
-          tier: "premium",
           country,
-          pricing: {
-            label: "$1.99 / month",
-            amount: "1.99",
-          },
+          accessFlow: "checkout",
           email,
         },
       });
-
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Signup failed";
 
-      setError(message || "Signup failed. Please try again.");
+      if (message.toLowerCase().includes("exists")) {
+        setError(
+          "This email is already registered. Please log in to continue."
+        );
+      } else {
+        setError(message || "Signup failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -78,68 +93,58 @@ export default function PremiumSignupPage() {
   return (
     <section className={styles.page}>
       <header className={styles.header}>
-        <h1>Premium Access</h1>
+        <h1>RAZ Premium Access</h1>
         <p className={styles.subtitle}>
-          Unlock enhanced Rugby Anthem Zone features with a premium subscription.
+          Create your Rugby Anthem Zone account to continue to terms and checkout.
         </p>
       </header>
 
       <section className={styles.content}>
         <div className={styles.block}>
-          <h2>What’s Included</h2>
+          <h2>What You’re Unlocking</h2>
           <ul>
-            <li>Ad-free experience</li>
-            <li>Enhanced match insights</li>
-            <li>Priority updates and notifications</li>
-            <li>Access to premium features</li>
+            <li>Match centre, fixtures, results, and stats</li>
+            <li>Anthems, tournaments, media, and matchday tools</li>
+            <li>Heritage and defining rugby moments</li>
+            <li>One Rugby Anthem Zone account across the platform</li>
           </ul>
         </div>
 
         <div className={styles.block}>
-          <h2>Billing</h2>
-          <p>Premium is billed monthly and can be cancelled anytime.</p>
-        </div>
+          <h2>Account Details</h2>
 
-        <div className={styles.block}>
           <label className={styles.label}>Email</label>
           <input
             type="email"
             className={styles.select}
             value={email}
-            onChange={(e) => setEmail(e.target.value.toLowerCase())}
+            onChange={(e) => {
+              setEmail(e.target.value.toLowerCase());
+              setError("");
+            }}
             placeholder="you@example.com"
           />
 
           <label className={styles.label}>Password</label>
-          <div style={{ position: "relative" }}>
-  <input
-    type={showPassword ? "text" : "password"}
-    className={styles.select}
-    value={password}
-    onChange={(e) => {
-      setPassword(e.target.value);
-      setError(""); // ✅ CLEAR ERROR ON TYPE
-    }}
-    placeholder="Enter password"
-    style={{ paddingRight: "40px" }}
-  />
+          <div className={styles.passwordWrap}>
+            <input
+              type={showPassword ? "text" : "password"}
+              className={`${styles.select} ${styles.passwordInput}`}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+              }}
+              placeholder="Enter password"
+            />
 
-  <span
-    onClick={() => setShowPassword(!showPassword)}
-    style={{
-      position: "absolute",
-      right: "10px",
-      top: "50%",
-      transform: "translateY(-50%)",
-      cursor: "pointer",
-      fontSize: "14px",
-      opacity: 0.7,
-      userSelect: "none",
-    }}
-  >
-    {showPassword ? "🙈" : "👁️"}
-  </span>
-</div>
+            <span
+              className={styles.passwordToggle}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </span>
+          </div>
         </div>
 
         <div className={styles.block}>
@@ -164,9 +169,9 @@ export default function PremiumSignupPage() {
         </div>
 
         <div className={styles.pricingBox}>
-          <p className={styles.price}>$2.49 / month</p>
+          <p className={styles.price}>RAZ Premium</p>
           <p className={styles.psychology}>
-            Cancel anytime. No hidden fees.
+            Secure paid access. Final pricing and billing details are shown at checkout.
           </p>
         </div>
       </section>
@@ -177,9 +182,7 @@ export default function PremiumSignupPage() {
           onClick={handleSignup}
           disabled={loading}
         >
-          {loading
-            ? "Creating account..."
-            : "Continue to Subscription Terms"}
+          {loading ? "Creating account..." : "Continue to Terms"}
         </button>
       </footer>
     </section>

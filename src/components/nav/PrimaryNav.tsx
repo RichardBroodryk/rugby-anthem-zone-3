@@ -1,5 +1,5 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./PrimaryNav.module.css";
 
 import logo from "../../assets/images/ui/raz-logo.png";
@@ -10,14 +10,32 @@ import {
   SearchEntity,
 } from "../../data/searchIndex";
 
-type PrimaryNavProps = {
-  variant: "freemium" | "premium" | "super";
-};
+import { logoutUser } from "../../services/auth";
 
-const ACTIVE_TIER_KEY = "raz_active_tier";
+/**
+ * PRIMARY NAV — WAVE 3
+ * --------------------------------------------------
+ * Single paid Rugby Anthem Zone navigation shell.
+ *
+ * Important:
+ * - No freemium / premium / super nav variants
+ * - One paid app home: /home
+ * - Search should expose the full paid app surface,
+ *   including heritage content
+ *
+ * Search note:
+ * buildSearchIndex still uses the old tier-era index builder
+ * contract underneath. For now we deliberately call the
+ * "super" branch as a compatibility bridge because it contains
+ * the full paid product surface we need in the one-tier app.
+ *
+ * Once searchIndex is rewritten for the one-tier model,
+ * this should be replaced with a neutral full-access builder.
+ */
+
 const AVATAR_KEY = "raz_avatar";
 
-export default function PrimaryNav({ variant }: PrimaryNavProps) {
+export default function PrimaryNav() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,7 +44,6 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
   );
 
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState<SearchEntity[]>([]);
@@ -34,28 +51,31 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
   const menuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  /* STORE TIER */
-  useEffect(() => {
-    if (variant === "super") {
-      sessionStorage.setItem(ACTIVE_TIER_KEY, "super");
-    } else if (variant === "premium") {
-      sessionStorage.setItem(ACTIVE_TIER_KEY, "premium");
-    }
-  }, [variant]);
+  const homeRoute = "/home";
 
-  /* BUILD SEARCH INDEX */
+  /* ==================================================
+     BUILD SEARCH INDEX
+     --------------------------------------------------
+     Transitional bridge:
+     use the legacy "super" search surface because it
+     contains the full paid app content set, including
+     heritage and other formerly super-only content.
+  ================================================== */
   useEffect(() => {
-    if (variant === "freemium") return;
-    setIndex(buildSearchIndex(variant));
-  }, [variant]);
+    setIndex(buildSearchIndex("super"));
+  }, []);
 
-  /* SEARCH RESULTS */
+  /* ==================================================
+     SEARCH RESULTS
+  ================================================== */
   const results = useMemo(() => {
-    if (!query) return index.slice(0, 8);
+    if (!query.trim()) return index.slice(0, 8);
     return searchEntities(query, index).slice(0, 8);
   }, [query, index]);
 
-  /* SYNC AVATAR */
+  /* ==================================================
+     SYNC AVATAR
+  ================================================== */
   useEffect(() => {
     function syncAvatar() {
       setAvatar(localStorage.getItem(AVATAR_KEY));
@@ -65,13 +85,12 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
     return () => window.removeEventListener("storage", syncAvatar);
   }, []);
 
-  /* CLOSE DROPDOWNS (CLICK OUTSIDE) */
+  /* ==================================================
+     CLOSE DROPDOWNS ON OUTSIDE CLICK
+  ================================================== */
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node)
-      ) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setMenuOpen(false);
       }
 
@@ -84,26 +103,19 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
+
+    return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
-  /* ✅ CLOSE ON ROUTE CHANGE (FIX) */
+  /* ==================================================
+     CLOSE DROPDOWNS ON ROUTE CHANGE
+  ================================================== */
   useEffect(() => {
     setMenuOpen(false);
     setSearchOpen(false);
   }, [location.pathname]);
-
-  const storedTier = sessionStorage.getItem(ACTIVE_TIER_KEY);
-  const homeRoute = storedTier === "super" ? "/home-super" : "/home";
-
-  const path = window.location.pathname;
-
-  // 🔒 HARD LOCK: never show nav on freemium routes
-  if (path.startsWith("/free")) return null;
-
-  // Existing rule
-  if (variant === "freemium") return null;
 
   function handleNavigate(route: string) {
     if (!route) {
@@ -114,6 +126,11 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
     setSearchOpen(false);
     setQuery("");
     navigate(route);
+  }
+
+  function handleLogout() {
+    logoutUser();
+    navigate("/welcome");
   }
 
   return (
@@ -128,10 +145,10 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
           />
         </NavLink>
 
-        {/* HOME ICON (UNCHANGED) */}
         <button
           className={styles.homeButton}
           onClick={() => navigate(homeRoute)}
+          aria-label="Go to home"
         >
           <svg
             width="22"
@@ -153,7 +170,8 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
         <div ref={searchRef} className={styles.searchWrapper}>
           <button
             className={styles.iconButton}
-            onClick={() => setSearchOpen((p) => !p)}
+            onClick={() => setSearchOpen((prev) => !prev)}
+            aria-label="Open search"
           >
             <svg
               width="22"
@@ -175,32 +193,34 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className={styles.searchInput}
-                placeholder="Search..."
+                placeholder="Search Rugby Anthem Zone..."
               />
 
               <div className={styles.searchResults}>
-                {results.map((item) => (
-                  <button
-                    key={item.id}
-                    className={styles.searchItem}
-                    onClick={() => handleNavigate(item.route)}
-                  >
-                    <div>
-                      <div className={styles.searchTitle}>
-                        {item.title}
+                {results.length > 0 ? (
+                  results.map((item) => (
+                    <button
+                      key={item.id}
+                      className={styles.searchItem}
+                      onClick={() => handleNavigate(item.route)}
+                    >
+                      <div>
+                        <div className={styles.searchTitle}>{item.title}</div>
+                        {item.subtitle && (
+                          <div className={styles.searchSubtitle}>
+                            {item.subtitle}
+                          </div>
+                        )}
                       </div>
-                      {item.subtitle && (
-                        <div className={styles.searchSubtitle}>
-                          {item.subtitle}
-                        </div>
-                      )}
-                    </div>
 
-                    <span className={styles.searchType}>
-                      {item.type}
-                    </span>
-                  </button>
-                ))}
+                      <span className={styles.searchType}>{item.type}</span>
+                    </button>
+                  ))
+                ) : (
+                  <div className={styles.searchEmpty}>
+                    No results found for “{query}”.
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -210,6 +230,7 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
         <button
           className={styles.iconButton}
           onClick={() => navigate("/contact")}
+          aria-label="Contact Rugby Anthem Zone"
         >
           <svg
             width="22"
@@ -228,13 +249,14 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
         <div ref={menuRef}>
           <button
             className={styles.profileButton}
-            onClick={() => setMenuOpen((p) => !p)}
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label="Open account menu"
           >
             {avatar ? (
               <img
                 src={avatar}
                 className={styles.navAvatar}
-                alt="User profile avatar"   // ✅ FIXED
+                alt="User profile avatar"
               />
             ) : (
               <svg
@@ -253,27 +275,18 @@ export default function PrimaryNav({ variant }: PrimaryNavProps) {
 
           {menuOpen && (
             <div className={styles.dropdown}>
-              <button onClick={() => navigate("/profile")}>
-                Profile
+              <button onClick={() => navigate("/profile")}>Profile</button>
+              <button onClick={() => navigate("/account/settings")}>
+                Account Settings
               </button>
-              <button onClick={() => navigate("/my-teams")}>
-                My Teams
-              </button>
+              <button onClick={() => navigate("/my-teams")}>My Teams</button>
               <button onClick={() => navigate("/notifications")}>
                 Notifications
               </button>
 
               <div className={styles.divider} />
 
-              <button
-                onClick={() => {
-                  localStorage.removeItem(AVATAR_KEY);
-                  sessionStorage.clear();
-                  navigate("/welcome");
-                }}
-              >
-                Logout
-              </button>
+              <button onClick={handleLogout}>Logout</button>
             </div>
           )}
         </div>

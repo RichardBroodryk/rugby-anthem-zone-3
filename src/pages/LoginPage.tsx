@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { loginUser, getToken, getUserTier } from "../services/auth"; // ✅ FIXED IMPORT
-import { apiRequest } from "../services/api";
-import styles from "./FreemiumSignupPage.module.css";
+import { loginUser, getUserTier } from "../services/auth";
+import styles from "./AccessPage.module.css";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -11,14 +10,10 @@ export default function LoginPage() {
   const redirectState = location.state as
     | {
         redirectAfterLogin?: string;
-        tier?: "premium" | "super";
       }
     | null;
 
-  const checkoutIntent =
-    redirectState?.redirectAfterLogin === "checkout";
-
-  const checkoutTier = redirectState?.tier;
+  const checkoutIntent = redirectState?.redirectAfterLogin === "checkout";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,10 +23,8 @@ export default function LoginPage() {
   const [info, setInfo] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const isValidEmail = (email: string) =>
-    /\S+@\S+\.\S+/.test(email);
+  const isValidEmail = (value: string) => /\S+@\S+\.\S+/.test(value);
 
-  // ✅ CLEAN LOGIN HANDLER (FINAL FIXED)
   const handleLogin = async () => {
     if (!email || !password) {
       setError("Please enter email and password.");
@@ -49,51 +42,31 @@ export default function LoginPage() {
 
     try {
       await loginUser(email, password);
-      const token = getToken();
 
-      // 🔥 FORCE FRESH TIER (CRITICAL FIX)
       const freshTier = await getUserTier();
 
-   // 🚨 HARD GUARD: ONLY ALLOW CHECKOUT AFTER CONFIRMED LOGIN + FREEMIUM
-if (checkoutIntent && checkoutTier) {
-  if (freshTier !== "freemium") {
-    console.log("🚫 BLOCKED CHECKOUT — user already paid:", freshTier);
-  } else if (token) {
-    const data = await apiRequest(
-      "/api/payments",
-      "POST",
-      { tier: checkoutTier },
-      token
-    );
+      if (window.history.state && window.history.state.usr) {
+        window.history.replaceState({}, document.title);
+      }
 
-    if (!data.checkoutUrl) {
-      setError("Unable to start payment.");
-      return;
-    }
+      if (checkoutIntent) {
+        if (freshTier === "active") {
+          navigate("/home");
+        } else {
+          navigate("/terms", {
+            state: { accessFlow: "checkout" },
+          });
+        }
+        return;
+      }
 
-    window.location.href = data.checkoutUrl;
-    return;
-  }
-}
-
-if (window.history.state && window.history.state.usr) {
-  window.history.replaceState({}, document.title);
-}
-
-// ===============================
-// 🧭 NORMAL LOGIN ROUTING
-// ===============================
-if (freshTier === "super") {
-  navigate("/home-super");
-} else if (freshTier === "premium") {
-  navigate("/home");
-} else {
-  navigate("/checkout");
-}
-
+      if (freshTier === "active") {
+        navigate("/home");
+      } else {
+        navigate("/what-you-get");
+      }
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "";
+      const message = err instanceof Error ? err.message : "";
 
       if (message.toLowerCase().includes("password")) {
         setError("Incorrect password");
@@ -102,13 +75,11 @@ if (freshTier === "super") {
       } else {
         setError("Login failed. Please try again.");
       }
-
     } finally {
       setLoading(false);
     }
   };
 
-  // 🔁 FORGOT PASSWORD (PLACEHOLDER)
   const handleForgotPassword = () => {
     if (!email) {
       setError("Enter your email first.");
@@ -127,7 +98,7 @@ if (freshTier === "super") {
   return (
     <section className={styles.page}>
       <header className={styles.header}>
-        <h1>Login</h1>
+        <h1>Log In</h1>
         <p className={styles.subtitle}>
           Sign in to access your Rugby Anthem Zone account.
         </p>
@@ -135,75 +106,47 @@ if (freshTier === "super") {
 
       <section className={styles.content}>
         <div className={styles.block}>
-          {/* EMAIL */}
+          <h2>Account Access</h2>
+
           <label className={styles.label}>Email</label>
           <input
             type="email"
             className={styles.select}
             value={email}
-            onChange={(e) =>
-              setEmail(e.target.value.toLowerCase())
-            }
+            onChange={(e) => setEmail(e.target.value.toLowerCase())}
             placeholder="you@example.com"
           />
 
-          {/* PASSWORD */}
           <label className={styles.label}>Password</label>
-          <div style={{ position: "relative" }}>
-  <input
-    type={showPassword ? "text" : "password"}
-    className={styles.select}
-    value={password}
-    onChange={(e) => {
-      setPassword(e.target.value);
-      setError(""); // ✅ CLEAR ERROR ON TYPE
-    }}
-    placeholder="Enter password"
-    style={{ paddingRight: "40px" }}
-  />
+          <div className={styles.passwordWrap}>
+            <input
+              type={showPassword ? "text" : "password"}
+              className={`${styles.select} ${styles.passwordInput}`}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+              }}
+              placeholder="Enter password"
+            />
 
-  <span
-    onClick={() => setShowPassword(!showPassword)}
-    style={{
-      position: "absolute",
-      right: "10px",
-      top: "50%",
-      transform: "translateY(-50%)",
-      cursor: "pointer",
-      fontSize: "14px",
-      opacity: 0.7,
-      userSelect: "none",
-    }}
-  >
-    {showPassword ? "🙈" : "👁️"}
-  </span>
-</div>
+            <span
+              className={styles.passwordToggle}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </span>
+          </div>
 
-          {/* FORGOT PASSWORD */}
           <p
+            className={styles.secondaryAction}
             onClick={handleForgotPassword}
-            style={{
-              marginTop: "8px",
-              fontSize: "12px",
-              color: "#007bff",
-              cursor: "pointer",
-              textDecoration: "underline",
-            }}
           >
             Forgot password?
           </p>
 
-          {/* ERROR */}
-          {error && (
-            <p className={styles.error}>{error}</p>
-          )}
-
-          {/* INFO */}
-          {info && (
-            <p style={{ color: "#4caf50", fontSize: "12px" }}>
-              {info}
-            </p>
-          )}
+          {error && <p className={styles.error}>{error}</p>}
+          {info && <p className={styles.info}>{info}</p>}
         </div>
       </section>
 
@@ -213,7 +156,7 @@ if (freshTier === "super") {
           onClick={handleLogin}
           disabled={loading}
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Logging in..." : "Log In"}
         </button>
       </footer>
     </section>

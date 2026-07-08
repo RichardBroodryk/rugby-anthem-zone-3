@@ -1,135 +1,89 @@
 import { useEffect, useState } from "react";
+import styles from "./CheckoutPage.module.css";
+import { getToken, getUserTier } from "../services/auth";
+import { createPaymentSession } from "../services/payments";
 
-declare global {
-  interface Window {
-    Paddle: any;
-  }
-}
-
-const CheckoutPage = () => {
-  const [status, setStatus] = useState("Loading secure checkout...");
+export default function CheckoutPage() {
+  const [status, setStatus] = useState("Preparing secure checkout...");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    console.log("🔥 CheckoutPage loaded - Initializing Paddle");
+    let cancelled = false;
 
-    // If Paddle already exists, we still re-initialize (DO NOT return)
-    if (window.Paddle) {
-      console.log("⚠️ Paddle already loaded — reinitializing");
+    async function beginCheckout() {
+      try {
+        const token = getToken();
+
+        if (!token) {
+          setStatus("Login required");
+          setError("You need to log in before checkout can begin.");
+          return;
+        }
+
+        const freshTier = await getUserTier();
+
+        if (cancelled) return;
+
+        if (freshTier === "active") {
+          setStatus("Access already active");
+          window.location.href = "/home";
+          return;
+        }
+
+        setStatus("Opening secure checkout...");
+
+        const data = await createPaymentSession();
+
+        if (cancelled) return;
+
+        if (!data.checkoutUrl) {
+          throw new Error("Unable to start checkout.");
+        }
+
+        window.location.href = data.checkoutUrl;
+      } catch (err) {
+        console.error(err);
+
+        if (cancelled) return;
+
+        const message =
+          err instanceof Error ? err.message : "Unable to start checkout.";
+
+        setStatus("Checkout unavailable");
+        setError(message);
+      }
     }
 
-    const script = document.createElement("script");
-    script.src = "https://cdn.paddle.com/paddle/v2/paddle.js";
-    script.async = true;
+    beginCheckout();
 
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      if (!window.Paddle) {
-        console.error("❌ Paddle failed to attach to window");
-        setStatus("Failed to initialize checkout. Please refresh.");
-        return;
-      }
-
-      console.log("✅ Paddle script loaded successfully");
-
-      window.Paddle.Initialize({
-        token: "live_1315bcf84802de1b59fc1bd1da5",
-
-        eventCallback: (event: any) => {
-          console.log("📦 Paddle event:", event.name);
-
-          if (event.name === "checkout.completed") {
-            console.log("🎉 Checkout completed successfully");
-
-            setStatus("Payment successful! Redirecting to your homepage...");
-
-            // 🔥 RETRY LOGIC (FIXES FREEMIUM ISSUE)
-            const checkTierAndRedirect = async () => {
-              const token = localStorage.getItem("raz_token");
-
-              for (let i = 0; i < 6; i++) {
-                try {
-                  const res = await fetch(
-                    "https://rugby-anthem-backend.fly.dev/api/subscription",
-                    {
-                      headers: token
-                        ? { Authorization: `Bearer ${token}` }
-                        : {},
-                    }
-                  );
-
-                  if (res.ok) {
-                    const data = await res.json();
-                    const tier = data.tier;
-
-                    console.log(`🔁 Tier check attempt ${i}:`, tier);
-
-                    if (tier === "super") {
-                      window.location.href = "/home-super";
-                      return;
-                    }
-
-                    if (tier === "premium") {
-                      window.location.href = "/home";
-                      return;
-                    }
-                  }
-                } catch (err) {
-                  console.error("Retry error:", err);
-                }
-
-                // wait 1 second before retry
-                await new Promise((res) => setTimeout(res, 1000));
-              }
-
-              console.warn("⚠️ Tier never updated — fallback to free");
-              window.location.href = "/home";
-            };
-
-            checkTierAndRedirect();
-          }
-        },
-      });
-
-      setStatus("Opening secure checkout...");
-    };
-
-    script.onerror = () => {
-      console.error("❌ Failed to load Paddle script");
-      setStatus("Network error loading checkout. Please refresh.");
-    };
-
-    // Cleanup on unmount
     return () => {
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
+      cancelled = true;
     };
   }, []);
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#0a0a0a",
-        color: "white",
-        textAlign: "center",
-        padding: "20px",
-      }}
-    >
-      <h2>{status}</h2>
+    <section className={styles.page}>
+      <div className={styles.card}>
+        <h1 className={styles.title}>{status}</h1>
 
-      <p>Please wait while we open the secure payment page...</p>
-
-      <p style={{ fontSize: "14px", opacity: 0.7, marginTop: "20px" }}>
-        You will be redirected automatically after payment.
-      </p>
-    </div>
+        {!error ? (
+          <>
+            <p className={styles.text}>
+              Please wait while we open the secure Rugby Anthem Zone checkout.
+            </p>
+            <p className={styles.subtle}>
+              You will be redirected automatically.
+            </p>
+          </>
+        ) : (
+          <>
+            <p className={styles.error}>{error}</p>
+            <a href="/welcome" className={styles.link}>
+              Return to Welcome
+            </a>
+          </>
+        )}
+      </div>
+    </section>
   );
-};
-
-export default CheckoutPage;
+}

@@ -1,6 +1,7 @@
 /* =========================================================
-   FREEMIUM LAYOUT — ENTRY & FREE EXPERIENCE
-   No navigation. No chrome. Editorial containment only.
+   PUBLIC LAYOUT — ACCESS / ONBOARDING SHELL
+   No main app navigation. No paid-app chrome.
+   Used for splash, welcome, signup, login, checkout flow.
    ========================================================= */
 
 .app {
@@ -11,14 +12,23 @@
   flex-direction: column;
 }
 
-/* Main content wrapper */
+.adTop {
+  width: 100%;
+  flex-shrink: 0;
+}
+
 .content {
   flex: 1;
   width: 100%;
   display: block;
 }
 
-/* Safety: prevent horizontal scroll leaks */
+.adBottom {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* Safety: prevent layout drift from nested page content */
 .content * {
   box-sizing: border-box;
 }

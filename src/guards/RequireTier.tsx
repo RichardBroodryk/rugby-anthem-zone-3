@@ -1,39 +1,30 @@
 import { Navigate, useLocation } from "react-router-dom";
-
-type Tier = "freemium" | "premium" | "super";
-
-type RequireTierProps = {
-  min: Tier;
-  children: React.ReactNode;
-};
+import type { ReactNode } from "react";
+import { getStoredTier } from "../services/auth";
 
 /**
- * REQUIRE TIER GUARD
- * Enforces minimum access level at the route level.
- * Calm redirects only. No errors. No crashes.
+ * REQUIRE ACTIVE SUBSCRIPTION
+ * One paid entitlement model only:
+ * - inactive
+ * - active
+ *
+ * If inactive, redirect the user into the onboarding / purchase flow.
  */
 
-const TIER_ORDER: Record<Tier, number> = {
-  freemium: 0,
-  premium: 1,
-  super: 2,
+type RequireActiveSubscriptionProps = {
+  children: ReactNode;
 };
 
-function getCurrentTier(): Tier {
-  const stored = localStorage.getItem("raz_tier");
-  if (stored === "premium" || stored === "super") return stored;
-  return "freemium";
-}
-
-export default function RequireTier({ min, children }: RequireTierProps) {
+export default function RequireTier({
+  children,
+}: RequireActiveSubscriptionProps) {
   const location = useLocation();
-  const currentTier = getCurrentTier();
+  const tier = getStoredTier();
 
-  if (TIER_ORDER[currentTier] < TIER_ORDER[min]) {
-    // Redirect calmly to clarity, not signup
+  if (tier !== "active") {
     return (
       <Navigate
-        to={`/what-you-get/${min}`}
+        to="/welcome"
         state={{ from: location.pathname }}
         replace
       />

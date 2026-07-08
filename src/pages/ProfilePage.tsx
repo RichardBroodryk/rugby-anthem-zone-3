@@ -4,24 +4,21 @@ import { useState, useEffect } from "react";
 
 import myRugbyHero from "../assets/images/raz/my-rugby-hero.png";
 import loyaltyHero from "../assets/images/raz/fanzone-loyalty.png";
+import { getStoredEmail, getStoredTier } from "../services/auth";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
 
   /* ================= USER ================= */
 
-  const tier =
-    sessionStorage.getItem("raz_active_tier") || "premium";
-
-  const userEmail =
-    localStorage.getItem("raz_user_email") || "No email";
+  const access = getStoredTier();
+  const userEmail = getStoredEmail() || "No email";
 
   /* ================= STATS ================= */
 
   const [matchesFollowed, setMatchesFollowed] = useState(0);
   const [anthemsPlayed, setAnthemsPlayed] = useState(0);
-  const [tournamentsFollowed, setTournamentsFollowed] =
-    useState(0);
+  const [tournamentsFollowed, setTournamentsFollowed] = useState(0);
 
   useEffect(() => {
     setMatchesFollowed(
@@ -60,8 +57,6 @@ export default function ProfilePage() {
     reader.readAsDataURL(file);
   }
 
-  /* ================= RENDER ================= */
-
   return (
     <main className={styles.page}>
       {/* ================= HEADER ================= */}
@@ -93,20 +88,8 @@ export default function ProfilePage() {
 
           <p className={styles.email}>{userEmail}</p>
 
-          <span
-            className={`${styles.memberBadge} ${
-              tier === "super"
-                ? styles.superBadge
-                : tier === "premium"
-                ? styles.premiumBadge
-                : styles.freemiumBadge
-            }`}
-          >
-            {tier === "super"
-              ? "SUPER MEMBER"
-              : tier === "premium"
-              ? "PREMIUM MEMBER"
-              : "FREEMIUM"}
+          <span className={styles.memberBadge}>
+            {access === "active" ? "RAZ PREMIUM" : "INACTIVE"}
           </span>
         </div>
 
@@ -210,27 +193,24 @@ export default function ProfilePage() {
         <h2>Account Settings</h2>
 
         <div className={styles.grid}>
-          {/* 🔒 MEMBERSHIP LOCKED */}
           <div className={styles.card}>
             <h3>Membership</h3>
 
-            <p className={styles.disabledText}>
-              Subscription upgrades and changes will be available soon.
+            <p>
+              Manage your Rugby Anthem Zone subscription and account access.
             </p>
 
             <button
-              className={styles.disabledButton}
-              disabled
+              onClick={() => navigate("/account/settings")}
             >
-              Coming Soon
+              Manage Subscription
             </button>
           </div>
 
-          {/* ACCOUNT SETTINGS */}
           <div className={styles.card}>
             <h3>Account</h3>
 
-            <p>Update your account information.</p>
+            <p>Update your account information and profile settings.</p>
 
             <button
               onClick={() => navigate("/account/settings")}

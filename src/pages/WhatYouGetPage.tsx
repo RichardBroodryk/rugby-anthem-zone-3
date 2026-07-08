@@ -1,67 +1,113 @@
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./WhatYouGetPage.module.css";
 
 /**
- * WHAT YOU GET — FINAL (PHASE 3)
- * Clarity only. No pricing. No selling.
+ * WHAT YOU GET — WAVE 1
+ * Single paid access overview.
+ * No freemium / premium / super branching.
  */
-
-type Tier = "freemium" | "premium" | "super";
 
 type FlowState = {
   country?: string;
 };
 
 export default function WhatYouGetPage() {
-  const { tier } = useParams<{ tier: Tier }>();
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as FlowState | null;
 
   const country = state?.country;
 
-  const isValidTier =
-    tier === "freemium" || tier === "premium" || tier === "super";
-
-  // Guard safety — never render a blank screen
-  if (!isValidTier) {
-    navigate("/welcome", { replace: true });
-    return null;
-  }
-
- const continuePath =
-  tier === "freemium"
-    ? "/checkout"
-    : tier === "premium"
-    ? "/signup/premium"
-    : "/signup/super";
-
   return (
     <section className={styles.page}>
       <header className={styles.header}>
         <h1>What You Get</h1>
         <p className={styles.subtitle}>
-          A clear overview of what is included with your selected access level.
+          A clear overview of what is included with Rugby Anthem Zone access.
         </p>
       </header>
 
       <div className={styles.tierLabel}>
-        Viewing: <strong>{formatTier(tier)}</strong>
+        Viewing: <strong>RAZ Access</strong>
       </div>
 
       <section className={styles.content}>
-        {tier === "freemium" && <FreemiumContent />}
-        {tier === "premium" && <PremiumContent />}
-        {tier === "super" && <SuperContent />}
+        <Section title="Included Access">
+          <Item
+            title="Anthems"
+            description="Full sing-along anthem experience designed for stadium and matchday atmosphere."
+          />
+          <Item
+            title="Tournaments"
+            description="Men’s and women’s competitions with access to all games and stadiums."
+          />
+          <Item
+            title="Notifications"
+            description="Opt-in alerts for matches, tournaments, and key rugby moments."
+          />
+          <Item
+            title="Match Centre"
+            description="Live scores, fixtures, results, and statistical coverage."
+          />
+          <Item
+            title="Matchday Journeys"
+            description="Match planning tools including tickets, flights, hotels, and local transport."
+          />
+          <Item
+            title="The Rugby Studio"
+            description="Classic tests, match highlights, podcasts, greatest hits, and fan commentary."
+          />
+          <Item
+            title="Fanzone"
+            description="Loyalty card program, live match audio, pay-per-view access, and personal team tracking."
+          />
+          <Item
+            title="News"
+            description="Breaking stories, transfers, injuries, interviews, press, and rumours."
+          />
+          <Item
+            title="Inside the Game"
+            description="Referees, laws, fantasy participation, and broader game understanding."
+          />
+          <Item
+            title="Global Calendar"
+            description="Worldwide fixtures, tournaments, and key rugby dates."
+          />
+          <Item
+            title="Stadiums"
+            description="Stadium access linked to matches and tournaments."
+          />
+          <Item
+            title="Merch"
+            description="Official team and rugby merchandise."
+          />
+          <Item
+            title="Heritage"
+            description="Legends, squads, champions, coaches and support staff, officials, and match governance."
+          />
+          <Item
+            title="Defining Rugby Moments"
+            description="World Cup turning points, tactical shifts, law changes, calls and decisions, rivalries, and cultural moments."
+          />
+        </Section>
+
+        <Section title="Access Model">
+          <Boundary label="Membership" value="Single paid RAZ access" />
+          <Boundary label="Advertising" value="Contextual platform advertising may appear during Wave 1 transition" />
+          <Boundary label="Platform billing" value="Web checkout now, Google-ready structure being prepared" />
+        </Section>
+
+        <Note>
+          Continue to account creation and terms to activate Rugby Anthem Zone access.
+        </Note>
       </section>
 
       <footer className={styles.footer}>
         <button
           className={styles.primaryButton}
           onClick={() =>
-            navigate(continuePath, {
+            navigate("/signup", {
               state: {
-                tier,
                 country,
               },
             })
@@ -70,10 +116,7 @@ export default function WhatYouGetPage() {
           Continue
         </button>
 
-        <button
-          className={styles.backLink}
-          onClick={() => navigate("/welcome")}
-        >
+        <button className={styles.backLink} onClick={() => navigate("/welcome")}>
           Back to Welcome
         </button>
       </footer>
@@ -81,72 +124,13 @@ export default function WhatYouGetPage() {
   );
 }
 
-/* ================= FREEMIUM ================= */
-
-function FreemiumContent() {
-  return (
-    <>
-      <Section title="Trial Period Has Passed">
-        <Item
-          title="Premium Access Required"
-          description="Trial access has ended. Upgrade to Premium or Super Premium to continue enjoying Rugby Anthem Zone."
-        />
-      </Section>
-
-      <Note>
-        Select Premium or Super Premium to continue.
-      </Note>
-    </>
-  );
-}
-
-/* ================= PREMIUM ================= */
-
-function PremiumContent() {
-  return (
-    <>
-      <Section title="Included Access">
-        <Item title="Anthems" description="Full sing-along anthem experience designed for stadium and matchday atmosphere." />
-        <Item title="Tournaments" description="Men’s and women’s competitions with access to all games and stadiums." />
-        <Item title="Notifications" description="Opt-in alerts for matches, tournaments, and key rugby moments." />
-        <Item title="Match Centre" description="Live scores, fixtures, results, and statistical coverage." />
-        <Item title="Matchday Journeys" description="Match planning tools including tickets, flights, hotels, and local transport." />
-        <Item title="The Rugby Studio" description="Classic tests, match highlights, podcasts, greatest hits, and fan commentary." />
-        <Item title="Fanzone" description="Loyalty card program, live match audio, pay-per-view access, and personal team tracking." />
-        <Item title="News" description="Breaking stories, transfers, injuries, interviews, press, and rumours." />
-        <Item title="Inside the Game" description="Referees, laws, and fantasy league participation." />
-        <Item title="Global Calendar" description="Worldwide fixtures, tournaments, and key rugby dates." />
-        <Item title="Stadiums" description="Stadium access linked to matches and tournaments." />
-        <Item title="Merchandise" description="Official team and rugby merchandise." />
-      </Section>
-
-      <Section title="Boundaries">
-        <Boundary label="Heritage" value="Not included" />
-        <Boundary label="Defining Moments" value="Not included" />
-        <Boundary label="Advertising" value="Yes (reduced and contextual)" />
-      </Section>
-    </>
-  );
-}
-
-/* ================= SUPER ================= */
-
-function SuperContent() {
-  return (
-    <>
-      <Section title="Included Access">
-        <Item title="All Premium Sections" description="Complete access to all matchday, media, planning, and supporter systems." />
-        <Item title="Heritage" description="Legends, squads, champions, coaches and support staff, officials, and match governance." />
-        <Item title="Defining Moments" description="World Cup turning points, tactical shifts, law changes, calls and decisions, era-defining rivalries, and cultural moments." />
-        <Item title="Advertising" description="No advertising across the platform." />
-      </Section>
-    </>
-  );
-}
-
-/* ================= UI HELPERS ================= */
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <section className={styles.section}>
       <h2>{title}</h2>
@@ -175,10 +159,4 @@ function Boundary({ label, value }: { label: string; value: string }) {
 
 function Note({ children }: { children: React.ReactNode }) {
   return <p className={styles.note}>{children}</p>;
-}
-
-function formatTier(tier: Tier) {
-  if (tier === "freemium") return "Freemium";
-  if (tier === "premium") return "Premium";
-  return "Super Premium";
 }

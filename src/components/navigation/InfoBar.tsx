@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
 import styles from "./InfoBar.module.css";
 
-type InfoBarProps = {
-  variant?: "premium" | "super";
-};
+/**
+ * INFO BAR — WAVE 2
+ * --------------------------------------------------
+ * Single paid app navigation rail.
+ * No premium/super branching.
+ */
 
-export default function InfoBar({ variant = "premium" }: InfoBarProps) {
-  const isSuper = variant === "super";
-
+export default function InfoBar() {
   const items = [
     { label: "Notifications", route: "/notifications" },
     { label: "Anthems", route: "/anthems" },
@@ -17,19 +18,13 @@ export default function InfoBar({ variant = "premium" }: InfoBarProps) {
     { label: "The Rugby Studio", route: "/media" },
     { label: "Fanzone", route: "/fanzone" },
     { label: "News", route: "/news" },
+    { label: "Heritage", route: "/heritage" },
+    { label: "Defining Moments", route: "/defining-moments" },
     { label: "Inside the Game", route: "/inside-the-game" },
     { label: "Calendar", route: "/calendar" },
     { label: "Stadiums", route: "/stadiums" },
     { label: "Merch", route: "/merch" },
   ];
-
-  if (isSuper) {
-    items.splice(7, 0, { label: "Heritage", route: "/heritage" });
-    items.splice(8, 0, {
-      label: "Defining Moments",
-      route: "/defining-moments",
-    });
-  }
 
   return (
     <section className={styles.bar}>

@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import styles from "./HeroCard.module.css";
 
-type HeroCardProps = {
-  variant: "premium" | "super";
-};
+/**
+ * HERO CARD — WAVE 2
+ * --------------------------------------------------
+ * Single paid access hero.
+ * No premium/super branching.
+ * Heritage is now part of the live paid app.
+ */
 
-export default function HeroCard({ variant }: HeroCardProps) {
-  const isSuper = variant === "super";
-
+export default function HeroCard() {
   return (
     <section className={styles.hero}>
       <div className={styles.overlay} />
@@ -32,16 +34,9 @@ export default function HeroCard({ variant }: HeroCardProps) {
             Anthems
           </Link>
 
-          {isSuper ? (
-            <Link to="/heritage" className={styles.heritage}>
-              Heritage
-            </Link>
-          ) : (
-            <div className={styles.heritageLocked}>
-              Heritage
-              <span>Super Premium</span>
-            </div>
-          )}
+          <Link to="/heritage" className={styles.heritage}>
+            Heritage
+          </Link>
         </div>
       </div>
     </section>

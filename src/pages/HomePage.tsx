@@ -31,6 +31,7 @@ import BookOpenIcon from "../components/icons/BookOpenIcon";
 import StarIcon from "../components/icons/StarIcon";
 import CalendarIcon from "../components/icons/CalendarIcon";
 import ShoppingBagIcon from "../components/icons/ShoppingBagIcon";
+import ArchiveIcon from "../components/icons/ArchiveIcon";
 
 /* IMAGES */
 import anthemsImage from "../assets/images/raz/anthems-page.png";
@@ -43,6 +44,17 @@ import newsImage from "../assets/images/raz/news-hero.png";
 import insideTheGameImage from "../assets/images/raz/inside-the-game.png";
 import calendarImage from "../assets/images/raz/calendar-hero.jpg";
 import merchImage from "../assets/images/raz/Merch.png";
+import heritageImage from "../assets/images/raz/heritage-hub.png";
+import definingMomentsImage from "../assets/images/raz/moments-hero.jpg";
+
+/**
+ * HOME PAGE — WAVE 2
+ * --------------------------------------------------
+ * Single paid RAZ home.
+ * Super content is now folded into the main paid home.
+ * We are not deleting the old SuperHomePage yet; this page
+ * becomes the live source of truth.
+ */
 
 export default function HomePage() {
   const featuredTournament =
@@ -54,9 +66,9 @@ export default function HomePage() {
   return (
     <PageWrapper imageUrl={razLight}>
       <main className={styles.page}>
-        <HeroCard variant="premium" />
+        <HeroCard />
 
-        <InfoBar variant="premium" />
+        <InfoBar />
 
         <FeaturedMatchCard />
 
@@ -74,14 +86,13 @@ export default function HomePage() {
                 features={[
                   {
                     label:
-                      featuredTournament.heroBadge ||
-                      "FEATURED TOURNAMENT",
+                      featuredTournament.heroBadge || "FEATURED TOURNAMENT",
                     icon: <AwardIcon />,
                   },
                   {
                     label:
                       featuredTournament.heroSubtitle ||
-                      "Global focus",
+                      "Current global focus",
                     icon: <StarIcon />,
                   },
                 ]}
@@ -108,9 +119,7 @@ export default function HomePage() {
               title="Anthems"
               image={anthemsImage}
               to="/anthems"
-              features={[
-                { label: "National Anthems", icon: <MusicIcon /> },
-              ]}
+              features={[{ label: "National Anthems", icon: <MusicIcon /> }]}
             />
 
             <HubCard
@@ -190,8 +199,7 @@ export default function HomePage() {
               to="/calendar"
               features={[
                 {
-                  label:
-                    "Global fixtures, key dates & iconic stadiums",
+                  label: "Global fixtures, key dates & iconic stadiums",
                   icon: <CalendarIcon />,
                 },
               ]}
@@ -203,6 +211,30 @@ export default function HomePage() {
               to="/merch"
               features={[
                 { label: "Official Team Gear", icon: <ShoppingBagIcon /> },
+              ]}
+            />
+
+            <HubCard
+              title="Heritage"
+              image={heritageImage}
+              to="/heritage"
+              features={[
+                {
+                  label: "Legends, Squads & Champions",
+                  icon: <ArchiveIcon />,
+                },
+              ]}
+            />
+
+            <HubCard
+              title="Defining Rugby Moments"
+              image={definingMomentsImage}
+              to="/defining-moments"
+              features={[
+                {
+                  label: "The moments that shaped the game",
+                  icon: <ArchiveIcon />,
+                },
               ]}
             />
           </AutoContentRail>

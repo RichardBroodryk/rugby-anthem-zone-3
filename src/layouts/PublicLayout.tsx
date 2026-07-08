@@ -1,8 +1,18 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AdBanner from "../components/homepage/AdBanner";
-import styles from "./FreemiumLayout.module.css";
+import styles from "./PublicLayout.module.css";
 
-export default function FreemiumLayout() {
+/**
+ * PUBLIC LAYOUT — WAVE 3
+ * --------------------------------------------------
+ * Public access shell for splash, onboarding, signup,
+ * login, terms, checkout, and access-pending routes.
+ *
+ * This replaces the old FreemiumLayout naming now that
+ * the app has moved to a single paid RAZ Premium model.
+ */
+
+export default function PublicLayout() {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -10,26 +20,23 @@ export default function FreemiumLayout() {
 
   return (
     <div className={styles.app}>
-      {/* TOP SPONSOR */}
       {!isSplashPage && (
         <div className={styles.adTop}>
-          <AdBanner text="🏉 Official Rugby Partner" />
+          <AdBanner text="🏉 Rugby Anthem Zone" />
         </div>
       )}
 
-      {/* PAGE CONTENT */}
       <main className={styles.content}>
         <Outlet />
       </main>
 
-      {/* 🔥 BOTTOM UPGRADE BAR (CLICKABLE CTA) */}
       {!isSplashPage && (
         <div
           className={styles.adBottom}
-          onClick={() => navigate("/what-you-get/premium")}
+          onClick={() => navigate("/what-you-get")}
           style={{ cursor: "pointer" }}
         >
-          <AdBanner text="⭐ Go Premium — Unlock the Full Rugby Experience" />
+          <AdBanner text="⭐ Unlock Rugby Anthem Zone Access" />
         </div>
       )}
     </div>
