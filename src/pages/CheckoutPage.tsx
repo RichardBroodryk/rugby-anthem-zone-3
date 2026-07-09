@@ -2,10 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./CheckoutPage.module.css";
 import { getToken, getUserTier } from "../services/auth";
 import { createPaymentSession } from "../services/payments";
+import { API_BASE_URL } from "../config/api";
 
 declare global {
   interface Window {
     Paddle?: {
+      Environment?: {
+        set: (env: "sandbox" | "production") => void;
+      };
+      Initialize?: (options: {
+        token: string;
+        eventCallback?: (event: unknown) => void;
+      }) => void;
       Checkout?: {
         open: (options: {
           transactionId?: string;
@@ -17,6 +25,11 @@ declare global {
   }
 }
 
+type PaddleFrontendConfig = {
+  clientToken: string;
+  environment?: string;
+};
+
 function extractTransactionIdFromUrl(): string | null {
   const params = new URLSearchParams(window.location.search);
   const raw = params.get("_ptxn");
@@ -27,7 +40,7 @@ async function waitForPaddle(maxWaitMs = 10000, intervalMs = 200) {
   const start = Date.now();
 
   while (Date.now() - start < maxWaitMs) {
-    if (window.Paddle?.Checkout?.open) {
+    if (window.Paddle?.Checkout?.open && window.Paddle?.Initialize) {
       return true;
     }
     await new Promise((resolve) => setTimeout(resolve, intervalMs));
@@ -36,11 +49,42 @@ async function waitForPaddle(maxWaitMs = 10000, intervalMs = 200) {
   return false;
 }
 
+async function getPaddleFrontendConfig(token: string): Promise<PaddleFrontendConfig> {
+  const res = await fetch(`${API_BASE_URL}/api/payments/config`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Cache-Control": "no-cache",
+    },
+  });
+
+  let data: any = null;
+
+  try {
+    data = await res.json();
+  } catch {
+    data = null;
+  }
+
+  if (!res.ok) {
+    throw new Error(
+      data?.error || data?.message || "Unable to load Paddle checkout config."
+    );
+  }
+
+  if (!data?.clientToken) {
+    throw new Error("Paddle client token is missing from checkout config.");
+  }
+
+  return data as PaddleFrontendConfig;
+}
+
 export default function CheckoutPage() {
   const [status, setStatus] = useState("Preparing secure checkout...");
   const [error, setError] = useState("");
 
   const hasStartedCheckoutRef = useRef(false);
+  const hasInitializedPaddleRef = useRef(false);
   const pollTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -73,6 +117,35 @@ export default function CheckoutPage() {
       }, 3000);
     };
 
+    async function ensurePaddleInitialized(token: string) {
+      if (hasInitializedPaddleRef.current) return;
+
+      const paddleReady = await waitForPaddle();
+
+      if (!paddleReady || !window.Paddle?.Initialize || !window.Paddle?.Checkout?.open) {
+        throw new Error(
+          "Paddle checkout could not be loaded. Please refresh and try again."
+        );
+      }
+
+      const config = await getPaddleFrontendConfig(token);
+      const environment =
+        config.environment === "sandbox" ? "sandbox" : "production";
+
+      if (window.Paddle?.Environment?.set) {
+        window.Paddle.Environment.set(environment);
+      }
+
+      window.Paddle.Initialize({
+        token: config.clientToken,
+        eventCallback(event) {
+          console.log("Paddle event:", event);
+        },
+      });
+
+      hasInitializedPaddleRef.current = true;
+    }
+
     async function beginCheckout() {
       try {
         const token = getToken();
@@ -83,7 +156,6 @@ export default function CheckoutPage() {
           return;
         }
 
-        // Always check current access first.
         const freshTier = await getUserTier();
 
         if (cancelled) return;
@@ -97,10 +169,9 @@ export default function CheckoutPage() {
         const paddleTxn = extractTransactionIdFromUrl();
 
         // =====================================================
-        // CASE 1: We are already on /checkout?_ptxn=...
-        // This is the merchant checkout URL returned by Paddle.
-        // We must open the Paddle checkout UI for this transaction,
-        // NOT create another payment session.
+        // CASE 1: /checkout?_ptxn=...
+        // Initialize Paddle, open overlay for the existing
+        // transaction, then poll until backend access activates.
         // =====================================================
         if (paddleTxn) {
           if (hasStartedCheckoutRef.current) {
@@ -111,19 +182,11 @@ export default function CheckoutPage() {
           setStatus("Opening secure checkout...");
           setError("");
 
-          const paddleReady = await waitForPaddle();
+          await ensurePaddleInitialized(token);
 
-          if (!paddleReady || !window.Paddle?.Checkout?.open) {
-            throw new Error(
-              "Paddle checkout could not be loaded. Please refresh and try again."
-            );
-          }
-
-          // Start polling before / while the checkout is open so we can
-          // pick up the webhook-driven activation as soon as it lands.
           beginPollingForActivation();
 
-          window.Paddle.Checkout.open({
+          window.Paddle!.Checkout!.open({
             transactionId: paddleTxn,
             settings: {
               displayMode: "overlay",
@@ -173,11 +236,7 @@ export default function CheckoutPage() {
 
     return () => {
       cancelled = true;
-
-      if (pollTimerRef.current) {
-        window.clearInterval(pollTimerRef.current);
-        pollTimerRef.current = null;
-      }
+      clearPoll();
     };
   }, []);
 
