@@ -20,13 +20,39 @@ export default function CheckoutPage() {
           return;
         }
 
+        // IMPORTANT:
+        // If Paddle sends the browser back to /checkout with a transaction token
+        // in the URL, do NOT create a new payment session again.
+        const params = new URLSearchParams(window.location.search);
+        const paddleTxn = params.get("_ptxn");
+
+        if (paddleTxn) {
+          setStatus("Finalising checkout...");
+
+          const freshTier = await getUserTier();
+
+          if (cancelled) return;
+
+          if (freshTier === "active") {
+            window.location.replace("/home");
+            return;
+          }
+
+          // Webhook may still be processing. Do not create another checkout.
+          setStatus("Processing payment...");
+          setError(
+            "Your payment is being processed. Please wait a moment, then refresh this page if access does not update automatically."
+          );
+          return;
+        }
+
         const freshTier = await getUserTier();
 
         if (cancelled) return;
 
         if (freshTier === "active") {
           setStatus("Access already active");
-          window.location.href = "/home";
+          window.location.replace("/home");
           return;
         }
 
