@@ -5,6 +5,10 @@ type ApiErrorPayload = {
   message?: string;
 };
 
+function buildUrl(endpoint: string) {
+  return `${API_BASE_URL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
+}
+
 export const apiRequest = async (
   endpoint: string,
   method: string = "GET",
@@ -19,7 +23,7 @@ export const apiRequest = async (
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+  const response = await fetch(buildUrl(endpoint), {
     method,
     headers,
     body: body ? JSON.stringify(body) : undefined,
