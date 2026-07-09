@@ -66,14 +66,20 @@ export default function LoginPage() {
         navigate("/what-you-get");
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : "";
+      const rawMessage = err instanceof Error ? err.message : "";
+      const message = rawMessage.toLowerCase();
 
-      if (message.toLowerCase().includes("password")) {
-        setError("Incorrect password");
-      } else if (message.toLowerCase().includes("user")) {
-        setError("Email not found");
+      if (
+        message.includes("invalid credentials") ||
+        message.includes("unauthorized")
+      ) {
+        setError("Incorrect email or password.");
+      } else if (message.includes("not found")) {
+        setError("Email not found.");
+      } else if (message.includes("password")) {
+        setError("Incorrect password.");
       } else {
-        setError("Login failed. Please try again.");
+        setError(rawMessage || "Login failed. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -113,7 +119,10 @@ export default function LoginPage() {
             type="email"
             className={styles.select}
             value={email}
-            onChange={(e) => setEmail(e.target.value.toLowerCase())}
+            onChange={(e) => {
+              setEmail(e.target.value.toLowerCase());
+              setError("");
+            }}
             placeholder="you@example.com"
           />
 

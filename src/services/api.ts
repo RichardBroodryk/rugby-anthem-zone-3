@@ -1,5 +1,10 @@
 import { API_BASE_URL } from "../config/api";
 
+type ApiErrorPayload = {
+  error?: string;
+  message?: string;
+};
+
 export const apiRequest = async (
   endpoint: string,
   method: string = "GET",
@@ -20,10 +25,22 @@ export const apiRequest = async (
     body: body ? JSON.stringify(body) : undefined,
   });
 
-  const data = await response.json();
+  let data: any = null;
+
+  try {
+    data = await response.json();
+  } catch {
+    data = null;
+  }
 
   if (!response.ok) {
-    throw new Error(data.message || "API request failed");
+    const payload = (data || {}) as ApiErrorPayload;
+    const message =
+      payload.error ||
+      payload.message ||
+      `Request failed with status ${response.status}`;
+
+    throw new Error(message);
   }
 
   return data;
