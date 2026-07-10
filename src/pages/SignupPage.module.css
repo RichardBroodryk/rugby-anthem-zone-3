@@ -99,7 +99,7 @@
 .heroImage {
   position: absolute;
   inset: 0;
-  background-image: url("../assets/images/stadiums/murrayfield/murrayfield-aerial.jpg");
+  background-image: url("../assets/images/stadiums/twickenham/twickenham-aerial.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -131,7 +131,7 @@
   z-index: 2;
   width: min(900px, 100%);
   margin: 0 auto;
-  padding: 3.35rem 1.5rem 9rem;
+  padding: 3.35rem 1.5rem 9.1rem;
   text-align: center;
 }
 
@@ -177,22 +177,18 @@
   text-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
-.subtitle strong {
-  color: #f4d58f;
-}
-
-.termsCardWrap {
+.formCardWrap {
   position: relative;
   z-index: 3;
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: -8rem;
+  margin-top: -8.25rem;
 }
 
-.termsCard {
-  width: min(900px, 100%);
-  padding: 2rem 2rem 1.9rem;
+.formCard {
+  width: min(720px, 100%);
+  padding: 2rem 2rem 1.85rem;
   border-radius: 28px;
   background: linear-gradient(
     180deg,
@@ -207,12 +203,12 @@
   color: #102133;
 }
 
-.cardHeader {
+.formHeader {
   text-align: center;
-  margin-bottom: 1.35rem;
+  margin-bottom: 1.25rem;
 }
 
-.cardEyebrow {
+.formEyebrow {
   display: inline-block;
   margin-bottom: 0.85rem;
   font-size: 0.8rem;
@@ -222,49 +218,136 @@
   color: #6d5321;
 }
 
-.cardHeader h2 {
+.formHeader h2 {
   margin: 0;
   font-size: 2rem;
   line-height: 1.08;
   color: #0f2235;
 }
 
-.cardIntro {
+.formIntro {
   margin: 0.85rem auto 0;
-  max-width: 38rem;
+  max-width: 34rem;
   font-size: 1rem;
   line-height: 1.65;
   color: #304456;
 }
 
-.contentGrid {
-  display: grid;
-  gap: 1.2rem;
-}
-
-.block {
-  padding: 1.2rem 1.2rem 1.25rem;
-  border-radius: 22px;
+.unlockBlock {
+  margin-bottom: 1.35rem;
+  padding: 1.15rem 1.15rem 1.2rem;
+  border-radius: 20px;
   background: rgba(16, 33, 51, 0.04);
   border: 1px solid rgba(16, 33, 51, 0.06);
 }
 
-.block h3 {
+.unlockBlock h3 {
   margin: 0 0 0.85rem;
   font-size: 1rem;
   line-height: 1.3;
   color: #102133;
 }
 
-.block ul {
+.unlockList {
   margin: 0;
-  padding-left: 1.2rem;
+  padding-left: 1.15rem;
   color: #304456;
   line-height: 1.75;
   font-size: 0.96rem;
 }
 
-.summaryBox {
+.formFields {
+  display: grid;
+  gap: 1rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: #17304a;
+}
+
+.input,
+.select {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 14px;
+  border: 1px solid rgba(16, 33, 51, 0.12);
+  background: rgba(255, 255, 255, 0.84);
+  color: #102133;
+  font-size: 1rem;
+  padding: 0 1rem;
+  outline: none;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.select {
+  appearance: none;
+}
+
+.input::placeholder {
+  color: #7c8793;
+}
+
+.input:focus,
+.select:focus {
+  border-color: rgba(216, 178, 107, 0.9);
+  box-shadow: 0 0 0 4px rgba(216, 178, 107, 0.16);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.passwordWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordInput {
+  padding-right: 5.5rem;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.35rem 0.45rem;
+}
+
+.passwordToggle:hover {
+  color: #102133;
+}
+
+.error {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  background: rgba(183, 40, 40, 0.08);
+  border: 1px solid rgba(183, 40, 40, 0.16);
+  color: #a72b2b;
+}
+
+.pricingBox {
   margin-top: 1.35rem;
   border-radius: 22px;
   padding: 1.2rem 1.25rem;
@@ -273,43 +356,22 @@
   box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
 }
 
-.summaryHeader {
-  margin-bottom: 0.45rem;
-}
-
-.summaryEyebrow {
-  display: inline-block;
-  margin-bottom: 0.45rem;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(243, 210, 138, 0.92);
-}
-
-.summaryBox h3 {
-  margin: 0;
-  font-size: 1.25rem;
+.price {
+  margin: 0 0 0.4rem;
+  font-size: 1.2rem;
   font-weight: 800;
   letter-spacing: 0.01em;
 }
 
-.summaryNote {
-  margin: 0.55rem 0 0;
-  color: rgba(255, 255, 255, 0.92);
+.psychology {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
   line-height: 1.65;
-  font-size: 0.96rem;
+  font-size: 0.95rem;
 }
 
-.currencyNote {
-  margin: 0.75rem 0 0;
-  color: rgba(255, 255, 255, 0.76);
-  line-height: 1.65;
-  font-size: 0.9rem;
-}
-
-.footerActions {
-  margin-top: 1.5rem;
+.actions {
+  margin-top: 1.35rem;
 }
 
 .primaryButton {
@@ -350,40 +412,6 @@
 .primaryButton:disabled {
   cursor: not-allowed;
   opacity: 0.7;
-}
-
-.notice {
-  margin: 0.95rem 0 0;
-  text-align: center;
-  font-size: 0.92rem;
-  line-height: 1.65;
-  color: #5c6d7d;
-}
-
-.secondaryButton {
-  appearance: none;
-  margin-top: 1rem;
-  width: 100%;
-  min-height: 54px;
-  border-radius: 14px;
-  border: 1px solid rgba(16, 33, 51, 0.12);
-  background: rgba(255, 255, 255, 0.76);
-  color: #102133;
-  font-size: 0.98rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    transform 0.18s ease,
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease;
-}
-
-.secondaryButton:hover {
-  transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(16, 33, 51, 0.2);
-  box-shadow: 0 10px 24px rgba(16, 33, 51, 0.08);
 }
 
 @media (max-width: 1100px) {
@@ -430,12 +458,12 @@
     font-size: 1rem;
   }
 
-  .termsCardWrap {
+  .formCardWrap {
     margin-top: -7.25rem;
   }
 
-  .termsCard {
-    width: min(760px, 100%);
+  .formCard {
+    width: min(640px, 100%);
     padding: 1.7rem 1.4rem 1.5rem;
     border-radius: 24px;
   }
@@ -483,45 +511,54 @@
     line-height: 1.72;
   }
 
-  .termsCardWrap {
+  .formCardWrap {
     margin-top: -5.8rem;
   }
 
-  .termsCard {
+  .formCard {
     width: 100%;
     padding: 1.35rem 1rem 1.2rem;
     border-radius: 20px;
   }
 
-  .cardEyebrow {
+  .formEyebrow {
     font-size: 0.72rem;
   }
 
-  .cardHeader h2 {
+  .formHeader h2 {
     font-size: 1.65rem;
   }
 
-  .cardIntro {
+  .formIntro {
     font-size: 0.95rem;
   }
 
-  .block {
+  .unlockBlock {
     padding: 1rem;
     border-radius: 18px;
   }
 
-  .block ul {
+  .unlockList {
     font-size: 0.92rem;
     line-height: 1.7;
   }
 
-  .summaryBox {
+  .input,
+  .select {
+    min-height: 52px;
+    font-size: 0.96rem;
+  }
+
+  .passwordInput {
+    padding-right: 5rem;
+  }
+
+  .pricingBox {
     padding: 1rem 1rem 1.05rem;
     border-radius: 18px;
   }
 
-  .primaryButton,
-  .secondaryButton {
+  .primaryButton {
     min-height: 52px;
     font-size: 0.96rem;
   }
@@ -553,11 +590,11 @@
     font-size: clamp(1.95rem, 11vw, 2.85rem);
   }
 
-  .termsCardWrap {
+  .formCardWrap {
     margin-top: -5rem;
   }
 
-  .cardHeader h2 {
+  .formHeader h2 {
     font-size: 1.5rem;
   }
 }

@@ -86,7 +86,7 @@
 .heroImagePanel {
   position: relative;
   width: min(1040px, 100%);
-  min-height: 470px;
+  min-height: 460px;
   margin: 0 auto;
   border-radius: 30px;
   overflow: hidden;
@@ -99,7 +99,7 @@
 .heroImage {
   position: absolute;
   inset: 0;
-  background-image: url("../assets/images/stadiums/murrayfield/murrayfield-aerial.jpg");
+  background-image: url("../assets/images/stadiums/paris-stade-de-france.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -129,9 +129,9 @@
 .heroText {
   position: relative;
   z-index: 2;
-  width: min(900px, 100%);
+  width: min(860px, 100%);
   margin: 0 auto;
-  padding: 3.35rem 1.5rem 9rem;
+  padding: 3.35rem 1.5rem 8.5rem;
   text-align: center;
 }
 
@@ -169,7 +169,7 @@
 }
 
 .subtitle {
-  max-width: 52rem;
+  max-width: 50rem;
   margin: 1.25rem auto 0;
   font-size: 1.08rem;
   line-height: 1.8;
@@ -177,11 +177,7 @@
   text-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
-.subtitle strong {
-  color: #f4d58f;
-}
-
-.termsCardWrap {
+.formCardWrap {
   position: relative;
   z-index: 3;
   width: 100%;
@@ -190,9 +186,9 @@
   margin-top: -8rem;
 }
 
-.termsCard {
-  width: min(900px, 100%);
-  padding: 2rem 2rem 1.9rem;
+.formCard {
+  width: min(620px, 100%);
+  padding: 2rem 2rem 1.85rem;
   border-radius: 28px;
   background: linear-gradient(
     180deg,
@@ -204,15 +200,16 @@
     0 28px 60px rgba(0, 0, 0, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(10px);
+  text-align: left;
   color: #102133;
 }
 
-.cardHeader {
+.formHeader {
   text-align: center;
-  margin-bottom: 1.35rem;
+  margin-bottom: 1.15rem;
 }
 
-.cardEyebrow {
+.formEyebrow {
   display: inline-block;
   margin-bottom: 0.85rem;
   font-size: 0.8rem;
@@ -222,94 +219,135 @@
   color: #6d5321;
 }
 
-.cardHeader h2 {
+.formHeader h2 {
   margin: 0;
   font-size: 2rem;
   line-height: 1.08;
   color: #0f2235;
 }
 
-.cardIntro {
+.formIntro {
   margin: 0.85rem auto 0;
-  max-width: 38rem;
+  max-width: 30rem;
   font-size: 1rem;
   line-height: 1.65;
   color: #304456;
 }
 
-.contentGrid {
+.formFields {
   display: grid;
-  gap: 1.2rem;
+  gap: 1rem;
 }
 
-.block {
-  padding: 1.2rem 1.2rem 1.25rem;
-  border-radius: 22px;
-  background: rgba(16, 33, 51, 0.04);
-  border: 1px solid rgba(16, 33, 51, 0.06);
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
 }
 
-.block h3 {
-  margin: 0 0 0.85rem;
+.label {
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: #17304a;
+}
+
+.input {
+  width: 100%;
+  min-height: 56px;
+  border-radius: 14px;
+  border: 1px solid rgba(16, 33, 51, 0.12);
+  background: rgba(255, 255, 255, 0.84);
+  color: #102133;
   font-size: 1rem;
-  line-height: 1.3;
+  padding: 0 1rem;
+  outline: none;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.input::placeholder {
+  color: #7c8793;
+}
+
+.input:focus {
+  border-color: rgba(216, 178, 107, 0.9);
+  box-shadow: 0 0 0 4px rgba(216, 178, 107, 0.16);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.passwordWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordInput {
+  padding-right: 5.5rem;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.35rem 0.45rem;
+}
+
+.passwordToggle:hover {
   color: #102133;
 }
 
-.block ul {
+.forgotButton {
+  appearance: none;
+  justify-self: flex-start;
+  margin-top: -0.1rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #8b6a2d;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.forgotButton:hover {
+  color: #6d5321;
+}
+
+.error,
+.info {
   margin: 0;
-  padding-left: 1.2rem;
-  color: #304456;
-  line-height: 1.75;
-  font-size: 0.96rem;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  font-size: 0.94rem;
+  line-height: 1.6;
 }
 
-.summaryBox {
-  margin-top: 1.35rem;
-  border-radius: 22px;
-  padding: 1.2rem 1.25rem;
-  background: linear-gradient(135deg, #102133 0%, #162f49 100%);
-  color: #ffffff;
-  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
+.error {
+  background: rgba(183, 40, 40, 0.08);
+  border: 1px solid rgba(183, 40, 40, 0.16);
+  color: #a72b2b;
 }
 
-.summaryHeader {
-  margin-bottom: 0.45rem;
+.info {
+  background: rgba(26, 97, 176, 0.08);
+  border: 1px solid rgba(26, 97, 176, 0.16);
+  color: #1f5fa8;
 }
 
-.summaryEyebrow {
-  display: inline-block;
-  margin-bottom: 0.45rem;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(243, 210, 138, 0.92);
-}
-
-.summaryBox h3 {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: 0.01em;
-}
-
-.summaryNote {
-  margin: 0.55rem 0 0;
-  color: rgba(255, 255, 255, 0.92);
-  line-height: 1.65;
-  font-size: 0.96rem;
-}
-
-.currencyNote {
-  margin: 0.75rem 0 0;
-  color: rgba(255, 255, 255, 0.76);
-  line-height: 1.65;
-  font-size: 0.9rem;
-}
-
-.footerActions {
-  margin-top: 1.5rem;
+.actions {
+  margin-top: 1.25rem;
 }
 
 .primaryButton {
@@ -352,51 +390,17 @@
   opacity: 0.7;
 }
 
-.notice {
-  margin: 0.95rem 0 0;
-  text-align: center;
-  font-size: 0.92rem;
-  line-height: 1.65;
-  color: #5c6d7d;
-}
-
-.secondaryButton {
-  appearance: none;
-  margin-top: 1rem;
-  width: 100%;
-  min-height: 54px;
-  border-radius: 14px;
-  border: 1px solid rgba(16, 33, 51, 0.12);
-  background: rgba(255, 255, 255, 0.76);
-  color: #102133;
-  font-size: 0.98rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    transform 0.18s ease,
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease;
-}
-
-.secondaryButton:hover {
-  transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(16, 33, 51, 0.2);
-  box-shadow: 0 10px 24px rgba(16, 33, 51, 0.08);
-}
-
 @media (max-width: 1100px) {
   .heroInner {
     padding: 2rem 1.5rem 2rem;
   }
 
   .heroImagePanel {
-    min-height: 430px;
+    min-height: 420px;
   }
 
   .heroText {
-    padding: 3rem 1.25rem 8.2rem;
+    padding: 3rem 1.25rem 7.9rem;
   }
 
   .heroText h1 {
@@ -418,24 +422,24 @@
   }
 
   .heroImagePanel {
-    min-height: 390px;
+    min-height: 380px;
     border-radius: 24px;
   }
 
   .heroText {
-    padding: 2.2rem 1rem 7.3rem;
+    padding: 2.2rem 1rem 7rem;
   }
 
   .subtitle {
     font-size: 1rem;
   }
 
-  .termsCardWrap {
-    margin-top: -7.25rem;
+  .formCardWrap {
+    margin-top: -7rem;
   }
 
-  .termsCard {
-    width: min(760px, 100%);
+  .formCard {
+    width: min(580px, 100%);
     padding: 1.7rem 1.4rem 1.5rem;
     border-radius: 24px;
   }
@@ -455,12 +459,12 @@
   }
 
   .heroImagePanel {
-    min-height: 330px;
+    min-height: 320px;
     border-radius: 20px;
   }
 
   .heroText {
-    padding: 1.45rem 0.85rem 6rem;
+    padding: 1.45rem 0.85rem 5.9rem;
   }
 
   .kicker {
@@ -483,45 +487,42 @@
     line-height: 1.72;
   }
 
-  .termsCardWrap {
-    margin-top: -5.8rem;
+  .formCardWrap {
+    margin-top: -5.5rem;
   }
 
-  .termsCard {
+  .formCard {
     width: 100%;
     padding: 1.35rem 1rem 1.2rem;
     border-radius: 20px;
   }
 
-  .cardEyebrow {
+  .formEyebrow {
     font-size: 0.72rem;
   }
 
-  .cardHeader h2 {
+  .formHeader h2 {
     font-size: 1.65rem;
   }
 
-  .cardIntro {
+  .formIntro {
     font-size: 0.95rem;
   }
 
-  .block {
-    padding: 1rem;
-    border-radius: 18px;
+  .input {
+    min-height: 52px;
+    font-size: 0.96rem;
   }
 
-  .block ul {
-    font-size: 0.92rem;
-    line-height: 1.7;
+  .passwordInput {
+    padding-right: 5rem;
   }
 
-  .summaryBox {
-    padding: 1rem 1rem 1.05rem;
-    border-radius: 18px;
+  .forgotButton {
+    font-size: 0.88rem;
   }
 
-  .primaryButton,
-  .secondaryButton {
+  .primaryButton {
     min-height: 52px;
     font-size: 0.96rem;
   }
@@ -541,23 +542,23 @@
   }
 
   .heroImagePanel {
-    min-height: 300px;
+    min-height: 290px;
     border-radius: 18px;
   }
 
   .heroText {
-    padding: 1.25rem 0.7rem 5.3rem;
+    padding: 1.25rem 0.7rem 5.1rem;
   }
 
   .heroText h1 {
     font-size: clamp(1.95rem, 11vw, 2.85rem);
   }
 
-  .termsCardWrap {
-    margin-top: -5rem;
+  .formCardWrap {
+    margin-top: -4.8rem;
   }
 
-  .cardHeader h2 {
+  .formHeader h2 {
     font-size: 1.5rem;
   }
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { loginUser, getUserTier } from "../services/auth";
-import styles from "./AccessPage.module.css";
+import styles from "./LoginPage.module.css";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -103,71 +103,109 @@ export default function LoginPage() {
 
   return (
     <section className={styles.page}>
-      <header className={styles.header}>
-        <h1>Log In</h1>
-        <p className={styles.subtitle}>
-          Sign in to access your Rugby Anthem Zone account.
-        </p>
-      </header>
+      <div className={styles.backgroundGlowTop} />
+      <div className={styles.backgroundGlowBottom} />
 
-      <section className={styles.content}>
-        <div className={styles.block}>
-          <h2>Account Access</h2>
+      <div className={styles.contentWrap}>
+        <section className={styles.heroFrame}>
+          <div className={styles.heroInner}>
+            <div className={styles.heroImagePanel}>
+              <div className={styles.heroImage} />
+              <div className={styles.heroImageOverlay} />
 
-          <label className={styles.label}>Email</label>
-          <input
-            type="email"
-            className={styles.select}
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value.toLowerCase());
-              setError("");
-            }}
-            placeholder="you@example.com"
-          />
+              <div className={styles.heroText}>
+                <span className={styles.kicker}>
+                  RAZ ACCOUNT • MATCHDAY ACCESS • INTERNATIONAL RUGBY
+                </span>
 
-          <label className={styles.label}>Password</label>
-          <div className={styles.passwordWrap}>
-            <input
-              type={showPassword ? "text" : "password"}
-              className={`${styles.select} ${styles.passwordInput}`}
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError("");
-              }}
-              placeholder="Enter password"
-            />
+                <h1>Log In</h1>
 
-            <span
-              className={styles.passwordToggle}
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "🙈" : "👁️"}
-            </span>
+                <p className={styles.subtitle}>
+                  Sign in to access your Rugby Anthem Zone account and continue
+                  into the international rugby experience.
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.formCardWrap}>
+              <section className={styles.formCard}>
+                <div className={styles.formHeader}>
+                  <span className={styles.formEyebrow}>Account Access</span>
+                  <h2>Welcome Back</h2>
+                  <p className={styles.formIntro}>
+                    Enter your email and password to continue into Rugby Anthem
+                    Zone.
+                  </p>
+                </div>
+
+                <div className={styles.formFields}>
+                  <div className={styles.fieldGroup}>
+                    <label className={styles.label}>Email</label>
+                    <input
+                      type="email"
+                      className={styles.input}
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value.toLowerCase());
+                        setError("");
+                      }}
+                      placeholder="you@example.com"
+                    />
+                  </div>
+
+                  <div className={styles.fieldGroup}>
+                    <label className={styles.label}>Password</label>
+                    <div className={styles.passwordWrap}>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        className={`${styles.input} ${styles.passwordInput}`}
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                          setError("");
+                        }}
+                        placeholder="Enter password"
+                      />
+
+                      <button
+                        type="button"
+                        className={styles.passwordToggle}
+                        onClick={() => setShowPassword(!showPassword)}
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
+                      >
+                        {showPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    className={styles.forgotButton}
+                    onClick={handleForgotPassword}
+                  >
+                    Forgot password?
+                  </button>
+
+                  {error && <p className={styles.error}>{error}</p>}
+                  {info && <p className={styles.info}>{info}</p>}
+                </div>
+
+                <div className={styles.actions}>
+                  <button
+                    className={styles.primaryButton}
+                    onClick={handleLogin}
+                    disabled={loading}
+                  >
+                    {loading ? "Logging in..." : "Log In"}
+                  </button>
+                </div>
+              </section>
+            </div>
           </div>
-
-          <p
-            className={styles.secondaryAction}
-            onClick={handleForgotPassword}
-          >
-            Forgot password?
-          </p>
-
-          {error && <p className={styles.error}>{error}</p>}
-          {info && <p className={styles.info}>{info}</p>}
-        </div>
-      </section>
-
-      <footer className={styles.footer}>
-        <button
-          className={styles.primaryButton}
-          onClick={handleLogin}
-          disabled={loading}
-        >
-          {loading ? "Logging in..." : "Log In"}
-        </button>
-      </footer>
+        </section>
+      </div>
     </section>
   );
 }

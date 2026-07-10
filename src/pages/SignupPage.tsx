@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./AccessPage.module.css";
+import styles from "./SignupPage.module.css";
 import { registerUser } from "../services/auth";
 
 /**
- * SIGNUP PAGE — WAVE 3
- * --------------------------------------------------
- * Single Rugby Anthem Zone signup page for the
- * one-tier paid model.
+ * SIGNUP PAGE — POLISH PASS
+ * Single Rugby Anthem Zone signup page for the one-tier paid model.
  */
 
 const COUNTRIES = [
@@ -75,8 +73,7 @@ export default function SignupPage() {
         },
       });
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Signup failed";
+      const message = err instanceof Error ? err.message : "Signup failed";
 
       if (message.toLowerCase().includes("exists")) {
         setError(
@@ -92,99 +89,137 @@ export default function SignupPage() {
 
   return (
     <section className={styles.page}>
-      <header className={styles.header}>
-        <h1>RAZ Premium Access</h1>
-        <p className={styles.subtitle}>
-          Create your Rugby Anthem Zone account to continue to terms and checkout.
-        </p>
-      </header>
+      <div className={styles.backgroundGlowTop} />
+      <div className={styles.backgroundGlowBottom} />
 
-      <section className={styles.content}>
-        <div className={styles.block}>
-          <h2>What You’re Unlocking</h2>
-          <ul>
-            <li>Match centre, fixtures, results, and stats</li>
-            <li>Anthems, tournaments, media, and matchday tools</li>
-            <li>Heritage and defining rugby moments</li>
-            <li>One Rugby Anthem Zone account across the platform</li>
-          </ul>
-        </div>
+      <div className={styles.contentWrap}>
+        <section className={styles.heroFrame}>
+          <div className={styles.heroInner}>
+            <div className={styles.heroImagePanel}>
+              <div className={styles.heroImage} />
+              <div className={styles.heroImageOverlay} />
 
-        <div className={styles.block}>
-          <h2>Account Details</h2>
+              <div className={styles.heroText}>
+                <span className={styles.kicker}>
+                  RAZ MEMBERSHIP • ACCOUNT SETUP • INTERNATIONAL RUGBY
+                </span>
 
-          <label className={styles.label}>Email</label>
-          <input
-            type="email"
-            className={styles.select}
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value.toLowerCase());
-              setError("");
-            }}
-            placeholder="you@example.com"
-          />
+                <h1>RAZ Premium Access</h1>
 
-          <label className={styles.label}>Password</label>
-          <div className={styles.passwordWrap}>
-            <input
-              type={showPassword ? "text" : "password"}
-              className={`${styles.select} ${styles.passwordInput}`}
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError("");
-              }}
-              placeholder="Enter password"
-            />
+                <p className={styles.subtitle}>
+                  Create your Rugby Anthem Zone account to continue to terms and
+                  checkout, and unlock the full international rugby experience.
+                </p>
+              </div>
+            </div>
 
-            <span
-              className={styles.passwordToggle}
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "🙈" : "👁️"}
-            </span>
+            <div className={styles.formCardWrap}>
+              <section className={styles.formCard}>
+                <div className={styles.formHeader}>
+                  <span className={styles.formEyebrow}>Monthly Membership</span>
+                  <h2>Create Your Account</h2>
+                  <p className={styles.formIntro}>
+                    Set up your Rugby Anthem Zone account, choose your country,
+                    and continue into terms and checkout.
+                  </p>
+                </div>
+
+                <div className={styles.unlockBlock}>
+                  <h3>What You’re Unlocking</h3>
+                  <ul className={styles.unlockList}>
+                    <li>Match centre, fixtures, results, and stats</li>
+                    <li>Anthems, tournaments, media, and matchday tools</li>
+                    <li>Heritage and defining rugby moments</li>
+                    <li>One Rugby Anthem Zone account across the platform</li>
+                  </ul>
+                </div>
+
+                <div className={styles.formFields}>
+                  <div className={styles.fieldGroup}>
+                    <label className={styles.label}>Email</label>
+                    <input
+                      type="email"
+                      className={styles.input}
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value.toLowerCase());
+                        setError("");
+                      }}
+                      placeholder="you@example.com"
+                    />
+                  </div>
+
+                  <div className={styles.fieldGroup}>
+                    <label className={styles.label}>Password</label>
+                    <div className={styles.passwordWrap}>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        className={`${styles.input} ${styles.passwordInput}`}
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                          setError("");
+                        }}
+                        placeholder="Enter password"
+                      />
+
+                      <button
+                        type="button"
+                        className={styles.passwordToggle}
+                        onClick={() => setShowPassword(!showPassword)}
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
+                      >
+                        {showPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className={styles.fieldGroup}>
+                    <label className={styles.label}>Select your country</label>
+                    <select
+                      value={country}
+                      onChange={(e) => {
+                        setCountry(e.target.value);
+                        setError("");
+                      }}
+                      className={styles.select}
+                    >
+                      <option value="">— Select country —</option>
+                      {COUNTRIES.map((c) => (
+                        <option key={c} value={c}>
+                          {c === "Other" ? "Other (Global)" : c}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {error && <p className={styles.error}>{error}</p>}
+                </div>
+
+                <div className={styles.pricingBox}>
+                  <p className={styles.price}>RAZ Premium</p>
+                  <p className={styles.psychology}>
+                    Secure monthly paid access. Final pricing and billing details
+                    are shown at checkout.
+                  </p>
+                </div>
+
+                <div className={styles.actions}>
+                  <button
+                    className={styles.primaryButton}
+                    onClick={handleSignup}
+                    disabled={loading}
+                  >
+                    {loading ? "Creating account..." : "Continue to Terms"}
+                  </button>
+                </div>
+              </section>
+            </div>
           </div>
-        </div>
-
-        <div className={styles.block}>
-          <label className={styles.label}>Select your country</label>
-          <select
-            value={country}
-            onChange={(e) => {
-              setCountry(e.target.value);
-              setError("");
-            }}
-            className={styles.select}
-          >
-            <option value="">— Select country —</option>
-            {COUNTRIES.map((c) => (
-              <option key={c} value={c}>
-                {c === "Other" ? "Other (Global)" : c}
-              </option>
-            ))}
-          </select>
-
-          {error && <p className={styles.error}>{error}</p>}
-        </div>
-
-        <div className={styles.pricingBox}>
-          <p className={styles.price}>RAZ Premium</p>
-          <p className={styles.psychology}>
-            Secure paid access. Final pricing and billing details are shown at checkout.
-          </p>
-        </div>
-      </section>
-
-      <footer className={styles.footer}>
-        <button
-          className={styles.primaryButton}
-          onClick={handleSignup}
-          disabled={loading}
-        >
-          {loading ? "Creating account..." : "Continue to Terms"}
-        </button>
-      </footer>
+        </section>
+      </div>
     </section>
   );
 }
