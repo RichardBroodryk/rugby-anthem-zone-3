@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./SplashPage.module.css";
 
-import razSplash from "../assets/images/raz/splashscreen.png";
+import razSplash from "../assets/images/raz/splashscreen2.png";
 
 const SPLASH_DURATION = 4000;
 
@@ -27,18 +27,12 @@ export default function SplashPage() {
 
   return (
     <section className={`${styles.splash} ${fadeOut ? styles.fadeOut : ""}`}>
-      <div className={styles.backgroundGlowTop} />
-      <div className={styles.backgroundGlowBottom} />
-      <div className={styles.backgroundTexture} />
-
       <div className={styles.stage}>
-        <div className={styles.logoWrap}>
-          <img
-            src={razSplash}
-            alt="Rugby Anthem Zone"
-            className={styles.image}
-          />
-        </div>
+        <img
+          src={razSplash}
+          alt="Rugby Anthem Zone"
+          className={styles.image}
+        />
       </div>
     </section>
   );
