@@ -229,6 +229,7 @@ export const matches2026Women: MatchData[] = [
   },
   {
     id: 101,
+    matchKey: "south-africa-w-vs-usa-w",
     competitionId: "womens-internationals",
     tournamentInstanceId: WOMENS_TESTS_2026,
     tournament: "Women's International Tests 2026",
