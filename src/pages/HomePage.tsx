@@ -68,6 +68,27 @@ export default function HomePage() {
       <main className={styles.page}>
         <HeroCard />
 
+        {/* ====== INTERNATIONAL STANDINGS BUTTONS ====== */}
+        <section className={styles.standingsButtonsSection}>
+          <div className={styles.standingsButtonsContainer}>
+            <button
+              className={styles.standingsButton}
+              onClick={() => window.location.href = "/rankings/men"}
+            >
+              <span className={styles.standingsIcon}>🏉</span>
+              <span className={styles.standingsLabel}>International Standings Men</span>
+            </button>
+            <button
+              className={styles.standingsButton}
+              onClick={() => window.location.href = "/rankings/women"}
+            >
+              <span className={styles.standingsIcon}>🏉</span>
+              <span className={styles.standingsLabel}>International Standings Women</span>
+            </button>
+          </div>
+        </section>
+        {/* ====== END STANDINGS BUTTONS ====== */}
+
         <InfoBar />
 
         <FeaturedMatchCard />

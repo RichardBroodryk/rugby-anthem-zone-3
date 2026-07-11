@@ -41,3 +41,81 @@
   /* keep vertical flow stable */
   align-self: stretch;
 }
+/* ==================================================
+   STANDINGS BUTTONS SECTION
+   ================================================== */
+
+.standingsButtonsSection {
+  padding: 1rem 1.5rem 0.25rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.standingsButtonsContainer {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.standingsButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: #000000;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  flex: 0 1 auto;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  font-family: inherit;
+  letter-spacing: 0.01em;
+}
+
+.standingsButton:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.standingsButton:active {
+  transform: scale(0.97);
+}
+
+.standingsIcon {
+  font-size: 1rem;
+}
+
+.standingsLabel {
+  letter-spacing: 0.02em;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .standingsButtonsSection {
+    padding: 0.75rem 1rem 0.15rem 1rem;
+  }
+
+  .standingsButtonsContainer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .standingsButton {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    flex: 1;
+    width: 100%;
+  }
+}
