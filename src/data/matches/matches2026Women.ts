@@ -239,7 +239,8 @@ export const matches2026Women: MatchData[] = [
     venue: "Loftus Versfeld, Pretoria",
     home: { name: "South Africa W", country: "south-africa" },
     away: { name: "USA W", country: "united-states-of-america" },
-    state: "upcoming",
+    score: { home: 19, away: 26 },
+    state: "final",
   },
   {
     id: 102,
