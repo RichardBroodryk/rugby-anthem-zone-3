@@ -17,6 +17,7 @@ export default function WeekendMatchesRail() {
     async function loadMatches() {
       try {
         const data = await getMatches();
+
         if (mounted) {
           setMatches(data);
         }
@@ -41,7 +42,8 @@ export default function WeekendMatchesRail() {
       .filter(
         (match) =>
           match.competitionId === "nations-championship" &&
-          match.round === "Round 2"
+          match.round === "Round 3" &&
+          match.state === "upcoming"
       )
       .sort(
         (a, b) =>
@@ -58,7 +60,7 @@ export default function WeekendMatchesRail() {
       <div className={styles.header}>
         <div>
           <h2>Weekend Test Matches</h2>
-          <p>Round 2 of the Nations Championship</p>
+          <p>18 July • Nations Championship Round 3</p>
         </div>
       </div>
 

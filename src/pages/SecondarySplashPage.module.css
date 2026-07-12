@@ -16,7 +16,7 @@
   background-position: center;
   background-repeat: no-repeat;
   transform: scale(1.02);
-  filter: saturate(1.03) contrast(1.01);
+  filter: saturate(0.9) contrast(0.95) brightness(1.15);
 }
 
 .overlay {
@@ -24,10 +24,10 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.16) 0%,
-    rgba(0, 0, 0, 0.24) 40%,
-    rgba(0, 0, 0, 0.38) 74%,
-    rgba(0, 0, 0, 0.52) 100%
+    rgba(0, 0, 0, 0.10) 0%,
+    rgba(0, 0, 0, 0.16) 40%,
+    rgba(0, 0, 0, 0.28) 74%,
+    rgba(0, 0, 0, 0.40) 100%
   );
   z-index: 1;
 }
@@ -41,8 +41,8 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(255, 255, 255, 0.05) 34%,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.06) 34%,
     rgba(255, 255, 255, 0) 72%
   );
   z-index: 1;
@@ -58,8 +58,8 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(255, 255, 255, 0.03) 40%,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
     rgba(255, 255, 255, 0) 72%
   );
   z-index: 1;
@@ -75,27 +75,27 @@
 
 .tierOneRail {
   position: absolute;
-  top: 15%;
-  left: -8%;
-  width: 118%;
+  top: 13%;
+  left: -10%;
+  width: 122%;
   transform: rotate(-7deg);
   opacity: 0.98;
 }
 
 .tierTwoRail {
   position: absolute;
-  top: 49%;
-  left: -10%;
-  width: 120%;
+  top: 47%;
+  left: -12%;
+  width: 126%;
   transform: rotate(8deg);
   opacity: 0.94;
 }
 
 .featureRail {
   position: absolute;
-  left: -8%;
-  bottom: 9%;
-  width: 118%;
+  left: -10%;
+  bottom: 7%;
+  width: 122%;
   transform: rotate(-4deg);
   opacity: 0.92;
 }
@@ -125,21 +125,21 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .kicker {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.55rem 1.15rem;
+  padding: 0.7rem 1.5rem;
   border-radius: 999px;
   background: rgba(20, 24, 34, 0.42);
   border: 1px solid rgba(255, 255, 255, 0.16);
   box-shadow:
     0 10px 24px rgba(0, 0, 0, 0.18),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  font-size: 0.74rem;
+  font-size: 0.85rem;
   letter-spacing: 0.18em;
   font-weight: 800;
   text-transform: uppercase;
@@ -150,12 +150,12 @@
 .titleSection {
   width: 100%;
   text-align: center;
-  margin-bottom: 1.8rem;
+  margin-bottom: 2.2rem;
 }
 
 .mainTitle {
   margin: 0;
-  font-size: clamp(2.8rem, 6vw, 5.1rem);
+  font-size: clamp(3.2rem, 7vw, 5.8rem);
   line-height: 0.9;
   letter-spacing: 0.08em;
   font-weight: 800;
@@ -168,18 +168,18 @@
 }
 
 .subtitle {
-  margin: 1rem auto 0;
-  max-width: 34rem;
-  font-size: 1.08rem;
+  margin: 1.2rem auto 0;
+  max-width: 38rem;
+  font-size: 1.2rem;
   line-height: 1.6;
   color: rgba(244, 247, 251, 0.94);
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
 }
 
 .anthemMoment {
-  width: min(640px, 100%);
+  width: min(700px, 100%);
   margin: 0 auto;
-  padding: 1.35rem 1.35rem 1.45rem;
+  padding: 1.6rem 1.6rem 1.7rem;
   border-radius: 24px;
   background: linear-gradient(
     180deg,
@@ -196,8 +196,8 @@
 
 .momentLabel {
   display: inline-block;
-  margin-bottom: 0.9rem;
-  font-size: 0.76rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -206,13 +206,13 @@
 
 .anthemMoment p {
   margin: 0;
-  font-size: 1.12rem;
+  font-size: 1.25rem;
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.96);
 }
 
 .continueSection {
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   display: flex;
   justify-content: center;
 }
@@ -220,12 +220,12 @@
 .continueButton {
   appearance: none;
   border: none;
-  min-width: 250px;
-  padding: 1rem 2.5rem;
+  min-width: 280px;
+  padding: 1.2rem 3rem;
   border-radius: 999px;
   background: linear-gradient(180deg, #ffffff 0%, #edf2f8 100%);
   color: #071320;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 800;
   letter-spacing: 0.03em;
   cursor: pointer;
@@ -253,7 +253,7 @@
 .legal {
   margin-top: 2rem;
   text-align: center;
-  font-size: 0.74rem;
+  font-size: 0.8rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.66);
@@ -261,15 +261,15 @@
 
 @media (max-width: 1100px) {
   .tierOneRail {
-    top: 17%;
+    top: 15%;
   }
 
   .tierTwoRail {
-    top: 50%;
+    top: 48%;
   }
 
   .featureRail {
-    bottom: 9%;
+    bottom: 7%;
   }
 }
 
@@ -279,31 +279,42 @@
   }
 
   .kicker {
-    font-size: 0.68rem;
+    font-size: 0.78rem;
     letter-spacing: 0.15em;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .mainTitle {
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
   }
 
   .subtitle {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 
   .anthemMoment {
-    padding: 1.15rem 1rem 1.2rem;
+    padding: 1.3rem 1.2rem 1.4rem;
   }
 
   .anthemMoment p {
-    font-size: 1rem;
+    font-size: 1.15rem;
     line-height: 1.7;
   }
 
+  .continueButton {
+    min-width: 250px;
+    padding: 1.1rem 2.5rem;
+    font-size: 1rem;
+  }
+
   .tierOneRail {
-    top: 15%;
+    top: 13%;
     left: -14%;
     width: 132%;
   }
 
   .tierTwoRail {
-    top: 49%;
+    top: 47%;
     left: -16%;
     width: 136%;
   }
@@ -311,7 +322,7 @@
   .featureRail {
     left: -12%;
     width: 130%;
-    bottom: 9%;
+    bottom: 7%;
   }
 }
 
@@ -325,52 +336,62 @@
   }
 
   .kickerRow {
-    margin-bottom: 1.1rem;
+    margin-bottom: 1.2rem;
   }
 
   .kicker {
-    padding: 0.48rem 0.9rem;
-    font-size: 0.62rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.7rem;
     line-height: 1.45;
     letter-spacing: 0.12em;
   }
 
   .mainTitle {
-    font-size: clamp(2.1rem, 11vw, 3.35rem);
+    font-size: clamp(2.4rem, 11vw, 3.8rem);
     letter-spacing: 0.06em;
   }
 
   .subtitle {
-    margin-top: 0.9rem;
-    font-size: 0.96rem;
+    margin-top: 1rem;
+    font-size: 1.05rem;
   }
 
   .anthemMoment {
     width: 100%;
     margin-top: 0.25rem;
     border-radius: 20px;
+    padding: 1.2rem 1rem 1.3rem;
+  }
+
+  .momentLabel {
+    font-size: 0.78rem;
+  }
+
+  .anthemMoment p {
+    font-size: 1.05rem;
   }
 
   .continueSection {
-    margin-top: 1.6rem;
+    margin-top: 1.8rem;
     width: 100%;
   }
 
   .continueButton {
     width: 100%;
     min-width: 0;
-    padding: 0.95rem 1.35rem;
+    padding: 1rem 1.35rem;
+    font-size: 1rem;
   }
 
   .tierOneRail {
-    top: 12%;
+    top: 10%;
     left: -30%;
     width: 170%;
     transform: rotate(-8deg);
   }
 
   .tierTwoRail {
-    top: 45%;
+    top: 43%;
     left: -34%;
     width: 178%;
     transform: rotate(10deg);
@@ -379,13 +400,13 @@
   .featureRail {
     left: -24%;
     width: 156%;
-    bottom: 8%;
+    bottom: 6%;
     transform: rotate(-5deg);
   }
 
   .legal {
     margin-top: 1.5rem;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     letter-spacing: 0.1em;
   }
 }
@@ -397,20 +418,21 @@
 
   .mainTitle {
     letter-spacing: 0.05em;
+    font-size: clamp(2rem, 9vw, 3rem);
   }
 
   .anthemMoment p {
-    font-size: 0.96rem;
+    font-size: 0.98rem;
   }
 
   .tierOneRail {
-    top: 11%;
+    top: 9%;
     left: -40%;
     width: 198%;
   }
 
   .tierTwoRail {
-    top: 43%;
+    top: 41%;
     left: -44%;
     width: 204%;
   }
@@ -418,6 +440,6 @@
   .featureRail {
     left: -30%;
     width: 172%;
-    bottom: 7%;
+    bottom: 5%;
   }
 }

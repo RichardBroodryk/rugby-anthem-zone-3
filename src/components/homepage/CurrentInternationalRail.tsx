@@ -24,6 +24,7 @@ export default function CurrentInternationalRail() {
     async function loadMatches() {
       try {
         const data = await getMatches();
+
         if (mounted) {
           setMatches(data);
         }
@@ -50,9 +51,7 @@ export default function CurrentInternationalRail() {
           return false;
         }
 
-        // Show completed + upcoming current-cycle matches
-        // but ignore legacy women's six nations here
-        return match.competitionId !== "six-nations-women";
+        return match.state === "upcoming";
       })
       .sort(
         (a, b) =>
@@ -68,9 +67,9 @@ export default function CurrentInternationalRail() {
     <section className={styles.section}>
       <div className={styles.header}>
         <div>
-          <h2>Tier 2 & Women’s International Rugby</h2>
+          <h2>Tier 2 & Women's International Rugby</h2>
           <p>
-            Emerging nations, Pacific competition and the current women’s international cycle
+            Upcoming World Rugby Nations Cup and Women's internationals
           </p>
         </div>
       </div>
