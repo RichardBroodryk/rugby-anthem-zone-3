@@ -997,7 +997,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Clarke Stadium, Edmonton",
   home: { name: "Tonga", country: "tonga" },
   away: { name: "Spain", country: "spain" },
-  state: "upcoming",
+  score: { home: 19, away: 32 },
+  state: "final",
 },
 {
   id: 3514,
@@ -1010,7 +1011,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Estadio Sausalito, Viña del Mar",
   home: { name: "Samoa", country: "samoa" },
   away: { name: "Georgia", country: "georgia" },
-  state: "upcoming",
+  score: { home: 12, away: 33 },
+  state: "final",
 },
 {
   id: 3515,
@@ -1023,7 +1025,8 @@ export const matches2026Men: MatchData[] = [
   venue: "American Legion Memorial Stadium, Charlotte",
   home: { name: "USA", country: "united-states-of-america" },
   away: { name: "Zimbabwe", country: "zimbabwe" },
-  state: "upcoming",
+  score: { home: 31, away: 15 },
+  state: "final",
 },
   // ---------- ROUND 3 ----------
   {
