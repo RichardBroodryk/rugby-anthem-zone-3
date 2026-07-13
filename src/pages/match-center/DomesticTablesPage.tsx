@@ -30,12 +30,16 @@ export default function DomesticTablesPage() {
         </button>
       </div>
 
-      {/* TITLE */}
-      <section className={styles.section}>
-        <h1 className={styles.title}>
-          Domestic League Tables
-        </h1>
-      </section>
+     {/* TITLE */}
+<section className={styles.section}>
+  <h1 className={styles.title}>
+    Domestic League Tables
+  </h1>
+
+  <p className={styles.subtitle}>
+    Domestic tables will be updated as the new league seasons begin.
+  </p>
+</section>
 
       {/* ================= MEN ================= */}
       <section className={styles.section}>

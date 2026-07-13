@@ -1,75 +1,89 @@
 .page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 80px;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
-  padding-bottom: 6rem;
+  gap: 72px;
 }
 
-/* HERO */
+/* ================= HERO - Matching ResultsPage ================= */
 
 .hero {
   position: relative;
-  height: 320px;
+  min-height: 380px;
+  margin-top: 28px;
+  border-radius: 22px;
+  overflow: hidden;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.heroOverlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.2);
-}
+/* No overlay - removed */
 
 .heroContent {
   position: relative;
-  max-width: 760px;
-  padding: 0 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px;
   text-align: center;
-  color: #ffffff;
-  text-shadow: 0 3px 14px rgba(0,0,0,0.45);
 }
 
 .heroContent h1 {
-  font-size: 2.9rem;
+  margin: 0;
+  font-size: 3rem;
   font-weight: 800;
+  color: #ffffff;
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.65),
+    0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
 .heroContent p {
-  margin-top: 1rem;
-  font-size: 1.05rem;
-  line-height: 1.45;
+  margin-top: 14px;
+  max-width: 760px;
+  margin-inline: auto;
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #ffffff;
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.65),
+    0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
-/* BACK */
+/* ================= BACK ================= */
 
 .backWrap {
   display: flex;
   justify-content: center;
-  margin: 24px 0;
+  margin: 18px 0 28px;
 }
 
 .back {
-  background: transparent;
+  background: none;
   border: none;
-  color: #0f172a;
-  font-size: 0.85rem;
+  padding: 0;
+  font-size: 0.95rem;
   font-weight: 600;
+  color: #4b5563;
   cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 .back:hover {
   text-decoration: underline;
+  color: #111827;
 }
 
-/* SECTIONS */
+/* ================= SECTIONS ================= */
 
 .section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 24px;
 }
 
 .sectionTitle {
@@ -81,52 +95,54 @@
 
 .bodyText {
   max-width: 760px;
-  color: #475569;
+  color: #00050b;
   line-height: 1.7;
 }
 
-/* BROADCAST GRID */
+/* ================= COUNTRY BLOCK ================= */
+
+.countryBlock {
+  margin-top: 2.5rem;
+}
+
+.countryTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+/* ================= BROADCAST GRID ================= */
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem 2.5rem;
 }
-
-/* BROADCAST CARD */
 
 .row {
   display: flex;
   align-items: center;
   gap: 1rem;
-
   text-decoration: none;
   color: inherit;
-
   background: #ffffff;
   border-radius: 14px;
-
   padding: 14px 16px;
-
   border: 1px solid #e5e7eb;
-
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .row:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
 }
-
-/* LOGO */
 
 .row img {
   width: 40px;
   height: 40px;
   object-fit: contain;
 }
-
-/* TEXT */
 
 .row div {
   display: flex;
@@ -140,74 +156,31 @@
 
 .row span {
   font-size: 0.9rem;
-  color: #64748b;
+  color: #00050c;
 }
 
-/* NOTICE */
-
-.notice {
-  max-width: 760px;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #64748b;
-  padding-left: 1rem;
-  border-left: 3px solid #cbd5e1;
-}
-
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 900px) {
+  .hero {
+    min-height: 280px;
+    margin-top: 20px;
+    border-radius: 18px;
+  }
+
+  .heroContent {
+    padding: 0 20px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.2rem;
+  }
+
+  .heroContent p {
+    font-size: 1rem;
+  }
 
   .grid {
     grid-template-columns: 1fr;
   }
-
-}
-.countryBlock {
-  margin-top: 2.5rem;
-}
-
-.countryTitle {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #1f2937;
-}
-.liveNow {
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 22px;
-}
-
-.liveBadge {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #dc2626;
-  letter-spacing: 0.08em;
-  margin-bottom: 8px;
-}
-
-.liveMatch {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 6px;
-  color: #0f172a;
-}
-
-.liveText {
-  color: #475569;
-  max-width: 720px;
-}
-@media (max-width: 768px) {
-
-  .hero {
-    height: 260px;
-    background-position: center top;
-  }
-
-  .heroContent h1 {
-    font-size: 2rem;
-  }
-
 }

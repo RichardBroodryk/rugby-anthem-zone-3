@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./MatchCenterPage.module.css";
 
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
+
 import AutoContentRail from "../components/ui/AutoContentRail";
 
 import heroBg from "../assets/images/raz/Match-center.png";
 
 /* CARD IMAGES */
-import liveScoresImg from "../assets/images/raz/Livescores.png";
+import liveScoresImg from "../assets/images/raz/livescore.jpg";
 import fixturesImg from "../assets/images/raz/Fixtures.jpg";
 import resultsImg from "../assets/images/raz/Results.png";
 import statsImg from "../assets/images/raz/Stats3.png";
@@ -18,6 +21,7 @@ export default function MatchCenterPage() {
   const navigate = useNavigate();
 
   return (
+  <PageWrapper imageUrl={razLight}>
     <main className={styles.page}>
       {/* ================= HERO ================= */}
       <header
@@ -106,6 +110,7 @@ export default function MatchCenterPage() {
           </div>
         </AutoContentRail>
       </section>
-    </main>
+       </main>
+  </PageWrapper>
   );
 }

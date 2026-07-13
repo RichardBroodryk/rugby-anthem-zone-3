@@ -1,7 +1,7 @@
 import styles from "./HomePage.module.css";
 
 import PageWrapper from "../components/layout/PageWrapper";
-import razLight from "../assets/images/raz/raz-light.jpg";
+import razLight from "../assets/images/raz/razlight2.png";
 
 import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";

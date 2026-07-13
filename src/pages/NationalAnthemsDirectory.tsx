@@ -2,6 +2,9 @@ import { useNavigate } from "react-router-dom";
 import styles from "./NationalAnthemsDirectory.module.css";
 import { anthemNations } from "../data/anthemNations";
 
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
+
 /* Helper: pick first usable accent colour */
 function getAccentColor(colors: string[]) {
   return (
@@ -15,6 +18,7 @@ export default function NationalAnthemsDirectory() {
   const navigate = useNavigate();
 
   return (
+  <PageWrapper imageUrl={razLight}>
     <main className={styles.page}>
       {/* PAGE HERO — ANTHEMS (LOCKED IMAGE) */}
       <section className={styles.hero}>
@@ -70,6 +74,7 @@ export default function NationalAnthemsDirectory() {
           );
         })}
       </section>
-    </main>
+     </main>
+  </PageWrapper>
   );
 }

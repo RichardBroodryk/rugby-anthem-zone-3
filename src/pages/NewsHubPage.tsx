@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import styles from "./NewsHubPage.module.css";
 
 import newsHero from "../assets/images/raz/news-hero.png";
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 
 /* ================= TYPES ================= */
 
@@ -104,59 +106,107 @@ export default function NewsHubPage() {
   /* ================= RENDER ================= */
 
   return (
-    <main className={styles.page}>
-      {/* HERO */}
-      <header className={styles.hero}>
-        <img src={newsHero} alt="" className={styles.heroImage} />
-        <div className={styles.heroText}>
-          <h1>Breaking Rugby News</h1>
-          <p>
-            Verified reporting, confirmed updates,
-            <br />
-            and global rugby coverage — as it happens.
-          </p>
-        </div>
-      </header>
-
-      {/* INTRO */}
-      <section className={styles.intro}>
-        <p>
-          This is the global rugby news surface. Stories here reflect
-          confirmed reports, official announcements, and major
-          developments across the international game.
-        </p>
-
-        {/* ✅ LAST UPDATED */}
-        {lastUpdated && (
-          <div className={styles.updated}>
-            Last updated: {lastUpdated}
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        {/* HERO */}
+        <header className={styles.hero}>
+          <img src={newsHero} alt="" className={styles.heroImage} />
+          <div className={styles.heroOverlay} />
+          <div className={styles.heroText}>
+            <h1>Breaking Rugby News</h1>
+            <p>
+              Verified reporting, confirmed updates,
+              <br />
+              and global rugby coverage — as it happens.
+            </p>
           </div>
+        </header>
+
+        {/* INTRO */}
+        <section className={styles.intro}>
+          <p>
+            This is the global rugby news surface. Stories here reflect
+            confirmed reports, official announcements, and major
+            developments across the international game.
+          </p>
+
+          {/* ✅ LAST UPDATED */}
+          {lastUpdated && (
+            <div className={styles.updated}>
+              Last updated: {lastUpdated}
+            </div>
+          )}
+        </section>
+
+        {/* CATEGORIES */}
+        <nav className={styles.categories}>
+          {categories.map((c) => (
+            <button
+              key={c.id}
+              className={`${styles.categoryBtn} ${
+                activeCategory === c.id ? styles.active : ""
+              }`}
+              onClick={() => setActiveCategory(c.id)}
+            >
+              {c.label}
+            </button>
+          ))}
+        </nav>
+
+        {/* FEATURED */}
+        {featured.length > 0 && (
+          <section className={styles.featured}>
+            <h2>Top Stories</h2>
+
+            <div className={styles.featuredGrid}>
+              {featured.map((item) => (
+                <article key={item.id} className={styles.featuredCard}>
+                  {/* ✅ IMAGE */}
+                  {item.image && (
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className={styles.image}
+                    />
+                  )}
+
+                  <span className={styles.meta}>
+                    {item.source} • {item.time}
+                    {isLive(item.time) && (
+                      <span className={styles.live}>LIVE</span>
+                    )}
+                  </span>
+
+                  <a
+                    href={item.url || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <h3>{item.title}</h3>
+                  </a>
+
+                  <p>{item.excerpt}</p>
+                </article>
+              ))}
+            </div>
+          </section>
         )}
-      </section>
 
-      {/* CATEGORIES */}
-      <nav className={styles.categories}>
-        {categories.map((c) => (
-          <button
-            key={c.id}
-            className={`${styles.categoryBtn} ${
-              activeCategory === c.id ? styles.active : ""
-            }`}
-            onClick={() => setActiveCategory(c.id)}
-          >
-            {c.label}
-          </button>
-        ))}
-      </nav>
+        {/* FEED */}
+        <section className={styles.feed}>
+          {loading && (
+            <div className={styles.empty}>Loading news...</div>
+          )}
 
-      {/* FEATURED */}
-      {featured.length > 0 && (
-        <section className={styles.featured}>
-          <h2>Top Stories</h2>
+          {!loading && filtered.length === 0 && (
+            <div className={styles.empty}>
+              No news available right now.
+            </div>
+          )}
 
-          <div className={styles.featuredGrid}>
-            {featured.map((item) => (
-              <article key={item.id} className={styles.featuredCard}>
+          {!loading &&
+            filtered.map((item) => (
+              <article key={item.id} className={styles.card}>
                 {/* ✅ IMAGE */}
                 {item.image && (
                   <img
@@ -182,61 +232,16 @@ export default function NewsHubPage() {
                 </a>
 
                 <p>{item.excerpt}</p>
+
+                <div className={styles.tags}>
+                  {item.tags?.map((tag, i) => (
+                    <span key={i}>#{tag}</span>
+                  ))}
+                </div>
               </article>
             ))}
-          </div>
         </section>
-      )}
-
-      {/* FEED */}
-      <section className={styles.feed}>
-        {loading && (
-          <div className={styles.empty}>Loading news...</div>
-        )}
-
-        {!loading && filtered.length === 0 && (
-          <div className={styles.empty}>
-            No news available right now.
-          </div>
-        )}
-
-        {!loading &&
-          filtered.map((item) => (
-            <article key={item.id} className={styles.card}>
-              {/* ✅ IMAGE */}
-              {item.image && (
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className={styles.image}
-                />
-              )}
-
-              <span className={styles.meta}>
-                {item.source} • {item.time}
-                {isLive(item.time) && (
-                  <span className={styles.live}>LIVE</span>
-                )}
-              </span>
-
-              <a
-                href={item.url || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <h3>{item.title}</h3>
-              </a>
-
-              <p>{item.excerpt}</p>
-
-              <div className={styles.tags}>
-                {item.tags?.map((tag, i) => (
-                  <span key={i}>#{tag}</span>
-                ))}
-              </div>
-            </article>
-          ))}
-      </section>
-    </main>
+      </main>
+    </PageWrapper>
   );
 }

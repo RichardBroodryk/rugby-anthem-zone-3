@@ -1,115 +1,114 @@
 .page {
-  background: #f9fafb;
-  padding-bottom: 96px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+  background: transparent;
 }
 
-/* HERO */
+/* ================= HERO ================= */
 
 .hero {
   position: relative;
-  margin: 0 auto 72px;
-  max-width: 1200px;
-  text-align: center;
+  min-height: 380px;
+  margin-top: 28px;
+  border-radius: 22px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .heroImage {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 420px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 20px;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .heroText {
-  position: absolute;
-  top: 46%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 640px;
-  color: #ffffff;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 48px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 2;
 }
 
 .heroText h1 {
-  margin-bottom: 14px;
-  font-size: 2.6rem;
+  margin: 0;
+  font-size: 3rem;
   font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
 .heroText p {
-  font-size: 1.2rem;
+  margin-top: 14px;
+  max-width: 760px;
+  margin-inline: auto;
+  font-size: 1.08rem;
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.6;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
+}
+
+/* ================= BACK ================= */
+
+.backRow {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 28px;
 }
 
 .backButton {
-  margin: 24px;
   background: none;
   border: none;
   padding: 0;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #4b5563;
   cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 .backButton:hover {
   text-decoration: underline;
-}
-.backRow {
-  display: flex;
-  justify-content: center;
+  color: #111827;
 }
 
-/* CONTAINER */
+/* ================= CONTAINER ================= */
 
 .container {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 24px;
-}
-
-/* TOGGLE */
-
-.toggle {
   display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 64px;
+  flex-direction: column;
+  gap: 48px;
 }
 
-.toggle button {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  padding: 10px 20px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #0f172a;
-  cursor: pointer;
-}
-
-.toggle button:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.toggle .active {
-  border-color: #0f172a;
-  font-weight: 700;
-}
-
-/* GRID — UNCHANGED */
+/* ================= GRID ================= */
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 32px;
-  margin-bottom: 48px;
 }
-
-/* TEAM CARD — UNCHANGED SIZE & ALIGNMENT */
 
 .teamCard {
   position: relative;
@@ -117,24 +116,18 @@
   border-radius: 18px;
   padding: 28px;
   overflow: hidden;
+  border: 1px solid #e5e7eb;
 }
-
-/* FEATHER — FIXED (NO OVERLAY, NO OPACITY) */
 
 .feather {
   position: absolute;
   top: 12px;
   right: 12px;
-
   width: 96px;
   height: auto;
-
   opacity: 1;
   pointer-events: none;
 }
-
-
-/* CONTENT — UNCHANGED */
 
 .teamContent {
   position: relative;
@@ -158,15 +151,50 @@
 .teamContent p {
   margin: 0;
   font-size: 0.9rem;
-  color: #475569;
+  color: #1f2933;
 }
 
-/* MANAGE */
+/* ================= SECTION ================= */
+
+.section {
+  padding: 0;
+}
+
+.section h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #0f172a;
+}
+
+.matchItem {
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.matchItem strong {
+  display: block;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.matchItem div {
+  font-size: 0.85rem;
+  color: #1f2933;
+  margin-top: 4px;
+}
+
+.empty {
+  padding: 24px 0;
+  color: #1f2933;
+  font-weight: 500;
+}
+
+/* ================= MANAGE ================= */
 
 .manage {
   display: flex;
   justify-content: center;
-  margin-bottom: 72px;
 }
 
 .manageButton {
@@ -176,25 +204,40 @@
   background: transparent;
   font-size: 0.85rem;
   font-weight: 600;
+  color: #0f172a;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-/* FEED */
-
-.feed {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+.manageButton:hover {
+  background: #0f172a;
+  color: #ffffff;
 }
 
-.feedItem {
-  padding-left: 20px;
-  border-left: 4px solid #e6e6e6;
-}
+/* ================= RESPONSIVE ================= */
 
-.feedMeta {
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #777;
+@media (max-width: 900px) {
+  .hero {
+    min-height: 280px;
+    margin-top: 20px;
+    border-radius: 18px;
+  }
+
+  .heroText {
+    padding: 28px 24px;
+    margin: 0 16px;
+  }
+
+  .heroText h1 {
+    font-size: 2.2rem;
+  }
+
+  .heroText p {
+    font-size: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
 }

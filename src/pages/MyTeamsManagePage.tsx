@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./MyTeamsManagePage.module.css";
 
+import myRugbyHero from "../assets/images/raz/my-rugby-hero.png";
 import { teamsMeta, TeamMeta } from "../data/teamsMeta";
 import {
   loadMyTeams,
   saveMyTeams,
   StoredTeams,
 } from "../utils/myTeamsStorage";
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 
 const MAX_PER_GENDER = 2;
 
@@ -76,8 +79,8 @@ export default function MyTeamsManagePage() {
           <h3>{team.name}</h3>
           <p>
             {team.gender === "men"
-              ? "Men’s International"
-              : "Women’s International"}
+              ? "Men's International"
+              : "Women's International"}
           </p>
         </div>
       </button>
@@ -85,54 +88,61 @@ export default function MyTeamsManagePage() {
   };
 
   return (
-    <main className={styles.page}>
-      <header className={styles.header}>
-        <h1>Manage My Teams</h1>
-        <p>
-          Choose up to two men’s and two women’s national teams.
-        </p>
-      </header>
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        {/* ================= HERO ================= */}
+        <header className={styles.hero}>
+          <img src={myRugbyHero} alt="" className={styles.heroImage} />
+          <div className={styles.heroOverlay} />
+          <div className={styles.heroText}>
+            <h1>Manage My Teams</h1>
+            <p>
+              Choose up to two men's and two women's national teams.
+            </p>
+          </div>
+        </header>
 
-      {/* ================= BACK ================= */}
-      <div className={styles.backRow}>
-        <button
-          className={styles.backButton}
-          onClick={() => navigate("/my-teams")}
-        >
-          ← Back to My Teams
-        </button>
-      </div>
-
-      {/* MEN */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Men</h2>
-        <div className={styles.grid}>
-          {menTeams.map(renderCard)}
+        {/* ================= BACK ================= */}
+        <div className={styles.backRow}>
+          <button
+            className={styles.backButton}
+            onClick={() => navigate("/my-teams")}
+          >
+            ← Back to My Teams
+          </button>
         </div>
-      </section>
 
-      {/* WOMEN */}
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Women</h2>
-        <div className={styles.grid}>
-          {womenTeams.map(renderCard)}
+        {/* MEN */}
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Men</h2>
+          <div className={styles.grid}>
+            {menTeams.map(renderCard)}
+          </div>
+        </section>
+
+        {/* WOMEN */}
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Women</h2>
+          <div className={styles.grid}>
+            {womenTeams.map(renderCard)}
+          </div>
+        </section>
+
+        <div className={styles.actions}>
+          <button
+            className={styles.secondary}
+            onClick={() => navigate("/my-teams")}
+          >
+            Cancel
+          </button>
+          <button
+            className={styles.primary}
+            onClick={handleSave}
+          >
+            Save Teams
+          </button>
         </div>
-      </section>
-
-      <div className={styles.actions}>
-        <button
-          className={styles.secondary}
-          onClick={() => navigate("/my-teams")}
-        >
-          Cancel
-        </button>
-        <button
-          className={styles.primary}
-          onClick={handleSave}
-        >
-          Save Teams
-        </button>
-      </div>
-    </main>
+      </main>
+    </PageWrapper>
   );
 }

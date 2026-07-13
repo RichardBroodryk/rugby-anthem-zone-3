@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import styles from "./FanComments.module.css";
 
 import { tournaments2026 } from "../data/tournamentMeta";
 import { API_BASE_URL } from "../config/api";
 
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 import commentsImg from "../assets/images/raz/Commentsmainpage.png";
 
 /* ================= TIME ================= */
+
 function getTimeMeta(dateString: string) {
   const now = new Date().getTime();
   const then = new Date(dateString).getTime();
@@ -24,6 +28,7 @@ function getTimeMeta(dateString: string) {
 }
 
 /* ================= FEED ================= */
+
 function buildGlobalFeed(threads: any[]) {
   if (!threads || threads.length === 0) return [];
 
@@ -106,7 +111,9 @@ export default function FanComments() {
 
       await fetch(`${API_BASE_URL}/api/comments`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           content: newComment,
           match_id: null,
@@ -126,92 +133,124 @@ export default function FanComments() {
   const feed = buildGlobalFeed(threads);
 
   if (loading) {
-    return <p className={styles.page}>Loading fan comments…</p>;
+    return (
+      <PageWrapper imageUrl={razLight}>
+        <main className={styles.page}>
+          <p className={styles.empty}>Loading fan comments…</p>
+        </main>
+      </PageWrapper>
+    );
   }
 
   return (
-    <main className={styles.page}>
-      {/* HERO */}
-      <header className={styles.hero}>
-        <img
-          src={commentsImg}
-          alt="Fan comments rugby discussion"
-          className={styles.heroImage}
-        />
-        <div className={styles.heroText}>
-          <h1>Fan Comments</h1>
-          <p>The global rugby conversation — reactions, debate, and opinion.</p>
-        </div>
-      </header>
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        {/* HERO */}
 
-      <div className={styles.contentColumn}>
-        {/* BACK */}
-        <div className={styles.backWrap}>
-          <button
-            className={styles.back}
-            onClick={() => navigate("/media")}
-          >
-            ← Back to The Rugby Studio
-          </button>
-        </div>
-
-        {/* 🔄 SYSTEM STATUS */}
-        {refreshing && (
-          <div className={styles.refreshing}>Updating…</div>
-        )}
-
-        {/* INPUT */}
-        <div className={styles.inputWrap}>
-          <textarea
-            className={styles.textarea}
-            placeholder="Join the global rugby conversation..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
+        <header className={styles.hero}>
+          <img
+            src={commentsImg}
+            alt="Fan comments rugby discussion"
+            className={styles.heroImage}
           />
 
-          <button
-            className={styles.postBtn}
-            onClick={handlePost}
-            disabled={posting}
-          >
-            {posting ? "Posting..." : "Post Comment"}
-          </button>
-        </div>
+          <div className={styles.heroText}>
+            <h1>Fan Comments</h1>
 
-        {/* FEED */}
-        {feed.length === 0 ? (
-          <p className={styles.empty}>
-            No live comments — be the first to start the conversation.
+            <p>
+              Join supporters from around the world as they discuss
+              international rugby, celebrate great moments and share opinions
+              throughout the season.
+            </p>
+          </div>
+        </header>
+
+        <section className={styles.howItWorks}>
+          <p>
+            The Fan Comments feed brings together reactions from across Rugby
+            Anthem Zone into one live conversation. Share your thoughts, read
+            what fellow supporters are saying and follow the latest discussion
+            as international rugby unfolds.
           </p>
-        ) : (
-          feed.map((c, index) => {
-            const time = getTimeMeta(c.createdAt);
-            const isNewest = index === 0;
+        </section>
 
-            return (
-              <div
-                key={c.id}
-                className={`${styles.commentBlock} ${
-                  isNewest ? styles.newest : ""
-                }`}
-              >
-                <div className={styles.commentHeader}>
-                  <span className={styles.metaRight}>
-                    {time.fresh && (
-                      <span className={styles.activeNow}>
-                        ● Active now
-                      </span>
-                    )}
-                    {time.label}
-                  </span>
+        <div className={styles.contentColumn}>
+          {/* BACK */}
+
+          <div className={styles.backWrap}>
+            <button
+              className={styles.back}
+              onClick={() => navigate("/media")}
+            >
+              ← Back to The Rugby Studio
+            </button>
+          </div>
+
+          {/* REFRESH */}
+
+          {refreshing && (
+            <div className={styles.refreshing}>
+              Updating live conversation…
+            </div>
+          )}
+
+          {/* INPUT */}
+
+          <div className={styles.inputWrap}>
+            <textarea
+              className={styles.textarea}
+              placeholder="Join the global rugby conversation..."
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+
+            <button
+              className={styles.postBtn}
+              onClick={handlePost}
+              disabled={posting}
+            >
+              {posting ? "Posting..." : "Post Comment"}
+            </button>
+          </div>
+
+          {/* FEED */}
+
+          {feed.length === 0 ? (
+            <p className={styles.empty}>
+              No live comments yet — be the first supporter to start today's
+              rugby conversation.
+            </p>
+          ) : (
+            feed.map((c, index) => {
+              const time = getTimeMeta(c.createdAt);
+              const isNewest = index === 0;
+
+              return (
+                <div
+                  key={c.id}
+                  className={`${styles.commentBlock} ${
+                    isNewest ? styles.newest : ""
+                  }`}
+                >
+                  <div className={styles.commentHeader}>
+                    <span className={styles.metaRight}>
+                      {time.fresh && (
+                        <span className={styles.activeNow}>
+                          ● Active now
+                        </span>
+                      )}
+
+                      {time.label}
+                    </span>
+                  </div>
+
+                  <p className={styles.comment}>“{c.text}”</p>
                 </div>
-
-                <p className={styles.comment}>“{c.text}”</p>
-              </div>
-            );
-          })
-        )}
-      </div>
-    </main>
+              );
+            })
+          )}
+        </div>
+      </main>
+    </PageWrapper>
   );
 }

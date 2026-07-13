@@ -3,56 +3,68 @@
   flex-direction: column;
   gap: 72px;
   padding-bottom: 96px;
-  background: #f9fafb;
 }
 
 /* ================= HERO ================= */
 
 .hero {
   position: relative;
-  height: 420px;
+  height: 380px;
   background-size: cover;
   background-position: center;
+  border-radius: 24px;
+  overflow: hidden;
   display: flex;
   align-items: center;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18);
 }
 
+/* Hero overlay removed for premium presentation */
+
 .heroOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(15, 23, 42, 0.55),
-    rgba(15, 23, 42, 0.15)
-  );
+  display: none;
 }
 
 .heroContent {
   position: relative;
-  max-width: 560px;
+  max-width: 660px;
   margin-left: clamp(24px, 8vw, 96px);
+
+  padding: 2rem 2.5rem;
+
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
   color: #ffffff;
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
 }
 
 .heroTitleBlock {
-  display: inline-block;
-  background: #ffffff;
-  padding: 10px 18px;
-  border-radius: 6px;
+  display: block;
+  background: transparent;
+  padding: 0;
 }
 
 .heroTitleBlock h1 {
   margin: 0;
-  font-size: 2.6rem;
-  font-weight: 900;
-  color: #0f172a;
+  font-size: clamp(2.4rem, 4vw, 3.3rem);
+  font-weight: 800;
+  color: #ffffff;
 }
 
 .heroSubtitle {
-  margin-top: 16px;
-  font-size: 1.05rem;
-  line-height: 1.55;
-  max-width: 520px;
+  margin-top: 18px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 560px;
+  color: #ffffff;
 }
 
 /* ================= INTRO ================= */
@@ -66,8 +78,8 @@
 
 .intro p {
   font-size: 1.1rem;
-  line-height: 1.6;
-  color: #334155;
+  line-height: 1.8;
+  color: #0f172a;
 }
 
 /* ================= FEATURES ================= */
@@ -86,8 +98,8 @@
 
 .featureCard {
   position: relative;
-  height: 260px;
-  border-radius: 18px;
+  height: 280px;
+  border-radius: 22px;
   background-size: cover;
   background-position: center;
   cursor: pointer;
@@ -95,38 +107,65 @@
 
   display: flex;
   align-items: flex-end;
+
+  border: 1px solid rgba(15, 23, 42, 0.08);
+
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+
+  transition: all 0.25s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 46px rgba(15, 23, 42, 0.14);
 }
 
 .featureOverlay {
   position: absolute;
   inset: 0;
+
   background: linear-gradient(
     to top,
-    rgba(15, 23, 42, 0.45),
-    rgba(15, 23, 42, 0.1)
+    rgba(15, 23, 42, 0.32),
+    rgba(15, 23, 42, 0.03)
   );
 }
 
 .featureCard h2 {
   position: relative;
-  margin: 20px;
-  font-size: 1.3rem;
+  margin: 24px;
+  font-size: 1.45rem;
   font-weight: 800;
   color: #ffffff;
 }
 
-/* ================= AUDIO CARD (CONTENT-LED) ================= */
+/* ================= AUDIO CARD ================= */
 
 .audioCard {
-  height: 260px;
-  border-radius: 18px;
-  background: #0f172a;
+  height: 280px;
+
+  border-radius: 22px;
+
+  background: #ffffff;
+
   cursor: pointer;
+
   overflow: hidden;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  border: 1px solid rgba(15, 23, 42, 0.08);
+
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+
+  transition: all 0.25s ease;
+}
+
+.audioCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 46px rgba(15, 23, 42, 0.14);
 }
 
 .audioImage {
@@ -136,40 +175,56 @@
 }
 
 .audioText {
-  padding: 18px;
+  padding: 20px;
 }
 
 .audioText h2 {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  color: #ffffff;
+  color: #0f172a;
 }
 
 /* ================= MOBILE ================= */
 
 @media (max-width: 900px) {
   .hero {
-    height: 320px;
+    height: 290px;
   }
 
   .heroContent {
-    margin-left: 24px;
-    max-width: 90%;
+    margin: 0 18px;
+    max-width: none;
+    padding: 1.5rem;
+  }
+
+  .heroTitleBlock h1 {
+    font-size: 2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .features {
     grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .featureCard,
+  .audioCard {
+    height: 240px;
   }
 
   .audioImage {
-    height: 60%;
+    height: 62%;
   }
 }
+
 .railSection {
   margin: 32px 0;
 
-  /* breakout consistency */
   width: calc(100% + 48px);
   margin-left: -24px;
   margin-right: -24px;

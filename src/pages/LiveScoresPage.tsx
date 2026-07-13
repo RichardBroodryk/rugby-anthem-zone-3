@@ -7,7 +7,10 @@ import type { MatchData } from "../data/matches/types";
 
 import LiveScoreRow from "../components/match/LiveScoreRow";
 
-import heroBg from "../assets/images/raz/Livescores.png";
+import heroBg from "../assets/images/raz/livescore.jpg";
+
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 
 /* ================= CURRENT TIER 1 FILTERS ================= */
 
@@ -67,7 +70,13 @@ function splitByGender(matches: MatchData[]) {
   };
 }
 
-type LivePhase = "Upcoming" | "1st Half" | "2nd Half" | "HT" | "ET" | "Final";
+type LivePhase =
+  | "Upcoming"
+  | "1st Half"
+  | "2nd Half"
+  | "HT"
+  | "ET"
+  | "Final";
 
 function getPhase(match: MatchData): LivePhase {
   if (match.state === "final" || match.score) return "Final";
@@ -125,10 +134,16 @@ export default function LiveScoresPage() {
     );
 
     const finals = cleaned
-      .filter((m) => isCompleted(m) && m.state !== "live" && m.state !== "starting")
+      .filter(
+        (m) =>
+          isCompleted(m) &&
+          m.state !== "live" &&
+          m.state !== "starting"
+      )
       .sort(
         (a, b) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime()
+          new Date(b.date).getTime() -
+          new Date(a.date).getTime()
       );
 
     const todayMatches = cleaned.filter(
@@ -149,7 +164,8 @@ export default function LiveScoresPage() {
       )
       .sort(
         (a, b) =>
-          new Date(a.date).getTime() - new Date(b.date).getTime()
+          new Date(a.date).getTime() -
+          new Date(b.date).getTime()
       );
 
     return {
@@ -162,17 +178,23 @@ export default function LiveScoresPage() {
 
   if (loading) {
     return (
-      <main className={styles.page}>
-        <div className={styles.empty}>Loading live matches...</div>
-      </main>
+      <PageWrapper imageUrl={razLight}>
+        <main className={styles.page}>
+          <div className={styles.empty}>
+            Loading live matches...
+          </div>
+        </main>
+      </PageWrapper>
     );
   }
 
   if (error) {
     return (
-      <main className={styles.page}>
-        <div className={styles.empty}>{error}</div>
-      </main>
+      <PageWrapper imageUrl={razLight}>
+        <main className={styles.page}>
+          <div className={styles.empty}>{error}</div>
+        </main>
+      </PageWrapper>
     );
   }
 
@@ -225,87 +247,104 @@ export default function LiveScoresPage() {
   const upcomingMatches = upcoming.slice(0, 20);
 
   return (
-    <main className={styles.page}>
-      <header
-        className={styles.hero}
-        style={{ backgroundImage: `url(${heroBg})` }}
-      >
-        <div className={styles.heroOverlay} />
-
-        <div className={styles.heroContent}>
-          <h1>Live Scores</h1>
-          <p>
-            Scores and match states from across world rugby —
-            <br />
-            live action, recent finals, and what’s coming next.
-          </p>
-        </div>
-      </header>
-
-      <div className={styles.backWrap}>
-        <button
-          className={styles.back}
-          onClick={() => navigate("/match-center")}
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        <header
+          className={styles.hero}
+          style={{ backgroundImage: `url(${heroBg})` }}
         >
-          ← Back to Match Center
-        </button>
-      </div>
+          <div className={styles.heroContent}>
+            <h1>Live Scores</h1>
 
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitleCenter}>Live Now</h2>
-
-        {live.length === 0 ? (
-          <div className={styles.empty}>No matches live right now.</div>
-        ) : (
-          renderGroup(live)
-        )}
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitleCenter}>Recent Results</h2>
-
-        {recentFinals.length === 0 ? (
-          <div className={styles.empty}>No completed matches available.</div>
-        ) : (
-          renderGroup(recentFinals.slice(0, 10))
-        )}
-      </section>
-
-      <section className={styles.sectionMuted}>
-        <h2 className={styles.sectionTitleMutedCenter}>Today</h2>
-
-        {today.length === 0 ? (
-          <div className={styles.empty}>No matches today.</div>
-        ) : (
-          renderGroup(today)
-        )}
-      </section>
-
-      <section className={styles.sectionMuted}>
-        <h2 className={styles.sectionTitleMutedCenter}>Upcoming</h2>
-
-        {upcomingMatches.length === 0 ? (
-          <div className={styles.empty}>No upcoming fixtures available.</div>
-        ) : (
-          <div className={styles.subBlock}>
-            <div className={styles.subHeader}>
-              UPCOMING INTERNATIONAL FIXTURES
-            </div>
-
-            {upcomingMatches.map((m) => (
-              <LiveScoreRow
-                key={m.id}
-                matchId={m.id}
-                home={m.home}
-                away={m.away}
-                phase="Upcoming"
-                tournament={m.tournament}
-                venue={m.venue}
-              />
-            ))}
+            <p>
+              Scores and match states from across world rugby —
+              <br />
+              live action, recent finals, and what’s coming next.
+            </p>
           </div>
-        )}
-      </section>
-    </main>
+        </header>
+
+        <div className={styles.backWrap}>
+          <button
+            className={styles.back}
+            onClick={() => navigate("/match-center")}
+          >
+            ← Back to Match Center
+          </button>
+        </div>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitleCenter}>
+            Live Now
+          </h2>
+
+          {live.length === 0 ? (
+            <div className={styles.empty}>
+              No matches live right now.
+            </div>
+          ) : (
+            renderGroup(live)
+          )}
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitleCenter}>
+            Recent Results
+          </h2>
+
+          {recentFinals.length === 0 ? (
+            <div className={styles.empty}>
+              No completed matches available.
+            </div>
+          ) : (
+            renderGroup(recentFinals.slice(0, 10))
+          )}
+        </section>
+
+        <section className={styles.sectionMuted}>
+          <h2 className={styles.sectionTitleMutedCenter}>
+            Today
+          </h2>
+
+          {today.length === 0 ? (
+            <div className={styles.empty}>
+              No matches today.
+            </div>
+          ) : (
+            renderGroup(today)
+          )}
+        </section>
+
+        <section className={styles.sectionMuted}>
+          <h2 className={styles.sectionTitleMutedCenter}>
+            Upcoming
+          </h2>
+
+          {upcomingMatches.length === 0 ? (
+            <div className={styles.empty}>
+              No upcoming fixtures available.
+            </div>
+          ) : (
+            <div className={styles.subBlock}>
+              <div className={styles.subHeader}>
+                UPCOMING INTERNATIONAL FIXTURES
+              </div>
+
+              {upcomingMatches.map((m) => (
+                <LiveScoreRow
+                  key={m.id}
+                  matchId={m.id}
+                  home={m.home}
+                  away={m.away}
+                  phase="Upcoming"
+                  tournament={m.tournament}
+                  venue={m.venue}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+      </main>
+    </PageWrapper>
   );
 }

@@ -13,6 +13,9 @@ import heroBg from "../assets/images/raz/Fixtures.jpg";
 import mensHero from "../assets/images/raz/mens-tournaments.png";
 import womensHero from "../assets/images/raz/womens-tournaments.png";
 
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
+
 /* ================= UTIL ================= */
 
 function isWomenMatch(match: MatchData) {
@@ -40,11 +43,11 @@ function isUpcoming(match: MatchData) {
 }
 
 function buildTournamentRoute(match: MatchData) {
-  return (
-    match.tournamentInstanceId
-      ? `/tournaments/${match.tournamentInstanceId}`
-      : `/tournament/${match.tournament.toLowerCase().replace(/\s+/g, "-")}`
-  );
+  return match.tournamentInstanceId
+    ? `/tournaments/${match.tournamentInstanceId}`
+    : `/tournament/${match.tournament
+        .toLowerCase()
+        .replace(/\s+/g, "-")}`;
 }
 
 /* ================= PAGE ================= */
@@ -70,6 +73,7 @@ export default function FixturesPage() {
         }
       } catch (err) {
         console.error("Failed to load fixtures", err);
+
         if (mounted) {
           setMatches([]);
         }
@@ -91,7 +95,9 @@ export default function FixturesPage() {
     const upcoming = matches
       .filter(isUpcoming)
       .sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        (a, b) =>
+          new Date(a.date).getTime() -
+          new Date(b.date).getTime()
       );
 
     return {
@@ -101,86 +107,99 @@ export default function FixturesPage() {
   }, [matches]);
 
   if (loading) {
-    return <div className={styles.empty}>Loading fixtures...</div>;
+    return (
+      <PageWrapper imageUrl={razLight}>
+        <main className={styles.page}>
+          <div className={styles.empty}>
+            Loading fixtures...
+          </div>
+        </main>
+      </PageWrapper>
+    );
   }
 
   return (
-    <main className={styles.page}>
-      <header
-        className={styles.hero}
-        style={{ backgroundImage: `url(${heroBg})` }}
-      >
-        <div className={styles.heroOverlay} />
-
-        <div className={styles.heroContent}>
-          <h1>Fixtures</h1>
-          <p>
-            Upcoming international rugby fixtures —
-            <br />
-            plan ahead across major tournaments and tours.
-          </p>
-        </div>
-      </header>
-
-      <div className={styles.backWrap}>
-        <button
-          className={styles.back}
-          onClick={() => navigate("/match-center")}
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        <header
+          className={styles.hero}
+          style={{ backgroundImage: `url(${heroBg})` }}
         >
-          ← Back to Match Center
-        </button>
-      </div>
+          <div className={styles.heroContent}>
+            <h1>Fixtures</h1>
 
-      <section className={styles.section}>
-        <FixturesSectionHero
-          title="Men’s International Fixtures"
-          backgroundImage={mensHero}
-        />
-
-        {mensFixtures.length === 0 ? (
-          <div className={styles.empty}>No upcoming men’s fixtures.</div>
-        ) : (
-          <div className={styles.group}>
-            {mensFixtures.map((m) => (
-              <FixtureRow
-                key={m.id}
-                date={formatDate(m.date)}
-                home={m.home}
-                away={m.away}
-                venue={m.venue}
-                tournament={m.tournament}
-                tournamentRoute={buildTournamentRoute(m)}
-              />
-            ))}
+            <p>
+              Upcoming international rugby fixtures —
+              <br />
+              plan ahead across major tournaments and tours.
+            </p>
           </div>
-        )}
-      </section>
+        </header>
 
-      <section className={styles.section}>
-        <FixturesSectionHero
-          title="Women’s International Fixtures"
-          backgroundImage={womensHero}
-          position="top"
-        />
+        <div className={styles.backWrap}>
+          <button
+            className={styles.back}
+            onClick={() => navigate("/match-center")}
+          >
+            ← Back to Match Center
+          </button>
+        </div>
 
-        {womensFixtures.length === 0 ? (
-          <div className={styles.empty}>No upcoming women’s fixtures.</div>
-        ) : (
-          <div className={styles.group}>
-            {womensFixtures.map((m) => (
-              <FixtureRow
-                key={m.id}
-                date={formatDate(m.date)}
-                home={m.home}
-                away={m.away}
-                venue={m.venue}
-                tournament={m.tournament}
-                tournamentRoute={buildTournamentRoute(m)}
-              />
-            ))}
-          </div>
-        )}
-      </section>
-    </main>
+        <section className={styles.section}>
+          <FixturesSectionHero
+            title="Men’s International Fixtures"
+            backgroundImage={mensHero}
+          />
+
+          {mensFixtures.length === 0 ? (
+            <div className={styles.empty}>
+              No upcoming men’s fixtures.
+            </div>
+          ) : (
+            <div className={styles.group}>
+              {mensFixtures.map((m) => (
+                <FixtureRow
+                  key={m.id}
+                  date={formatDate(m.date)}
+                  home={m.home}
+                  away={m.away}
+                  venue={m.venue}
+                  tournament={m.tournament}
+                  tournamentRoute={buildTournamentRoute(m)}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section className={styles.section}>
+          <FixturesSectionHero
+            title="Women’s International Fixtures"
+            backgroundImage={womensHero}
+            position="top"
+          />
+
+          {womensFixtures.length === 0 ? (
+            <div className={styles.empty}>
+              No upcoming women’s fixtures.
+            </div>
+          ) : (
+            <div className={styles.group}>
+              {womensFixtures.map((m) => (
+                <FixtureRow
+                  key={m.id}
+                  date={formatDate(m.date)}
+                  home={m.home}
+                  away={m.away}
+                  venue={m.venue}
+                  tournament={m.tournament}
+                  tournamentRoute={buildTournamentRoute(m)}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+      </main>
+    </PageWrapper>
   );
 }

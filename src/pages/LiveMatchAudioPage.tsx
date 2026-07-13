@@ -6,6 +6,8 @@ import { recordLoyaltyAction } from "../utils/loyaltyHooks";
 import heroImage from "../assets/images/raz/fanzone-audio.png";
 
 import LiveNowBar from "../components/live/LiveNowBar";
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 
 import { broadcasters } from "../data/broadcasters";
 
@@ -55,87 +57,86 @@ export default function LiveMatchAudioPage() {
   }, []);
 
   return (
-    <main className={styles.page}>
-      {/* HERO */}
-
-      <section
-        className={styles.hero}
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
-        <div className={styles.heroOverlay} />
-
-        <div className={styles.heroContent}>
-          <h1>Live Match Audio</h1>
-
-          <p>
-            Official international rugby commentary delivered through
-            national broadcasters and authorised audio partners.
-          </p>
-        </div>
-      </section>
-
-      {/* BACK */}
-
-      <div className={styles.backWrap}>
-        <button
-          className={styles.back}
-          onClick={() => navigate("/fanzone")}
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        {/* HERO */}
+        <header
+          className={styles.hero}
+          style={{ backgroundImage: `url(${heroImage})` }}
         >
-          ← Back to Fanzone
-        </button>
-      </div>
+          <div className={styles.heroContent}>
+            <h1>Live Match Audio</h1>
 
-      {/* LIVE BAR */}
-
-      <LiveNowBar />
-
-      {/* EDITORIAL */}
-
-      <section className={styles.section}>
-        <p className={styles.bodyText}>
-          Radio commentary remains one of rugby’s most authentic match-day
-          experiences. Whether following the game while travelling,
-          working or inside the stadium itself, these authorised radio
-          partners provide full commentary coverage without Rugby Anthem
-          Zone hosting audio streams directly.
-        </p>
-      </section>
-
-      {/* BROADCASTERS */}
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>
-          Official Audio Broadcasters
-        </h2>
-
-        {Object.entries(grouped).map(([country, list]: any) => (
-          <div key={country} className={styles.countryBlock}>
-            <h3 className={styles.countryTitle}>{country}</h3>
-
-            <div className={styles.grid}>
-              {list.map((b: any) => (
-                <a
-                  key={b.id}
-                  className={styles.row}
-                  href={b.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    recordLoyaltyAction("audio_listen")
-                  }
-                >
-                  <img src={radioLogos[b.id]} alt={b.name} />
-
-                  <div>
-                    <strong>{b.name}</strong>
-                    <span>{b.country}</span>
-                  </div>
-                </a>
-              ))}
-            </div>
+            <p>
+              Official international rugby commentary delivered through
+              national broadcasters and authorised audio partners.
+            </p>
           </div>
-        ))}
-      </section>
-    </main>
+        </header>
+
+        {/* BACK */}
+
+        <div className={styles.backWrap}>
+          <button
+            className={styles.back}
+            onClick={() => navigate("/fanzone")}
+          >
+            ← Back to Fanzone
+          </button>
+        </div>
+
+        {/* LIVE BAR */}
+
+        <LiveNowBar />
+
+        {/* EDITORIAL */}
+
+        <section className={styles.section}>
+          <p className={styles.bodyText}>
+            Radio commentary remains one of rugby's most authentic match-day
+            experiences. Whether following the game while travelling,
+            working or inside the stadium itself, these authorised radio
+            partners provide full commentary coverage without Rugby Anthem
+            Zone hosting audio streams directly.
+          </p>
+        </section>
+
+        {/* BROADCASTERS */}
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>
+            Official Audio Broadcasters
+          </h2>
+
+          {Object.entries(grouped).map(([country, list]: any) => (
+            <div key={country} className={styles.countryBlock}>
+              <h3 className={styles.countryTitle}>{country}</h3>
+
+              <div className={styles.grid}>
+                {list.map((b: any) => (
+                  <a
+                    key={b.id}
+                    className={styles.row}
+                    href={b.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      recordLoyaltyAction("audio_listen")
+                    }
+                  >
+                    <img src={radioLogos[b.id]} alt={b.name} />
+
+                    <div>
+                      <strong>{b.name}</strong>
+                      <span>{b.country}</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      </main>
+    </PageWrapper>
   );
 }
