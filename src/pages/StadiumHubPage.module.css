@@ -1,12 +1,18 @@
 .page {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  background: transparent;
 }
 
 /* ================= HERO ================= */
 
 .hero {
   height: 300px;
+  margin-top: 28px;
+  border-radius: 22px;
+  overflow: hidden;
   background-size: cover;
   background-position: center;
   position: relative;
@@ -44,7 +50,7 @@
 .grid {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 2rem 4rem;
+  padding: 3rem 0 4rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
@@ -58,6 +64,8 @@
   cursor: pointer;
   display: flex;
   align-items: flex-end;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .overlay {
@@ -91,11 +99,33 @@
 @media (max-width: 1000px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
+    padding: 2rem 0 4rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    height: 240px;
+    margin-top: 20px;
+    border-radius: 18px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.2rem;
   }
 }
 
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: 1fr;
+    padding: 1.5rem 0 3rem;
+  }
+
+  .hero {
+    height: 200px;
+  }
+
+  .heroContent h1 {
+    font-size: 2rem;
   }
 }

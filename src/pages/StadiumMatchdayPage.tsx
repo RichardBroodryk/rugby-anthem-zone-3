@@ -2,6 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import styles from "./StadiumMatchdayPage.module.css";
 
 import { stadiums } from "../data/stadiums";
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 
 /* ================= HERO IMAGES (MUST BE AT TOP) ================= */
 
@@ -15,6 +17,11 @@ import paris from "../assets/images/stadiums/paris-stade-de-france.jpg";
 import principality from "../assets/images/stadiums/principality-stadium.jpg";
 import olimpico from "../assets/images/stadiums/stadio-olimpico.jpg";
 import twickenham from "../assets/images/stadiums/twickenham.jpg";
+
+/* ================= NEW ZEALAND STADIUMS ================= */
+
+import wellington from "../assets/images/stadiums/wellington/wellington-hnrystadium-aerial.jpg";
+import christchurch from "../assets/images/stadiums/christchurch/christchurch-stadium-aerial.jpg";
 
 /* ================= CARD IMAGES ================= */
 
@@ -36,6 +43,8 @@ const HERO_MAP: Record<string, string> = {
   principality,
   "stadio-olimpico": olimpico,
   twickenham,
+  "hnry-stadium": wellington,
+  "one-nz-stadium": christchurch,
 };
 
 export default function StadiumMatchdayPage() {
@@ -65,77 +74,89 @@ export default function StadiumMatchdayPage() {
     navigate(`${path}?stadium=${stadium.slug}`);
 
   return (
-    <main className={styles.page}>
-      {/* ================= HERO ================= */}
-      <header
-        className={styles.hero}
-        style={{ backgroundImage: `url(${hero})` }}
-      >
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroContent}>
-          <h1>Game here we come.</h1>
-          <p>
-            Plan your matchday at <strong>{stadium.name}</strong> —
-            <br />
-            tickets, travel, and arrival.
-          </p>
-        </div>
-      </header>
-
-      {/* ================= GRID ================= */}
-      <section className={styles.grid}>
-        <div
-          className={styles.card}
-          style={{ backgroundImage: `url(${ticketsImg})` }}
-          onClick={() => go("/tickets")}
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        {/* ================= HERO ================= */}
+        <header
+          className={styles.hero}
+          style={{ backgroundImage: `url(${hero})` }}
         >
-          <div className={styles.overlay} />
-          <div className={styles.cardContent}>
-            <h3>Secure Tickets</h3>
-            <p>Official match access for this venue.</p>
-            <span className={styles.cta}>Go to Tickets →</span>
+          <div className={styles.heroOverlay} />
+          <div className={styles.heroContent}>
+            <h1>Game here we come.</h1>
+            <p>
+              Plan your matchday at <strong>{stadium.name}</strong> —
+              <br />
+              tickets, travel, and arrival.
+            </p>
           </div>
+        </header>
+
+        {/* ================= BACK BUTTON ================= */}
+        <div className={styles.backWrap}>
+          <button
+            className={styles.backButton}
+            onClick={() => navigate("/stadiums")}
+          >
+            ← Back to Stadium Hub
+          </button>
         </div>
 
-        <div
-          className={styles.card}
-          style={{ backgroundImage: `url(${flightsImg})` }}
-          onClick={() => go("/flights")}
-        >
-          <div className={styles.overlay} />
-          <div className={styles.cardContent}>
-            <h3>Plan Travel</h3>
-            <p>Flights and long-distance travel.</p>
-            <span className={styles.cta}>View Flights →</span>
+        {/* ================= GRID ================= */}
+        <section className={styles.grid}>
+          <div
+            className={styles.card}
+            style={{ backgroundImage: `url(${ticketsImg})` }}
+            onClick={() => go("/tickets")}
+          >
+            <div className={styles.overlay} />
+            <div className={styles.cardContent}>
+              <h3>Secure Tickets</h3>
+              <p>Official match access for this venue.</p>
+              <span className={styles.cta}>Go to Tickets →</span>
+            </div>
           </div>
-        </div>
 
-        <div
-          className={styles.card}
-          style={{ backgroundImage: `url(${hotelsImg})` }}
-          onClick={() => go("/hotels")}
-        >
-          <div className={styles.overlay} />
-          <div className={styles.cardContent}>
-            <h3>Book Accommodation</h3>
-            <p>Stay near the stadium or city access.</p>
-            <span className={styles.cta}>Browse Hotels →</span>
+          <div
+            className={styles.card}
+            style={{ backgroundImage: `url(${flightsImg})` }}
+            onClick={() => go("/flights")}
+          >
+            <div className={styles.overlay} />
+            <div className={styles.cardContent}>
+              <h3>Plan Travel</h3>
+              <p>Flights and long-distance travel.</p>
+              <span className={styles.cta}>View Flights →</span>
+            </div>
           </div>
-        </div>
 
-        <div
-          className={styles.card}
-          style={{ backgroundImage: `url(${transportImg})` }}
-          onClick={() => go("/transport")}
-        >
-          <div className={styles.overlay} />
-          <div className={styles.cardContent}>
-            <h3>Local Transport</h3>
-            <p>Arrival, parking, and matchday movement.</p>
-            <span className={styles.cta}>Local Transport →</span>
+          <div
+            className={styles.card}
+            style={{ backgroundImage: `url(${hotelsImg})` }}
+            onClick={() => go("/hotels")}
+          >
+            <div className={styles.overlay} />
+            <div className={styles.cardContent}>
+              <h3>Book Accommodation</h3>
+              <p>Stay near the stadium or city access.</p>
+              <span className={styles.cta}>Browse Hotels →</span>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+
+          <div
+            className={styles.card}
+            style={{ backgroundImage: `url(${transportImg})` }}
+            onClick={() => go("/transport")}
+          >
+            <div className={styles.overlay} />
+            <div className={styles.cardContent}>
+              <h3>Local Transport</h3>
+              <p>Arrival, parking, and matchday movement.</p>
+              <span className={styles.cta}>Local Transport →</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </PageWrapper>
   );
 }

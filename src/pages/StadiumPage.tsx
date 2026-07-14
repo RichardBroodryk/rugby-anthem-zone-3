@@ -8,6 +8,8 @@ import { stadiums } from "../data/stadiums";
 
 /* COMPONENTS */
 import MatchRow from "../components/match/MatchRow";
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 
 /* RESOLVER */
 import { getStadiumByName } from "../utils/stadiumResolver";
@@ -75,102 +77,137 @@ export default function StadiumPage() {
     );
 
   return (
-    <main className={styles.page}>
-      <header
-        className={styles.hero}
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroContent}>
-          <h1>{stadium.name}</h1>
-          <p>
-            {stadium.city ? `${stadium.city}, ` : ""}
-            {stadium.country}
-          </p>
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        <header
+          className={styles.hero}
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          <div className={styles.heroOverlay} />
+          <div className={styles.heroContent}>
+            <h1>{stadium.name}</h1>
+            <p>
+              {stadium.city ? `${stadium.city}, ` : ""}
+              {stadium.country}
+            </p>
+          </div>
+        </header>
+
+        {/* ================= BACK BUTTON ================= */}
+        <div className={styles.backWrap}>
+          <button
+            className={styles.backButton}
+            onClick={() => navigate("/stadiums")}
+          >
+            ← Back to Stadium Hub
+          </button>
         </div>
-      </header>
 
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Upcoming matches</h2>
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Upcoming matches</h2>
 
-        {upcomingMatches.length > 0 ? (
-          <div className={styles.matches}>
-            {upcomingMatches.map((m: MatchData) => (
-              <MatchRow
-                key={m.id}
-                home={m.home}
-                away={m.away}
-                state="upcoming"
-                metaLeft={m.date}
-                metaRight={stadium.slug}
-                onClick={() => navigate(`/match/${m.id}`)}
-              />
+          {upcomingMatches.length > 0 ? (
+            <div className={styles.matches}>
+              {upcomingMatches.map((m: MatchData) => (
+                <MatchRow
+                  key={m.id}
+                  home={m.home}
+                  away={m.away}
+                  state="upcoming"
+                  metaLeft={m.date}
+                  metaRight={stadium.slug}
+                  onClick={() => navigate(`/match/${m.id}`)}
+                />
+              ))}
+            </div>
+          ) : (
+            <p>No upcoming fixtures.</p>
+          )}
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Stadium intelligence</h2>
+
+          <div className={styles.intelGrid}>
+            {meta.capacity && (
+              <div className={styles.intelCard}>
+                <strong>Capacity</strong>
+                <span>{meta.capacity.toLocaleString()}</span>
+              </div>
+            )}
+            {meta.altitude && (
+              <div className={styles.intelCard}>
+                <strong>Altitude</strong>
+                <span>{meta.altitude}m</span>
+              </div>
+            )}
+            {meta.pitch && (
+              <div className={styles.intelCard}>
+                <strong>Pitch</strong>
+                <span>{meta.pitch}</span>
+              </div>
+            )}
+            {meta.roof && (
+              <div className={styles.intelCard}>
+                <strong>Roof</strong>
+                <span>{meta.roof}</span>
+              </div>
+            )}
+          </div>
+
+          {experience.atmosphereScore && (
+            <div className={styles.atmosphereCard}>
+              <strong>Atmosphere Score</strong>
+              <span>{experience.atmosphereScore}/5</span>
+            </div>
+          )}
+
+          {experience.homeAdvantage && (
+            <div className={styles.atmosphereCard}>
+              <strong>Home Advantage</strong>
+              <span>{experience.homeAdvantage}/5</span>
+            </div>
+          )}
+
+          {experience.arrivalTip && (
+            <div className={styles.tip}>
+              <strong>Tip:</strong> {experience.arrivalTip}
+            </div>
+          )}
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Inside the stadium</h2>
+
+          <div className={styles.gallery}>
+            {galleryImages.map((img, i) => (
+              <div key={i} className={styles.galleryItem}>
+                <img src={img} alt="stadium" />
+              </div>
             ))}
           </div>
-        ) : (
-          <p>No upcoming fixtures.</p>
-        )}
-      </section>
+        </section>
 
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Stadium intelligence</h2>
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Seating</h2>
 
-        <div className={styles.intelGrid}>
-          {meta.capacity && (
-            <div className={styles.intelCard}>
-              Capacity: {meta.capacity}
-            </div>
-          )}
-          {meta.altitude && (
-            <div className={styles.intelCard}>
-              Altitude: {meta.altitude}m
-            </div>
-          )}
-          {meta.pitch && (
-            <div className={styles.intelCard}>
-              Pitch: {meta.pitch}
-            </div>
-          )}
-          {meta.roof && (
-            <div className={styles.intelCard}>
-              Roof: {meta.roof}
-            </div>
-          )}
-        </div>
-
-        {experience.arrivalTip && (
-          <div className={styles.tip}>
-            <strong>Tip:</strong> {experience.arrivalTip}
+          <div className={styles.seatingGrid}>
+            {seating.map((zone, i) => (
+              <div key={i} className={styles.seatCard}>
+                <h3>{zone.name}</h3>
+                <p>
+                  {zone.type} · {zone.view}
+                </p>
+                {zone.atmosphere && (
+                  <span className={styles.atmosphereBadge}>
+                    Atmosphere: {zone.atmosphere}/5
+                  </span>
+                )}
+              </div>
+            ))}
           </div>
-        )}
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Inside the stadium</h2>
-
-        <div className={styles.gallery}>
-          {galleryImages.map((img, i) => (
-            <div key={i} className={styles.galleryItem}>
-              <img src={img} alt="stadium" />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Seating</h2>
-
-        <div className={styles.seatingGrid}>
-          {seating.map((zone, i) => (
-            <div key={i} className={styles.seatCard}>
-              <h3>{zone.name}</h3>
-              <p>
-                {zone.type} · {zone.view}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </PageWrapper>
   );
 }

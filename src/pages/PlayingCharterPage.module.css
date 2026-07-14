@@ -1,8 +1,11 @@
 .page {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  padding-bottom: 6rem;
+  padding: 0 24px 6rem;
+  background: transparent;
 }
 
 /* ================= HERO ================= */
@@ -10,11 +13,14 @@
 .hero {
   position: relative;
   height: 340px;
+  margin-top: 28px;
+  border-radius: 22px;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .heroOverlay {
@@ -48,7 +54,7 @@
 .backWrap {
   display: flex;
   justify-content: center;
-  margin-top: -1.5rem;
+  margin-top: -0.5rem;
 }
 
 .backBtn {
@@ -56,13 +62,15 @@
   border: none;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #4b5563;
   cursor: pointer;
   padding: 0.5rem 1rem;
+  transition: color 0.2s ease;
 }
 
 .backBtn:hover {
   text-decoration: underline;
+  color: #111827;
 }
 
 /* ================= SECTIONS ================= */
@@ -70,7 +78,7 @@
 .section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0;
 }
 
 .section h2 {
@@ -82,7 +90,7 @@
 
 .bodyText {
   max-width: 760px;
-  color: #374151;
+  color: #1f2933;
   line-height: 1.7;
   margin-bottom: 1rem;
 }
@@ -93,7 +101,7 @@
   max-width: 760px;
   margin-top: 1rem;
   padding-left: 1.25rem;
-  color: #374151;
+  color: #1f2933;
 }
 
 .valuesList li {
@@ -107,12 +115,32 @@
 
 /* ================= RESPONSIVE ================= */
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
+  .hero {
+    height: 280px;
+    margin-top: 20px;
+    border-radius: 18px;
+  }
+
   .heroContent h1 {
-    font-size: 2.2rem;
+    font-size: 2.4rem;
   }
 
   .heroContent p {
-    font-size: 1.05rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    height: 240px;
+  }
+
+  .heroContent h1 {
+    font-size: 2rem;
+  }
+
+  .heroContent p {
+    font-size: 0.95rem;
   }
 }

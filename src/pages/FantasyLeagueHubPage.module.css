@@ -1,20 +1,26 @@
 .page {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  padding-bottom: 6rem;
+  padding: 0 24px 6rem;
+  background: transparent;
 }
 
-/* HERO */
+/* ================= HERO ================= */
 
 .hero {
   position: relative;
   height: 360px;
+  margin-top: 28px;
+  border-radius: 22px;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .heroOverlay {
@@ -41,38 +47,59 @@
   color: #fff;
 }
 
-/* CONTEXT NAV */
+/* ================= CONTEXT NAV ================= */
 
 .contextNav {
   max-width: 1200px;
-  margin: -1rem auto 0;
-  padding: 0 2rem;
+  margin: -0.5rem auto 0;
+  padding: 0;
   display: flex;
   gap: 0.5rem;
+  align-items: center;
+}
+
+.contextNav span {
+  color: #4b5563;
+  font-size: 0.95rem;
 }
 
 .contextNav button {
   background: none;
   border: none;
   cursor: pointer;
-  color: #374151;
+  color: #4b5563;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
-/* SECTIONS */
+.contextNav button:hover {
+  text-decoration: underline;
+  color: #111827;
+}
+
+/* ================= SECTIONS ================= */
 
 .section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0;
+}
+
+.section h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: #000;
 }
 
 .bodyText {
   max-width: 760px;
   line-height: 1.75;
-  color: #374151;
+  color: #1f2933;
 }
 
-/* HERO CARDS */
+/* ================= HERO CARDS ================= */
 
 .heroCardGrid {
   display: grid;
@@ -96,6 +123,12 @@
 .heroCardText h3 {
   font-size: 1.4rem;
   margin-bottom: 0.4rem;
+  color: #0f172a;
+}
+
+.heroCardText p {
+  color: #1f2933;
+  font-size: 0.95rem;
 }
 
 .tag {
@@ -107,7 +140,7 @@
   color: #6b7280;
 }
 
-/* LINKS */
+/* ================= LINKS ================= */
 
 .linkGrid {
   display: grid;
@@ -125,17 +158,67 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.linkGrid a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
 }
 
 .linkGrid img {
   width: 36px;
 }
 
-/* RESPONSIVE */
+.linkGrid h4 {
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.linkGrid p {
+  color: #1f2933;
+  font-size: 0.9rem;
+}
+
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 900px) {
+  .hero {
+    height: 280px;
+    margin-top: 20px;
+    border-radius: 18px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.4rem;
+  }
+
+  .heroSub {
+    font-size: 1rem;
+  }
+
   .heroCardGrid,
   .linkGrid {
     grid-template-columns: 1fr;
+  }
+
+  .heroCard {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .heroCard img {
+    width: 100px;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    height: 240px;
+  }
+
+  .heroContent h1 {
+    font-size: 2rem;
   }
 }

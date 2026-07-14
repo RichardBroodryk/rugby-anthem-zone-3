@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./StadiumHubPage.module.css";
 import { stadiums } from "../data/stadiums";
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 
 /* HERO */
 import fallbackHero from "../assets/images/stadiums/capetown-stadium.jpg";
@@ -21,6 +23,10 @@ import capetown from "../assets/images/stadiums/capetown-stadium.jpg";
 import dexcomOutside from "../assets/images/stadiums/dexcom/dexcom-outside.jpg";
 import stadeDesAlpesOutside from "../assets/images/stadiums/stade-des-alpes/stade-des-alpes-outside.jpg";
 
+/* 🔥 NEW ZEALAND STADIUMS */
+import wellington from "../assets/images/stadiums/wellington/wellington-hnrystadium-aerial.jpg";
+import christchurch from "../assets/images/stadiums/christchurch.jpg";
+
 const stadiumImages: Record<string, string> = {
   "twickenham": twickenham,
   "allianz-stadium": twickenham, // 🔥 ALIAS FIX
@@ -38,50 +44,56 @@ const stadiumImages: Record<string, string> = {
   "ellis-park": ellisPark,
   "fnb-stadium": fnbStadium,
   "capetown": capetown,
+
+  /* 🔥 NEW ZEALAND STADIUMS */
+  "hnry-stadium": wellington,
+  "one-nz-stadium": christchurch,
 };
 
 export default function StadiumHubPage() {
   const navigate = useNavigate();
 
   return (
-    <main className={styles.page}>
-      <header
-        className={styles.hero}
-        style={{ backgroundImage: `url(${fallbackHero})` }}
-      >
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroContent}>
-          <h1>Rugby Stadiums</h1>
-        </div>
-      </header>
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        <header
+          className={styles.hero}
+          style={{ backgroundImage: `url(${fallbackHero})` }}
+        >
+          <div className={styles.heroOverlay} />
+          <div className={styles.heroContent}>
+            <h1>Rugby Stadiums</h1>
+          </div>
+        </header>
 
-      <section className={styles.grid}>
-        {stadiums.map((stadium) => {
-          const image =
-            stadiumImages[stadium.slug] ||
-            stadiumImages[stadium.aliasOf || ""];
+        <section className={styles.grid}>
+          {stadiums.map((stadium) => {
+            const image =
+              stadiumImages[stadium.slug] ||
+              stadiumImages[stadium.aliasOf || ""];
 
-          return (
-            <div
-              key={stadium.slug}
-              className={styles.card}
-              style={{
-                backgroundImage: image ? `url(${image})` : undefined,
-              }}
-              onClick={() => navigate(`/stadium/${stadium.slug}`)}
-            >
-              <div className={styles.overlay} />
-              <div className={styles.cardContent}>
-                <h3>{stadium.name}</h3>
-                <p>
-                  {stadium.city ? `${stadium.city}, ` : ""}
-                  {stadium.country}
-                </p>
+            return (
+              <div
+                key={stadium.slug}
+                className={styles.card}
+                style={{
+                  backgroundImage: image ? `url(${image})` : undefined,
+                }}
+                onClick={() => navigate(`/stadium/${stadium.slug}`)}
+              >
+                <div className={styles.overlay} />
+                <div className={styles.cardContent}>
+                  <h3>{stadium.name}</h3>
+                  <p>
+                    {stadium.city ? `${stadium.city}, ` : ""}
+                    {stadium.country}
+                  </p>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </section>
-    </main>
+            );
+          })}
+        </section>
+      </main>
+    </PageWrapper>
   );
 }

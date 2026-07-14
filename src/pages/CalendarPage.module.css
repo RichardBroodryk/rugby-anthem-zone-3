@@ -1,51 +1,75 @@
 .page {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 72px;
-  padding-bottom: 80px;
+  padding: 0 24px 80px;
+  background: transparent;
 }
 
 /* ================= HERO ================= */
 
 .hero {
   position: relative;
-  min-height: 320px;
+  min-height: 380px;
   width: 100%;
-
-  background-size: cover;          /* 🔒 FULL WIDTH */
-  background-position: center top; /* protects diagrams */
+  margin-top: 28px;
+  border-radius: 22px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center top;
   background-repeat: no-repeat;
-
   display: flex;
   align-items: center;
-
+  justify-content: center;
   background-color: #f8fafc;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
 }
 
 .heroContent {
   position: relative;
-  max-width: 1100px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
   text-align: center;
+  z-index: 2;
 }
 
-.heroContent h1 {
+/* Translucent block behind text - matching other pages */
+.heroTextBlock {
+  padding: 40px 48px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: inline-block;
+}
+
+.heroTextBlock h1 {
   margin: 0;
   font-size: 2.75rem;
   font-weight: 800;
   letter-spacing: -0.01em;
-  color: #0f172a;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
-.heroContent p {
+.heroTextBlock p {
   margin-top: 0.5rem;
   max-width: 760px;
   margin-inline: auto;
-  color: #0f172a;      /* 🔒 SAME AUTHORITY AS TITLE */
+  color: #ffffff;
   line-height: 1.55;
   font-size: 1.05rem;
   font-weight: 500;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
 /* ================= SECTION ================= */
@@ -53,7 +77,7 @@
 .section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0;
 }
 
 .section h2 {
@@ -63,7 +87,7 @@
 
 .subtext {
   max-width: 720px;
-  color: #475569;
+  color: #1f2933;
   font-size: 0.95rem;
   line-height: 1.55;
   margin-bottom: 32px;
@@ -111,6 +135,7 @@
   border: 1px solid #cbd5e1;
   font-size: 0.85rem;
   font-weight: 600;
+  color: #0f172a;
 }
 
 /* ================= LINKS ================= */
@@ -118,7 +143,7 @@
 .hubLink {
   margin-top: 12px;
   font-size: 0.85rem;
-  color: #475569;
+  color: #1f2933;
 }
 
 .inlineLink {
@@ -138,7 +163,7 @@
   padding-top: 24px;
   border-top: 1px dashed #cbd5e1;
   max-width: 680px;
-  color: #475569;
+  color: #1f2933;
 }
 
 .futureNotice strong {
@@ -155,12 +180,32 @@
 
 /* ================= MOBILE ================= */
 
+@media (max-width: 900px) {
+  .hero {
+    min-height: 280px;
+    margin-top: 20px;
+    border-radius: 18px;
+  }
+
+  .heroTextBlock {
+    padding: 28px 24px;
+  }
+
+  .heroTextBlock h1 {
+    font-size: 2.2rem;
+  }
+
+  .heroTextBlock p {
+    font-size: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     min-height: 250px;
   }
 
-  .heroContent h1 {
+  .heroTextBlock h1 {
     font-size: 2.1rem;
   }
 }

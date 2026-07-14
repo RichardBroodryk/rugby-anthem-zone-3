@@ -51,6 +51,13 @@ export function getStadiumByName(name?: string) {
     // 🔥 NEW SAFE MAPPINGS
     galway: "dexcom",
     "allianz stadium": "twickenham", // 🔥 CRITICAL FIX
+
+    // 🔥 NEW ZEALAND STADIUMS
+    wellington: "hnry-stadium",
+    christchurch: "one-nz-stadium",
+    "the cake tin": "hnry-stadium",
+    "hnry stadium": "hnry-stadium",
+    "one nz stadium": "one-nz-stadium",
   };
 
   const slug = map[n];

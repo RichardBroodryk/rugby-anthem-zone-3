@@ -5,6 +5,8 @@ import styles from "./MerchPage.module.css";
 import { recordLoyaltyAction } from "../utils/loyaltyHooks";
 
 import AutoContentRail from "../components/ui/AutoContentRail";
+import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 
 import merchHero from "../assets/images/raz/Merch.png";
 
@@ -32,114 +34,116 @@ export default function MerchPage() {
   }, []);
 
   return (
-    <main className={styles.page}>
-      {/* HERO */}
-      <header className={styles.hero}>
-        <img src={merchHero} alt="" className={styles.heroImage} />
-        <h1>Merchandise</h1>
-        <p>
-          Official rugby merchandise from leading unions and teams worldwide.
-          Licensed products, premium quality, and trusted sources.
-        </p>
-      </header>
-
-      {/* HOW MERCH WORKS */}
-      <section className={styles.section}>
-        <h2>How Merchandising Works</h2>
-        <div className={styles.info}>
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        {/* HERO */}
+        <header className={styles.hero}>
+          <img src={merchHero} alt="" className={styles.heroImage} />
+          <h1>Merchandise</h1>
           <p>
-            Rugby Anthem Zone curates official team stores and licensed
-            merchandise partners. Selecting a team redirects you to the
-            official store to complete your purchase securely.
+            Official rugby merchandise from leading unions and teams worldwide.
+            Licensed products, premium quality, and trusted sources.
           </p>
-          <p>
-            Fulfilment and transactions are handled by authorised partners.
-            Loyalty recognition may apply to verified partner activity.
-          </p>
-        </div>
-      </section>
+        </header>
 
-      {/* 🔥 OFFICIAL STORES RAIL */}
-      <section className={styles.section}>
-        <h2>Official Team Stores</h2>
+        {/* HOW MERCH WORKS */}
+        <section className={styles.section}>
+          <h2>How Merchandising Works</h2>
+          <div className={styles.info}>
+            <p>
+              Rugby Anthem Zone curates official team stores and licensed
+              merchandise partners. Selecting a team redirects you to the
+              official store to complete your purchase securely.
+            </p>
+            <p>
+              Fulfilment and transactions are handled by authorised partners.
+              Loyalty recognition may apply to verified partner activity.
+            </p>
+          </div>
+        </section>
 
-        <div className={styles.railSection}>
-          <AutoContentRail autoAdvance>
-            <MerchStoreTile
-              name="South Africa"
-              logo={southAfrica}
-              to="/merch/south-africa"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="New Zealand"
-              logo={newZealand}
-              to="/merch/new-zealand"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="England"
-              logo={england}
-              to="/merch/england"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="France"
-              logo={france}
-              to="/merch/france"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="Wales"
-              logo={wales}
-              to="/merch/wales"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="Ireland"
-              logo={ireland}
-              to="/merch/ireland"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="Scotland"
-              logo={scotland}
-              to="/merch/scotland"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="Italy"
-              logo={italy}
-              to="/merch/italy"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="Australia"
-              logo={australia}
-              to="/merch/australia"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="Japan"
-              logo={japan}
-              to="/merch/japan"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="Fiji"
-              logo={fiji}
-              to="/merch/fiji"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-            <MerchStoreTile
-              name="Argentina"
-              logo={argentina}
-              to="/merch/argentina"
-              onVisit={() => recordLoyaltyAction("merch_purchase")}
-            />
-          </AutoContentRail>
-        </div>
-      </section>
-    </main>
+        {/* 🔥 OFFICIAL STORES RAIL */}
+        <section className={styles.section}>
+          <h2>Official Team Stores</h2>
+
+          <div className={styles.railSection}>
+            <AutoContentRail autoAdvance>
+              <MerchStoreTile
+                name="South Africa"
+                logo={southAfrica}
+                to="/merch/south-africa"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="New Zealand"
+                logo={newZealand}
+                to="/merch/new-zealand"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="England"
+                logo={england}
+                to="/merch/england"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="France"
+                logo={france}
+                to="/merch/france"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="Wales"
+                logo={wales}
+                to="/merch/wales"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="Ireland"
+                logo={ireland}
+                to="/merch/ireland"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="Scotland"
+                logo={scotland}
+                to="/merch/scotland"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="Italy"
+                logo={italy}
+                to="/merch/italy"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="Australia"
+                logo={australia}
+                to="/merch/australia"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="Japan"
+                logo={japan}
+                to="/merch/japan"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="Fiji"
+                logo={fiji}
+                to="/merch/fiji"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+              <MerchStoreTile
+                name="Argentina"
+                logo={argentina}
+                to="/merch/argentina"
+                onVisit={() => recordLoyaltyAction("merch_purchase")}
+              />
+            </AutoContentRail>
+          </div>
+        </section>
+      </main>
+    </PageWrapper>
   );
 }

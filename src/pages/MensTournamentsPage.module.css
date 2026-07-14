@@ -1,11 +1,17 @@
 .page {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  background: transparent;
 }
 
 /* ================= HERO ================= */
 .hero {
   height: 320px;
+  margin-top: 28px;
+  border-radius: 22px;
+  overflow: hidden;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -24,19 +30,23 @@
   margin: 0;
   font-size: 2.4rem;
   font-weight: 600;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
 .heroContent p {
   margin-top: 12px;
   font-size: 1.05rem;
   opacity: 0.9;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
 /* ================= BACK BUTTON ================= */
 .backWrap {
   max-width: 1100px;
-  margin: 28px auto 0;
-  padding: 0 20px;
+  margin: 18px auto 0;
+  padding: 0 24px;
+  display: flex;
+  justify-content: center;
 }
 
 .backButton {
@@ -44,20 +54,22 @@
   border: none;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #4b5563;
   cursor: pointer;
   padding: 6px 0;
+  transition: color 0.2s ease;
 }
 
 .backButton:hover {
   text-decoration: underline;
+  color: #111827;
 }
 
 /* ================= SECTION ================= */
 .section {
   max-width: 1100px;
   margin: 24px auto 0;
-  padding: 0 20px 72px;
+  padding: 0 24px 72px;
 }
 
 /* ================= LIST ================= */
@@ -107,7 +119,7 @@
 .subtext {
   margin-top: 4px;
   font-size: 0.9rem;
-  opacity: 0.8;
+  color: #1f2933;
   line-height: 1.4;
 }
 
@@ -123,28 +135,24 @@
 .row:hover .view {
   opacity: 0.85;
 }
+
+/* ================= RANKINGS STRIP ================= */
 .rankingsStrip {
   margin: 28px 0 18px;
   padding: 14px 18px 14px 22px;
   border-radius: 12px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   position: relative;
   overflow: hidden;
-
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.08),
     rgba(255, 255, 255, 0.03)
   );
-
   border: 1px solid rgba(255, 255, 255, 0.10);
-
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -155,7 +163,6 @@
     rgba(255, 255, 255, 0.12),
     rgba(255, 255, 255, 0.05)
   );
-
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
 }
@@ -178,14 +185,91 @@
 .rankingsTitle {
   font-size: 14px;
   opacity: 0.7;
+  color: #090000;
 }
 
 .rankingsMain {
   font-size: 18px;
   font-weight: 600;
+  color: #090000;
 }
 
 .rankingsArrow {
   font-size: 20px;
   opacity: 0.7;
+  color: #090000;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .hero {
+    height: 260px;
+    margin-top: 20px;
+    border-radius: 18px;
+  }
+
+  .heroContent h1 {
+    font-size: 2rem;
+  }
+
+  .heroContent p {
+    font-size: 1rem;
+  }
+
+  .section {
+    padding: 0 16px 56px;
+  }
+
+  .backWrap {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    height: 220px;
+  }
+
+  .heroContent h1 {
+    font-size: 1.8rem;
+  }
+
+  .row {
+    padding: 12px 14px;
+    gap: 14px;
+  }
+
+  .logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .text h3 {
+    font-size: 0.95rem;
+  }
+
+  .subtext {
+    font-size: 0.8rem;
+  }
+
+  .view {
+    font-size: 0.75rem;
+  }
+
+  .rankingsStrip {
+    padding: 12px 14px 12px 18px;
+  }
+
+  .rankingsMain {
+    font-size: 16px;
+  }
+
+  .rankingsTitle {
+    font-size: 12px;
+  }
+
+  .rankingsArrow {
+    font-size: 16px;
+  }
 }

@@ -1,10 +1,13 @@
 .page {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 0 24px 96px;
-  background: #f9fafb;
+  background: transparent;
 }
 
 /* ================= HERO ================= */
 .hero {
+  position: relative;
   height: 420px;
   background-image: url("../assets/images/moments/wc-turning-point.png");
   background-size: cover;
@@ -14,40 +17,48 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 72px;
-  position: relative;
+  overflow: hidden;
 }
 
-/* 🔧 LIGHTER (SAME BLACK GRADIENT, JUST REDUCED) */
-.hero::after {
-  content: "";
+/* Dark overlay */
+.heroOverlay {
   position: absolute;
   inset: 0;
+  background: rgba(0, 0, 0, 0.30);
   border-radius: 20px;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.10),
-    rgba(0, 0, 0, 0.25)
-  );
 }
 
-/* 🔧 TEXT BLACK */
+/* ================= HERO CONTENT ================= */
 .heroContent {
   position: relative;
   max-width: 720px;
   padding: 0 24px;
   text-align: center;
-  color: #0f172a;
+  z-index: 1;
 }
 
-.heroContent h1 {
+/* Translucent block behind text */
+.heroTextBlock {
+  padding: 40px 48px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.heroTextBlock h1 {
   font-size: 2.6rem;
   font-weight: 800;
   margin-bottom: 14px;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
-.heroContent p {
+.heroTextBlock p {
   font-size: 1.05rem;
   line-height: 1.45;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
   opacity: 0.95;
 }
 
@@ -93,7 +104,7 @@
   margin: 0 1.25rem 1.5rem;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: #475569;
+  color: #1f2933;
 }
 
 /* ================= RESPONSIVE ================= */
@@ -102,7 +113,16 @@
     height: 300px;
   }
 
-  .heroContent h1 {
+  .heroTextBlock {
+    padding: 28px 24px;
+    margin: 0 8px;
+  }
+
+  .heroTextBlock h1 {
     font-size: 2.1rem;
+  }
+
+  .heroTextBlock p {
+    font-size: 0.95rem;
   }
 }

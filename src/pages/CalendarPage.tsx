@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import styles from "./CalendarPage.module.css";
 
 import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 
-import calendarBg from "../assets/images/raz/calendar-hero.jpg";
+import calendarBg from "../assets/images/raz/calendar-hero2.jpg";
 
 import { resolveCalendarMatches } from "../utils/calendar/resolveCalendarMatches";
 import { groupMatchesByMonth } from "../utils/calendar/groupMatchesByMonth";
@@ -81,86 +82,89 @@ export default function CalendarPage() {
   /* ================= UI ================= */
 
   return (
-  <PageWrapper bg="springbok">
-    <main className={styles.page}>
-      {/* ================= HERO ================= */}
-      <header
-        className={styles.hero}
-        style={{ backgroundImage: `url(${calendarBg})` }}
-      >
-        <div className={styles.heroContent}>
-          <h1>Global Rugby Calendar</h1>
-          <p>
-            An authoritative view of confirmed international fixtures,
-            <br />
-            major tournaments, and key rugby dates across the season.
+    <PageWrapper imageUrl={razLight}>
+      <main className={styles.page}>
+        {/* ================= HERO ================= */}
+        <header
+          className={styles.hero}
+          style={{ backgroundImage: `url(${calendarBg})` }}
+        >
+          <div className={styles.heroOverlay} />
+          <div className={styles.heroContent}>
+            <div className={styles.heroTextBlock}>
+              <h1>Global Rugby Calendar</h1>
+              <p>
+                An authoritative view of confirmed international fixtures,
+                <br />
+                major tournaments, and key rugby dates across the season.
+              </p>
+            </div>
+          </div>
+        </header>
+
+        {/* ================= CONTENT ================= */}
+        <section className={styles.section}>
+          <h2>Confirmed Fixtures</h2>
+
+          <p className={styles.subtext}>
+            Officially released match dates appear here as they are confirmed.
+            Fixtures not yet announced are clearly marked as{" "}
+            <strong>Coming soon</strong>.
           </p>
-        </div>
-      </header>
 
-      {/* ================= CONTENT ================= */}
-      <section className={styles.section}>
-        <h2>Confirmed Fixtures</h2>
+          {/* ================= FILTERS ================= */}
+          <div className={styles.filters}>
+            <div className={styles.filterGroup}>
+              <button
+                className={gender === "all" ? styles.active : ""}
+                onClick={() => setGender("all")}
+              >
+                All
+              </button>
+              <button
+                className={gender === "men" ? styles.active : ""}
+                onClick={() => setGender("men")}
+              >
+                Men
+              </button>
+              <button
+                className={gender === "women" ? styles.active : ""}
+                onClick={() => setGender("women")}
+              >
+                Women
+              </button>
+            </div>
 
-        <p className={styles.subtext}>
-          Officially released match dates appear here as they are confirmed.
-          Fixtures not yet announced are clearly marked as{" "}
-          <strong>Coming soon</strong>.
-        </p>
-
-        {/* ================= FILTERS ================= */}
-        <div className={styles.filters}>
-          <div className={styles.filterGroup}>
-            <button
-              className={gender === "all" ? styles.active : ""}
-              onClick={() => setGender("all")}
+            <select
+              className={styles.select}
+              value={tournamentId}
+              onChange={(e) => setTournamentId(e.target.value)}
             >
-              All
-            </button>
-            <button
-              className={gender === "men" ? styles.active : ""}
-              onClick={() => setGender("men")}
-            >
-              Men
-            </button>
-            <button
-              className={gender === "women" ? styles.active : ""}
-              onClick={() => setGender("women")}
-            >
-              Women
-            </button>
+              <option value="all">All tournaments</option>
+              {tournamentOptions.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.name}
+                </option>
+              ))}
+            </select>
           </div>
 
-          <select
-            className={styles.select}
-            value={tournamentId}
-            onChange={(e) => setTournamentId(e.target.value)}
-          >
-            <option value="all">All tournaments</option>
-            {tournamentOptions.map((t) => (
-              <option key={t.id} value={t.id}>
-                {t.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* ================= STATES ================= */}
-        {loading ? (
-          <p>Loading calendar...</p>
-        ) : monthGroups.length === 0 ? (
-          <p>No fixtures match your filters — try another selection.</p>
-        ) : (
-          monthGroups.map((group) => (
-            <CalendarMonth
-              key={`${group.year}-${group.month}`}
-              group={group}
-              onMatchSelect={goMatchFromCalendar}
-            />
-          ))
-        )}
-      </section>
-    </main>
-  </PageWrapper>
-);
+          {/* ================= STATES ================= */}
+          {loading ? (
+            <p>Loading calendar...</p>
+          ) : monthGroups.length === 0 ? (
+            <p>No fixtures match your filters — try another selection.</p>
+          ) : (
+            monthGroups.map((group) => (
+              <CalendarMonth
+                key={`${group.year}-${group.month}`}
+                group={group}
+                onMatchSelect={goMatchFromCalendar}
+              />
+            ))
+          )}
+        </section>
+      </main>
+    </PageWrapper>
+  );
 }

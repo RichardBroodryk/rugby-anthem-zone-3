@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./TournamentsHubPage.module.css";
 
 import PageWrapper from "../components/layout/PageWrapper";
+import razLight from "../assets/images/raz/razlight2.png";
 
 /* ================= HERO ================= */
 import tournamentHero from "../assets/images/raz/tournament-hub-page.png";
@@ -71,7 +72,7 @@ export default function TournamentsHubPage() {
   );
 
   return (
-    <PageWrapper bg="skyBlue">
+    <PageWrapper imageUrl={razLight}>
       <main className={styles.page}>
         {/* ================= HERO ================= */}
         <header
@@ -106,7 +107,7 @@ export default function TournamentsHubPage() {
 
           <div className={styles.sectionHeader}>
             <div className={styles.headerRow}>
-              <h2>Men’s Tournaments</h2>
+              <h2>Men's Tournaments</h2>
               <button
                 className={styles.viewAll}
                 onClick={() => navigate("/tournaments/men")}
@@ -114,7 +115,7 @@ export default function TournamentsHubPage() {
                 View all →
               </button>
             </div>
-            <p>Historic competitions shaping the global men’s game.</p>
+            <p>Historic competitions shaping the global men's game.</p>
           </div>
 
           <div className={styles.list}>
@@ -163,7 +164,7 @@ export default function TournamentsHubPage() {
 
           <div className={styles.sectionHeader}>
             <div className={styles.headerRow}>
-              <h2>Women’s Tournaments</h2>
+              <h2>Women's Tournaments</h2>
               <button
                 className={styles.viewAll}
                 onClick={() => navigate("/tournaments/women")}
@@ -172,7 +173,7 @@ export default function TournamentsHubPage() {
               </button>
             </div>
             <p>
-              Elite competitions defining women’s international rugby.
+              Elite competitions defining women's international rugby.
             </p>
           </div>
 

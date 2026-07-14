@@ -1,10 +1,18 @@
 .page {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  background: transparent;
 }
+
+/* ================= HERO ================= */
 
 .hero {
   height: 300px;
+  margin-top: 28px;
+  border-radius: 22px;
+  overflow: hidden;
   background-size: cover;
   background-position: center;
   position: relative;
@@ -16,20 +24,43 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
 }
 
 .heroContent {
   position: relative;
   color: white;
   text-align: center;
+  padding: 0 2rem;
 }
+
+.heroContent h1 {
+  font-size: 2.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.heroContent p {
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+
+/* ================= SECTIONS ================= */
 
 .section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 0;
+  width: 100%;
 }
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #0f172a;
+}
+
+/* ================= MATCHES ================= */
 
 .matches {
   display: flex;
@@ -37,37 +68,74 @@
   gap: 1rem;
 }
 
-.ctaWrap {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.primary {
-  background: #1b5e20;
-  color: white;
-  padding: 0.8rem 1.6rem;
-  border: none;
-  cursor: pointer;
-}
+/* ================= INTELLIGENCE ================= */
 
 .intelGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .intelCard {
-  background: #e8f5e9;
-  padding: 1rem;
+  background: #f1f5f9;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.intelCard strong {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.intelCard span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-top: 0.25rem;
+}
+
+.atmosphereCard {
+  background: #f1f5f9;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.atmosphereCard strong {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.atmosphereCard span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0f172a;
 }
 
 .tip {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   background: #dff3e3;
-  padding: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  color: #0f172a;
+  line-height: 1.6;
 }
 
-/* 🔥 FINAL GALLERY FIX */
+.tip strong {
+  color: #0f172a;
+}
+
+/* ================= GALLERY ================= */
 
 .gallery {
   display: grid;
@@ -81,13 +149,13 @@
 
 .galleryItem img {
   width: 100%;
-  height: 260px;        /* 🔥 THIS fixes the problem */
-  object-fit: cover;    /* 🔥 THIS normalizes all images */
+  height: 260px;
+  object-fit: cover;
   border-radius: 10px;
   display: block;
 }
 
-/* SEATING */
+/* ================= SEATING ================= */
 
 .seatingGrid {
   display: grid;
@@ -96,13 +164,78 @@
 }
 
 .seatCard {
-  background: #e8f5e9;
-  padding: 1rem;
+  background: #f1f5f9;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
 }
 
-/* RESPONSIVE */
+.seatCard h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: #0f172a;
+}
+
+.seatCard p {
+  font-size: 0.9rem;
+  color: #475569;
+  margin-bottom: 0.25rem;
+}
+
+.atmosphereBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0f172a;
+  background: #e2e8f0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+/* ================= ERROR ================= */
+
+.error {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.error button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #0f172a;
+  background: transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 900px) {
+  .hero {
+    height: 240px;
+    margin-top: 20px;
+    border-radius: 18px;
+  }
+
+  .heroContent h1 {
+    font-size: 2.2rem;
+  }
+
+  .heroContent p {
+    font-size: 1rem;
+  }
+
+  .intelGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .seatingGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
   .gallery {
     grid-template-columns: 1fr;
   }
@@ -111,7 +244,48 @@
     grid-template-columns: 1fr;
   }
 
-  .seatingGrid {
-    grid-template-columns: 1fr;
+  .galleryItem img {
+    height: 200px;
   }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    height: 200px;
+  }
+
+  .heroContent h1 {
+    font-size: 1.8rem;
+  }
+
+  .section {
+    padding: 1.5rem 0;
+  }
+
+  .intelCard {
+    padding: 0.75rem 1rem;
+  }
+}
+/* ================= BACK BUTTON ================= */
+
+.backWrap {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 28px;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.backButton:hover {
+  text-decoration: underline;
+  color: #111827;
 }

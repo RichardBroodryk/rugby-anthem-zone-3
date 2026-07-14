@@ -9,6 +9,10 @@ import { edenpark } from "./edenpark";
 import { ellispark } from "./ellispark";
 import { fnb } from "./fnb";
 
+/* 🔥 NEW ZEALAND STADIUMS */
+import { wellington } from "./wellington";
+import { christchurch } from "./christchurch";
+
 import { StadiumIntelligence } from "../stadiumEngine";
 
 /* 🔥 THIS IS THE FIX */
@@ -23,4 +27,8 @@ export const stadiumRegistry: Record<string, StadiumIntelligence> = {
   "eden-park": edenpark,
   "ellis-park": ellispark,
   "fnb-stadium": fnb,
+
+  /* 🔥 NEW ZEALAND STADIUMS */
+  "hnry-stadium": wellington,
+  "one-nz-stadium": christchurch,
 };

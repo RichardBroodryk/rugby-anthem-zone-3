@@ -1,10 +1,17 @@
 .page {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  background: transparent;
 }
 
+/* ================= HERO ================= */
 .hero {
   height: 320px;
+  margin-top: 28px;
+  border-radius: 22px;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,133 +28,80 @@
   text-shadow: 0 3px 14px rgba(0, 0, 0, 0.45);
 }
 
+.heroContent h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.heroContent p {
+  font-size: 1.05rem;
+  opacity: 0.9;
+  margin-top: 8px;
+}
+
+/* ================= BACK BUTTON ================= */
 .backNav {
   max-width: 1200px;
-  margin: 28px auto 0;
+  margin: 18px auto 0;
   padding: 0 24px;
+  display: flex;
+  justify-content: center;
 }
 
 .backButton {
-  background: #0f172a;
-  color: white;
-  padding: 10px 16px;
-  border-radius: 8px;
+  background: none;
   border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4b5563;
   cursor: pointer;
+  padding: 6px 0;
+  transition: color 0.2s ease;
 }
 
 .backButton:hover {
-  background: #1e293b;
+  text-decoration: underline;
+  color: #111827;
 }
 
+/* ================= SECTIONS ================= */
 .section {
   max-width: 1200px;
   margin: 40px auto 0;
   padding: 0 24px;
 }
 
-/* ================= FINAL STANDINGS - PERFECT ALIGNMENT ================= */
-.standings {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 20px;
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #0f172a;
 }
 
-.headerRow {
-  display: flex;
-  align-items: center;
-  padding: 14px 16px;
-  background: #0f172a;
-  color: white;
-  font-weight: 600;
-  border-radius: 8px 8px 0 0;
+.anthemSubtext {
+  color: #1f2933;
+  margin-bottom: 1.5rem;
   font-size: 0.95rem;
 }
 
-.headerRow > span {
-  text-align: center;
+/* ================= ANTHEMS ================= */
+.flagsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  justify-items: center;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-.headerRow .rankHeader   { width: 40px; }
-.headerRow .teamHeader   { flex: 1; text-align: left; padding-left: 12px; }
-.headerRow .numHeader    { width: 48px; }
-.headerRow .pdHeader     { width: 58px; }
-.headerRow .ptsHeader    { width: 58px; }
-.headerRow .formHeader   { width: 130px; }   /* Room for 5-6 form items */
-
-.standingRow {
-  display: flex;
-  align-items: center;
-  padding: 14px 16px;
-  background: white;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  gap: 8px;
-  font-size: 0.95rem;
-}
-
-.standingRow > span {
-  text-align: center;
-}
-
-.standingRow .rank   { width: 40px; font-weight: 600; color: #475569; }
-.standingRow .team   { flex: 1; display: flex; align-items: center; gap: 10px; text-align: left; padding-left: 12px; }
-.standingRow .num    { width: 48px; }
-.standingRow .pd     { width: 58px; }
-.standingRow .pts    { width: 58px; font-weight: 700; }
-.standingRow .form   { width: 130px; display: flex; gap: 6px; justify-content: center; }
-
-.flag {
-  width: 28px;
-  height: 20px;
-  object-fit: cover;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-
-.win  { color: #22c55e; font-weight: 700; }
-.loss { color: #ef4444; font-weight: 700; }
-.draw { color: #64748b; }
-
-/* ================= MATCHES ================= */
-.matches {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* ================= MOBILE RESPONSIVE ================= */
-@media (max-width: 768px) {
-  .hero { height: 260px; }
-  .flag { width: 24px; height: 16px; }
-  
-  .headerRow, .standingRow {
-    font-size: 0.9rem;
-    padding: 12px 12px;
-  }
-  
-  .headerRow .teamHeader,
-  .standingRow .team { flex: 1.2; }
-  
-  .headerRow .numHeader,
-  .standingRow .num,
-  .headerRow .pdHeader,
-  .standingRow .pd,
-  .headerRow .ptsHeader,
-  .standingRow .pts { width: 42px; }
-  
-  .headerRow .formHeader,
-  .standingRow .form { width: 100px; gap: 4px; }
-}
-/* ================= TABLE STANDINGS - PERFECT ALIGNMENT ================= */
+/* ================= STANDINGS TABLE ================= */
 .standingsTable {
   width: 100%;
   border-collapse: collapse;
   background: white;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .standingsTable th,
@@ -166,6 +120,7 @@
 
 .standingsTable td {
   font-size: 0.95rem;
+  color: #1f2933;
 }
 
 .standingsTable th:nth-child(1),
@@ -190,11 +145,12 @@
 .standingsTable td:nth-child(7) { width: 70px; }
 
 .standingsTable th:nth-child(8),
-.standingsTable td:nth-child(8) { width: 65px; font-weight: 700; }
+.standingsTable td:nth-child(8) { width: 65px; font-weight: 700; color: #0f172a; }
 
 .standingsTable th:nth-child(9),
 .standingsTable td:nth-child(9) { width: 140px; }
 
+/* ================= TEAM CELL ================= */
 .teamCell {
   display: flex;
   align-items: center;
@@ -208,37 +164,130 @@
   border-radius: 3px;
 }
 
+/* ================= FORM ================= */
 .form {
   display: flex;
   gap: 6px;
   justify-content: center;
 }
 
-.win  { color: #22c55e; font-weight: 700; }
-.loss { color: #ef4444; font-weight: 700; }
-.draw { color: #64748b; }
+.win { 
+  color: #22c55e; 
+  font-weight: 700; 
+}
 
-/* Mobile */
+.loss { 
+  color: #ef4444; 
+  font-weight: 700; 
+}
+
+.draw { 
+  color: #64748b; 
+}
+
+.points {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* ================= MATCHES ================= */
+.matches {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .hero {
+    height: 260px;
+    margin-top: 20px;
+    border-radius: 18px;
+  }
+
+  .heroContent h1 {
+    font-size: 2rem;
+  }
+
+  .heroContent p {
+    font-size: 1rem;
+  }
+
+  .section {
+    padding: 0 16px;
+  }
+
+  .backNav {
+    padding: 0 16px;
+  }
+}
+
 @media (max-width: 768px) {
+  .hero { 
+    height: 220px; 
+  }
+
+  .flag { 
+    width: 24px; 
+    height: 16px; 
+  }
+
   .standingsTable th,
   .standingsTable td {
     padding: 12px 8px;
     font-size: 0.9rem;
   }
-  
+
   .standingsTable th:nth-child(2),
-  .standingsTable td:nth-child(2) { width: 180px; }
-  
-  .form { gap: 4px; }
+  .standingsTable td:nth-child(2) { 
+    width: 180px; 
+  }
+
+  .form { 
+    gap: 4px; 
+  }
+
+  .flagsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 360px;
+  }
 }
-.flagsGrid {
-  display: grid;
 
-  grid-template-columns: repeat(4, 1fr); /* 🔥 max 4 per row */
+@media (max-width: 480px) {
+  .flagsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 240px;
+  }
 
-  gap: 16px;
-  justify-items: center;
+  .hero {
+    height: 200px;
+  }
 
-  max-width: 480px;
-  margin: 0 auto;
+  .heroContent h1 {
+    font-size: 1.6rem;
+  }
+
+  .standingsTable th,
+  .standingsTable td {
+    font-size: 0.75rem;
+    padding: 8px 4px;
+  }
+
+  .standingsTable th:nth-child(2),
+  .standingsTable td:nth-child(2) { 
+    width: 120px; 
+  }
+
+  .flag {
+    width: 20px;
+    height: 14px;
+  }
+
+  .form {
+    gap: 2px;
+  }
+
+  .form span {
+    font-size: 0.7rem;
+  }
 }

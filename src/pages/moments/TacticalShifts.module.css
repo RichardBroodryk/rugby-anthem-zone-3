@@ -1,6 +1,8 @@
 .page {
-  background: #f9fafb;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 0 24px 96px;
+  background: transparent;
 }
 
 /* ================= HERO ================= */
@@ -8,6 +10,8 @@
   position: relative;
   margin-bottom: 72px;
   text-align: center;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .heroImage {
@@ -36,10 +40,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 700px;
-  color: #0f172a; /* changed from white to black */
+  color: #ffffff;
   text-shadow: 0 3px 14px rgba(0, 0, 0, 0.45);
 }
-
 
 .heroText h1 {
   margin-bottom: 14px;
@@ -51,6 +54,29 @@
   font-size: 1.05rem;
   line-height: 1.45;
   opacity: 0.95;
+}
+
+/* ================= BACK BUTTON ================= */
+.backWrap {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 28px;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.backButton:hover {
+  text-decoration: underline;
+  color: #111827;
 }
 
 /* ================= CONTENT ================= */
@@ -72,27 +98,24 @@
   margin-bottom: 14px;
   font-size: 1rem;
   line-height: 1.75;
-  color: #475569;
+  color: #1f2933;
 }
 
 .block p:last-child {
   margin-bottom: 0;
 }
-.backNav {
-  max-width: 1200px;
-  margin: 24px auto 0;
-  padding: 0 24px;
-}
 
-.backNav a {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #0f172a;
-  text-decoration: none;
-  opacity: 0.8;
-}
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .heroImage {
+    height: 300px;
+  }
 
-.backNav a:hover {
-  opacity: 1;
-  text-decoration: underline;
+  .heroText h1 {
+    font-size: 2.1rem;
+  }
+
+  .heroText p {
+    font-size: 0.95rem;
+  }
 }

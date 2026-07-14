@@ -36,7 +36,20 @@ export const stadiums: Stadium[] = [
   { name: "Ellis Park", slug: "ellis-park", country: "South Africa", city: "Johannesburg" },
   { name: "FNB Stadium", slug: "fnb-stadium", country: "South Africa", city: "Johannesburg" },
 
-  /* ===== NEW ===== */
+  /* ===== NEW ZEALAND STADIUMS ===== */
+  { 
+    name: "HNRY Stadium", 
+    slug: "hnry-stadium", 
+    country: "New Zealand", 
+    city: "Wellington" 
+  },
+  { 
+    name: "One NZ Stadium", 
+    slug: "one-nz-stadium", 
+    country: "New Zealand", 
+    city: "Christchurch" 
+  },
 
+  /* ===== SOUTH AFRICA ===== */
   { name: "Cape Town Stadium", slug: "capetown", country: "South Africa", city: "Cape Town" },
 ];
