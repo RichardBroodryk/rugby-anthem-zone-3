@@ -7,11 +7,13 @@ import razLight from "../assets/images/raz/razlight2.png";
 
 import matchVideosHero from "../assets/images/raz/Matchhighlightsmainpage.png";
 
+/* ================= TYPES ================= */
+
 type VideoCategory =
-  | "highlights"
+  | "highlight"
   | "analysis"
-  | "interviews"
-  | "behind-scenes";
+  | "interview"
+  | "press";
 
 interface VideoItem {
   id: number;
@@ -24,30 +26,35 @@ interface VideoItem {
   thumbnail?: string;
 }
 
+/* ================= CATEGORIES ================= */
+
 const categories: { id: VideoCategory; label: string }[] = [
-  { id: "highlights", label: "Match Highlights" },
+  { id: "highlight", label: "Match Highlights" },
   { id: "analysis", label: "Expert Analysis" },
-  { id: "interviews", label: "Player Interviews" },
-  { id: "behind-scenes", label: "Behind the Scenes" },
+  { id: "interview", label: "Player & Coach Interviews" },
+  { id: "press", label: "Press Conferences" },
 ];
 
-// ✅ BACKEND URL
+/* ================= API ================= */
+
 const API_URL = "https://rugby-anthem-backend.onrender.com";
 
 export default function MatchVideosPage() {
   const [activeCategory, setActiveCategory] =
-    useState<VideoCategory>("highlights");
+    useState<VideoCategory>("highlight");
 
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  /* ================= FETCH VIDEOS BY CATEGORY ================= */
+
   useEffect(() => {
     setLoading(true);
     setError(null);
 
-    fetch(`${API_URL}/api/videos`)
+    fetch(`${API_URL}/api/videos?category=${activeCategory}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -55,7 +62,7 @@ export default function MatchVideosPage() {
         return res.json();
       })
       .then((data) => {
-        console.log("🎥 MATCH VIDEOS RECEIVED:", data);
+        console.log(`🎥 MATCH VIDEOS (${activeCategory}) RECEIVED:`, data);
         setVideos(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
@@ -66,24 +73,9 @@ export default function MatchVideosPage() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [activeCategory]);
 
-  const filteredVideos = videos.filter((video) => {
-    const backendCategory = video.category?.toLowerCase();
-
-    if (!backendCategory && activeCategory === "highlights") {
-      return true;
-    }
-
-    if (
-      backendCategory === "highlight" &&
-      activeCategory === "highlights"
-    ) {
-      return true;
-    }
-
-    return backendCategory === activeCategory;
-  });
+  /* ================= RENDER ================= */
 
   return (
     <PageWrapper imageUrl={razLight}>
@@ -92,7 +84,7 @@ export default function MatchVideosPage() {
         <header className={styles.hero}>
           <img
             src={matchVideosHero}
-            alt=""
+            alt="Match Videos"
             className={styles.heroImage}
           />
 
@@ -101,8 +93,7 @@ export default function MatchVideosPage() {
 
             <p>
               Highlights, analysis, interviews and
-              behind-the-scenes coverage from across
-              the rugby world.
+              press conferences from across the rugby world.
             </p>
           </div>
         </header>
@@ -117,43 +108,41 @@ export default function MatchVideosPage() {
           </button>
         </div>
 
-        {/* FEATURED */}
+        {/* FEATURED VIDEO - Will Jordan Try Record */}
         <section className={styles.featured}>
           <div
             className={styles.featuredThumbnail}
             onClick={() =>
               window.open(
-                "https://www.youtube.com/watch?v=FykXCpCuhNM",
+                "https://www.youtube.com/watch?v=iJRY0u9jG1k",
                 "_blank"
               )
             }
             style={{
               backgroundImage:
-                "url(https://img.youtube.com/vi/FykXCpCuhNM/hqdefault.jpg)",
+                "url(https://img.youtube.com/vi/iJRY0u9jG1k/hqdefault.jpg)",
               backgroundSize: "cover",
               backgroundPosition: "center",
               cursor: "pointer",
             }}
           >
             <span className={styles.featuredDuration}>
-              Final
+              Record Breaker
             </span>
           </div>
 
           <div className={styles.featuredInfo}>
             <span className={styles.featuredLabel}>
-              Featured Match
+              Featured Rugby Video
             </span>
 
             <h2>
-              Rugby World Cup 2023 Final —
-              Highlights
+              Will Jordan Try Record
             </h2>
 
             <p>
-              Relive the epic clash between South
-              Africa and New Zealand in the 2023
-              Rugby World Cup Final.
+              One of the greatest finishers in world rugby.
+              Watch Will Jordan continue rewriting the record books.
             </p>
           </div>
         </section>
@@ -192,7 +181,7 @@ export default function MatchVideosPage() {
         {/* VIDEO GRID */}
         {!loading && !error && (
           <section className={styles.grid}>
-            {filteredVideos.map((video) => (
+            {videos.map((video) => (
               <div
                 key={video.id}
                 className={styles.card}
@@ -219,6 +208,12 @@ export default function MatchVideosPage() {
                 </div>
 
                 <div className={styles.info}>
+                  {/* ✅ CATEGORY LABEL ABOVE TITLE */}
+                  {video.category && (
+                    <span className={styles.videoCategory}>
+                      {video.category.toUpperCase()}
+                    </span>
+                  )}
                   <h3>{video.title}</h3>
 
                   <div className={styles.meta}>
@@ -232,20 +227,21 @@ export default function MatchVideosPage() {
         )}
 
         {/* EMPTY STATE */}
-        {!loading && !error && filteredVideos.length === 0 && (
+        {!loading && !error && videos.length === 0 && (
           <p className={styles.empty}>
-            No videos available right now.
+            No videos found in this category yet.
           </p>
         )}
 
         {/* PREMIUM */}
         <section className={styles.callout}>
-          <h3>Premium Video Access</h3>
+          <h3>RAZ Premium Video</h3>
 
           <p>
-            Extended highlights, ad-light viewing,
-            and exclusive rugby documentaries are
-            available with Premium membership.
+            Exclusive documentaries<br />
+            Extended highlights<br />
+            Historic matches<br />
+            Ad-light viewing
           </p>
         </section>
       </main>

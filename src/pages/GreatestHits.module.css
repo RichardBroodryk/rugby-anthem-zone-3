@@ -135,3 +135,12 @@
   font-size: 0.9rem;
   color: #0f172a;
 }
+.videoCategory {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+}

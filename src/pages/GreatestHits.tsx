@@ -16,13 +16,13 @@ interface VideoItem {
 
 /* ================= API ================= */
 
-// ✅ USE YOUR RENDER BACKEND URL
 const API_URL = "https://rugby-anthem-backend.onrender.com";
 
 export default function GreatestHits() {
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   const navigate = useNavigate();
 
   /* ================= FETCH ================= */
@@ -31,72 +31,71 @@ export default function GreatestHits() {
     setLoading(true);
     setError(null);
 
-    fetch(`${API_URL}/api/videos`)
+    fetch(
+      `${API_URL}/api/videos?category=hit,moment,try,tackle`
+    )
       .then((res) => {
         if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+          throw new Error(`HTTP ${res.status}`);
         }
+
         return res.json();
       })
       .then((data) => {
-        console.log("🎥 GREATEST HITS RECEIVED:", data);
+        console.log("🏉 Greatest Hits:", data);
 
-        let hitVideos: VideoItem[] = [];
-
-        if (Array.isArray(data) && data.length > 0) {
-          // Try to filter by "hit" category first
-          hitVideos = data.filter(
-            (v: VideoItem) =>
-              v.category &&
-              v.category.toLowerCase().includes("hit")
-          );
-
-          // Fallback to "highlight" category
-          if (hitVideos.length === 0) {
-            hitVideos = data
-              .filter(
-                (v: VideoItem) =>
-                  v.category &&
-                  v.category.toLowerCase().includes("highlight")
-              )
-              .slice(0, 16);
-          }
-
-          // If still empty, take first 16 videos
-          if (hitVideos.length === 0) {
-            hitVideos = data.slice(0, 16);
-          }
-
-          setVideos(hitVideos.slice(0, 16));
+        if (Array.isArray(data)) {
+          setVideos(data);
         } else {
           setVideos([]);
           setError("No videos available right now.");
         }
       })
       .catch((err) => {
-        console.error("🔴 Failed to load hit videos:", err);
-        setError("Failed to load videos. Please try again.");
+        console.error(err);
+
         setVideos([]);
+        setError("Failed to load videos.");
       })
       .finally(() => {
         setLoading(false);
       });
   }, []);
 
-  /* ================= SMART DISTRIBUTION ================= */
+  /* ================= FILTER BY CATEGORY (Case-Insensitive) ================= */
 
-  const rightNow = videos.slice(0, 4);
-  const momentum = videos.slice(4, 8);
-  const feelIt = videos.slice(8, 12);
-  const still = videos.slice(12, 16);
+  const greatestHits = videos.filter(
+    (v) => v.category?.toLowerCase() === "hit"
+  );
+
+  const unforgettable = videos.filter(
+    (v) => v.category?.toLowerCase() === "moment"
+  );
+
+  const greatestTries = videos.filter(
+    (v) => v.category?.toLowerCase() === "try"
+  );
+
+  const biggestTackles = videos.filter(
+    (v) => v.category?.toLowerCase() === "tackle"
+  );
 
   /* ================= CARD ================= */
 
-  const renderCard = (video: VideoItem, large = false) => (
+  const renderCard = (
+    video: VideoItem,
+    large = false
+  ) => (
     <div
       key={video.id}
-      className={large ? styles.cardLarge : styles.card}
-      onClick={() => video.url && window.open(video.url, "_blank")}
+      className={
+        large ? styles.cardLarge : styles.card
+      }
+      onClick={() => {
+        if (video.url) {
+          window.open(video.url, "_blank");
+        }
+      }}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
@@ -106,18 +105,31 @@ export default function GreatestHits() {
       }}
     >
       <div
-        className={large ? styles.thumbLarge : styles.thumb}
+        className={
+          large ? styles.thumbLarge : styles.thumb
+        }
         style={{
           backgroundImage: video.thumbnail
             ? `url(${video.thumbnail})`
             : undefined,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         <div className={styles.overlay} />
-        <span className={styles.play}>▶</span>
+
+        <span className={styles.play}>
+          ▶
+        </span>
       </div>
 
       <div className={styles.info}>
+        {/* ✅ CATEGORY LABEL ABOVE TITLE */}
+        {video.category && (
+          <span className={styles.videoCategory}>
+            {video.category.toUpperCase()}
+          </span>
+        )}
         <h3>{video.title}</h3>
       </div>
     </div>
@@ -128,93 +140,140 @@ export default function GreatestHits() {
   return (
     <main className={styles.page}>
       {/* HERO */}
+
       <header className={styles.hero}>
         <img
           src={hitsHero}
-          alt="Rugby greatest hits"
+          alt="Greatest Hits"
           className={styles.heroImage}
         />
+
         <div className={styles.heroText}>
           <h1>Greatest Hits</h1>
+
           <p>
-            The moments that make you stop,
-            <br />
-            react, and watch again.
+            The biggest hits, unforgettable moments,
+            greatest tries and bone-crunching tackles
+            from the world of rugby.
           </p>
         </div>
       </header>
 
-      {/* CONTENT COLUMN */}
       <div className={styles.contentColumn}>
-        
-        {/* BACK BUTTON */}
+        {/* BACK */}
+
         <div className={styles.backWrap}>
           <button
             className={styles.back}
-            onClick={() => navigate("/media")}
+            onClick={() =>
+              navigate("/media")
+            }
           >
             ← Back to The Rugby Studio
           </button>
         </div>
 
-        {/* LOADING STATE */}
+        {/* LOADING */}
+
         {loading && (
-          <div className={styles.empty}>Loading videos...</div>
+          <div className={styles.empty}>
+            Loading videos...
+          </div>
         )}
 
-        {/* ERROR STATE */}
-        {error && !loading && (
+        {/* ERROR */}
+
+        {!loading && error && (
           <div className={styles.empty}>
             ⚠️ {error}
           </div>
         )}
 
-        {/* 🔥 RIGHT NOW */}
-        {!loading && rightNow.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>Right Now</h2>
-            <div className={styles.rail}>
-              {rightNow.map((v) => renderCard(v))}
-            </div>
-          </section>
-        )}
+        {/* GREATEST HITS */}
 
-        {/* 💥 MOMENTUM */}
-        {!loading && momentum.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>Momentum Shifters</h2>
-            <div className={styles.grid}>
-              {momentum.map((v) => renderCard(v, true))}
-            </div>
-          </section>
-        )}
+        {!loading &&
+          !error &&
+          greatestHits.length > 0 && (
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>
+                Greatest Hits
+              </h2>
 
-        {/* 🔊 FEEL IT */}
-        {!loading && feelIt.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>Feel It</h2>
-            <div className={styles.rail}>
-              {feelIt.map((v) => renderCard(v))}
-            </div>
-          </section>
-        )}
+              <div className={styles.rail}>
+                {greatestHits.map((video) =>
+                  renderCard(video)
+                )}
+              </div>
+            </section>
+          )}
 
-        {/* 🧱 STILL HITS */}
-        {!loading && still.length > 0 && (
-          <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>Still Hits</h2>
-            <div className={styles.gridCompact}>
-              {still.map((v) => renderCard(v))}
-            </div>
-          </section>
-        )}
+        {/* UNFORGETTABLE MOMENTS */}
 
-        {/* EMPTY STATE */}
-        {!loading && !error && videos.length === 0 && (
-          <p className={styles.empty}>
-            No hits available yet — check back soon.
-          </p>
-        )}
+        {!loading &&
+          !error &&
+          unforgettable.length > 0 && (
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>
+                Unforgettable Moments
+              </h2>
+
+              <div className={styles.grid}>
+                {unforgettable.map((video) =>
+                  renderCard(video, true)
+                )}
+              </div>
+            </section>
+          )}
+
+        {/* GREATEST TRIES */}
+
+        {!loading &&
+          !error &&
+          greatestTries.length > 0 && (
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>
+                Greatest Tries
+              </h2>
+
+              <div className={styles.rail}>
+                {greatestTries.map((video) =>
+                  renderCard(video)
+                )}
+              </div>
+            </section>
+          )}
+
+        {/* BIGGEST TACKLES */}
+
+        {!loading &&
+          !error &&
+          biggestTackles.length > 0 && (
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>
+                Biggest Tackles
+              </h2>
+
+              <div
+                className={
+                  styles.gridCompact
+                }
+              >
+                {biggestTackles.map((video) =>
+                  renderCard(video)
+                )}
+              </div>
+            </section>
+          )}
+
+        {/* EMPTY */}
+
+        {!loading &&
+          !error &&
+          videos.length === 0 && (
+            <div className={styles.empty}>
+              No videos available.
+            </div>
+          )}
       </div>
     </main>
   );
