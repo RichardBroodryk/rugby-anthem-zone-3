@@ -34,6 +34,7 @@ export default function NewsHubPage() {
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   /* ================= FETCH ================= */
 
@@ -74,12 +75,24 @@ export default function NewsHubPage() {
       })
       .finally(() => {
         setLoading(false);
+        setRefreshing(false);
       });
   };
 
+  /* ================= MANUAL REFRESH ================= */
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchNews();
+  };
+
+  /* ================= AUTO REFRESH (10 minutes) ================= */
+
   useEffect(() => {
     fetchNews();
-    const interval = setInterval(fetchNews, 300000);
+    
+    // Refresh every 10 minutes (600,000 ms)
+    const interval = setInterval(fetchNews, 600000);
     return () => clearInterval(interval);
   }, []);
 
@@ -146,12 +159,24 @@ export default function NewsHubPage() {
             developments across the international game.
           </p>
 
-          {lastUpdated && (
-            <div className={styles.updated}>
-              Last updated: {lastUpdated}
-            </div>
-          )}
+          {/* LAST UPDATED & REFRESH BUTTON */}
+          <div className={styles.controls}>
+            {lastUpdated && (
+              <div className={styles.updated}>
+                Last updated: {lastUpdated}
+              </div>
+            )}
+            
+            <button 
+              onClick={handleRefresh} 
+              className={styles.refreshBtn}
+              disabled={refreshing || loading}
+            >
+              {refreshing || loading ? '🔄 Refreshing...' : '🔄 Refresh News'}
+            </button>
+          </div>
           
+          {/* ERROR MESSAGE */}
           {error && (
             <div className={styles.error}>
               ⚠️ {error}
