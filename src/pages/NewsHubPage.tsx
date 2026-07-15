@@ -35,25 +35,45 @@ export default function NewsHubPage() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   /* ================= FETCH ================= */
 
   const fetchNews = () => {
+    setLoading(true);
+    setError(null);
+    
     fetch(`${API_URL}/api/news`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
         console.log("🔥 FRONTEND RECEIVED:", data);
 
-        if (Array.isArray(data) && data.length > 0) {
-  setNews(data);
-  setLastUpdated(new Date().toLocaleTimeString());
-} else {
-  console.warn("⚠️ Empty API — keeping existing news");
-}
+        // ✅ ALWAYS update state - even if empty array
+        if (Array.isArray(data)) {
+          setNews(data);
+          setLastUpdated(new Date().toLocaleTimeString());
+          
+          if (data.length === 0) {
+            console.log("📭 API returned empty - clearing news feed");
+            setError("No news available right now.");
+          } else {
+            setError(null);
+          }
+        } else {
+          console.warn("⚠️ Invalid response format - expected array");
+          setNews([]);
+          setError("Invalid data format received");
+        }
       })
       .catch((err) => {
         console.warn("🔴 Fetch failed", err);
-        setNews([]); // honest state
+        setNews([]); // ✅ CLEAR on error
+        setError("Failed to load news. Please try again.");
       })
       .finally(() => {
         setLoading(false);
@@ -63,7 +83,8 @@ export default function NewsHubPage() {
   useEffect(() => {
     fetchNews();
 
-    const interval = setInterval(fetchNews, 60000);
+    // Refresh every 5 minutes (300,000 ms)
+    const interval = setInterval(fetchNews, 300000);
     return () => clearInterval(interval);
   }, []);
 
@@ -136,6 +157,13 @@ export default function NewsHubPage() {
               Last updated: {lastUpdated}
             </div>
           )}
+          
+          {/* ✅ ERROR MESSAGE */}
+          {error && (
+            <div className={styles.error}>
+              ⚠️ {error}
+            </div>
+          )}
         </section>
 
         {/* CATEGORIES */}
@@ -198,9 +226,15 @@ export default function NewsHubPage() {
             <div className={styles.empty}>Loading news...</div>
           )}
 
-          {!loading && filtered.length === 0 && (
+          {!loading && filtered.length === 0 && !error && (
             <div className={styles.empty}>
               No news available right now.
+            </div>
+          )}
+
+          {!loading && filtered.length === 0 && error && (
+            <div className={styles.empty}>
+              {error}
             </div>
           )}
 
