@@ -31,21 +31,40 @@ const categories: { id: VideoCategory; label: string }[] = [
   { id: "behind-scenes", label: "Behind the Scenes" },
 ];
 
+// ✅ BACKEND URL
+const API_URL = "https://rugby-anthem-backend.onrender.com";
+
 export default function MatchVideosPage() {
   const [activeCategory, setActiveCategory] =
     useState<VideoCategory>("highlights");
 
   const [videos, setVideos] = useState<VideoItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/videos")
-      .then((res) => res.json())
+    setLoading(true);
+    setError(null);
+
+    fetch(`${API_URL}/api/videos`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
-        setVideos(data);
+        console.log("🎥 MATCH VIDEOS RECEIVED:", data);
+        setVideos(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
-        console.error("Failed to load videos:", err);
+        console.error("🔴 Failed to load videos:", err);
+        setError("Failed to load videos. Please try again.");
+        setVideos([]);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -158,45 +177,66 @@ export default function MatchVideosPage() {
           ))}
         </nav>
 
+        {/* LOADING STATE */}
+        {loading && (
+          <div className={styles.empty}>Loading videos...</div>
+        )}
+
+        {/* ERROR STATE */}
+        {error && !loading && (
+          <div className={styles.empty}>
+            ⚠️ {error}
+          </div>
+        )}
+
         {/* VIDEO GRID */}
-        <section className={styles.grid}>
-          {filteredVideos.map((video) => (
-            <div
-              key={video.id}
-              className={styles.card}
-              onClick={() => {
-                if (video.url) {
-                  window.open(video.url, "_blank");
-                }
-              }}
-              style={{ cursor: "pointer" }}
-            >
+        {!loading && !error && (
+          <section className={styles.grid}>
+            {filteredVideos.map((video) => (
               <div
-                className={styles.thumbnail}
-                style={{
-                  backgroundImage: video.thumbnail
-                    ? `url(${video.thumbnail})`
-                    : undefined,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
+                key={video.id}
+                className={styles.card}
+                onClick={() => {
+                  if (video.url) {
+                    window.open(video.url, "_blank");
+                  }
                 }}
+                style={{ cursor: "pointer" }}
               >
-                <span className={styles.duration}>
-                  {video.duration || ""}
-                </span>
-              </div>
+                <div
+                  className={styles.thumbnail}
+                  style={{
+                    backgroundImage: video.thumbnail
+                      ? `url(${video.thumbnail})`
+                      : undefined,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  <span className={styles.duration}>
+                    {video.duration || ""}
+                  </span>
+                </div>
 
-              <div className={styles.info}>
-                <h3>{video.title}</h3>
+                <div className={styles.info}>
+                  <h3>{video.title}</h3>
 
-                <div className={styles.meta}>
-                  <span>{video.views || ""}</span>
-                  <span>{video.date || ""}</span>
+                  <div className={styles.meta}>
+                    <span>{video.views || ""}</span>
+                    <span>{video.date || ""}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </section>
+            ))}
+          </section>
+        )}
+
+        {/* EMPTY STATE */}
+        {!loading && !error && filteredVideos.length === 0 && (
+          <p className={styles.empty}>
+            No videos available right now.
+          </p>
+        )}
 
         {/* PREMIUM */}
         <section className={styles.callout}>
