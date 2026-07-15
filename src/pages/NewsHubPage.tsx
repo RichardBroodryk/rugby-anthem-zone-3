@@ -91,8 +91,8 @@ export default function NewsHubPage() {
   useEffect(() => {
     fetchNews();
     
-    // Refresh every 10 minutes (600,000 ms)
-    const interval = setInterval(fetchNews, 600000);
+    // Refresh every 30 minutes (1800,000 ms)
+    const interval = setInterval(fetchNews, 1800000);
     return () => clearInterval(interval);
   }, []);
 
