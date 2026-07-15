@@ -17,18 +17,16 @@ type NewsItem = {
   category: string;
   tags: string[];
   featured?: boolean;
-
-  // ✅ NEW FIELDS FROM BACKEND
   publishedAt?: string | null;
   image?: string | null;
 };
 
 /* ================= API ================= */
 
-const API_URL =
-  process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+// ✅ YOUR RENDER BACKEND URL
+const API_URL = "https://rugby-anthem-backend.onrender.com";
 
-console.log("API_URL:", API_URL);
+console.log("🔗 API_URL:", API_URL);
 
 export default function NewsHubPage() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -53,7 +51,6 @@ export default function NewsHubPage() {
       .then((data) => {
         console.log("🔥 FRONTEND RECEIVED:", data);
 
-        // ✅ ALWAYS update state - even if empty array
         if (Array.isArray(data)) {
           setNews(data);
           setLastUpdated(new Date().toLocaleTimeString());
@@ -72,7 +69,7 @@ export default function NewsHubPage() {
       })
       .catch((err) => {
         console.warn("🔴 Fetch failed", err);
-        setNews([]); // ✅ CLEAR on error
+        setNews([]);
         setError("Failed to load news. Please try again.");
       })
       .finally(() => {
@@ -82,8 +79,6 @@ export default function NewsHubPage() {
 
   useEffect(() => {
     fetchNews();
-
-    // Refresh every 5 minutes (300,000 ms)
     const interval = setInterval(fetchNews, 300000);
     return () => clearInterval(interval);
   }, []);
@@ -151,14 +146,12 @@ export default function NewsHubPage() {
             developments across the international game.
           </p>
 
-          {/* ✅ LAST UPDATED */}
           {lastUpdated && (
             <div className={styles.updated}>
               Last updated: {lastUpdated}
             </div>
           )}
           
-          {/* ✅ ERROR MESSAGE */}
           {error && (
             <div className={styles.error}>
               ⚠️ {error}
@@ -185,11 +178,9 @@ export default function NewsHubPage() {
         {featured.length > 0 && (
           <section className={styles.featured}>
             <h2>Top Stories</h2>
-
             <div className={styles.featuredGrid}>
               {featured.map((item) => (
                 <article key={item.id} className={styles.featuredCard}>
-                  {/* ✅ IMAGE */}
                   {item.image && (
                     <img
                       src={item.image}
@@ -197,14 +188,12 @@ export default function NewsHubPage() {
                       className={styles.image}
                     />
                   )}
-
                   <span className={styles.meta}>
                     {item.source} • {item.time}
                     {isLive(item.time) && (
                       <span className={styles.live}>LIVE</span>
                     )}
                   </span>
-
                   <a
                     href={item.url || "#"}
                     target="_blank"
@@ -212,7 +201,6 @@ export default function NewsHubPage() {
                   >
                     <h3>{item.title}</h3>
                   </a>
-
                   <p>{item.excerpt}</p>
                 </article>
               ))}
@@ -241,7 +229,6 @@ export default function NewsHubPage() {
           {!loading &&
             filtered.map((item) => (
               <article key={item.id} className={styles.card}>
-                {/* ✅ IMAGE */}
                 {item.image && (
                   <img
                     src={item.image}
@@ -249,14 +236,12 @@ export default function NewsHubPage() {
                     className={styles.image}
                   />
                 )}
-
                 <span className={styles.meta}>
                   {item.source} • {item.time}
                   {isLive(item.time) && (
                     <span className={styles.live}>LIVE</span>
                   )}
                 </span>
-
                 <a
                   href={item.url || "#"}
                   target="_blank"
@@ -264,9 +249,7 @@ export default function NewsHubPage() {
                 >
                   <h3>{item.title}</h3>
                 </a>
-
                 <p>{item.excerpt}</p>
-
                 <div className={styles.tags}>
                   {item.tags?.map((tag, i) => (
                     <span key={i}>#{tag}</span>
