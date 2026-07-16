@@ -10,19 +10,8 @@
   opacity: 1;
   transition: opacity 0.85s ease-in-out;
 
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(35, 74, 118, 0.28) 0%,
-      rgba(35, 74, 118, 0.12) 28%,
-      rgba(35, 74, 118, 0) 60%
-    ),
-    linear-gradient(
-      180deg,
-      #05111d 0%,
-      #071727 45%,
-      #081b2d 100%
-    );
+  /* Changed to solid black background */
+  background: #000000;
 }
 
 .fadeOut {
@@ -54,6 +43,25 @@
   filter:
     drop-shadow(0 30px 45px rgba(0,0,0,.45))
     drop-shadow(0 8px 20px rgba(0,0,0,.25));
+
+  /* Added pulse animation */
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Pulse keyframes */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -89,5 +97,10 @@
 @media (prefers-reduced-motion: reduce) {
   .splash {
     transition: none !important;
+  }
+  
+  /* Disable animation for users who prefer reduced motion */
+  .image {
+    animation: none !important;
   }
 }

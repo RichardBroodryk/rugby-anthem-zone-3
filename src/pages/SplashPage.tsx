@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./SplashPage.module.css";
 
-import razSplash from "../assets/images/raz/splashscreen2.png";
+import razSplash from "../assets/images/raz/logonew.png";
 
 const SPLASH_DURATION = 4000;
 
