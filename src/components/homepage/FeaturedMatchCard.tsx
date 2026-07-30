@@ -1,160 +1,123 @@
-import { useEffect, useMemo, useState } from "react";
+import styles from "./FeaturedMatchCard.module.css";
 import { useNavigate } from "react-router-dom";
 
-import styles from "./FeaturedMatchCard.module.css";
+// Flag imports - using the correct paths from your file list
+import nzFlag from "../../assets/images/flags/new-zealand.jpg";
+import saFlag from "../../assets/images/flags/south-africa.jpg";
+import argentinaFlag from "../../assets/images/flags/argentina.jpg";
 
-import { getMatches } from "../../data/matchesAdapter";
-import { flagMap } from "../../data/flagMap";
+// URC Team Logos - using the correct paths from your file list
+import stormersLogo from "../../assets/images/rivalry/stormers.jpg";
 
-import type { MatchData } from "../../data/matches/types";
+interface FeaturedMatch {
+  id: number;
+  homeTeam: string;
+  homeFlag: string;
+  homeLogo?: string;
+  awayTeam: string;
+  awayFlag: string;
+  awayLogo?: string;
+  date: string;
+  venue: string;
+  competition: string;
+  matchId: number;
+}
 
 export default function FeaturedMatchCard() {
   const navigate = useNavigate();
 
-  const [matches, setMatches] = useState<MatchData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const matches: FeaturedMatch[] = [
+    {
+      id: 2998,
+      homeTeam: "Argentina",
+      homeFlag: argentinaFlag,
+      awayTeam: "South Africa",
+      awayFlag: saFlag,
+      date: "Sat 8 Aug 2026",
+      venue: "Estadio José Amalfitani, Buenos Aires",
+      competition: "International Test Match",
+      matchId: 2998,
+    },
+    {
+      id: 7001,
+      homeTeam: "Stormers",
+      homeFlag: stormersLogo,
+      homeLogo: stormersLogo,
+      awayTeam: "New Zealand",
+      awayFlag: nzFlag,
+      date: "Fri 7 Aug 2026",
+      venue: "Cape Town Stadium, Cape Town",
+      competition: "The Rivalry Tour - Midweek Match",
+      matchId: 7001,
+    },
+  ];
 
-  useEffect(() => {
-    let mounted = true;
-
-    async function loadMatches() {
-      try {
-        const data = await getMatches();
-
-        if (mounted) {
-          setMatches(data);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        if (mounted) {
-          setLoading(false);
-        }
-      }
-    }
-
-    loadMatches();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  const featuredMatch = useMemo(() => {
-    if (!matches.length) return null;
-
-    const now = new Date();
-
-    const southAfricaEngland = matches.find(
-      (m) =>
-        m.competitionId === "nations-championship" &&
-        m.home.country === "south-africa" &&
-        m.away.country === "england" &&
-        !m.score &&
-        new Date(m.date).getTime() >= now.getTime()
-    );
-
-    if (southAfricaEngland) {
-      return southAfricaEngland;
-    }
-
-    const upcoming = matches
-      .filter(
-        (m) =>
-          !m.score &&
-          new Date(m.date).getTime() >= now.getTime()
-      )
-      .sort(
-        (a, b) =>
-          new Date(a.date).getTime() -
-          new Date(b.date).getTime()
-      );
-
-    return upcoming[0] || null;
-  }, [matches]);
-
-  if (loading || !featuredMatch) {
-    return null;
-  }
-
-  const homeFlag =
-    flagMap[featuredMatch.home.country];
-
-  const awayFlag =
-    flagMap[featuredMatch.away.country];
-
-  const formattedDate = new Date(
-    featuredMatch.date
-  ).toLocaleDateString("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  const handleMatchClick = (matchId: number) => {
+    navigate(`/match/${matchId}`);
+  };
 
   return (
-    <section
-      className={styles.card}
-      onClick={() =>
-        navigate(`/match/${featuredMatch.id}`)
-      }
-    >
-      <div className={styles.badge}>
-        FEATURED MATCH
+    <section className={styles.featuredMatchSection}>
+      <div className={styles.header}>
+        <h2>⚡ Upcoming Featured Matches</h2>
+        <span className={styles.subtitle}>Don't miss the action</span>
       </div>
 
-      <div className={styles.hero}>
-        <div className={styles.left}>
-          {homeFlag && (
-            <img
-              src={homeFlag}
-              alt={featuredMatch.home.name}
-              className={styles.heroImage}
-            />
-          )}
-        </div>
+      <div className={styles.matchesGrid}>
+        {matches.map((match) => (
+          <div
+            key={match.id}
+            className={styles.matchCard}
+            onClick={() => handleMatchClick(match.id)}
+          >
+            <div className={styles.competitionBadge}>{match.competition}</div>
 
-        <div className={styles.right}>
-          {awayFlag && (
-            <img
-              src={awayFlag}
-              alt={featuredMatch.away.name}
-              className={styles.heroImage}
-            />
-          )}
-        </div>
+            <div className={styles.teamsContainer}>
+              {/* Home Team */}
+              <div className={styles.teamBlock}>
+                <div className={styles.flagWrapper}>
+                  <img
+                    src={match.homeFlag}
+                    alt={match.homeTeam}
+                    className={styles.flag}
+                  />
+                </div>
+                <span className={styles.teamName}>{match.homeTeam}</span>
+              </div>
 
-        <div className={styles.overlay}>
-          <div className={styles.vs}>
-            VS
+              <div className={styles.vsContainer}>
+                <span className={styles.vsBadge}>VS</span>
+              </div>
+
+              {/* Away Team */}
+              <div className={styles.teamBlock}>
+                <div className={styles.flagWrapper}>
+                  <img
+                    src={match.awayFlag}
+                    alt={match.awayTeam}
+                    className={styles.flag}
+                  />
+                </div>
+                <span className={styles.teamName}>{match.awayTeam}</span>
+              </div>
+            </div>
+
+            <div className={styles.matchDetails}>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>📅 Date</span>
+                <span className={styles.detailValue}>{match.date}</span>
+              </div>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>📍 Venue</span>
+                <span className={styles.detailValue}>{match.venue}</span>
+              </div>
+            </div>
+
+            <div className={styles.matchFooter}>
+              <span className={styles.clickHint}>Click to view match →</span>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div className={styles.content}>
-        <h2 className={styles.title}>
-          {featuredMatch.home.name}
-          {" "}
-          vs
-          {" "}
-          {featuredMatch.away.name}
-        </h2>
-
-        <div className={styles.meta}>
-          {formattedDate}
-        </div>
-
-        <div className={styles.meta}>
-          {featuredMatch.venue}
-        </div>
-
-        <div className={styles.meta}>
-          {featuredMatch.tournament}
-        </div>
-
-        <div className={styles.cta}>
-          Tap to View Match →
-        </div>
+        ))}
       </div>
     </section>
   );

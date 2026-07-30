@@ -1,220 +1,260 @@
-.card {
-  margin: 20px 0 28px;
-
-  border-radius: 20px;
-  overflow: hidden;
-
-  cursor: pointer;
-
-  background: #081120;
-
-  box-shadow:
-    0 10px 28px
-    rgba(0, 0, 0, 0.18);
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 16px 34px
-    rgba(0, 0, 0, 0.24);
-}
-
-/* =====================================
-   FEATURED LABEL
-   ===================================== */
-
-.badge {
-  text-align: center;
-
-  padding: 10px 14px;
-
-  background: #0f172a;
-
-  color: #fbbf24;
-
-  font-size: 13px;
-  font-weight: 900;
-
-  letter-spacing: 2px;
-
-  text-transform: uppercase;
-
-  border-bottom:
-    1px solid
-    rgba(255,255,255,0.08);
-}
-
-/* =====================================
-   HERO
-   ===================================== */
-
-.hero {
-  position: relative;
-
-  height: 240px;
-
-  display: grid;
-
-  grid-template-columns:
-    1fr
-    1fr;
-
-  overflow: hidden;
-}
-
-.left,
-.right {
-  position: relative;
-
-  overflow: hidden;
-}
-
-.left {
-  clip-path:
-    polygon(
-      0 0,
-      100% 0,
-      78% 100%,
-      0 100%
-    );
-}
-
-.right {
-  clip-path:
-    polygon(
-      22% 0,
-      100% 0,
-      100% 100%,
-      0 100%
-    );
-}
-
-.heroImage {
+.featuredMatchSection {
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
   width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  display: block;
 }
 
-.overlay {
-  position: absolute;
-
-  inset: 0;
-
+.header {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
 
+.header h2 {
+  color: #0d0d0d;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  color: rgba(12, 12, 12, 0.6);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.matchesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.matchCard {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.matchCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
   pointer-events: none;
 }
 
-.vs {
-  width: 74px;
-  height: 74px;
+.matchCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.09);
+}
 
+.competitionBadge {
+  display: inline-block;
+  background: rgba(255, 215, 0, 0.15);
+  color: #ffd700;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+.teamsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.teamBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  text-align: center;
+}
+
+.flagWrapper {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-
-  background: rgba(8, 17, 32, 0.92);
-
-  color: white;
-
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 24px;
-  font-weight: 900;
-
-  letter-spacing: 1px;
-
-  border:
-    3px solid
-    rgba(255,255,255,0.15);
-
-  box-shadow:
-    0 8px 24px
-    rgba(0,0,0,0.35);
+  flex-shrink: 0;
 }
 
-/* =====================================
-   CONTENT
-   ===================================== */
-
-.content {
-  padding: 22px 24px 24px;
-
-  text-align: center;
-
-  background:
-    linear-gradient(
-      180deg,
-      #081120,
-      #0f2340
-    );
+.flag {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.title {
-  margin: 0 0 14px;
-
-  color: white;
-
-  font-size: 28px;
-  font-weight: 900;
-
-  line-height: 1.2;
+.teamLogo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px;
 }
 
-.meta {
-  color: rgba(255,255,255,0.85);
-
-  font-size: 15px;
-
-  margin-bottom: 8px;
+.teamName {
+  color: #100f0f;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-.cta {
-  margin-top: 18px;
-
-  font-weight: 800;
-
-  color: #fbbf24;
-
-  font-size: 15px;
+.vsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-/* =====================================
-   MOBILE
-   ===================================== */
+.vsBadge {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
 
+.matchDetails {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.detailLabel {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detailValue {
+  color: rgba(10, 10, 10, 0.85);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.matchFooter {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.clickHint {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .hero {
-    height: 180px;
+  .matchesGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
-  .vs {
-    width: 60px;
-    height: 60px;
-
-    font-size: 20px;
+  .featuredMatchSection {
+    padding: 1.5rem 1rem;
   }
 
-  .title {
-    font-size: 22px;
+  .header h2 {
+    font-size: 1.3rem;
   }
 
-  .meta {
-    font-size: 14px;
+  .matchCard {
+    padding: 1.25rem;
   }
 
-  .content {
-    padding: 18px;
+  .flagWrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .teamName {
+    font-size: 0.9rem;
+  }
+
+  .teamLogo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .matchDetails {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .detailValue {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .teamsContainer {
+    flex-direction: row;
+    gap: 0.25rem;
+  }
+
+  .teamBlock {
+    flex: 1;
+  }
+
+  .flagWrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  .teamName {
+    font-size: 0.75rem;
+  }
+
+  .vsBadge {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.35rem;
+  }
+
+  .competitionBadge {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.5rem;
   }
 }

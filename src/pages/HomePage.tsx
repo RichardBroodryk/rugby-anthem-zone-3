@@ -1,7 +1,7 @@
 import styles from "./HomePage.module.css";
 
 import PageWrapper from "../components/layout/PageWrapper";
-import razLight from "../assets/images/raz/razlight2.png";
+import razLight from "../assets/images/raz/raz-light.jpg";
 
 import HeroCard from "../components/homepage/HeroCard";
 import HubCard from "../components/homepage/HubCard";
@@ -33,6 +33,14 @@ import CalendarIcon from "../components/icons/CalendarIcon";
 import ShoppingBagIcon from "../components/icons/ShoppingBagIcon";
 import ArchiveIcon from "../components/icons/ArchiveIcon";
 
+/* RIVALRY BANNER IMAGES */
+import rivalry1 from "../assets/images/rivalry/rivalry1.jpg";
+import rivalry2 from "../assets/images/rivalry/rivalry2.jpg";
+import rivalry3 from "../assets/images/rivalry/rivalry3.jpg";
+import rivalry4 from "../assets/images/rivalry/rivalry4.jpg";
+import rivalry5 from "../assets/images/rivalry/rivalry5.jpg";
+import rivalry6 from "../assets/images/rivalry/rivalry6.jpg";
+
 /* IMAGES */
 import anthemsImage from "../assets/images/raz/anthems-page.png";
 import tournamentsImage from "../assets/images/raz/tournament-hub-page.png";
@@ -46,6 +54,8 @@ import calendarImage from "../assets/images/raz/calendar-hero.jpg";
 import merchImage from "../assets/images/raz/Merch.png";
 import heritageImage from "../assets/images/raz/heritage-hub.png";
 import definingMomentsImage from "../assets/images/raz/moments-hero.jpg";
+
+const rivalryImages = [rivalry1, rivalry2, rivalry3, rivalry4, rivalry5, rivalry6];
 
 /**
  * HOME PAGE — WAVE 2
@@ -68,28 +78,26 @@ export default function HomePage() {
       <main className={styles.page}>
         <HeroCard />
 
-        {/* ====== INTERNATIONAL STANDINGS BUTTONS ====== */}
-        <section className={styles.standingsButtonsSection}>
-          <div className={styles.standingsButtonsContainer}>
-            <button
-              className={styles.standingsButton}
-              onClick={() => window.location.href = "/rankings/men"}
-            >
-              <span className={styles.standingsIcon}>🏉</span>
-              <span className={styles.standingsLabel}>International Standings Men</span>
-            </button>
-            <button
-              className={styles.standingsButton}
-              onClick={() => window.location.href = "/rankings/women"}
-            >
-              <span className={styles.standingsIcon}>🏉</span>
-              <span className={styles.standingsLabel}>International Standings Women</span>
-            </button>
+        <InfoBar />
+
+        {/* ====== RIVALRY BANNER ====== */}
+        <section className={styles.rivalryBannerSection}>
+          <div className={styles.rivalryBannerContainer}>
+            <div className={styles.rivalryBannerTrack}>
+              {rivalryImages.map((image, index) => (
+                <div key={index} className={styles.rivalryBannerItem}>
+                  <img src={image} alt={`Rivalry Tour ${index + 1}`} />
+                </div>
+              ))}
+              {rivalryImages.map((image, index) => (
+                <div key={`dup-${index}`} className={styles.rivalryBannerItem}>
+                  <img src={image} alt={`Rivalry Tour ${index + 1}`} />
+                </div>
+              ))}
+            </div>
           </div>
         </section>
-        {/* ====== END STANDINGS BUTTONS ====== */}
-
-        <InfoBar />
+        {/* ====== END RIVALRY BANNER ====== */}
 
         <FeaturedMatchCard />
 
