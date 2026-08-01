@@ -443,3 +443,171 @@
     bottom: 5%;
   }
 }
+/* ================= ALERT BANNER ================= */
+
+.alertBanner {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto 1.2rem auto;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.92) 0%, rgba(180, 20, 20, 0.92) 100%);
+  border: 2px solid rgba(255, 200, 0, 0.6);
+  box-shadow: 
+    0 0 30px rgba(220, 38, 38, 0.4),
+    0 0 60px rgba(220, 38, 38, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  animation: pulseBorder 2s ease-in-out infinite;
+  position: relative;
+  z-index: 10;
+}
+
+.alertContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.alertPulse {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  border-radius: 50%;
+  background: #ffd700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+  animation: pulseDot 1.5s ease-in-out infinite;
+  position: relative;
+}
+
+.alertPulse::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  animation: pulseRing 1.5s ease-in-out infinite;
+}
+
+.alertText {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes pulseBorder {
+  0%, 100% {
+    border-color: rgba(255, 200, 0, 0.6);
+    box-shadow: 
+      0 0 30px rgba(220, 38, 38, 0.4),
+      0 0 60px rgba(220, 38, 38, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    border-color: rgba(255, 215, 0, 1);
+    box-shadow: 
+      0 0 40px rgba(220, 38, 38, 0.6),
+      0 0 80px rgba(220, 38, 38, 0.3),
+      0 0 120px rgba(220, 38, 38, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.9;
+  }
+}
+
+@keyframes pulseRing {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .alertBanner {
+    padding: 0.7rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .alertText {
+    font-size: 0.85rem;
+  }
+
+  .alertPulse {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .alertBanner {
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.8rem;
+    border-radius: 40px;
+  }
+
+  .alertContent {
+    gap: 10px;
+  }
+
+  .alertText {
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+  }
+
+  .alertPulse {
+    width: 8px;
+    height: 8px;
+    min-width: 8px;
+  }
+
+  .alertPulse::before {
+    inset: -3px;
+  }
+}
+
+@media (max-width: 430px) {
+  .alertBanner {
+    padding: 0.5rem 0.8rem;
+    margin-bottom: 0.6rem;
+    border-radius: 30px;
+  }
+
+  .alertText {
+    font-size: 0.65rem;
+    letter-spacing: 0.01em;
+  }
+
+  .alertContent {
+    gap: 6px;
+  }
+
+  .alertPulse {
+    width: 6px;
+    height: 6px;
+    min-width: 6px;
+  }
+}

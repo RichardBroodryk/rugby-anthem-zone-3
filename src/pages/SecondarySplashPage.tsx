@@ -127,6 +127,16 @@ const SecondarySplashPage = () => {
 
       <div className={styles.content}>
         <div className={styles.heroStack}>
+          {/* 🔥 NEW ALERT BANNER */}
+          <div className={styles.alertBanner}>
+            <div className={styles.alertContent}>
+              <span className={styles.alertPulse}></span>
+              <span className={styles.alertText}>
+                The World's Greatest Rivalry between South Africa and New Zealand from 7 August 2026 !!
+              </span>
+            </div>
+          </div>
+
           <div className={styles.kickerRow}>
             <span className={styles.kicker}>
               INTERNATIONAL RUGBY • MATCHDAY ATMOSPHERE • ANTHEMS
