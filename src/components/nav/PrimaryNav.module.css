@@ -6,8 +6,9 @@
   height: 64px;
   padding: 0 20px;
 
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  /* 🔥 FIERY ORANGE GRADIENT BACKGROUND */
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%);
+  border-bottom: 2px solid #9a3412;
 
   position: sticky;
   top: 0;
@@ -36,6 +37,9 @@
 
   object-fit: contain;
   display: block;
+
+  /* Add a subtle drop shadow for better visibility on orange background */
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 /* HOME BUTTON */
@@ -47,15 +51,18 @@
   width: 36px;
   height: 36px;
 
-  background: transparent;
+  background: rgba(255, 255, 255, 0.15);
   border: none;
+  border-radius: 8px;
   cursor: pointer;
 
-  color: #0f172a;
+  color: #ffffff;
+  transition: all 0.2s ease;
 }
 
 .homeButton:hover {
-  color: #c8102e;
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
 }
 
 /* RIGHT SIDE */
@@ -74,15 +81,18 @@
   width: 36px;
   height: 36px;
 
-  background: transparent;
+  background: rgba(255, 255, 255, 0.15);
   border: none;
+  border-radius: 8px;
   cursor: pointer;
 
-  color: #0f172a;
+  color: #ffffff;
+  transition: all 0.2s ease;
 }
 
 .iconButton:hover {
-  color: #c8102e;
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
 }
 
 /* PROFILE BUTTON */
@@ -94,15 +104,18 @@
   width: 36px;
   height: 36px;
 
-  background: transparent;
+  background: rgba(255, 255, 255, 0.15);
   border: none;
+  border-radius: 8px;
   cursor: pointer;
 
-  color: #0f172a;
+  color: #ffffff;
+  transition: all 0.2s ease;
 }
 
 .profileButton:hover {
-  color: #c8102e;
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
 }
 
 /* USER AVATAR */
@@ -123,7 +136,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 10px;
 
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 
   display: flex;
   flex-direction: column;
@@ -147,6 +160,7 @@
   font-weight: 500;
 
   cursor: pointer;
+  color: #0f172a;
 }
 
 .dropdown button:hover {
@@ -176,7 +190,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 10px;
 
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 
   padding: 10px;
 
@@ -194,6 +208,11 @@
   font-size: 14px;
 
   margin-bottom: 10px;
+}
+
+.searchInput:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
 }
 
 .searchResults {
@@ -240,7 +259,7 @@
   text-transform: uppercase;
 }
 
-.empty {
+.searchEmpty {
   text-align: center;
   padding: 10px;
   font-size: 13px;
@@ -253,7 +272,7 @@
   position: fixed;
   inset: 0;
 
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
 
   display: flex;
   align-items: center;
@@ -270,7 +289,7 @@
   width: 320px;
   text-align: center;
 
-  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
 .modal h3 {

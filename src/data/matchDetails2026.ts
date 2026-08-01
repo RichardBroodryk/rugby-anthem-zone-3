@@ -1091,78 +1091,76 @@ export const matchDetails2026: MatchDetails[] = [
 // ================= INTERNATIONAL TESTS 2026 =================
 
 {
-  matchKey: "argentina-vs-south-africa",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Estadio José Amalfitani, Buenos Aires" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+  "matchKey": "argentina-vs-south-africa",
+  "timeline": [
+    { "minute": "0'", "label": "Kick-off — Estadio José Amalfitani, Buenos Aires" },
+    { "minute": "40'", "label": "Half Time" },
+    { "minute": "80'", "label": "Full Time" }
   ],
-  lineups: {
-    homeStarting: [
-      // Argentina squad named, matchday 23 TBD [citation:4]
-      { number: 1, name: "TBD" },
-      { number: 2, name: "TBD" },
-      { number: 3, name: "TBD" },
-      { number: 4, name: "TBD" },
-      { number: 5, name: "TBD" },
-      { number: 6, name: "TBD" },
-      { number: 7, name: "TBD" },
-      { number: 8, name: "TBD" },
-      { number: 9, name: "TBD" },
-      { number: 10, name: "TBD" },
-      { number: 11, name: "TBD" },
-      { number: 12, name: "TBD" },
-      { number: 13, name: "TBD" },
-      { number: 14, name: "TBD" },
-      { number: 15, name: "TBD" },
+  "lineups": {
+    "homeStarting": [
+      { "number": 1, "name": "Mayco Vivas" },
+      { "number": 2, "name": "Ignacio Ruiz" },
+      { "number": 3, "name": "Tomás Rapetti" },
+      { "number": 4, "name": "Efraín Elías" },
+      { "number": 5, "name": "Guido Petti" },
+      { "number": 6, "name": "Pablo Matera" },
+      { "number": 7, "name": "Benjamín Grondona" },
+      { "number": 8, "name": "Joaquín Moro" },
+      { "number": 9, "name": "Simón Benítez Cruz" },
+      { "number": 10, "name": "Gerónimo Prisciantelli" },
+      { "number": 11, "name": "Ignacio Mendy" },
+      { "number": 12, "name": "Matías Moroni" },
+      { "number": 13, "name": "Lucio Cinti" },
+      { "number": 14, "name": "Rodrigo Isgró" },
+      { "number": 15, "name": "Santiago Carreras" }
     ],
-    homeBench: [
-      { number: 16, name: "TBD" },
-      { number: 17, name: "TBD" },
-      { number: 18, name: "TBD" },
-      { number: 19, name: "TBD" },
-      { number: 20, name: "TBD" },
-      { number: 21, name: "TBD" },
-      { number: 22, name: "TBD" },
-      { number: 23, name: "TBD" },
+    "homeBench": [
+      { "number": 16, "name": "Leonel Oviedo" },
+      { "number": 17, "name": "Rodrigo Martínez" },
+      { "number": 18, "name": "Pedro Delgado" },
+      { "number": 19, "name": "Tomás Lavanini" },
+      { "number": 20, "name": "Juan Martín Scelzo" },
+      { "number": 21, "name": "Gonzalo Bertranou" },
+      { "number": 22, "name": "Nicolás Roger" },
+      { "number": 23, "name": "Mateo Soler" }
     ],
-    awayStarting: [
-      // Springboks squad named [citation:9], matchday 23 TBD
-      { number: 1, name: "TBD" },
-      { number: 2, name: "TBD" },
-      { number: 3, name: "TBD" },
-      { number: 4, name: "TBD" },
-      { number: 5, name: "TBD" },
-      { number: 6, name: "TBD" },
-      { number: 7, name: "TBD" },
-      { number: 8, name: "TBD" },
-      { number: 9, name: "TBD" },
-      { number: 10, name: "TBD" },
-      { number: 11, name: "TBD" },
-      { number: 12, name: "TBD" },
-      { number: 13, name: "TBD" },
-      { number: 14, name: "TBD" },
-      { number: 15, name: "TBD" },
+    "awayStarting": [
+      { "number": 1, "name": "Thomas du Toit" },
+      { "number": 2, "name": "Johan Grobbelaar" },
+      { "number": 3, "name": "Wilco Louw" },
+      { "number": 4, "name": "Eben Etzebeth" },
+      { "number": 5, "name": "Lood de Jager" },
+      { "number": 6, "name": "Marco van Staden" },
+      { "number": 7, "name": "Elrigh Louw" },
+      { "number": 8, "name": "Cameron Hanekom" },
+      { "number": 9, "name": "Cobus Reinach" },
+      { "number": 10, "name": "Handre Pollard" },
+      { "number": 11, "name": "Canan Moodie" },
+      { "number": 12, "name": "Andre Esterhuizen" },
+      { "number": 13, "name": "Ethan Hooker" },
+      { "number": 14, "name": "Aphelele Fassi" },
+      { "number": 15, "name": "Sacha Feinberg-Mngomezulu" }
     ],
-    awayBench: [
-      { number: 16, name: "TBD" },
-      { number: 17, name: "TBD" },
-      { number: 18, name: "TBD" },
-      { number: 19, name: "TBD" },
-      { number: 20, name: "TBD" },
-      { number: 21, name: "TBD" },
-      { number: 22, name: "TBD" },
-      { number: 23, name: "TBD" },
-    ],
+    "awayBench": [
+      { "number": 16, "name": "Jan-Hendrik Wessels" },
+      { "number": 17, "name": "Gerhard Steenekamp" },
+      { "number": 18, "name": "Zachary Porthen" },
+      { "number": 19, "name": "Cobus Wiese" },
+      { "number": 20, "name": "Ben-Jason Dixon" },
+      { "number": 21, "name": "Morne van den Berg" },
+      { "number": 22, "name": "Herchel Jantjies" },
+      { "number": 23, "name": "Quan Horn" }
+    ]
   },
-  performances: [
-    { category: "Coach", player: "Felipe Contepomi", value: "Argentina" },
-    { category: "Coach", player: "Rassie Erasmus", value: "South Africa" },
-    { category: "Captain", player: "TBD", value: "Argentina" },
-    { category: "Captain", player: "TBD", value: "South Africa" },
-    { category: "Venue", player: "Estadio José Amalfitani", value: "Buenos Aires" },
-  ],
-},
+  "performances": [
+    { "category": "Coach", "player": "Felipe Contepomi", "value": "Argentina" },
+    { "category": "Coach", "player": "Rassie Erasmus", "value": "South Africa" },
+    { "category": "Captain", "player": "Pablo Matera", "value": "Argentina" },
+    { "category": "Captain", "player": "Siya Kolisi", "value": "South Africa" },
+    { "category": "Venue", "player": "Estadio José Amalfitani", "value": "Buenos Aires" }
+  ]
+}
 
 ];
 

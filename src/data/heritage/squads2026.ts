@@ -12,157 +12,166 @@ export type SquadData = {
 export const squads2026: Record<string, SquadData> = {
   "south-africa": {
     captain: "Siya Kolisi",
-    squadSize: 46,
+    squadSize: 44,
 
     uncappedPlayers: [
-      "Paul de Villiers",
-      "Riley Norton",
-      "Carlu Sadie",
-      "Ruben van Heerden",
-      "Vusi Moyo",
-      "Jaco Williams"
+      "Zachary Porthen",
+      "Cameron Hanekom",
+      "Ethan Hooker",
+      "Quan Horn",
+      "Morne van den Berg",
+      "Edwill van der Merwe"
     ],
 
     keyReturnees: [
-      "Herschel Jantjies",
-      "Embrose Papier"
+      "Sacha Feinberg-Mngomezulu",
+      "Lood de Jager",
+      "Siya Kolisi",
+      "Morne van den Berg"
     ],
 
     playersToWatch: [
-  "Cameron Hanekom",
-  "Riley Norton",
-  "Vusi Moyo"
-],
+      "Cameron Hanekom",
+      "Sacha Feinberg-Mngomezulu",
+      "Ethan Hooker"
+    ],
 
     selectionNotes: [
-      "Rassie Erasmus named a 46-man squad for the 2026 international season.",
-      "The squad contains 28 forwards and 18 backs.",
-      "Six uncapped players were selected.",
-      "Siya Kolisi continues as captain."
+      "44-man squad named for the four-Test series against New Zealand in August–September 2026.",
+      "The squad is focused on the 'Rugby's Greatest Rivalry' tour.",
+      "Key players rested: Cheslin Kolbe, Damian Willemse, Jesse Kriel, Ruan Nortje.",
+      "Several players unavailable: Ox Nche (recovering), Franco Mostert (recovering), Pieter-Steph du Toit, Malcolm Marx, RG Snyman, Jean Kleyn, Kwagga Smith.",
+      "Siya Kolisi continues as captain and returns from injury.",
+      "Six uncapped players selected."
     ],
 
     forwards: [
-      "Thomas du Toit",
-      "Wilco Louw",
-      "Ntuthuko Mchunu",
-      "Ox Nche",
-      "Zachary Porthen",
-      "Carlu Sadie",
-      "Gerhard Steenekamp",
-      "Boan Venter",
-      "Johan Grobbelaar",
-      "Malcolm Marx",
-      "Andre-Hugo Venter",
       "Lood de Jager",
-      "Eben Etzebeth",
-      "Ruan Nortje",
-      "Ruben van Heerden",
-      "Paul de Villiers",
       "Ben-Jason Dixon",
+      "Thomas du Toit",
+      "Eben Etzebeth",
+      "Johan Grobbelaar",
       "Cameron Hanekom",
       "Siya Kolisi",
-      "Evan Roos",
-      "Vincent Tshituka",
-      "Jasper Wiese",
-      "Pieter-Steph du Toit",
-      "Franco Mostert",
-      "Riley Norton",
+      "Elrigh Louw",
+      "Wilco Louw",
+      "Zachary Porthen",
+      "Gerhard Steenekamp",
       "Marco van Staden",
+      "Boan Venter",
       "Jan-Hendrik Wessels",
-      "Cobus Wiese"
+      "Cobus Wiese",
+      "Ntuthuko Mchunu",
+      "Ox Nche (recovering)",
+      "Franco Mostert (recovering)",
+      "Pieter-Steph du Toit",
+      "Malcolm Marx",
+      "RG Snyman (unavailable)",
+      "Jean Kleyn (unavailable)",
+      "Kwagga Smith (unavailable)"
     ],
 
     backs: [
-      "Herschel Jantjies",
-      "Embrose Papier",
-      "Cobus Reinach",
-      "Grant Williams",
-      "Manie Libbok",
-      "Vusi Moyo",
-      "Handre Pollard",
-      "Damian de Allende",
       "Andre Esterhuizen",
-      "Jesse Kriel",
-      "Kurt-Lee Arendse",
       "Aphelele Fassi",
+      "Sacha Feinberg-Mngomezulu",
+      "Ethan Hooker",
       "Quan Horn",
-      "Cheslin Kolbe",
+      "Herchel Jantjies",
       "Canan Moodie",
+      "Handre Pollard",
+      "Cobus Reinach",
+      "Morne van den Berg",
       "Edwill van der Merwe",
-      "Jaco Williams",
-      "Damian Willemse"
+      "Cheslin Kolbe (rested)",
+      "Damian Willemse (rested)",
+      "Jesse Kriel (rested)",
+      "Damian de Allende"
     ]
   },
 
   "new-zealand": {
     captain: "Ardie Savea",
-    squadSize: 34,
+    squadSize: 44,
 
     uncappedPlayers: [
-      "Xavier Numia",
-      "Josh Moorby",
-      "Fehi Fineanganofo",
-      "Anton Segner"
+      "Siale Lauaki",
+      "Semisi Tupou Ta'eiloa",
+      "Josh Jacomb",
+      "Fehi Fineanganofo"
     ],
 
     keyReturnees: [
+      "Ardie Savea",
       "Codie Taylor",
-      "Beauden Barrett"
+      "Beauden Barrett",
+      "Will Jordan"
     ],
 
     playersToWatch: [
-  "Ruben Love",
-  "Wallace Sititi",
-  "Fehi Fineanganofo"
-],
+      "Ruben Love",
+      "Wallace Sititi",
+      "Fehi Fineanganofo"
+    ],
 
     selectionNotes: [
-      "Dave Rennie's first All Blacks squad.",
-      "Ardie Savea appointed captain.",
-      "Four uncapped players selected."
+      "44-man squad named by Coach Dave Rennie for the 'Rugby's Greatest Rivalry' tour.",
+      "Captain Ardie Savea will join the tour 10 days before the first Test.",
+      "Four uncapped players selected.",
+      "Key players unavailable: Tamaiti Williams (injury), Scott Barrett (injury), Leicester Fainga'anuku (injury).",
+      "Strong squad depth with experienced players across all positions."
     ],
 
     forwards: [
       "Asafo Aumua",
       "Codie Taylor",
       "Samisoni Taukei'aho",
+      "George Bell",
+      "Ethan De Groot",
       "George Bower",
-      "Ethan de Groot",
+      "Xavier Numia",
+      "Ollie Norris",
       "Tyrel Lomax",
       "Fletcher Newell",
-      "Xavier Numia",
       "Pasilio Tosi",
-      "Sam Darry",
-      "Josh Lord",
-      "Patrick Tuipulotu",
+      "Siale Lauaki",
       "Tupou Vaa'i",
-      "Luke Jacobson",
+      "Patrick Tuipulotu",
+      "Josh Lord",
+      "Sam Darry",
+      "Fabian Holland",
       "Peter Lakai",
       "Simon Parker",
-      "Ardie Savea",
+      "Ethan Blackadder",
+      "Luke Jacobson",
       "Anton Segner",
-      "Wallace Sititi"
+      "Ardie Savea",
+      "Wallace Sititi",
+      "Semisi Tupou Ta'eiloa"
     ],
 
     backs: [
-      "Kyle Preston",
+      "Cam Roigard",
       "Cortez Ratima",
-      "Cameron Roigard",
-      "Beauden Barrett",
+      "Kyle Preston",
       "Ruben Love",
+      "Beauden Barrett",
       "Damian McKenzie",
+      "Josh Jacomb",
       "Jordie Barrett",
-      "Anton Lienert-Brown",
-      "Billy Proctor",
       "Quinn Tupaea",
-      "Leroy Carter",
+      "Billy Proctor",
+      "Anton Lienert-Brown",
+      "Timoci Tavatavanawai",
       "Caleb Clarke",
       "Fehi Fineanganofo",
+      "Leroy Carter",
+      "Josh Moorby",
       "Will Jordan",
-      "Josh Moorby"
+      "Rieko Ioane",
+      "Emoni Narawa"
     ]
   },
-
   "ireland": {
     captain: "Dan Sheehan",
     squadSize: 36,

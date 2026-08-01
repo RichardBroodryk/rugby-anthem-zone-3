@@ -2,7 +2,8 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./PrimaryNav.module.css";
 
-import logo from "../../assets/images/ui/raz-logo.png";
+// Updated logo path
+import logo from "../../assets/images/raz/logonew.png";
 
 import {
   buildSearchIndex,

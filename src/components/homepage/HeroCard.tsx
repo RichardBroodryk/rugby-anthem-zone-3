@@ -5,8 +5,8 @@ import styles from "./HeroCard.module.css";
  * HERO CARD — WAVE 2
  * --------------------------------------------------
  * Single paid access hero.
- * No premium/super branching.
- * Heritage is now part of the live paid app.
+ * Now features Pay per View and Live Audio as the main CTA pills
+ * Men's and Women's rugby moved to InfoBar
  */
 
 export default function HeroCard() {
@@ -22,20 +22,12 @@ export default function HeroCard() {
         </p>
 
         <div className={styles.actions}>
-          <Link to="/tournaments/men" className={styles.mens}>
-            Men’s Rugby
+          <Link to="/fanzone/ppv" className={styles.payperview}>
+            Pay per View
           </Link>
 
-          <Link to="/tournaments/women" className={styles.womens}>
-            Women’s Rugby
-          </Link>
-
-          <Link to="/anthems" className={styles.anthems}>
-            Anthems
-          </Link>
-
-          <Link to="/heritage" className={styles.heritage}>
-            Heritage
+          <Link to="/fanzone/audio" className={styles.liveaudio}>
+            Live Audio
           </Link>
         </div>
       </div>

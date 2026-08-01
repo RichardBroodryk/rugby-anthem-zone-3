@@ -14,9 +14,10 @@
   max-width: 1400px;
   margin: 0 auto;
 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 8px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
 }
 
 .link {
@@ -27,18 +28,25 @@
   font-weight: 600;
   color: #111;
 
-  padding: 6px 4px;
+  padding: 8px 18px;
+  border-radius: 999px;
 
-  transition: color 0.18s ease;
+  transition: all 0.18s ease;
 }
 
-/* subtle hover colour */
-.link:hover {
+/* Standard link styling */
+.link:not(.mens):not(.womens):not(.anthems):not(.heritage) {
+  padding: 6px 4px;
+  border-radius: 0;
+}
+
+/* Standard link hover */
+.link:not(.mens):not(.womens):not(.anthems):not(.heritage):hover {
   color: #c8102e;
 }
 
-/* subtle professional underline animation */
-.link::after {
+/* Standard link underline animation */
+.link:not(.mens):not(.womens):not(.anthems):not(.heritage)::after {
   content: "";
   position: absolute;
   left: 0;
@@ -52,10 +60,65 @@
   transition: width 0.18s ease;
 }
 
-.link:hover::after {
+.link:not(.mens):not(.womens):not(.anthems):not(.heritage):hover::after {
   width: 100%;
 }
 
-.link.active {
+.link:not(.mens):not(.womens):not(.anthems):not(.heritage).active {
   color: #c8102e;
+}
+
+/* Colorful pill styles (matching hero card styles) */
+.mens {
+  background: #14532d;
+  color: #ffffff !important;
+}
+
+.mens:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(20, 83, 45, 0.35);
+  color: #ffffff !important;
+}
+
+.womens {
+  background: #1d4ed8;
+  color: #ffffff !important;
+}
+
+.womens:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(29, 78, 216, 0.35);
+  color: #ffffff !important;
+}
+
+.anthems {
+  background: #eed3d3;
+  color: #5b21b6 !important;
+  border: 1px solid #e6e6e6;
+}
+
+.anthems:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(91, 33, 182, 0.15);
+  color: #5b21b6 !important;
+}
+
+.heritage {
+  background: #d4af37;
+  color: #111111 !important;
+}
+
+.heritage:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
+  color: #111111 !important;
+}
+
+/* Active state for pills */
+.mens.active,
+.womens.active,
+.anthems.active,
+.heritage.active {
+  opacity: 0.85;
+  transform: scale(0.97);
 }
