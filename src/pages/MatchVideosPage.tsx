@@ -10,10 +10,9 @@ import matchVideosHero from "../assets/images/raz/Matchhighlightsmainpage.png";
 /* ================= TYPES ================= */
 
 type VideoCategory =
-  | "highlight"
+  | "press"
   | "analysis"
-  | "interview"
-  | "press";
+  | "moment";
 
 interface VideoItem {
   id: number;
@@ -26,13 +25,12 @@ interface VideoItem {
   thumbnail?: string;
 }
 
-/* ================= CATEGORIES ================= */
+/* ================= CATEGORIES - MATCH YOUR DATABASE ================= */
 
 const categories: { id: VideoCategory; label: string }[] = [
-  { id: "highlight", label: "Match Highlights" },
-  { id: "analysis", label: "Expert Analysis" },
-  { id: "interview", label: "Player & Coach Interviews" },
   { id: "press", label: "Press Conferences" },
+  { id: "analysis", label: "Expert Analysis" },
+  { id: "moment", label: "Unforgettable Moments" },
 ];
 
 /* ================= API ================= */
@@ -41,7 +39,7 @@ const API_URL = "https://rugby-anthem-backend.onrender.com";
 
 export default function MatchVideosPage() {
   const [activeCategory, setActiveCategory] =
-    useState<VideoCategory>("highlight");
+    useState<VideoCategory>("press"); // ✅ DEFAULT TO PRESS
 
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -92,8 +90,8 @@ export default function MatchVideosPage() {
             <h1>Match Videos</h1>
 
             <p>
-              Highlights, analysis, interviews and
-              press conferences from across the rugby world.
+              Press conferences, expert analysis, and
+              unforgettable moments from across the rugby world.
             </p>
           </div>
         </header>
@@ -208,7 +206,6 @@ export default function MatchVideosPage() {
                 </div>
 
                 <div className={styles.info}>
-                  {/* ✅ CATEGORY LABEL ABOVE TITLE */}
                   {video.category && (
                     <span className={styles.videoCategory}>
                       {video.category.toUpperCase()}
