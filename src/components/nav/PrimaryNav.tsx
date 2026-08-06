@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./PrimaryNav.module.css";
 
 // Updated logo path
-import logo from "../../assets/images/raz/logonew.png";
+import logo from "../../assets/images/raz/iconfinal.png";
 
 import {
   buildSearchIndex,

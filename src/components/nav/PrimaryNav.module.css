@@ -3,12 +3,21 @@
   align-items: center;
   justify-content: space-between;
 
-  height: 64px;
+  height: 72px;
   padding: 0 20px;
 
-  /* 🔥 FIERY ORANGE GRADIENT BACKGROUND */
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%);
-  border-bottom: 2px solid #9a3412;
+  background:
+    linear-gradient(
+      180deg,
+      #1b4b7d 0%,
+      #123862 45%,
+      #0b2343 100%
+    );
+
+  border-bottom: 1px solid rgba(255,255,255,.08);
+
+  box-shadow:
+    0 6px 24px rgba(0,0,0,.28);
 
   position: sticky;
   top: 0;
@@ -17,52 +26,70 @@
 
 /* LEFT SIDE */
 .left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  display:flex;
+  align-items:center;
+  gap:22px;
 }
 
 /* LOGO CONTAINER */
 .logoLink {
   display: flex;
   align-items: center;
-  height: 100%;
+  justify-content: center;
+
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
 /* LOGO IMAGE — 🔥 FIXED */
 .logo {
-  height: 100%;
-  max-height: 56px; /* 🔥 fills nav but stays inside */
-  width: auto;
-
-  object-fit: contain;
   display: block;
 
-  /* Add a subtle drop shadow for better visibility on orange background */
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+ width: 68px;
+    height: 68px;
+    object-fit: contain;
+
+  filter:
+    drop-shadow(0 0 14px rgba(255,215,90,.35))
+    drop-shadow(0 4px 14px rgba(0,0,0,.35));
+
+  transition:
+    transform .25s ease,
+    filter .25s ease;
+}
+
+.logo:hover{
+  transform:scale(1.08);
+
+  filter:
+    drop-shadow(0 0 18px rgba(255,225,120,.50))
+    drop-shadow(0 6px 18px rgba(0,0,0,.40));
 }
 
 /* HOME BUTTON */
 .homeButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  width: 36px;
-  height: 36px;
+  width:38px;
+  height:38px;
 
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  background:rgba(255,255,255,.08);
 
-  color: #ffffff;
-  transition: all 0.2s ease;
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:10px;
+
+  cursor:pointer;
+
+  color:#ffffff;
+
+  transition:.25s ease;
 }
 
-.homeButton:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
+.homeButton:hover{
+  background:rgba(255,255,255,.16);
 }
 
 /* RIGHT SIDE */
@@ -74,48 +101,54 @@
 
 /* ICON BUTTON */
 .iconButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  width: 36px;
-  height: 36px;
+  width:38px;
+  height:38px;
 
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  background:rgba(255,255,255,.08);
 
-  color: #ffffff;
-  transition: all 0.2s ease;
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:10px;
+
+  cursor:pointer;
+
+  color:#ffffff;
+
+  transition:.25s ease;
 }
 
-.iconButton:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
+.iconButton:hover{
+  background:rgba(255,255,255,.16);
 }
 
 /* PROFILE BUTTON */
 .profileButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  width: 36px;
-  height: 36px;
+  width:38px;
+  height:38px;
 
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  background:rgba(255,255,255,.08);
 
-  color: #ffffff;
-  transition: all 0.2s ease;
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:10px;
+
+  cursor:pointer;
+
+  color:#ffffff;
+
+  transition:.25s ease;
 }
 
-.profileButton:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
+.profileButton:hover{
+  background:rgba(255,255,255,.16);
 }
 
 /* USER AVATAR */
@@ -211,8 +244,8 @@
 }
 
 .searchInput:focus {
-  border-color: #f97316;
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+ border-color:#1b4b7d;
+box-shadow:0 0 0 3px rgba(27,75,125,.18);
 }
 
 .searchResults {

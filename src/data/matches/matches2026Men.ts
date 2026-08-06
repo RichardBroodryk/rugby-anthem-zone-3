@@ -236,9 +236,20 @@ export const matches2026Men: MatchData[] = [
   },
 
   // ================= INTERNATIONAL TESTS =================
-  // Standalone tests only
 
-  // ================= INTERNATIONAL TESTS =================
+{
+  id: 2997,
+  competitionId: "international-tests",
+  tournamentInstanceId: INTERNATIONAL_TESTS_2026,
+  tournament: "Men's International Tests 2026",
+  gender: "men",
+  round: "Test Match",
+  date: "2026-08-08",
+  venue: "Hanazono Rugby Stadium, Osaka",
+  home: { name: "Japan", country: "japan" },
+  away: { name: "Australia", country: "australia" },
+  state: "upcoming",
+},
 
 {
   id: 2998,

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./SplashPage.module.css";
 
-import razSplash from "../assets/images/raz/logonew.png";
+import razSplash from "../assets/images/raz/splashlogo.png";
 
 const SPLASH_DURATION = 4000;
 
@@ -13,7 +13,7 @@ export default function SplashPage() {
   useEffect(() => {
     const fadeTimer = window.setTimeout(() => {
       setFadeOut(true);
-    }, SPLASH_DURATION - 850);
+    }, SPLASH_DURATION - 700);
 
     const navTimer = window.setTimeout(() => {
       navigate("/splash-intro");
