@@ -50,7 +50,7 @@ import rugbyStudioImage from "../assets/images/raz/Mediahub.jpg";
 import fanzoneImage from "../assets/images/raz/fanzone-hub.png";
 import newsImage from "../assets/images/raz/news-hero.png";
 import insideTheGameImage from "../assets/images/raz/inside-the-game.png";
-import calendarImage from "../assets/images/raz/calendar-hero.jpg";
+import calendarImage from "../assets/images/raz/calendar-hero2.jpg";
 import merchImage from "../assets/images/raz/Merch.png";
 import heritageImage from "../assets/images/raz/heritage-hub.png";
 import definingMomentsImage from "../assets/images/raz/moments-hero.jpg";
