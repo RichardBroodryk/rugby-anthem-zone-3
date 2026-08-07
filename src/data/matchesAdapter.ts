@@ -6,12 +6,12 @@
 import type { MatchData } from "../data/matches/types";
 
 import { matches2026 } from "./matches";
-import { COMPETITIONS } from "../contracts/competitionRegistry";
+import {
+  getCompetition,
+} from "../contracts/competitionRegistry";
 import { calculateImportance } from "../contracts/importanceEngine";
-import { LEAGUE_API_MAP } from "../contracts/leagueApiMap";
-import { convertApiSportsFixtures } from "../utils/apiSportsConverter";
-import { fetchFixturesByLeague } from "../services/apiSportsRugby";
 import { tournaments2026 } from "./tournamentMeta";
+import { API_BASE_URL } from "../config/api";
 
 /* ==================================================
    TYPES
@@ -24,12 +24,6 @@ type GetMatchesOptions = {
   gender?: "men" | "women";
   leagueId?: string;
   includeAll?: boolean;
-};
-
-type LeagueMapEntry = {
-  id: number;
-  competitionId?: string;
-  gender?: "men" | "women";
 };
 
 /* ==================================================
@@ -49,24 +43,18 @@ function isValidStructure(match: MatchData): boolean {
 function isValidCompetition(match: MatchData): boolean {
   return (
     match.competitionId !== "unknown" &&
-    COMPETITIONS.some((c) => c.conceptId === match.competitionId)
+    !!getCompetition(match.competitionId)
   );
 }
 
 function isInternational(match: MatchData): boolean {
-  return COMPETITIONS.some(
-    (comp) =>
-      comp.conceptId === match.competitionId &&
-      comp.category === "international"
-  );
+  const competition = getCompetition(match.competitionId);
+  return competition?.category === "international";
 }
 
 function isDomestic(match: MatchData): boolean {
-  return COMPETITIONS.some(
-    (comp) =>
-      comp.conceptId === match.competitionId &&
-      comp.category === "domestic"
-  );
+  const competition = getCompetition(match.competitionId);
+  return competition?.category === "domestic";
 }
 
 /* ==================================================
@@ -94,98 +82,43 @@ function resolveTournamentInstanceId(
 }
 
 /* ==================================================
-   API LEAGUE ENTRY RESOLVER
-   ================================================== */
-
-function getLeagueEntriesForOptions(
-  options?: GetMatchesOptions
-): Array<[string, LeagueMapEntry]> {
-  const entries = Object.entries(
-    LEAGUE_API_MAP as Record<string, LeagueMapEntry>
-  );
-
-  return entries.filter(([mapKey, entry]) => {
-    if (!entry?.id) return false;
-
-    if (options?.gender && entry.gender && entry.gender !== options.gender) {
-      return false;
-    }
-
-    if (!options?.leagueId) {
-      return true;
-    }
-
-    const requestedLeagueId = options.leagueId.toLowerCase();
-
-    return (
-      entry.competitionId?.toLowerCase() === requestedLeagueId ||
-      mapKey.toLowerCase() === requestedLeagueId ||
-      String(entry.id) === options.leagueId
-    );
-  });
-}
-
-/* ==================================================
    API FETCH
    ================================================== */
-
-async function fetchLeagueFixtures(
-  leagueApiId: number
-): Promise<MatchData[]> {
-  try {
-    const timestamp = Date.now();
-
-    let apiData = await fetchFixturesByLeague(
-      leagueApiId,
-      2026,
-      timestamp
-    );
-
-    if (!apiData || apiData.length === 0) {
-      console.warn(
-        `⚠️ 2026 EMPTY FOR LEAGUE ${leagueApiId} → FALLBACK TO 2025`
-      );
-
-      apiData = await fetchFixturesByLeague(
-        leagueApiId,
-        2025,
-        timestamp
-      );
-    }
-
-    return convertApiSportsFixtures(apiData || []);
-  } catch (err) {
-    console.warn("DIRECT API FAILED:", leagueApiId, err);
-    return [];
-  }
-}
 
 async function fetchFromApi(
   options?: GetMatchesOptions
 ): Promise<MatchData[] | null> {
   try {
-    const entries = getLeagueEntriesForOptions(options);
+    const today = new Date()
+      .toISOString()
+      .split("T")[0];
 
-    if (entries.length === 0) {
-      return null;
-    }
-
-    const results = await Promise.all(
-      entries.map(([, entry]) =>
-        fetchLeagueFixtures(entry.id).catch(() => [])
-      )
+    const response = await fetch(
+      `${API_BASE_URL}/api/stats/fixtures?date=${today}`
     );
 
-    const flat = results.flat();
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
 
-    if (!flat.length) {
+    const matches: MatchData[] = await response.json();
+
+    if (!matches.length) {
       return null;
     }
 
-    console.log("🔥 DIRECT API MATCHES:", flat.length);
-    return flat;
+    console.log(
+      "🔥 HIGHLIGHTLY MATCHES:",
+      matches.length
+    );
+
+    return matches;
   } catch (err) {
-    console.warn("DIRECT API FAILED", err);
+    console.warn(
+      "BACKEND FIXTURE FETCH FAILED",
+      err
+    );
+
     return null;
   }
 }

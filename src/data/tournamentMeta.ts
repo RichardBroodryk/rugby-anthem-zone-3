@@ -9,12 +9,16 @@ export interface TournamentMeta {
   year: number;
   gender: "men" | "women" | "mixed";
   type: string;
-  status: string;
+  status: "active" | "completed" | "planned";
   matchKey: string;
   heroBadge?: string;
   heroSubtitle?: string;
   route: string;
   window?: string;
+  currentRound?: number;
+  champion?: string;
+  matchesPlayed?: number;
+  totalMatches?: number;
 }
 
 /* ==================================================
@@ -34,6 +38,9 @@ export const tournaments2026: TournamentMeta[] = [
     status: "completed",
     matchKey: "Six Nations 2026",
     route: "/tournaments/men/six-nations-2026",
+    champion: "Ireland",
+    matchesPlayed: 15,
+    totalMatches: 15,
   },
 
   {
@@ -46,6 +53,9 @@ export const tournaments2026: TournamentMeta[] = [
     status: "active",
     matchKey: "Nations Championship 2026",
     route: "/tournaments/men/nations-championship-2026",
+    currentRound: 3,
+    matchesPlayed: 18,
+    totalMatches: 48,
   },
 
   {
@@ -60,6 +70,9 @@ export const tournaments2026: TournamentMeta[] = [
     heroBadge: "EMERGING NATIONS",
     heroSubtitle: "Tier 2 International Championship",
     route: "/tournaments/men/world-rugby-nations-cup-2026",
+    currentRound: 2,
+    matchesPlayed: 8,
+    totalMatches: 24,
   },
 
   {
@@ -72,6 +85,9 @@ export const tournaments2026: TournamentMeta[] = [
     status: "active",
     matchKey: "Pacific Nations Cup 2026",
     route: "/tournaments/men/pacific-nations-2026",
+    currentRound: 1,
+    matchesPlayed: 2,
+    totalMatches: 16,
   },
 
   {
@@ -84,6 +100,9 @@ export const tournaments2026: TournamentMeta[] = [
     status: "active",
     matchKey: "Men's International Tests 2026",
     route: "/tournaments/men/international-tests-2026",
+    currentRound: 2,
+    matchesPlayed: 12,
+    totalMatches: 42,
   },
 
   {
@@ -98,6 +117,9 @@ export const tournaments2026: TournamentMeta[] = [
     heroBadge: "ICONIC RIVALRY",
     heroSubtitle: "Australia · New Zealand",
     route: "/tournaments/men/bledisloe-cup-2026",
+    currentRound: 1,
+    matchesPlayed: 1,
+    totalMatches: 3,
   },
 
   {
@@ -112,6 +134,8 @@ export const tournaments2026: TournamentMeta[] = [
     heroBadge: "ICONIC RIVALRY",
     heroSubtitle: "South Africa · New Zealand",
     route: "/tournaments/men/rivalry-tour-2026",
+    matchesPlayed: 0,
+    totalMatches: 3,
   },
 
   // ================= SVNS (MEN + WOMEN COMBINED) =================
@@ -129,6 +153,9 @@ export const tournaments2026: TournamentMeta[] = [
     heroSubtitle: "Hong Kong · Valladolid · Bordeaux",
     route: "/svns",
     window: "Apr – Jun 2026",
+    currentRound: 3,
+    matchesPlayed: 30,
+    totalMatches: 72,
   },
 
   // ================= WOMEN =================
@@ -143,6 +170,9 @@ export const tournaments2026: TournamentMeta[] = [
     status: "completed",
     matchKey: "Women's Six Nations 2026",
     route: "/tournaments/women/six-nations-women-2026",
+    champion: "England",
+    matchesPlayed: 15,
+    totalMatches: 15,
   },
 
   {
@@ -155,6 +185,9 @@ export const tournaments2026: TournamentMeta[] = [
     status: "active",
     matchKey: "WXV Global Series 2026",
     route: "/tournaments/women/wxv1-2026",
+    currentRound: 2,
+    matchesPlayed: 6,
+    totalMatches: 18,
   },
 
   {
@@ -167,5 +200,8 @@ export const tournaments2026: TournamentMeta[] = [
     status: "active",
     matchKey: "Women's International Tests 2026",
     route: "/tournaments/women/womens-tests-2026",
+    currentRound: 1,
+    matchesPlayed: 4,
+    totalMatches: 16,
   },
 ];

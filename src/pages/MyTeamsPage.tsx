@@ -32,7 +32,9 @@ export default function MyTeamsPage() {
   useEffect(() => {
     async function fetchMatches() {
       try {
-        const data = await getMatches();
+        const data = await getMatches({
+  includeAll: true,
+});
         setMatches(data);
       } catch {
         console.warn("MyTeams: match fetch failed");

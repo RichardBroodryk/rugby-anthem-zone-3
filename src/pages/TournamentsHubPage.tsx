@@ -11,6 +11,9 @@ import defaultTournamentHero from "../assets/images/tournaments/default-tourname
 
 /* ================= DATA ================= */
 import { tournaments2026 } from "../data/tournamentMeta";
+import {
+  getInternationalCompetitions,
+} from "../contracts/competitionRegistry";
 import { getTournamentVisual } from "../data/tournamentVisuals";
 
 /* ================= TYPES ================= */
@@ -25,6 +28,17 @@ type TournamentRow = {
 export default function TournamentsHubPage() {
   const navigate = useNavigate();
 
+  const competitionMap = useMemo(() => {
+    const map = new Map(
+      getInternationalCompetitions().map((c) => [
+        c.conceptId,
+        c,
+      ])
+    );
+
+    return map;
+  }, []);
+
   const mensTournaments: TournamentRow[] = useMemo(
     () =>
       tournaments2026
@@ -33,10 +47,14 @@ export default function TournamentsHubPage() {
           const visual = getTournamentVisual(t.conceptId);
 
           return {
-            name: t.name,
+            name:
+              competitionMap.get(t.conceptId)?.name ??
+              t.name,
             year: t.year,
             description:
-              t.heroSubtitle ?? "International rugby competition",
+              t.heroSubtitle ??
+              competitionMap.get(t.conceptId)?.name ??
+              "International rugby competition",
             logo:
               visual?.heroImageMen ||
               visual?.heroImageWomen ||
@@ -45,7 +63,7 @@ export default function TournamentsHubPage() {
             route: t.route,
           };
         }),
-    []
+    [competitionMap]
   );
 
   const womensTournaments: TournamentRow[] = useMemo(
@@ -56,10 +74,14 @@ export default function TournamentsHubPage() {
           const visual = getTournamentVisual(t.conceptId);
 
           return {
-            name: t.name,
+            name:
+              competitionMap.get(t.conceptId)?.name ??
+              t.name,
             year: t.year,
             description:
-              t.heroSubtitle ?? "International rugby competition",
+              t.heroSubtitle ??
+              competitionMap.get(t.conceptId)?.name ??
+              "International rugby competition",
             logo:
               visual?.heroImageWomen ||
               visual?.heroImageMen ||
@@ -68,7 +90,7 @@ export default function TournamentsHubPage() {
             route: t.route,
           };
         }),
-    []
+    [competitionMap]
   );
 
   return (

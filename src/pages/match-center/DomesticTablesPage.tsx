@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./DomesticTablesPage.module.css";
 
 import { domesticLeagues } from "../../data/domesticLeagues";
+import { womenDomesticLeagues } from "../../data/womenDomesticLeagues";
 import heroImg from "../../assets/images/domestic/domestic-hero.jpg";
 
 export default function DomesticTablesPage() {
@@ -30,16 +31,16 @@ export default function DomesticTablesPage() {
         </button>
       </div>
 
-     {/* TITLE */}
-<section className={styles.section}>
-  <h1 className={styles.title}>
-    Domestic League Tables
-  </h1>
+      {/* TITLE */}
+      <section className={styles.section}>
+        <h1 className={styles.title}>
+          Domestic League Tables
+        </h1>
 
-  <p className={styles.subtitle}>
-    Domestic tables will be updated as the new league seasons begin.
-  </p>
-</section>
+        <p className={styles.subtitle}>
+          Select a competition to view the latest standings, fixtures and results.
+        </p>
+      </section>
 
       {/* ================= MEN ================= */}
       <section className={styles.section}>
@@ -57,7 +58,7 @@ export default function DomesticTablesPage() {
               key={`men-${league.id}`}
               className={styles.card}
               onClick={() =>
-                navigate(`/match-center/domestic/${league.id}-men`)
+                navigate(`/match-center/domestic/${league.id}`)
               }
             >
               <img
@@ -84,12 +85,12 @@ export default function DomesticTablesPage() {
         </h3>
 
         <div className={styles.grid}>
-          {domesticLeagues.map((league) => (
+          {womenDomesticLeagues.map((league) => (
             <div
               key={`women-${league.id}`}
               className={styles.card}
               onClick={() =>
-                navigate(`/match-center/domestic/${league.id}-women`)
+                navigate(`/match-center/domestic/${league.id}`)
               }
             >
               <img
@@ -98,7 +99,7 @@ export default function DomesticTablesPage() {
                 className={styles.logo}
               />
               <div className={styles.name}>
-                {league.name} (Women)
+                {league.name}
               </div>
             </div>
           ))}

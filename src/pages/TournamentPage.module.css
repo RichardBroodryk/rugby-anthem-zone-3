@@ -64,6 +64,120 @@
   color: #111827;
 }
 
+/* ================= STATUS BAR (NEW) ================= */
+.statusBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.statusLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.statusLabel {
+  font-weight: 600;
+  opacity: 0.6;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.statusActive {
+  color: #4ade80;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.statusCompleted {
+  color: #facc15;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.statusRound {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.statusChampion {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.statusRight {
+  display: flex;
+  align-items: center;
+}
+
+.lastUpdated {
+  opacity: 0.6;
+  font-size: 0.85rem;
+}
+
+/* ================= LOADING/EMPTY CARDS (NEW) ================= */
+.loadingCard {
+  padding: 40px;
+  text-align: center;
+  opacity: 0.6;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.emptyCard {
+  padding: 40px;
+  text-align: center;
+  opacity: 0.6;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+/* ================= ERROR CARD (NEW) ================= */
+.errorCard {
+  padding: 60px 40px;
+  text-align: center;
+  max-width: 500px;
+  margin: 80px auto;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.errorCard h2 {
+  margin-bottom: 12px;
+  font-size: 1.8rem;
+}
+
+.errorCard p {
+  opacity: 0.7;
+  margin-bottom: 24px;
+}
+
+.errorButton {
+  padding: 12px 32px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.errorButton:hover {
+  background: #2563eb;
+}
+
 /* ================= SECTIONS ================= */
 .section {
   max-width: 1200px;
@@ -220,6 +334,20 @@
   .backNav {
     padding: 0 16px;
   }
+
+  .statusBar {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .statusLeft {
+    gap: 10px;
+  }
+
+  .statusRight {
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -250,6 +378,15 @@
   .flagsGrid {
     grid-template-columns: repeat(3, 1fr);
     max-width: 360px;
+  }
+
+  .errorCard {
+    padding: 40px 24px;
+    margin: 40px 16px;
+  }
+
+  .errorCard h2 {
+    font-size: 1.4rem;
   }
 }
 
@@ -289,5 +426,36 @@
 
   .form span {
     font-size: 0.7rem;
+  }
+
+  .statusBar {
+    padding: 10px 12px;
+  }
+
+  .statusLeft {
+    gap: 8px;
+    font-size: 0.85rem;
+  }
+
+  .statusRound {
+    font-size: 0.75rem;
+    padding: 3px 10px;
+  }
+
+  .lastUpdated {
+    font-size: 0.75rem;
+  }
+
+  .errorCard {
+    padding: 30px 16px;
+  }
+
+  .errorCard h2 {
+    font-size: 1.2rem;
+  }
+
+  .errorButton {
+    padding: 10px 24px;
+    font-size: 0.9rem;
   }
 }

@@ -20,6 +20,20 @@ export interface Competition {
   gender: "men" | "women" | "mixed";
   tier?: CompetitionTier;
   region?: string;
+  
+  // Optional display fields
+  logo?: string;
+  hero?: string;
+  route?: string;
+  season?: string;
+  
+  // Feature flags
+  supportsStandings?: boolean;
+  supportsStatistics?: boolean;
+  supportsFixtures?: boolean;
+  supportsResults?: boolean;
+  supportsSquads?: boolean;
+  supportsPlayers?: boolean;
 }
 
 // --------------------------------------------------
@@ -37,6 +51,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier1",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "rugby-championship",
@@ -44,6 +64,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier1",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "world-cup",
@@ -51,6 +77,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier1",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "autumn-nations",
@@ -58,6 +90,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier1",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "summer-internationals",
@@ -65,6 +103,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier1",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
 
   // 🔥 RAZ CORE MEN'S INTERNATIONALS
@@ -74,6 +118,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier1",
+    supportsStandings: false,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "nations-championship",
@@ -81,6 +131,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier1",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "bledisloe-cup",
@@ -88,6 +144,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier1",
+    supportsStandings: false,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "sa-nz-rival-tour",
@@ -95,7 +157,26 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier1",
+    supportsStandings: false,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
+  {
+  conceptId: "lions-tour",
+  name: "British & Irish Lions Tour",
+  category: "international",
+  gender: "men",
+  tier: "tier1",
+  supportsStandings: false,
+  supportsStatistics: true,
+  supportsFixtures: true,
+  supportsResults: true,
+  supportsSquads: true,
+  supportsPlayers: true,
+},
 
   // ==================================================
   // 🌍 MEN — INTERNATIONAL (TIER 2 / DEVELOPMENT)
@@ -107,6 +188,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier2",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "pacific-nations",
@@ -114,6 +201,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "men",
     tier: "tier2",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
 
   // ==================================================
@@ -126,6 +219,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "women",
     tier: "tier1",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "world-cup-women",
@@ -133,6 +232,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "women",
     tier: "tier1",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "womens-internationals",
@@ -140,6 +245,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "women",
     tier: "tier1",
+    supportsStandings: false,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "wxv1",
@@ -147,6 +258,12 @@ export const COMPETITIONS: Competition[] = [
     category: "international",
     gender: "women",
     tier: "tier1",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
 
   // ==================================================
@@ -160,6 +277,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier1",
     region: "global",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "top-14",
@@ -168,6 +291,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier1",
     region: "france",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "premiership",
@@ -176,6 +305,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier1",
     region: "england",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "super-rugby",
@@ -184,6 +319,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier1",
     region: "sanzaar",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "pro-d2",
@@ -192,6 +333,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier2",
     region: "france",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "japan-league-one",
@@ -200,6 +347,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier1",
     region: "japan",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "mlr",
@@ -208,6 +361,26 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier1",
     region: "usa",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
+  },
+  {
+    conceptId: "npc",
+    name: "Bunnings NPC",
+    category: "domestic",
+    gender: "men",
+    tier: "tier1",
+    region: "new-zealand",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
 
   // ==================================================
@@ -221,6 +394,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "women",
     tier: "tier1",
     region: "england",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "super-rugby-women",
@@ -229,6 +408,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "women",
     tier: "tier1",
     region: "sanzaar",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "aupiki",
@@ -237,6 +422,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "women",
     tier: "tier1",
     region: "new-zealand",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "elite-1-women",
@@ -245,6 +436,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "women",
     tier: "tier1",
     region: "france",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
 
   // ==================================================
@@ -258,6 +455,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier1",
     region: "europe",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "challenge-cup",
@@ -266,6 +469,12 @@ export const COMPETITIONS: Competition[] = [
     gender: "men",
     tier: "tier1",
     region: "europe",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
 
   // ==================================================
@@ -277,17 +486,93 @@ export const COMPETITIONS: Competition[] = [
     name: "SVNS Series",
     category: "sevens",
     gender: "mixed",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "sevens-world-cup",
     name: "Sevens World Cup",
     category: "sevens",
     gender: "mixed",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
   {
     conceptId: "olymics-sevens",
     name: "Olympic Sevens",
     category: "sevens",
     gender: "mixed",
+    supportsStandings: true,
+    supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
   },
 ];
+
+// ==================================================
+// 🛠️ HELPER FUNCTIONS
+// ==================================================
+
+export function getCompetition(conceptId: string): Competition | undefined {
+  return COMPETITIONS.find((c) => c.conceptId === conceptId);
+}
+
+export function getCompetitionByRoute(route: string): Competition | undefined {
+  return COMPETITIONS.find((c) => c.route === route);
+}
+
+export function getDomesticCompetitions(gender?: "men" | "women"): Competition[] {
+  return COMPETITIONS.filter((c) => {
+    if (c.category !== "domestic") return false;
+    if (gender && c.gender !== gender) return false;
+    return true;
+  });
+}
+
+export function getInternationalCompetitions(gender?: "men" | "women"): Competition[] {
+  return COMPETITIONS.filter((c) => {
+    if (c.category !== "international") return false;
+    if (gender && c.gender !== gender) return false;
+    return true;
+  });
+}
+
+export function getSevensCompetitions(): Competition[] {
+  return COMPETITIONS.filter((c) => c.category === "sevens");
+}
+
+export function getCompetitionsWithStandings(): Competition[] {
+  return COMPETITIONS.filter((c) => c.supportsStandings === true);
+}
+
+export function getCompetitionsByRegion(region: string): Competition[] {
+  return COMPETITIONS.filter((c) => c.region === region);
+}
+
+export function getCompetitionsByTier(tier: CompetitionTier): Competition[] {
+  return COMPETITIONS.filter((c) => c.tier === tier);
+}
+
+const competitionRegistry = {
+  COMPETITIONS,
+  getCompetition,
+  getCompetitionByRoute,
+  getDomesticCompetitions,
+  getInternationalCompetitions,
+  getSevensCompetitions,
+  getCompetitionsWithStandings,
+  getCompetitionsByRegion,
+  getCompetitionsByTier,
+};
+
+export default competitionRegistry;

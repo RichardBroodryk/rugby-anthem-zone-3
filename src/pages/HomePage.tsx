@@ -70,7 +70,6 @@ export default function HomePage() {
   const featuredTournament =
     tournaments2026.find((t) => t.conceptId === "nations-championship") ??
     tournaments2026.find((t) => t.status === "active") ??
-    tournaments2026.find((t) => t.status === "upcoming") ??
     tournaments2026[0];
 
   return (

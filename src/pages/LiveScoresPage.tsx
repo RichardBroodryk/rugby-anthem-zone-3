@@ -5,6 +5,8 @@ import styles from "./LiveScoresPage.module.css";
 import { getMatches } from "../data/matchesAdapter";
 import type { MatchData } from "../data/matches/types";
 
+import { getCompetition } from "../contracts/competitionRegistry"; // <-- Added import
+
 import LiveScoreRow from "../components/match/LiveScoreRow";
 
 import heroBg from "../assets/images/raz/livescore.jpg";
@@ -12,24 +14,7 @@ import heroBg from "../assets/images/raz/livescore.jpg";
 import PageWrapper from "../components/layout/PageWrapper";
 import razLight from "../assets/images/raz/razlight2.png";
 
-/* ================= CURRENT TIER 1 FILTERS ================= */
-
-const CURRENT_TIER1_COMPETITIONS = new Set<string>([
-  "nations-championship",
-  "international-tests",
-  "bledisloe-cup",
-  "sa-nz-rival-tour",
-  "pacific-nations",
-]);
-
-const LEGACY_COMPETITIONS = new Set<string>([
-  "six-nations",
-  "six-nations-women",
-]);
-
-const TIER2_COMPETITIONS = new Set<string>([
-  "world-rugby-nations-cup",
-]);
+/* ================= HELPERS ================= */
 
 function isBarbariansMatch(match: MatchData) {
   return (
@@ -42,10 +27,6 @@ function isBarbariansMatch(match: MatchData) {
 
 function isCompleted(match: MatchData) {
   return match.state === "final" || !!match.score;
-}
-
-function isCurrentTier1Match(match: MatchData) {
-  return CURRENT_TIER1_COMPETITIONS.has(match.competitionId);
 }
 
 function isToday(dateStr: string) {
@@ -92,6 +73,9 @@ export default function LiveScoresPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  /* ==================================================
+     1. FETCH DATA
+     ================================================== */
   useEffect(() => {
     let mounted = true;
 
@@ -121,12 +105,19 @@ export default function LiveScoresPage() {
     };
   }, []);
 
+  /* ==================================================
+     2. ALL HOOKS MUST EXECUTE BEFORE EARLY RETURNS
+     ================================================== */
   const { live, recentFinals, today, upcoming } = useMemo(() => {
+    // --- UPDATED FILTER LOGIC HERE ---
     const cleaned = matches.filter((match) => {
       if (isBarbariansMatch(match)) return false;
-      if (LEGACY_COMPETITIONS.has(match.competitionId)) return false;
-      if (TIER2_COMPETITIONS.has(match.competitionId)) return false;
-      return isCurrentTier1Match(match);
+
+      const competition = getCompetition(match.competitionId);
+
+      if (!competition) return false;
+
+      return competition.category === "international";
     });
 
     const liveMatches = cleaned.filter(
@@ -176,28 +167,9 @@ export default function LiveScoresPage() {
     };
   }, [matches]);
 
-  if (loading) {
-    return (
-      <PageWrapper imageUrl={razLight}>
-        <main className={styles.page}>
-          <div className={styles.empty}>
-            Loading live matches...
-          </div>
-        </main>
-      </PageWrapper>
-    );
-  }
-
-  if (error) {
-    return (
-      <PageWrapper imageUrl={razLight}>
-        <main className={styles.page}>
-          <div className={styles.empty}>{error}</div>
-        </main>
-      </PageWrapper>
-    );
-  }
-
+  /* ==================================================
+     3. HELPER FUNCTIONS (No hooks inside)
+     ================================================== */
   const renderGroup = (group: MatchData[]) => {
     const { men, women } = splitByGender(group);
 
@@ -244,8 +216,36 @@ export default function LiveScoresPage() {
     );
   };
 
+  /* ==================================================
+     4. EARLY RETURNS (SAFE, EXECUTED AFTER ALL HOOKS)
+     ================================================== */
+  if (loading) {
+    return (
+      <PageWrapper imageUrl={razLight}>
+        <main className={styles.page}>
+          <div className={styles.empty}>
+            Loading live matches...
+          </div>
+        </main>
+      </PageWrapper>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageWrapper imageUrl={razLight}>
+        <main className={styles.page}>
+          <div className={styles.empty}>{error}</div>
+        </main>
+      </PageWrapper>
+    );
+  }
+
   const upcomingMatches = upcoming.slice(0, 20);
 
+  /* ==================================================
+     5. PAGE RENDER
+     ================================================== */
   return (
     <PageWrapper imageUrl={razLight}>
       <main className={styles.page}>

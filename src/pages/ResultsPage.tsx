@@ -6,31 +6,14 @@ import styles from "./ResultsPage.module.css";
 import { getMatches } from "../data/matchesAdapter";
 import type { MatchData } from "../data/matches/types";
 
+import { getCompetition } from "../contracts/competitionRegistry"; // <-- Added import
+
 import MatchRow from "../components/match/MatchRow";
 
 import heroBg from "../assets/images/raz/Results.png";
 
 import PageWrapper from "../components/layout/PageWrapper";
 import razLight from "../assets/images/raz/razlight2.png";
-
-/* ================= FILTERS ================= */
-
-const CURRENT_TIER1_COMPETITIONS = new Set<string>([
-  "nations-championship",
-  "international-tests",
-  "bledisloe-cup",
-  "sa-nz-rival-tour",
-  "pacific-nations",
-]);
-
-const TIER2_COMPETITIONS = new Set<string>([
-  "world-rugby-nations-cup",
-]);
-
-const LEGACY_COMPETITIONS = new Set<string>([
-  "six-nations",
-  "six-nations-women",
-]);
 
 /* ================= UTIL ================= */
 
@@ -108,26 +91,35 @@ export default function ResultsPage() {
     };
   }, []);
 
-  const {
-    tier1Groups,
-    tier2Groups,
-    legacyGroups,
-  } = useMemo(() => {
+  /* ==================================================
+     HOOKS BEFORE EARLY RETURN
+     ================================================== */
+  const { tier1Groups, tier2Groups, legacyGroups } = useMemo(() => {
     const completed = matches.filter(isCompleted);
 
-    const tier1 = completed
-      .filter((m) =>
-        CURRENT_TIER1_COMPETITIONS.has(m.competitionId)
-      )
-      .filter((m) => !isBarbariansMatch(m));
+    // --- REPLACED FILTER LOGIC HERE ---
+    const tier1 = completed.filter((m) => {
+      const c = getCompetition(m.competitionId);
 
-    const tier2 = completed.filter((m) =>
-      TIER2_COMPETITIONS.has(m.competitionId)
-    );
+      return (
+        c &&
+        c.category === "international" &&
+        c.tier === "tier1" &&
+        !isBarbariansMatch(m)
+      );
+    });
 
-    const legacy = completed.filter((m) =>
-      LEGACY_COMPETITIONS.has(m.competitionId)
-    );
+    const tier2 = completed.filter((m) => {
+      const c = getCompetition(m.competitionId);
+
+      return (
+        c &&
+        c.category === "international" &&
+        c.tier === "tier2"
+      );
+    });
+
+    const legacy: MatchData[] = []; // Explicitly empty per your request
 
     return {
       tier1Groups: groupByTournament(tier1),
@@ -136,6 +128,9 @@ export default function ResultsPage() {
     };
   }, [matches]);
 
+  /* ==================================================
+     EARLY RETURNS (SAFE, AFTER ALL HOOKS)
+     ================================================== */
   if (loading) {
     return (
       <PageWrapper imageUrl={razLight}>
@@ -158,6 +153,9 @@ export default function ResultsPage() {
     );
   }
 
+  /* ==================================================
+     PAGE RENDER
+     ================================================== */
   return (
     <PageWrapper imageUrl={razLight}>
       <main className={styles.page}>

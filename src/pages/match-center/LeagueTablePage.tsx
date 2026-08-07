@@ -11,7 +11,17 @@ import {
 
 import styles from "./LeagueTablePage.module.css";
 
-import { domesticLeagues } from "../../data/domesticLeagues";
+import {
+  getCompetition,
+} from "../../contracts/competitionRegistry";
+
+import {
+  domesticLeagues,
+} from "../../data/domesticLeagues";
+
+import {
+  womenDomesticLeagues,
+} from "../../data/womenDomesticLeagues";
 
 import {
   tables2026,
@@ -41,6 +51,10 @@ import type {
   MatchData,
 } from "../../data/matches/types";
 
+import {
+  getStandings,
+} from "../../utils/standings/standingsService";
+
 /* ==================================================
    PAGE
    ================================================== */
@@ -57,29 +71,36 @@ export default function LeagueTablePage() {
   const [matches, setMatches] =
     useState<MatchData[]>([]);
 
+  const [standings, setStandings] =
+    useState<any[]>([]);
+
   const [loading, setLoading] =
     useState(true);
 
   const [lastUpdated, setLastUpdated] =
     useState("");
 
-  const [id, gender] = (
-    leagueId || ""
-  ).split("-");
+  const id = leagueId || "";
 
   const league =
-    domesticLeagues.find(
+    getCompetition(id) ??
+    [...domesticLeagues, ...womenDomesticLeagues].find(
       (l) => l.id === id
     );
 
-  const key =
-    `${id}-${gender}`;
+  const leagueUi =
+    [...domesticLeagues, ...womenDomesticLeagues].find(
+      (l) => l.id === id
+    );
 
   const competition =
-    competitionState[key];
+    competitionState[id];
+
+  const competitionInfo =
+    getCompetition(id);
 
   const qualification =
-    competitionQualification[key];
+    competitionQualification[id];
 
 
   /* ==================================================
@@ -89,7 +110,7 @@ useEffect(() => {
     let mounted = true;
 
     async function load() {
-      if (!id || !gender) {
+      if (!id) {
         return;
       }
 
@@ -102,10 +123,6 @@ useEffect(() => {
 
             leagueId: id,
 
-            gender:
-              gender as
-                | "men"
-                | "women",
           });
 
         if (!mounted) {
@@ -113,6 +130,20 @@ useEffect(() => {
         }
 
         setMatches(data);
+
+        try {
+          const liveStandings =
+            await getStandings(id, 2026);
+
+          if (mounted) {
+            setStandings(liveStandings);
+          }
+        } catch (err) {
+          console.warn(
+            "LIVE STANDINGS FAILED",
+            err
+          );
+        }
 
         setLastUpdated(
           new Date().toLocaleTimeString()
@@ -230,7 +261,6 @@ useEffect(() => {
     };
  }, [
   id,
-  gender,
   competition?.state,
   matches,
 ]);
@@ -323,7 +353,7 @@ useEffect(() => {
   const baseTable =
     useMemo(() => {
       const normalizedKey =
-        `${id}-${gender}`.toLowerCase();
+        id.toLowerCase();
 
       return (
         tables2026[
@@ -332,7 +362,6 @@ useEffect(() => {
       );
     }, [
     id,
-    gender,
   ]);
 
   /* ==================================================
@@ -341,6 +370,36 @@ useEffect(() => {
 
   const table =
     useMemo(() => {
+      if (standings.length > 0) {
+        const liveRows =
+          standings.map((team) => ({
+            team: team.name,
+
+            played: team.played,
+
+            won: team.won,
+
+            drawn: team.drawn,
+
+            lost: team.lost,
+
+            pf: team.pointsFor,
+
+            pa: team.pointsAgainst,
+
+            pts: team.points,
+
+            pd:
+              team.pointsFor -
+              team.pointsAgainst,
+          }));
+
+        return applyTableOverlay(
+          baseTable,
+          liveRows
+        );
+      }
+
       if (
         computedStandings.length ===
         0
@@ -386,13 +445,14 @@ useEffect(() => {
     }, [
       baseTable,
       computedStandings,
+      standings,
     ]);
 
   /* ==================================================
      NOT FOUND
      ================================================== */
 
-  if (!league) {
+  if (!league && !leagueUi) {
     return (
       <main className={styles.page}>
         <div>
@@ -425,14 +485,14 @@ useEffect(() => {
       {/* HEADER */}
       <section className={styles.section}>
         <h1 className={styles.title}>
-          {league.name} (
-          {gender})
+          {competitionInfo?.name ?? leagueUi?.name}
         </h1>
 
-        <p className={styles.season}>
-          Season:{" "}
-          {league.season}
-        </p>
+        {leagueUi?.season && (
+          <p className={styles.season}>
+            Season: {leagueUi?.season}
+          </p>
+        )}
 
         <p
           style={{
@@ -631,7 +691,7 @@ useEffect(() => {
             {liveMatches.map(
               (match) => (
                 <div
-                  key={match.matchKey}
+                  key={match.matchKey || String(match.id)}
                   className={styles.matchItem}
                 >
                   <div
@@ -675,10 +735,10 @@ useEffect(() => {
           >
                        {recentResults.map(
               (
-                match: any
+                match: MatchData
               ) => (
                 <div
-                  key={`${match.home}-${match.away}`}
+                  key={match.matchKey || String(match.id)}
                   className={
                     styles.matchItem
                   }
@@ -688,8 +748,8 @@ useEffect(() => {
                       styles.matchTeams
                     }
                   >
-                    {match.home} vs{" "}
-                    {match.away}
+                    {match.home.name} vs{" "}
+                    {match.away.name}
                   </div>
 
                   <div
@@ -697,13 +757,9 @@ useEffect(() => {
                       styles.matchScore
                     }
                   >
-                    {
-                      match.homeScore
-                    }{" "}
-                    -{" "}
-                    {
-                      match.awayScore
-                    }
+                    {match.score
+                      ? `${match.score.home} - ${match.score.away}`
+                      : "-"}
                   </div>
 
                   <div
@@ -735,10 +791,10 @@ useEffect(() => {
           >
                         {upcomingFixtures.map(
               (
-                match: any
+                match: MatchData
               ) => (
                 <div
-                  key={`${match.home}-${match.away}`}
+                  key={match.matchKey || String(match.id)}
                   className={
                     styles.matchItem
                   }
@@ -748,8 +804,8 @@ useEffect(() => {
                       styles.matchTeams
                     }
                   >
-                    {match.home} vs{" "}
-                    {match.away}
+                    {match.home.name} vs{" "}
+                    {match.away.name}
                   </div>
 
                   <div

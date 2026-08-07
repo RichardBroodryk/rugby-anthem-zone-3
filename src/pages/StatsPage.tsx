@@ -13,6 +13,7 @@ import razLight from "../assets/images/raz/razlight2.png";
 
 import { getMatches } from "../data/matchesAdapter";
 import type { MatchData } from "../data/matches/types";
+import { getCompetition } from "../contracts/competitionRegistry"; // <-- Updated import path
 
 /* ================= TYPES ================= */
 
@@ -28,31 +29,6 @@ type TeamStats = {
   difference: number;
   tablePoints: number;
 };
-
-/* ================= FILTERS ================= */
-
-const CURRENT_TIER1_COMPETITIONS = new Set<string>([
-  "nations-championship",
-  "bledisloe-cup",
-  "sa-nz-rival-tour",
-  "pacific-nations",
-]);
-
-const STANDALONE_TEST_COMPETITIONS = new Set<string>([
-  "international-tests",
-]);
-
-const CURRENT_TIER2_COMPETITIONS = new Set<string>([
-  "world-rugby-nations-cup",
-]);
-
-const LEGACY_MENS_COMPETITIONS = new Set<string>([
-  "six-nations",
-]);
-
-const LEGACY_WOMENS_COMPETITIONS = new Set<string>([
-  "six-nations-women",
-]);
 
 /* ================= HELPERS ================= */
 
@@ -135,6 +111,65 @@ function buildStats(matches: MatchData[]): TeamStats[] {
   });
 }
 
+// Exported outside the component so it doesn't get recreated on every render
+function renderTable(data: TeamStats[]) {
+  if (data.length === 0) {
+    return (
+      <p className={styles.empty}>
+        No completed matches available yet.
+      </p>
+    );
+  }
+
+  return (
+    <div className={styles.tableWrap}>
+      <table className={styles.statsTable}>
+        <thead>
+          <tr>
+            <th className={styles.left}>
+              Team
+            </th>
+            <th>P</th>
+            <th>W</th>
+            <th>L</th>
+            <th>PF</th>
+            <th>PA</th>
+            <th>+/-</th>
+            <th>Pts</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {data.map((t) => (
+            <tr key={t.team}>
+              <td
+                className={`${styles.teamCell} ${styles.left}`}
+              >
+                <Flag
+                  country={t.country}
+                  size="small"
+                />
+
+                <span className={styles.teamName}>
+                  {t.team}
+                </span>
+              </td>
+
+              <td>{t.played}</td>
+              <td>{t.won}</td>
+              <td>{t.lost}</td>
+              <td>{t.pointsFor}</td>
+              <td>{t.pointsAgainst}</td>
+              <td>{t.difference}</td>
+              <td>{t.tablePoints}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 /* ================= PAGE ================= */
 
 export default function StatsPage() {
@@ -174,36 +209,29 @@ export default function StatsPage() {
       (m) => !!m.score
     );
 
-    const currentTier1 = completed.filter((m) =>
-      CURRENT_TIER1_COMPETITIONS.has(
-        m.competitionId
-      )
-    );
+    const currentTier1 = completed.filter((m) => {
+      const c = getCompetition(m.competitionId);
+      return (
+        c &&
+        c.category === "international" &&
+        c.tier === "tier1"
+      );
+    });
 
-    const currentTier2 = completed.filter((m) =>
-      CURRENT_TIER2_COMPETITIONS.has(
-        m.competitionId
-      )
-    );
+    const currentTier2 = completed.filter((m) => {
+      const c = getCompetition(m.competitionId);
+      return (
+        c &&
+        c.category === "international" &&
+        c.tier === "tier2"
+      );
+    });
 
-    const legacyMens = completed.filter((m) =>
-      LEGACY_MENS_COMPETITIONS.has(
-        m.competitionId
-      )
-    );
-
-    const legacyWomens = completed.filter((m) =>
-      LEGACY_WOMENS_COMPETITIONS.has(
-        m.competitionId
-      )
-    );
+    const legacyMens: MatchData[] = [];
+    const legacyWomens: MatchData[] = [];
 
     const standaloneTests = completed
-      .filter((m) =>
-        STANDALONE_TEST_COMPETITIONS.has(
-          m.competitionId
-        )
-      )
+      .filter((m) => m.competitionId === "international-tests")
       .sort(
         (a, b) =>
           new Date(b.date).getTime() -
@@ -235,63 +263,9 @@ export default function StatsPage() {
     };
   }, [matches]);
 
-  const renderTable = (data: TeamStats[]) => {
-    if (data.length === 0) {
-      return (
-        <p className={styles.empty}>
-          No completed matches available yet.
-        </p>
-      );
-    }
-
-    return (
-      <div className={styles.tableWrap}>
-        <table className={styles.statsTable}>
-          <thead>
-            <tr>
-              <th className={styles.left}>
-                Team
-              </th>
-              <th>P</th>
-              <th>W</th>
-              <th>L</th>
-              <th>PF</th>
-              <th>PA</th>
-              <th>+/-</th>
-              <th>Pts</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {data.map((t) => (
-              <tr key={t.team}>
-                <td
-                  className={`${styles.teamCell} ${styles.left}`}
-                >
-                  <Flag
-                    country={t.country}
-                    size="small"
-                  />
-
-                  <span className={styles.teamName}>
-                    {t.team}
-                  </span>
-                </td>
-
-                <td>{t.played}</td>
-                <td>{t.won}</td>
-                <td>{t.lost}</td>
-                <td>{t.pointsFor}</td>
-                <td>{t.pointsAgainst}</td>
-                <td>{t.difference}</td>
-                <td>{t.tablePoints}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  };
+  /* ==================================================
+     PAGE RENDER
+     ================================================== */
 
   return (
     <PageWrapper imageUrl={razLight}>
