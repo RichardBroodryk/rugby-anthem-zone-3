@@ -66,7 +66,8 @@ export async function getStandings(
     raw: row.raw,
   }));
 }
-
-export default {
+const standingsService = {
   getStandings,
 };
+
+export default standingsService;
