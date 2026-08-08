@@ -7,6 +7,118 @@ import { flagMap } from "../data/flagMap";
 import { getMatchDetails } from "../utils/matchDetailsResolver";
 import { tournaments2026 } from "../data/tournamentMeta";
 
+/* ==================================================
+   MATCH RESOLUTION HELPERS
+   ================================================== */
+
+function normalizeTeamName(
+  value: string | undefined
+): string {
+  return String(value || "")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function normalizeDate(
+  value: string | undefined
+): string {
+  if (!value) return "";
+
+  return value.split("T")[0];
+}
+
+function sameTeams(
+  first: any,
+  second: any
+): boolean {
+  if (!first || !second) {
+    return false;
+  }
+
+  return (
+    normalizeTeamName(first.home?.name) ===
+      normalizeTeamName(second.home?.name) &&
+    normalizeTeamName(first.away?.name) ===
+      normalizeTeamName(second.away?.name)
+  );
+}
+
+function sameMatchDate(
+  first: any,
+  second: any
+): boolean {
+  return (
+    normalizeDate(first?.date) ===
+    normalizeDate(second?.date)
+  );
+}
+
+function hasUsableScore(
+  match: any
+): boolean {
+  return (
+    !!match?.score &&
+    Number.isFinite(match.score.home) &&
+    Number.isFinite(match.score.away)
+  );
+}
+
+function hasLiveState(
+  match: any
+): boolean {
+  return (
+    match?.state === "live" ||
+    match?.state === "final" ||
+    match?.state === "starting"
+  );
+}
+
+/* ==================================================
+   MATCH CANDIDATE RESOLUTION
+   ================================================== */
+
+function selectBestMatch(
+  candidates: any[]
+): any | undefined {
+  if (!candidates.length) {
+    return undefined;
+  }
+
+  /*
+   * Highlightly data must win when it contains
+   * authoritative live/final information.
+   *
+   * Priority:
+   *
+   * 1. Match with score
+   * 2. Live / final / starting state
+   * 3. Otherwise first available record
+   */
+
+  const scored =
+    candidates.find(
+      (candidate) =>
+        hasUsableScore(candidate)
+    );
+
+  if (scored) {
+    return scored;
+  }
+
+  const stateful =
+    candidates.find(
+      (candidate) =>
+        hasLiveState(candidate)
+    );
+
+  if (stateful) {
+    return stateful;
+  }
+
+  return candidates[0];
+}
+
 export default function MatchPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,31 +142,181 @@ export default function MatchPage() {
     match?.competitionId === "svns";
 
   /* ==================================================
-     LOAD MATCH (STATE OR URL)
+     LOAD MATCH
+
+     IMPORTANT:
+
+     The route state is only the initial record.
+
+     MatchPage always refreshes through getMatches()
+     so Highlightly can supply the latest score/state.
+
+     Resolution order:
+
+     1. Exact matchKey candidates
+     2. Same home + away + date candidates
+     3. ID fallback
+
+     When multiple candidates exist, the scored/live
+     record wins.
      ================================================== */
 
   useEffect(() => {
-    if (match) return;
+    if (!id && !location.state) {
+      return;
+    }
+
+    let cancelled = false;
 
     async function loadMatch() {
-      const allMatches =
-        await getMatches();
+      try {
+        const allMatches =
+          await getMatches();
 
-      const found =
-        allMatches.find(
-          (m) =>
-            String(m.id) === id
+        if (cancelled) {
+          return;
+        }
+
+        const routeMatch =
+          location.state || null;
+
+        let found: any | undefined;
+
+        /* ==================================================
+           1. EXACT MATCH KEY
+           ================================================== */
+
+        if (routeMatch?.matchKey) {
+          const keyMatches =
+            allMatches.filter(
+              (candidate) =>
+                candidate.matchKey ===
+                routeMatch.matchKey
+            );
+
+          found =
+            selectBestMatch(
+              keyMatches
+            );
+        }
+
+        /* ==================================================
+           2. SAME TEAMS + SAME DATE
+           
+           This is the critical reconciliation step.
+
+           There may be both:
+           
+           LOCAL:
+           Stormers vs New Zealand
+           no score
+
+           HIGHLIGHTLY:
+           Stormers vs New Zealand
+           21 - 38
+
+           We collect ALL matching records and allow
+           selectBestMatch() to choose the scored record.
+           ================================================== */
+
+        if (!found && routeMatch) {
+          const matchingCandidates =
+            allMatches.filter(
+              (candidate) =>
+                sameTeams(
+                  candidate,
+                  routeMatch
+                ) &&
+                sameMatchDate(
+                  candidate,
+                  routeMatch
+                )
+            );
+
+          found =
+            selectBestMatch(
+              matchingCandidates
+            );
+        }
+
+        /* ==================================================
+           3. ID FALLBACK
+           ================================================== */
+
+        if (!found && id) {
+          const idMatches =
+            allMatches.filter(
+              (candidate) =>
+                String(candidate.id) ===
+                String(id)
+            );
+
+          found =
+            selectBestMatch(
+              idMatches
+            );
+        }
+
+        /* ==================================================
+           USE CANONICAL MATCH
+           ================================================== */
+
+        if (found) {
+          console.log(
+            "🏉 MATCH PAGE RESOLVED:",
+            {
+              id: found.id,
+              matchKey: found.matchKey,
+              home: found.home?.name,
+              away: found.away?.name,
+              date: found.date,
+              score: found.score,
+              state: found.state,
+            }
+          );
+
+          setMatch(found);
+
+          return;
+        }
+
+        /* ==================================================
+           LAST RESORT
+           ================================================== */
+
+        if (routeMatch) {
+          console.warn(
+            "⚠️ MATCH PAGE USING ROUTE STATE FALLBACK"
+          );
+
+          setMatch(routeMatch);
+        }
+      } catch (error) {
+        console.warn(
+          "⚠️ MATCH PAGE FAILED TO REFRESH MATCH:",
+          error
         );
 
-      if (found) {
-        setMatch(found);
+        /*
+         * Keep the existing route state if the backend
+         * is temporarily unavailable.
+         */
+
+        if (
+          !cancelled &&
+          location.state
+        ) {
+          setMatch(location.state);
+        }
       }
     }
 
-    if (id) {
-      loadMatch();
-    }
-  }, [id, match]);
+    loadMatch();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [id, location.state]);
 
   /* ==================================================
      TRACKING
@@ -66,8 +328,9 @@ export default function MatchPage() {
 
     if (
       sessionStorage.getItem(key)
-    )
+    ) {
       return;
+    }
 
     const current =
       Number(
@@ -91,9 +354,11 @@ export default function MatchPage() {
      LOADING
      ================================================== */
 
-const resolvedTournamentRoute =
+  const resolvedTournamentRoute =
     useMemo(() => {
-      if (!match) return "/tournaments";
+      if (!match) {
+        return "/tournaments";
+      }
 
       if (match.tournamentSlug) {
         return `/tournaments/${match.tournamentSlug}`;
@@ -117,7 +382,6 @@ const resolvedTournamentRoute =
 
       return "/tournaments";
     }, [match]);
-
 
   if (!match) {
     return (
@@ -149,7 +413,6 @@ const resolvedTournamentRoute =
   const details =
     getMatchDetails(match);
 
-  
   /* ==================================================
      FLAGS + META
      ================================================== */
@@ -180,7 +443,7 @@ const resolvedTournamentRoute =
       : "Date TBC";
 
   const hasScore =
-    !!match.score;
+    hasUsableScore(match);
 
   /* ==================================================
      COMMENTS
@@ -190,8 +453,9 @@ const resolvedTournamentRoute =
     () => {
       if (
         newComment.trim() === ""
-      )
+      ) {
         return;
+      }
 
       const comment = {
         id: Date.now().toString(),

@@ -24,6 +24,7 @@ export interface MatchData {
   pool?: string;
 
   date: string;
+  startTime?: string;
   venue: string;
 
   home: MatchTeam;

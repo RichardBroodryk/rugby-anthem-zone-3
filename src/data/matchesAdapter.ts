@@ -7,9 +7,8 @@
 //   status and scores.
 // - Local matches2026 remains the fallback/curated
 //   fixture source.
-// - We deliberately fetch a rolling date window so that
-//   completed matches do not disappear simply because
-//   the calendar has moved to the next day.
+// - Local and Highlightly records are reconciled even
+//   when their matchKey formats differ.
 // - Match details such as lineups, players, coaches,
 //   officials and curated content remain in
 //   matchDetails2026.ts.
@@ -41,24 +40,6 @@ type GetMatchesOptions = {
 /* ==================================================
    CONSTANTS
    ================================================== */
-
-/*
- * We fetch a rolling window rather than TODAY only.
- *
- * Yesterday:
- *   keeps recently completed matches such as NZ vs Stormers
- *
- * Today:
- *   supplies today's live/upcoming matches
- *
- * Future:
- *   supplies the next fixtures so the Home page can
- *   automatically move to the next match.
- *
- * Seven days is enough for the Home / Match Centre
- * workflow without requesting an unnecessarily large
- * amount of data.
- */
 
 const PAST_DAYS = 2;
 const FUTURE_DAYS = 14;
@@ -110,6 +91,58 @@ function addDays(date: Date, amount: number): Date {
   result.setUTCDate(result.getUTCDate() + amount);
 
   return result;
+}
+
+/* ==================================================
+   NAME NORMALISATION
+   ================================================== */
+
+function normalizeTeamName(value: string): string {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "");
+}
+
+/* ==================================================
+   MATCH IDENTITY
+   ==================================================
+
+   IMPORTANT:
+
+   Local curated matches and Highlightly matches can
+   have different matchKey formats.
+
+   Example:
+
+   LOCAL:
+   sa-nz-rival-tour_2026-08-07_stormers_new-zealand
+
+   HIGHLIGHTLY:
+   stormers_new-zealand_2026-08-07
+
+   They are nevertheless the SAME match.
+
+   Therefore matchKey alone must NEVER be used as
+   the only reconciliation mechanism.
+   ================================================== */
+
+function buildMatchIdentityKey(
+  match: MatchData
+): string {
+  const date = match.date
+    ? match.date.split("T")[0]
+    : "";
+
+  const home = normalizeTeamName(
+    match.home?.name || ""
+  );
+
+  const away = normalizeTeamName(
+    match.away?.name || ""
+  );
+
+  return `${home}|${away}|${date}`;
 }
 
 /* ==================================================
@@ -207,37 +240,38 @@ async function fetchFromApi(
   /*
    * Fetch all dates concurrently.
    *
-   * This means the adapter receives:
-   * - recent completed games
-   * - today's games
-   * - upcoming games
+   * The backend itself protects Highlightly with its
+   * cache and request lock.
    */
 
   const responses = await Promise.all(
-    dates.map((date) => fetchDateFromApi(date))
+    dates.map((date) =>
+      fetchDateFromApi(date)
+    )
   );
 
   const apiMatches = responses.flat();
 
   /*
-   * Remove duplicate matches.
-   *
-   * Highlightly should normally give one record per
-   * match, but this protects us if the same match appears
-   * in overlapping data.
+   * Remove duplicates returned by the API.
    */
 
-  const unique = new Map<string, MatchData>();
+  const unique =
+    new Map<string, MatchData>();
 
   apiMatches.forEach((match) => {
     const key =
-      match.matchKey ||
-      String(match.id);
+      buildMatchIdentityKey(match);
+
+    if (!key) {
+      return;
+    }
 
     unique.set(key, match);
   });
 
-  const result = Array.from(unique.values());
+  const result =
+    Array.from(unique.values());
 
   console.log(
     "🔥 HIGHLIGHTLY ROLLING MATCHES:",
@@ -251,20 +285,25 @@ async function fetchFromApi(
    MATCH ID / KEY RESOLUTION
    ================================================== */
 
-function buildMatchKey(match: MatchData): string {
+function buildMatchKey(
+  match: MatchData
+): string {
   if (match.matchKey) {
     return match.matchKey;
   }
 
-  const normalize = (value: string) =>
+  const normalize = (
+    value: string
+  ) =>
     value
       .toLowerCase()
-      .trim()
       .replace(/\s+/g, "-");
 
   return `${normalize(
     match.home.name
-  )}-vs-${normalize(match.away.name)}`;
+  )}-vs-${normalize(
+    match.away.name
+  )}`;
 }
 
 /* ==================================================
@@ -275,20 +314,31 @@ function mergeMatches(
   localMatches: MatchData[],
   apiMatches: MatchData[]
 ): MatchData[] {
-  const mergedMap = new Map<string, MatchData>();
+  const mergedMap =
+    new Map<string, MatchData>();
 
   /*
-   * Start with local data.
+   * Start with local curated data.
    *
-   * This preserves the curated fixture information
-   * already built into matches2026.
+   * The identity key is deliberately independent
+   * from match.matchKey.
    */
 
-  localMatches.forEach((match) => {
-    const key = buildMatchKey(match);
+  localMatches.forEach(
+    (match) => {
+      const identity =
+        buildMatchIdentityKey(match);
 
-    mergedMap.set(key, match);
-  });
+      if (!identity) {
+        return;
+      }
+
+      mergedMap.set(
+        identity,
+        match
+      );
+    }
+  );
 
   /*
    * Overlay Highlightly.
@@ -300,54 +350,141 @@ function mergeMatches(
    * - live fixture information
    */
 
-  apiMatches.forEach((apiMatch) => {
-    const key = buildMatchKey(apiMatch);
+  apiMatches.forEach(
+    (apiMatch) => {
+      const identity =
+        buildMatchIdentityKey(
+          apiMatch
+        );
 
-    const existing = mergedMap.get(key);
+      if (!identity) {
+        return;
+      }
 
-    if (!existing) {
-      mergedMap.set(key, {
-        ...apiMatch,
-        matchKey: key,
-      });
+      const existing =
+        mergedMap.get(identity);
 
-      return;
-    }
+      /*
+       * No local record exists.
+       *
+       * This is a genuinely new Highlightly match.
+       */
 
-    const apiHasPriority =
-      apiMatch.state === "live" ||
-      apiMatch.state === "final" ||
-      !!apiMatch.score;
+      if (!existing) {
+        const key =
+          buildMatchKey(apiMatch);
 
-    if (apiHasPriority) {
-      mergedMap.set(key, {
-        ...existing,
-        ...apiMatch,
-        matchKey:
-          apiMatch.matchKey ||
-          existing.matchKey ||
-          key,
-      });
+        mergedMap.set(
+          identity,
+          {
+            ...apiMatch,
+            matchKey: key,
+          }
+        );
 
-      return;
-    }
+        return;
+      }
 
-    /*
-     * If the API record does not contain a better
-     * state/score, preserve the richer local record.
-     */
+      /*
+       * The local record exists.
+       *
+       * Highlightly now becomes the authority for
+       * dynamic match information.
+       *
+       * IMPORTANT:
+       *
+       * Preserve the local ID.
+       *
+       * MatchPage routes can use IDs such as:
+       *
+       * /matches/7001
+       *
+       * If Highlightly's ID replaced 7001, the route
+       * could no longer resolve the curated match.
+       */
 
-    mergedMap.set(key, {
-      ...apiMatch,
-      ...existing,
-      matchKey:
+      const key =
         existing.matchKey ||
         apiMatch.matchKey ||
-        key,
-    });
-  });
+        buildMatchKey(existing);
 
-  return Array.from(mergedMap.values());
+      const apiHasPriority =
+        apiMatch.state === "live" ||
+        apiMatch.state === "final" ||
+        !!apiMatch.score;
+
+      if (apiHasPriority) {
+        const merged: MatchData = {
+          ...existing,
+          ...apiMatch,
+
+          // Preserve the local route identity.
+          id: existing.id,
+
+          // Preserve the curated match key.
+          matchKey: key,
+
+          // Highlightly provides the live team record,
+          // but the local record owns the trusted flag identity.
+          home: {
+            ...apiMatch.home,
+            country:
+              existing.home.country ||
+              apiMatch.home.country,
+          },
+
+          away: {
+            ...apiMatch.away,
+            country:
+              existing.away.country ||
+              apiMatch.away.country,
+          },
+        };
+
+        console.log(
+          "🔄 MATCH RECONCILED:",
+          {
+            id: existing.id,
+            home: existing.home.name,
+            away: existing.away.name,
+            date: existing.date,
+            score: merged.score,
+            state: merged.state,
+          }
+        );
+
+        mergedMap.set(
+          identity,
+          merged
+        );
+
+        return;
+      }
+
+      /*
+       * Highlightly has no useful live/final state
+       * yet.
+       *
+       * Preserve the richer local curated record.
+       */
+
+      mergedMap.set(
+        identity,
+        {
+          ...apiMatch,
+          ...existing,
+
+          id: existing.id,
+
+          matchKey: key,
+        }
+      );
+    }
+  );
+
+  return Array.from(
+    mergedMap.values()
+  );
 }
 
 /* ==================================================
@@ -359,7 +496,8 @@ export async function getMatches(
 ): Promise<MatchData[]> {
   let data: MatchData[];
 
-  const apiData = await fetchFromApi(options);
+  const apiData =
+    await fetchFromApi(options);
 
   /*
    * IMPORTANT:
@@ -387,30 +525,40 @@ export async function getMatches(
      VALIDATION
      ================================================== */
 
-  let filtered = data.filter(
-    isValidStructure
-  );
+  let filtered =
+    data.filter(
+      isValidStructure
+    );
 
   if (!options?.includeAll) {
-    filtered = filtered.filter(
-      isValidCompetition
-    );
+    filtered =
+      filtered.filter(
+        isValidCompetition
+      );
   }
 
   /* ==================================================
      TYPE FILTER
      ================================================== */
 
-  if (options?.type === "international") {
-    filtered = filtered.filter(
-      isInternational
-    );
+  if (
+    options?.type ===
+    "international"
+  ) {
+    filtered =
+      filtered.filter(
+        isInternational
+      );
   }
 
-  if (options?.type === "domestic") {
-    filtered = filtered.filter(
-      isDomestic
-    );
+  if (
+    options?.type ===
+    "domestic"
+  ) {
+    filtered =
+      filtered.filter(
+        isDomestic
+      );
   }
 
   /* ==================================================
@@ -418,35 +566,39 @@ export async function getMatches(
      ================================================== */
 
   if (options?.gender) {
-    filtered = filtered.filter(
-      (match) => {
-        if (options.gender === "women") {
-          return (
-            match.gender === "women" ||
-            match.home.name.includes(" W") ||
-            match.away.name.includes(" W") ||
+    filtered =
+      filtered.filter(
+        (match) => {
+          const isWomen =
+            match.gender ===
+              "women" ||
+            match.home.name.includes(
+              " W"
+            ) ||
+            match.away.name.includes(
+              " W"
+            ) ||
             match.competitionId
               .toLowerCase()
-              .includes("women") ||
+              .includes(
+                "women"
+              ) ||
             match.tournament
               .toLowerCase()
-              .includes("women")
-          );
-        }
+              .includes(
+                "women"
+              );
 
-        return !(
-          match.gender === "women" ||
-          match.home.name.includes(" W") ||
-          match.away.name.includes(" W") ||
-          match.competitionId
-            .toLowerCase()
-            .includes("women") ||
-          match.tournament
-            .toLowerCase()
-            .includes("women")
-        );
-      }
-    );
+          if (
+            options.gender ===
+            "women"
+          ) {
+            return isWomen;
+          }
+
+          return !isWomen;
+        }
+      );
   }
 
   /* ==================================================
@@ -457,16 +609,22 @@ export async function getMatches(
     const key =
       options.leagueId.toLowerCase();
 
-    filtered = filtered.filter(
-      (match) =>
-        match.competitionId
-          ?.toLowerCase() === key ||
-        match.tournamentInstanceId
-          ?.toLowerCase() === key ||
-        match.tournament
-          ?.toLowerCase()
-          .replace(/\s+/g, "-") === key
-    );
+    filtered =
+      filtered.filter(
+        (match) =>
+          match.competitionId
+            ?.toLowerCase() ===
+            key ||
+          match.tournamentInstanceId
+            ?.toLowerCase() ===
+            key ||
+          match.tournament
+            ?.toLowerCase()
+            .replace(
+              /\s+/g,
+              "-"
+            ) === key
+      );
   }
 
   /* ==================================================
@@ -475,38 +633,50 @@ export async function getMatches(
 
   filtered.sort(
     (a, b) =>
-      new Date(a.date).getTime() -
-      new Date(b.date).getTime()
+      new Date(
+        a.date
+      ).getTime() -
+      new Date(
+        b.date
+      ).getTime()
   );
 
   /* ==================================================
      FINAL NORMALIZATION
      ================================================== */
 
-  return filtered.map((match) => {
-    const tournamentInstanceId =
-      match.tournamentInstanceId ||
-      resolveTournamentInstanceId(match);
+  return filtered.map(
+    (match) => {
+      const tournamentInstanceId =
+        match.tournamentInstanceId ||
+        resolveTournamentInstanceId(
+          match
+        );
 
-    return {
-      ...match,
+      return {
+        ...match,
 
-      matchKey:
-        match.matchKey ||
-        buildMatchKey(match),
+        matchKey:
+          match.matchKey ||
+          buildMatchKey(
+            match
+          ),
 
-      tournamentInstanceId,
+        tournamentInstanceId,
 
-      importance:
-        calculateImportance(match),
+        importance:
+          calculateImportance(
+            match
+          ),
 
-      state:
-        match.state ||
-        (match.score
-          ? "final"
-          : "upcoming"),
-    };
-  });
+        state:
+          match.state ||
+          (match.score
+            ? "final"
+            : "upcoming"),
+      };
+    }
+  );
 }
 
 /* ==================================================
@@ -516,7 +686,10 @@ export async function getMatches(
 export async function getTournamentMatches(
   tournament: {
     conceptId: string;
-    gender?: "men" | "women" | "mixed";
+    gender?:
+      | "men"
+      | "women"
+      | "mixed";
     instanceId?: string;
     name?: string;
   }
@@ -526,54 +699,61 @@ export async function getTournamentMatches(
       includeAll: true,
 
       gender:
-        tournament.gender === "mixed"
+        tournament.gender ===
+        "mixed"
           ? undefined
           : tournament.gender,
     });
 
   return allMatches
-    .filter((match) => {
-      /*
-       * Direct concept match.
-       */
+    .filter(
+      (match) => {
+        /*
+         * Direct concept match.
+         */
 
-      if (
-        match.competitionId ===
-        tournament.conceptId
-      ) {
-        return true;
+        if (
+          match.competitionId ===
+          tournament.conceptId
+        ) {
+          return true;
+        }
+
+        /*
+         * Tournament instance match.
+         */
+
+        if (
+          tournament.instanceId &&
+          match.tournamentInstanceId ===
+            tournament.instanceId
+        ) {
+          return true;
+        }
+
+        /*
+         * Tournament name match.
+         */
+
+        if (
+          tournament.name &&
+          match.tournament
+            .toLowerCase() ===
+            tournament.name.toLowerCase()
+        ) {
+          return true;
+        }
+
+        return false;
       }
-
-      /*
-       * Tournament instance match.
-       */
-
-      if (
-        tournament.instanceId &&
-        match.tournamentInstanceId ===
-          tournament.instanceId
-      ) {
-        return true;
-      }
-
-      /*
-       * Tournament name match.
-       */
-
-      if (
-        tournament.name &&
-        match.tournament
-          .toLowerCase() ===
-          tournament.name.toLowerCase()
-      ) {
-        return true;
-      }
-
-      return false;
-    })
+    )
     .sort(
       (a, b) =>
-        new Date(a.date).getTime() -
-        new Date(b.date).getTime()
+        new Date(
+          a.date
+        ).getTime() -
+        new Date(
+          b.date
+        ).getTime()
     );
 }
