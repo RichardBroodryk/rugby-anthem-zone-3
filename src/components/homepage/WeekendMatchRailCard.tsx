@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./WeekendMatchRailCard.module.css";
 
-import { flagMap } from "../../data/flagMap";
+import { getTeamImage } from "../../utils/teamImageResolver";
 import type { MatchData } from "../../data/matches/types";
 
 type WeekendMatchRailCardProps = {
@@ -13,8 +13,10 @@ export default function WeekendMatchRailCard({
 }: WeekendMatchRailCardProps) {
   const navigate = useNavigate();
 
-  const homeFlag = flagMap[match.home.country];
-  const awayFlag = flagMap[match.away.country];
+  const homeImage = getTeamImage(match.home.name);
+  console.log(match.home.name);
+console.log(match.away.name);
+  const awayImage = getTeamImage(match.away.name);
 
   const formattedDate = new Date(match.date).toLocaleDateString("en-GB", {
     weekday: "short",
@@ -29,9 +31,9 @@ export default function WeekendMatchRailCard({
     >
       <div className={styles.hero}>
         <div className={styles.left}>
-          {homeFlag && (
+          {homeImage && (
             <img
-              src={homeFlag}
+              src={homeImage}
               alt={match.home.name}
               className={styles.heroImage}
             />
@@ -39,9 +41,9 @@ export default function WeekendMatchRailCard({
         </div>
 
         <div className={styles.right}>
-          {awayFlag && (
+          {awayImage && (
             <img
-              src={awayFlag}
+              src={awayImage}
               alt={match.away.name}
               className={styles.heroImage}
             />

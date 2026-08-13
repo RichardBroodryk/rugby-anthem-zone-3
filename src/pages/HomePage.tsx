@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styles from "./HomePage.module.css";
 
 import PageWrapper from "../components/layout/PageWrapper";
@@ -55,6 +56,10 @@ import merchImage from "../assets/images/raz/Merch.png";
 import heritageImage from "../assets/images/raz/heritage-hub.png";
 import definingMomentsImage from "../assets/images/raz/moments-hero.jpg";
 
+/* DATA */
+import { getMatches } from "../data/matchesAdapter";
+import type { MatchData } from "../data/matches/types";
+
 const rivalryImages = [rivalry1, rivalry2, rivalry3, rivalry4, rivalry5, rivalry6];
 
 /**
@@ -67,10 +72,28 @@ const rivalryImages = [rivalry1, rivalry2, rivalry3, rivalry4, rivalry5, rivalry
  */
 
 export default function HomePage() {
+  const [matches, setMatches] = useState<MatchData[]>([]);
+  const [loadingMatches, setLoadingMatches] = useState(true);
+
   const featuredTournament =
     tournaments2026.find((t) => t.conceptId === "nations-championship") ??
     tournaments2026.find((t) => t.status === "active") ??
     tournaments2026[0];
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const data = await getMatches();
+        setMatches(data);
+      } catch (error) {
+        console.error("Failed to load matches:", error);
+      } finally {
+        setLoadingMatches(false);
+      }
+    }
+
+    load();
+  }, []);
 
   return (
     <PageWrapper imageUrl={razLight}>
@@ -98,11 +121,20 @@ export default function HomePage() {
         </section>
         {/* ====== END RIVALRY BANNER ====== */}
 
-        <FeaturedMatchCard />
+        <FeaturedMatchCard
+          matches={matches}
+          loading={loadingMatches}
+        />
 
-        <WeekendMatchesRail />
+        <WeekendMatchesRail
+          matches={matches}
+          loading={loadingMatches}
+        />
 
-        <CurrentInternationalRail />
+        <CurrentInternationalRail
+          matches={matches}
+          loading={loadingMatches}
+        />
 
         <section className={styles.railSection}>
           <AutoContentRail autoAdvance>

@@ -27,6 +27,11 @@ import uruguay from "../assets/images/flags/uruguay.jpg";
 import wales from "../assets/images/flags/wales.jpg";
 import barbarians from "../assets/images/logos/solid/barbarians.jpg";
 
+import bulls from "../assets/images/rivalry/bulls.jpg";
+import stormers from "../assets/images/rivalry/stormers.jpg";
+import sharks from "../assets/images/rivalry/sharks.jpg";
+import lions from "../assets/images/rivalry/lions.jpg";
+
 export const flagMap: Record<string, string> = {
   "argentina": argentina,
   "australia": australia,
@@ -59,4 +64,9 @@ export const flagMap: Record<string, string> = {
 
   /* TEMP FIX */
   "great-britain": england,
+
+  "bulls": bulls,
+"stormers": stormers,
+"sharks": sharks,
+"lions": lions,
 };

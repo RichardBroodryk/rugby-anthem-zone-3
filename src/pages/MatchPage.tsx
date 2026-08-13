@@ -417,6 +417,13 @@ export default function MatchPage() {
      FLAGS + META
      ================================================== */
 
+     console.log("🏉 MATCH PAGE FLAGS", {
+  homeTeam: match.home.name,
+  homeCountry: match.home.country,
+  awayTeam: match.away.name,
+  awayCountry: match.away.country,
+});
+
   const homeFlag =
     flagMap[
       match.home.country
