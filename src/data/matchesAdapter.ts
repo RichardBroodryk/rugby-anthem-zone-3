@@ -43,6 +43,12 @@ type GetMatchesOptions = {
 
 const PAST_DAYS = 2;
 const FUTURE_DAYS = 14;
+const API_CACHE_TTL = 60 * 1000;
+const API_REQUEST_TIMEOUT = 2500;
+
+let apiMatchesCache: MatchData[] | null = null;
+let apiMatchesCacheTime = 0;
+let apiMatchesRequest: Promise<MatchData[]> | null = null;
 
 /* ==================================================
    VALIDATION
@@ -177,9 +183,18 @@ function resolveTournamentInstanceId(
 async function fetchDateFromApi(
   date: string
 ): Promise<MatchData[]> {
+  const controller = new AbortController();
+
+  const timeout = window.setTimeout(() => {
+    controller.abort();
+  }, API_REQUEST_TIMEOUT);
+
   try {
     const response = await fetch(
-      `${API_BASE_URL}/api/stats/fixtures?date=${date}`
+      `${API_BASE_URL}/api/stats/fixtures?date=${date}`,
+      {
+        signal: controller.signal,
+      }
     );
 
     if (!response.ok) {
@@ -207,12 +222,23 @@ async function fetchDateFromApi(
 
     return data;
   } catch (error) {
-    console.warn(
-      `⚠️ BACKEND FIXTURE FETCH FAILED FOR ${date}`,
-      error
-    );
+    if (
+      error instanceof DOMException &&
+      error.name === "AbortError"
+    ) {
+      console.warn(
+        `⚠️ BACKEND FIXTURE REQUEST TIMED OUT FOR ${date}`
+      );
+    } else {
+      console.warn(
+        `⚠️ BACKEND FIXTURE FETCH FAILED FOR ${date}`,
+        error
+      );
+    }
 
     return [];
+  } finally {
+    window.clearTimeout(timeout);
   }
 }
 
@@ -223,62 +249,111 @@ async function fetchDateFromApi(
 async function fetchFromApi(
   _options?: GetMatchesOptions
 ): Promise<MatchData[]> {
-  const today = new Date();
+  if (!apiMatchesRequest) {
+    apiMatchesRequest = (async () => {
+      const now = Date.now();
 
-  const dates: string[] = [];
+      if (
+        apiMatchesCache &&
+        now - apiMatchesCacheTime < API_CACHE_TTL
+      ) {
+        console.log(
+          "🔥 HIGHLIGHTLY CACHE HIT:",
+          apiMatchesCache.length
+        );
 
-  for (
-    let offset = -PAST_DAYS;
-    offset <= FUTURE_DAYS;
-    offset++
-  ) {
-    dates.push(
-      formatDate(addDays(today, offset))
-    );
+        return apiMatchesCache;
+      }
+
+      const today = new Date();
+
+      const dates: string[] = [];
+
+      for (
+        let offset = -PAST_DAYS;
+        offset <= FUTURE_DAYS;
+        offset++
+      ) {
+        dates.push(
+          formatDate(addDays(today, offset))
+        );
+      }
+
+      /*
+       * Fetch all dates concurrently.
+       *
+       * The backend itself protects Highlightly with its
+       * cache and request lock.
+       */
+
+      const responses = await Promise.all(
+        dates.map((date) =>
+          fetchDateFromApi(date)
+        )
+      );
+
+      const apiMatches = responses.flat();
+
+      /*
+       * Remove duplicates returned by the API.
+       */
+
+      const unique =
+        new Map<string, MatchData>();
+
+      apiMatches.forEach(
+        (match) => {
+          const key =
+            buildMatchIdentityKey(
+              match
+            );
+
+          if (!key) {
+            return;
+          }
+
+          unique.set(
+            key,
+            match
+          );
+        }
+      );
+
+      const result =
+        Array.from(
+          unique.values()
+        );
+
+      console.log(
+        "🔥 HIGHLIGHTLY ROLLING MATCHES:",
+        result.length
+      );
+
+      /*
+       * Only cache a successful API response.
+       *
+       * An empty response is NOT cached so that a
+       * temporary backend failure does not suppress
+       * Highlightly indefinitely.
+       */
+
+      if (result.length > 0) {
+        apiMatchesCache =
+          result;
+
+        apiMatchesCacheTime =
+          Date.now();
+      }
+
+      return result;
+    })();
   }
 
-  /*
-   * Fetch all dates concurrently.
-   *
-   * The backend itself protects Highlightly with its
-   * cache and request lock.
-   */
-
-  const responses = await Promise.all(
-    dates.map((date) =>
-      fetchDateFromApi(date)
-    )
-  );
-
-  const apiMatches = responses.flat();
-
-  /*
-   * Remove duplicates returned by the API.
-   */
-
-  const unique =
-    new Map<string, MatchData>();
-
-  apiMatches.forEach((match) => {
-    const key =
-      buildMatchIdentityKey(match);
-
-    if (!key) {
-      return;
-    }
-
-    unique.set(key, match);
-  });
-
-  const result =
-    Array.from(unique.values());
-
-  console.log(
-    "🔥 HIGHLIGHTLY ROLLING MATCHES:",
-    result.length
-  );
-
-  return result;
+  try {
+    return await apiMatchesRequest;
+  } finally {
+    apiMatchesRequest = null;
+  }
 }
 
 /* ==================================================

@@ -3,10 +3,21 @@ import type { MatchData } from "../data/matches/types";
 import type { MatchDetails } from "../data/matchDetails2026";
 
 /* ==================================================
-   NORMALIZER (SHARED LOGIC)
+   NORMALIZERS
    ================================================== */
 
-function normalizeName(value?: string): string {
+function normalizeExactName(value?: string): string {
+  if (!value) return "unknown";
+
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function normalizeLegacyName(value?: string): string {
   if (!value) return "unknown";
 
   return value
@@ -19,87 +30,177 @@ function normalizeName(value?: string): string {
 }
 
 /* ==================================================
-   BUILD LEGACY KEY (DETAILS FILE FORMAT)
+   BUILD KEYS
    ================================================== */
 
+function buildExactKey(match: MatchData): string {
+  const home = normalizeExactName(match.home?.name);
+  const away = normalizeExactName(match.away?.name);
+
+  return `${home}-vs-${away}`;
+}
+
 function buildLegacyKey(match: MatchData): string {
-  const home = normalizeName(match.home?.name);
-  const away = normalizeName(match.away?.name);
+  const home = normalizeLegacyName(match.home?.name);
+  const away = normalizeLegacyName(match.away?.name);
 
   return `${home}-vs-${away}`;
 }
 
 /* ==================================================
    EXTRACT TEAMS FROM NEW KEY
-   (competition_date_home_away)
+   ==================================================
+
+   Supports:
+
+   competition_date_home_away
+
+   Example:
+
+   sa-nz-rival-tour_2026-08-07_stormers_new-zealand
    ================================================== */
 
 function extractTeamsFromKey(matchKey: string) {
   const parts = matchKey.split("_");
 
-  if (parts.length < 4) return null;
+  if (parts.length < 4) {
+    return null;
+  }
 
   return {
-    home: normalizeName(parts[2]),
-    away: normalizeName(parts[3]),
+    home: normalizeExactName(parts[2]),
+    away: normalizeExactName(parts[3]),
   };
 }
 
 /* ==================================================
-   MAIN RESOLVER (ROBUST)
+   MAIN RESOLVER
    ================================================== */
 
 export function getMatchDetails(
   match: MatchData
 ): MatchDetails | undefined {
-  if (!match) return undefined;
-
-  /* -----------------------------------------------
-     1. DIRECT MATCH (IF KEYS MATCH EXACTLY)
-  ------------------------------------------------ */
-  if (match.matchKey) {
-    const direct = matchDetails2026.find(
-      (d) => d.matchKey === match.matchKey
-    );
-    if (direct) return direct;
+  if (!match) {
+    return undefined;
   }
 
   /* -----------------------------------------------
-     2. TRY LEGACY FORMAT (MOST IMPORTANT)
-  ------------------------------------------------ */
-  const legacyKey = buildLegacyKey(match);
+     1. EXACT MATCH KEY
+     ----------------------------------------------- */
 
-  const legacyMatch = matchDetails2026.find(
-    (d) => d.matchKey === legacyKey
-  );
-
-  if (legacyMatch) return legacyMatch;
-
-  /* -----------------------------------------------
-     3. HANDLE NEW FORMAT KEYS
-  ------------------------------------------------ */
   if (match.matchKey) {
-    const extracted = extractTeamsFromKey(match.matchKey);
+    const direct = matchDetails2026.find(
+      (details) =>
+        details.matchKey === match.matchKey
+    );
 
-    if (extracted) {
-      const fallbackKey = `${extracted.home}-vs-${extracted.away}`;
-
-      const fallbackMatch = matchDetails2026.find(
-        (d) => d.matchKey === fallbackKey
-      );
-
-      if (fallbackMatch) return fallbackMatch;
+    if (direct) {
+      return direct;
     }
   }
 
   /* -----------------------------------------------
-     4. FINAL FALLBACK (NO KEY CASE)
-  ------------------------------------------------ */
-  const fallbackKey = `${normalizeName(match.home?.name)}-vs-${normalizeName(
-    match.away?.name
-  )}`;
+     2. EXACT HOME + AWAY KEY
+     
+     This is important for Rivals Tour matches.
+     
+     Example:
+     
+     Stormers
+     New Zealand
+     
+     →
+     
+     stormers-vs-new-zealand
+     ----------------------------------------------- */
 
-  return matchDetails2026.find(
-    (d) => d.matchKey === fallbackKey
+  const exactKey = buildExactKey(match);
+
+  const exactMatch = matchDetails2026.find(
+    (details) =>
+      details.matchKey === exactKey
   );
+
+  if (exactMatch) {
+    return exactMatch;
+  }
+
+  /* -----------------------------------------------
+     3. LEGACY NORMALISED KEY
+     
+     Preserves compatibility with the older
+     women/sevens detail format.
+     
+     Example:
+     
+     england-w-vs-ireland-w
+     
+     can resolve through:
+     
+     england-vs-ireland
+     ----------------------------------------------- */
+
+  const legacyKey = buildLegacyKey(match);
+
+  const legacyMatch = matchDetails2026.find(
+    (details) =>
+      details.matchKey === legacyKey
+  );
+
+  if (legacyMatch) {
+    return legacyMatch;
+  }
+
+  /* -----------------------------------------------
+     4. HANDLE HIGHLIGHTLY / NEW MATCH KEY FORMAT
+     
+     Example:
+     
+     sa-nz-rival-tour_2026-08-07_stormers_new-zealand
+     ----------------------------------------------- */
+
+  if (match.matchKey) {
+    const extracted =
+      extractTeamsFromKey(match.matchKey);
+
+    if (extracted) {
+      const extractedExactKey =
+        `${extracted.home}-vs-${extracted.away}`;
+
+      const extractedMatch =
+        matchDetails2026.find(
+          (details) =>
+            details.matchKey ===
+            extractedExactKey
+        );
+
+      if (extractedMatch) {
+        return extractedMatch;
+      }
+
+      const extractedLegacyKey =
+        `${normalizeLegacyName(
+          extracted.home
+        )}-vs-${normalizeLegacyName(
+          extracted.away
+        )}`;
+
+      const extractedLegacyMatch =
+        matchDetails2026.find(
+          (details) =>
+            details.matchKey ===
+            extractedLegacyKey
+        );
+
+      if (extractedLegacyMatch) {
+        return extractedLegacyMatch;
+      }
+    }
+  }
+
+  /* -----------------------------------------------
+     5. NO MATCH DETAILS
+     ----------------------------------------------- */
+
+  return undefined;
 }

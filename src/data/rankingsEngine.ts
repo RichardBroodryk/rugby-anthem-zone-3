@@ -22,21 +22,29 @@ export const mensCoachMap: Record<string, string> = {
   "england": "Steve Borthwick",
   "scotland": "Gregor Townsend",
   "italy": "Gonzalo Quesada",
-  "australia": "TBC",
-  "fiji": "TBC",
+  "australia": "Les Kiss",
+  "fiji": "Senirusi Seruvakula",
+  "wales": "Steve Tandy",
+  "japan": "Eddie Jones",
+  "georgia": "Pierre-Henry Broncan",
+  "united-states": "Scott Lawrence",
+  "portugal": "Simon Mannix",
 };
 
 export const womensCoachMap: Record<string, string> = {
   "england": "John Mitchell",
   "canada": "TBC",
-  "new-zealand": "Allan Bunting",
+  "new-zealand": "Whitney Hansen",
   "france": "François Ratier",
   "ireland": "Scott Bemand",
   "scotland": "Sione Fukofuka",
-  "australia": "TBC",
+  "australia": "Tim Walsh",
   "usa": "TBC",
   "italy": "Fabio Roselli",
   "south-africa": "Swys de Bruin",
+  "japan": "TBC",
+  "wales": "Sean Lynn",
+  "fiji": "Willie Walker",
 };
 
 /* ==================================================

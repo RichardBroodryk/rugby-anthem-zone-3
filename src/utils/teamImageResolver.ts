@@ -3,6 +3,8 @@ import lionsLogo from "../assets/images/rivalry/lions.jpg";
 import sharksLogo from "../assets/images/rivalry/sharks.jpg";
 import stormersLogo from "../assets/images/rivalry/stormers.jpg";
 
+import splashLogo from "../assets/images/raz/splashlogo.png";
+
 import argentinaFlag from "../assets/images/flags/argentina.jpg";
 import australiaFlag from "../assets/images/flags/australia.jpg";
 import englandFlag from "../assets/images/flags/england.png";
@@ -30,6 +32,13 @@ import hongKongFlag from "../assets/images/flags/hong-kong-china.jpg";
 
 const TEAM_IMAGES: Record<string, string> = {
   // ==================================================
+  // RAZ PLACEHOLDER
+  // ==================================================
+
+  tbd: splashLogo,
+  unknown: splashLogo,
+
+  // ==================================================
   // SOUTH AFRICAN FRANCHISES
   // ==================================================
 
@@ -52,7 +61,7 @@ const TEAM_IMAGES: Record<string, string> = {
   ireland: irelandFlag,
   italy: italyFlag,
   scotland: scotlandFlag,
-  spain:spainFlag,
+  spain: spainFlag,
   wales: walesFlag,
   fiji: fijiFlag,
   samoa: samoaFlag,
@@ -70,7 +79,10 @@ const TEAM_IMAGES: Record<string, string> = {
 };
 
 export function getTeamImage(teamName: string): string {
-  const key = teamName.trim().toLowerCase();
+  const key = teamName
+    .trim()
+    .toLowerCase()
+    .replace(/\s+w$/, "");
 
-  return TEAM_IMAGES[key] ?? "";
+  return TEAM_IMAGES[key] ?? splashLogo;
 }

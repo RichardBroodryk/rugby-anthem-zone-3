@@ -102,12 +102,27 @@ export default function LeagueTablePage() {
   const qualification =
     competitionQualification[id];
 
-
   /* ==================================================
-     LOAD LIVE MATCHES
+     LOAD MATCHES + STANDINGS
+
+     IMPORTANT:
+
+     This effect deliberately does NOT depend on
+     `matches`.
+
+     The previous implementation depended on matches
+     while also calling setMatches(), which caused the
+     entire effect to run repeatedly.
+
+     That produced repeated Highlightly standings
+     requests and eventually a 429 daily-limit error.
      ================================================== */
-useEffect(() => {
+
+  useEffect(() => {
     let mounted = true;
+    let timeout:
+      | ReturnType<typeof setTimeout>
+      | undefined;
 
     async function load() {
       if (!id) {
@@ -115,14 +130,14 @@ useEffect(() => {
       }
 
       try {
-        setLoading(true);
+        if (mounted) {
+          setLoading(true);
+        }
 
         const data =
           await getMatches({
             type: "domestic",
-
             leagueId: id,
-
           });
 
         if (!mounted) {
@@ -130,6 +145,17 @@ useEffect(() => {
         }
 
         setMatches(data);
+
+        /*
+        --------------------------------------------------
+        LIVE STANDINGS
+
+        This is one standings request per controlled
+        refresh cycle.
+
+        It is NOT triggered by setMatches().
+        --------------------------------------------------
+        */
 
         try {
           const liveStandings =
@@ -143,16 +169,120 @@ useEffect(() => {
             "LIVE STANDINGS FAILED",
             err
           );
+
+          /*
+          Do not destroy an existing standings table
+          simply because a live request fails.
+          */
         }
 
         setLastUpdated(
           new Date().toLocaleTimeString()
         );
+
+        /*
+        --------------------------------------------------
+        SMART NEXT REFRESH
+
+        Completed:
+          no polling
+
+        Live:
+          30 seconds
+
+        Upcoming within 6 hours:
+          2 minutes
+
+        Otherwise:
+          5 minutes
+        --------------------------------------------------
+        */
+
+        let refreshRate = 300000;
+
+        if (
+          competition?.state ===
+          "completed"
+        ) {
+          refreshRate = 0;
+        } else if (
+          data.some(
+            (m) =>
+              m.state === "live"
+          )
+        ) {
+          refreshRate = 30000;
+        } else {
+          const now =
+            Date.now();
+
+          const upcomingSoon =
+            data.some((m) => {
+              if (
+                m.state !==
+                "upcoming"
+              ) {
+                return false;
+              }
+
+              const matchTime =
+                new Date(
+                  m.date
+                ).getTime();
+
+              const diff =
+                matchTime - now;
+
+              return (
+                diff > 0 &&
+                diff <
+                  1000 *
+                    60 *
+                    60 *
+                    6
+              );
+            });
+
+          if (upcomingSoon) {
+            refreshRate = 120000;
+          }
+        }
+
+        if (
+          mounted &&
+          refreshRate > 0
+        ) {
+          console.log(
+            "🏉 NEXT TABLE REFRESH:",
+            refreshRate
+          );
+
+          timeout =
+            setTimeout(() => {
+              load();
+            }, refreshRate);
+        }
       } catch (err) {
         console.error(
           "LIVE TABLE LOAD FAILED",
           err
         );
+
+        /*
+        --------------------------------------------------
+        If the load fails, retry after 5 minutes.
+
+        This prevents a failed API request from creating
+        a rapid retry loop.
+        --------------------------------------------------
+        */
+
+        if (mounted) {
+          timeout =
+            setTimeout(() => {
+              load();
+            }, 300000);
+        }
       } finally {
         if (mounted) {
           setLoading(false);
@@ -162,109 +292,17 @@ useEffect(() => {
 
     load();
 
-        /* ==========================================
-       SMART POLLING
-       ========================================== */
-
-    let refreshRate =
-      300000;
-
-    /* ======================================
-       COMPLETED COMPETITION
-       ====================================== */
-
-    if (
-      competition?.state ===
-      "completed"
-    ) {
-      refreshRate = 0;
-    }
-
-    /* ======================================
-       LIVE MATCH DETECTED
-       ====================================== */
-
-    else if (
-      matches.some(
-        (m) =>
-          m.state === "live"
-      )
-    ) {
-      refreshRate = 30000;
-    }
-
-    /* ======================================
-       UPCOMING TODAY
-       ====================================== */
-
-    else {
-      const now = Date.now();
-
-      const upcomingSoon =
-        matches.some((m) => {
-          if (
-            m.state !==
-            "upcoming"
-          ) {
-            return false;
-          }
-
-          const matchTime =
-            new Date(
-              m.date
-            ).getTime();
-
-          const diff =
-            matchTime - now;
-
-          return (
-            diff > 0 &&
-            diff <
-              1000 *
-                60 *
-                60 *
-                6
-          );
-        });
-
-      if (upcomingSoon) {
-        refreshRate = 120000;
-      }
-    }
-
-    /* ======================================
-       START POLLING
-       ====================================== */
-
-    let interval:
-      | NodeJS.Timeout
-      | undefined;
-
-    if (refreshRate > 0) {
-      console.log(
-        "🏉 POLLING RATE:",
-        refreshRate
-      );
-
-      interval =
-        setInterval(() => {
-          load();
-        }, refreshRate);
-    }
-
-        return () => {
+    return () => {
       mounted = false;
 
-      if (interval) {
-        clearInterval(interval);
+      if (timeout) {
+        clearTimeout(timeout);
       }
     };
- }, [
-  id,
-  competition?.state,
-  matches,
-]);
-  
+  }, [
+    id,
+    competition?.state,
+  ]);
 
   /* ==================================================
      FINAL MATCHES
@@ -277,6 +315,7 @@ useEffect(() => {
           m.state === "final"
       );
     }, [matches]);
+
   /* ==================================================
      RECENT RESULTS
      ================================================== */
@@ -335,6 +374,7 @@ useEffect(() => {
           m.state === "live"
       );
     }, [matches]);
+
   /* ==================================================
      COMPUTED STANDINGS
      ================================================== */
@@ -360,9 +400,7 @@ useEffect(() => {
           normalizedKey as keyof typeof tables2026
         ] || []
       );
-    }, [
-    id,
-  ]);
+    }, [id]);
 
   /* ==================================================
      LIVE TABLE
@@ -375,19 +413,26 @@ useEffect(() => {
           standings.map((team) => ({
             team: team.name,
 
-            played: team.played,
+            played:
+              team.played,
 
-            won: team.won,
+            won:
+              team.won,
 
-            drawn: team.drawn,
+            drawn:
+              team.drawn,
 
-            lost: team.lost,
+            lost:
+              team.lost,
 
-            pf: team.pointsFor,
+            pf:
+              team.pointsFor,
 
-            pa: team.pointsAgainst,
+            pa:
+              team.pointsAgainst,
 
-            pts: team.points,
+            pts:
+              team.points,
 
             pd:
               team.pointsFor -
@@ -413,17 +458,20 @@ useEffect(() => {
       const liveRows =
         computedStandings.map(
           (team) => ({
-            team: team.team,
+            team:
+              team.team,
 
             played:
               team.played,
 
-            won: team.won,
+            won:
+              team.won,
 
             drawn:
               team.drawn,
 
-            lost: team.lost,
+            lost:
+              team.lost,
 
             pf:
               team.pointsFor,
@@ -431,7 +479,8 @@ useEffect(() => {
             pa:
               team.pointsAgainst,
 
-            pts: team.points,
+            pts:
+              team.points,
 
             pd:
               team.pointsDiff,
@@ -485,12 +534,13 @@ useEffect(() => {
       {/* HEADER */}
       <section className={styles.section}>
         <h1 className={styles.title}>
-          {competitionInfo?.name ?? leagueUi?.name}
+          {competitionInfo?.name ??
+            leagueUi?.name}
         </h1>
 
         {leagueUi?.season && (
           <p className={styles.season}>
-            Season: {leagueUi?.season}
+            Season: {leagueUi.season}
           </p>
         )}
 
@@ -592,9 +642,7 @@ useEffect(() => {
                     }
                   >
                     <td>
-                      {
-                        row.position
-                      }
+                      {row.position}
                     </td>
 
                     <td>
@@ -602,15 +650,11 @@ useEffect(() => {
                     </td>
 
                     <td>
-                      {
-                        row.coach
-                      }
+                      {row.coach}
                     </td>
 
                     <td>
-                      {
-                        row.played
-                      }
+                      {row.played}
                     </td>
 
                     <td>
@@ -618,39 +662,27 @@ useEffect(() => {
                     </td>
 
                     <td>
-                      {
-                        row.draws
-                      }
+                      {row.draws}
                     </td>
 
                     <td>
-                      {
-                        row.losses
-                      }
+                      {row.losses}
                     </td>
 
                     <td>
-                      {
-                        row.pointsFor
-                      }
+                      {row.pointsFor}
                     </td>
 
                     <td>
-                      {
-                        row.pointsAgainst
-                      }
+                      {row.pointsAgainst}
                     </td>
 
                     <td>
-                      {
-                        row.pointsDiff
-                      }
+                      {row.pointsDiff}
                     </td>
 
                     <td>
-                      {
-                        row.leaguePoints
-                      }
+                      {row.leaguePoints}
                     </td>
                   </tr>
 
@@ -680,29 +712,43 @@ useEffect(() => {
         )}
       </section>
 
-            {/* LIVE MATCHES */}
+      {/* LIVE MATCHES */}
       {liveMatches.length > 0 && (
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>
             🔴 Live Matches
           </h2>
 
-          <div className={styles.matchesList}>
+          <div
+            className={
+              styles.matchesList
+            }
+          >
             {liveMatches.map(
               (match) => (
                 <div
-                  key={match.matchKey || String(match.id)}
-                  className={styles.matchItem}
+                  key={
+                    match.matchKey ||
+                    String(match.id)
+                  }
+                  className={
+                    styles.matchItem
+                  }
                 >
                   <div
-                    className={styles.matchTeams}
+                    className={
+                      styles.matchTeams
+                    }
                   >
-                    {match.home.name} vs{" "}
+                    {match.home.name}{" "}
+                    vs{" "}
                     {match.away.name}
                   </div>
 
                   <div
-                    className={styles.matchScore}
+                    className={
+                      styles.matchScore
+                    }
                   >
                     {match.score
                       ? `${match.score.home} - ${match.score.away}`
@@ -710,7 +756,9 @@ useEffect(() => {
                   </div>
 
                   <div
-                    className={styles.matchMeta}
+                    className={
+                      styles.matchMeta
+                    }
                   >
                     {match.date}
                   </div>
@@ -722,7 +770,7 @@ useEffect(() => {
       )}
 
       {/* RECENT RESULTS */}
-            {recentResults.length > 0 && (
+      {recentResults.length > 0 && (
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>
             Recent Results
@@ -733,12 +781,15 @@ useEffect(() => {
               styles.matchesList
             }
           >
-                       {recentResults.map(
+            {recentResults.map(
               (
                 match: MatchData
               ) => (
                 <div
-                  key={match.matchKey || String(match.id)}
+                  key={
+                    match.matchKey ||
+                    String(match.id)
+                  }
                   className={
                     styles.matchItem
                   }
@@ -748,7 +799,8 @@ useEffect(() => {
                       styles.matchTeams
                     }
                   >
-                    {match.home.name} vs{" "}
+                    {match.home.name}{" "}
+                    vs{" "}
                     {match.away.name}
                   </div>
 
@@ -777,7 +829,7 @@ useEffect(() => {
       )}
 
       {/* UPCOMING */}
-            {upcomingFixtures.length >
+      {upcomingFixtures.length >
         0 && (
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>
@@ -789,12 +841,15 @@ useEffect(() => {
               styles.matchesList
             }
           >
-                        {upcomingFixtures.map(
+            {upcomingFixtures.map(
               (
                 match: MatchData
               ) => (
                 <div
-                  key={match.matchKey || String(match.id)}
+                  key={
+                    match.matchKey ||
+                    String(match.id)
+                  }
                   className={
                     styles.matchItem
                   }
@@ -804,7 +859,8 @@ useEffect(() => {
                       styles.matchTeams
                     }
                   >
-                    {match.home.name} vs{" "}
+                    {match.home.name}{" "}
+                    vs{" "}
                     {match.away.name}
                   </div>
 
@@ -847,12 +903,10 @@ useEffect(() => {
                   <div
                     className={
                       styles.playoffTeams
-                    }
+                  }
                   >
                     <span>
-                      {
-                        match.home
-                      }
+                      {match.home}
                     </span>
 
                     <span
@@ -864,9 +918,7 @@ useEffect(() => {
                     </span>
 
                     <span>
-                      {
-                        match.away
-                      }
+                      {match.away}
                     </span>
                   </div>
 
@@ -876,15 +928,11 @@ useEffect(() => {
                     }
                   >
                     <div>
-                      {
-                        match.date
-                      }
+                      {match.date}
                     </div>
 
                     <div>
-                      {
-                        match.venue
-                      }
+                      {match.venue}
                     </div>
                   </div>
                 </div>
