@@ -12,6 +12,7 @@ export interface MatchScore {
 
 export interface MatchData {
   id: number;
+  highlightlyId?: string | number;
   matchKey?: string;
 
   competitionId: string;

@@ -417,11 +417,15 @@ export default function MatchPage() {
      FLAGS + META
      ================================================== */
 
-     console.log("🏉 MATCH PAGE FLAGS", {
+     console.log("🏉 MATCH PAGE MATCH IDENTIFIERS", {
+  razId: match.id,
+  highlightlyId: match.highlightlyId,
+  matchKey: match.matchKey,
   homeTeam: match.home.name,
-  homeCountry: match.home.country,
   awayTeam: match.away.name,
-  awayCountry: match.away.country,
+  date: match.date,
+  score: match.score,
+  state: match.state,
 });
 
   const homeFlag =

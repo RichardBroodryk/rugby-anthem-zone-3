@@ -453,6 +453,9 @@ function mergeMatches(
           identity,
           {
             ...apiMatch,
+            highlightlyId:
+              apiMatch.highlightlyId ??
+              apiMatch.id,
             matchKey: key,
           }
         );
@@ -495,6 +498,11 @@ function mergeMatches(
 
           // Preserve the local route identity.
           id: existing.id,
+
+          // Preserve the real Highlightly match ID.
+          highlightlyId:
+            apiMatch.highlightlyId ??
+            existing.highlightlyId,
 
           // Preserve the curated match key.
           matchKey: key,
@@ -550,6 +558,10 @@ function mergeMatches(
           ...existing,
 
           id: existing.id,
+
+          highlightlyId:
+            apiMatch.highlightlyId ??
+            existing.highlightlyId,
 
           matchKey: key,
         }

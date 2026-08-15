@@ -977,11 +977,11 @@ export const matchDetails2026: MatchDetails[] = [
       { number: 15, name: "Willie le Roux" },
     ],
     homeBench: [
-      { number: 16, name: "Jaundre Schoeman" },
+      { number: 16, name: "Johan Grobbelaar" },
       { number: 17, name: "Sti Sithole" },
       { number: 18, name: "Khuta Mchunu" },
       { number: 19, name: "Reinhardt Ludwig" },
-      { number: 20, name: "Mpilo Gumede" },
+      { number: 20, name: "Elrigh Louw" },
       { number: 21, name: "Paul de Wet" },
       { number: 22, name: "Katlego Letebele" },
       { number: 23, name: "Hakeem Kunene" },
