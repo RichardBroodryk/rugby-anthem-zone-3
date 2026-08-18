@@ -282,18 +282,144 @@ async function fetchDateFromApi(
   }
 }
 
+async function fetchSeasonFromApi(
+  league: string
+): Promise<MatchData[]> {
+  const controller =
+    new AbortController();
+
+  const timeout =
+    window.setTimeout(() => {
+      controller.abort();
+    }, API_REQUEST_TIMEOUT);
+
+  try {
+    const query =
+      new URLSearchParams();
+
+    query.set(
+      "league",
+      league
+    );
+
+    const response =
+      await fetch(
+        `${API_BASE_URL}/api/stats/fixtures?${query.toString()}`,
+        {
+          signal:
+            controller.signal,
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        `Season fixture request failed: HTTP ${response.status}`
+      );
+    }
+
+    const data =
+      await response.json();
+
+    if (!Array.isArray(data)) {
+      console.warn(
+        "⚠️ NPC SEASON RESPONSE WAS NOT AN ARRAY:",
+        data
+      );
+
+      return [];
+    }
+
+    console.log(
+      "🔥 NPC SEASON FIXTURES:",
+      data.length
+    );
+
+    return data;
+  } catch (error) {
+    if (
+      error instanceof DOMException &&
+      error.name === "AbortError"
+    ) {
+      console.warn(
+        "⚠️ NPC SEASON REQUEST TIMED OUT"
+      );
+    } else {
+      console.warn(
+        "⚠️ NPC SEASON FETCH FAILED:",
+        error
+      );
+    }
+
+    return [];
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
 /* ==================================================
    ROLLING API FETCH
    ================================================== */
 
 async function fetchFromApi(
-  _options?: GetMatchesOptions
+  options?: GetMatchesOptions
 ): Promise<MatchData[]> {
   if (!apiMatchesRequest) {
     apiMatchesRequest =
       (async () => {
         const now =
           Date.now();
+
+        // Check if this is an NPC request
+        const isNpc =
+          options?.leagueId
+            ?.toLowerCase() === "npc";
+
+        if (isNpc) {
+         const npcMatches =
+  await fetchSeasonFromApi(
+    "npc"
+  );
+
+          const unique =
+            new Map<string, MatchData>();
+
+          npcMatches.forEach(
+            (match) => {
+              const key =
+                buildMatchIdentityKey(
+                  match
+                );
+
+              if (!key) {
+                return;
+              }
+
+              unique.set(
+                key,
+                match
+              );
+            }
+          );
+
+          const result =
+            Array.from(
+              unique.values()
+            );
+
+          console.log(
+            "🔥 NPC 2026 SEASON MATCHES:",
+            result.length
+          );
+
+          if (result.length > 0) {
+            apiMatchesCache =
+              result;
+
+            apiMatchesCacheTime =
+              Date.now();
+          }
+
+          return result;
+        }
 
         if (
           apiMatchesCache &&
