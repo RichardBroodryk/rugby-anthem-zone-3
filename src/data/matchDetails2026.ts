@@ -20,6 +20,7 @@ export type PerformanceStat = {
 
 export type MatchDetails = {
   matchKey: string;
+  highlightsUrl?: string;
   timeline?: TimelineEvent[];
   lineups?: {
     homeStarting: Player[];

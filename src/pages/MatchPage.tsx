@@ -6,16 +6,56 @@ import { getMatches } from "../data/matchesAdapter";
 import { flagMap } from "../data/flagMap";
 import { getMatchDetails } from "../utils/matchDetailsResolver";
 import { tournaments2026 } from "../data/tournamentMeta";
-import {
-  getMatchHighlights,
-} from "../utils/highlights/highlightsService";
-import type {
-  MatchHighlight,
-} from "../utils/highlights/highlightsService";
 
 /* ==================================================
    MATCH RESOLUTION HELPERS
    ================================================== */
+
+function getYouTubeEmbedUrl(
+  url: string
+): string {
+  try {
+    const parsed = new URL(url);
+
+    if (parsed.hostname === "youtu.be") {
+      const videoId =
+        parsed.pathname.replace("/", "");
+
+      return videoId
+        ? `https://www.youtube.com/embed/${videoId}`
+        : url;
+    }
+
+    if (
+      parsed.hostname === "www.youtube.com" ||
+      parsed.hostname === "youtube.com" ||
+      parsed.hostname === "m.youtube.com"
+    ) {
+      if (
+        parsed.pathname === "/watch"
+      ) {
+        const videoId =
+          parsed.searchParams.get("v");
+
+        return videoId
+          ? `https://www.youtube.com/embed/${videoId}`
+          : url;
+      }
+
+      if (
+        parsed.pathname.startsWith(
+          "/embed/"
+        )
+      ) {
+        return url;
+      }
+    }
+
+    return url;
+  } catch {
+    return url;
+  }
+}
 
 function normalizeTeamName(
   value: string | undefined
@@ -133,9 +173,6 @@ export default function MatchPage() {
   const [match, setMatch] = useState<any>(
     location.state || null
   );
-
-  const [matchHighlights, setMatchHighlights] =
-    useState<MatchHighlight[]>([]);
 
   const [userComments, setUserComments] =
     useState<any[]>([]);
@@ -326,54 +363,6 @@ export default function MatchPage() {
       cancelled = true;
     };
   }, [id, location.state]);
-
-  /* ==================================================
-     LOAD MATCH HIGHLIGHTS
-     ================================================== */
-
-  useEffect(() => {
-    if (!match?.highlightlyId) {
-      setMatchHighlights([]);
-      return;
-    }
-
-    let cancelled = false;
-
-    async function loadHighlights() {
-      try {
-        const highlights =
-          await getMatchHighlights(
-            match.highlightlyId
-          );
-
-        if (!cancelled) {
-          console.log(
-            "🎥 MATCH HIGHLIGHTS LOADED:",
-            highlights
-          );
-
-          setMatchHighlights(
-            highlights
-          );
-        }
-      } catch (error) {
-        console.warn(
-          "⚠️ MATCH HIGHLIGHTS FAILED:",
-          error
-        );
-
-        if (!cancelled) {
-          setMatchHighlights([]);
-        }
-      }
-    }
-
-    loadHighlights();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [match?.highlightlyId]);
 
   /* ==================================================
      TRACKING
@@ -644,60 +633,13 @@ export default function MatchPage() {
         </div>
       </section>
 
-      {/* ================= EVENTS ================= */}
+      {/* ================= MATCH HIGHLIGHTS ================= */}
 
-      <section
-        className={styles.section}
-      >
-        <h2>Match Events</h2>
+      <section className={styles.section}>
+        <h2>Match Highlights</h2>
 
-        {details?.timeline
-          ?.length ? (
-          details.timeline.map(
-            (
-              e: any,
-              i: number
-            ) => (
-              <div
-                key={i}
-                className={
-                  styles.event
-                }
-              >
-                <strong>
-                  {e.minute}
-                </strong>{" "}
-                — {e.label}
-              </div>
-            )
-          )
-        ) : (
-          <p>
-            No events recorded
-            yet for this match.
-          </p>
-        )}
-      </section>
-
-     {/* ================= MATCH HIGHLIGHTS ================= */}
-
-{matchHighlights.length > 0 && (
-  <section
-    className={styles.section}
-  >
-    <h2>
-      Match Highlights
-    </h2>
-
-    {matchHighlights.map(
-      (highlight) => (
-        <div
-          key={highlight.id}
-          className={
-            styles.reportCard
-          }
-        >
-          {highlight.embedUrl && (
+        {details?.highlightsUrl ? (
+          <div className={styles.reportCard}>
             <div
               style={{
                 position: "relative",
@@ -708,12 +650,10 @@ export default function MatchPage() {
               }}
             >
               <iframe
-                src={
-                  highlight.embedUrl
-                }
-                title={
-                  highlight.title
-                }
+                src={getYouTubeEmbedUrl(
+                  details.highlightsUrl
+                )}
+                title={`${match.home.name} vs ${match.away.name} Match Highlights`}
                 style={{
                   position: "absolute",
                   top: 0,
@@ -725,47 +665,29 @@ export default function MatchPage() {
                 allowFullScreen
               />
             </div>
-          )}
 
-          <div
-            style={{
-              marginTop: "12px",
-            }}
-          >
-            <a
-              href={
-                highlight.url
-              }
-              target="_blank"
-              rel="noopener noreferrer"
+            <div
+              style={{
+                marginTop: "12px",
+              }}
             >
-              Watch on YouTube ↗
-            </a>
+              <a
+                href={details.highlightsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Watch Match Highlights ↗
+              </a>
+            </div>
           </div>
-
-          <p
-            className={
-              styles.reportText
-            }
-          >
-            {highlight.title}
-          </p>
-
-          {highlight.channel && (
-            <p
-              className={
-                styles.reportText
-              }
-            >
-              Source:{" "}
-              {highlight.channel}
+        ) : (
+          <div className={styles.reportCard}>
+            <p className={styles.reportText}>
+              Match highlights will be added after the match.
             </p>
-          )}
-        </div>
-      )
-    )}
-  </section>
-)}
+          </div>
+        )}
+      </section>
 
       {/* ================= SVNS REPORT ================= */}
 
