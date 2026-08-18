@@ -689,6 +689,114 @@ export default function MatchPage() {
         )}
       </section>
 
+      {/* ================= MATCH STATS ================= */}
+
+{!isSvns && details?.matchStats && (
+  <section className={styles.section}>
+    <h2>Match Stats</h2>
+
+    <div className={styles.lineups}>
+      <div>
+        <h3>{match.home.name}</h3>
+
+        <div className={styles.performance}>
+          <strong>Meters Made:</strong>{" "}
+          {details.matchStats.home.metresMade}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Carries:</strong>{" "}
+          {details.matchStats.home.carries}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Defenders Beaten:</strong>{" "}
+          {details.matchStats.home.defendersBeaten}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Clean Breaks:</strong>{" "}
+          {details.matchStats.home.cleanBreaks}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Offloads:</strong>{" "}
+          {details.matchStats.home.offloads}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Tackles Made:</strong>{" "}
+          {details.matchStats.home.tacklesMade}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Tackles Missed:</strong>{" "}
+          {details.matchStats.home.tacklesMissed}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Turnovers Won:</strong>{" "}
+          {details.matchStats.home.turnoversWon}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Penalties Conceded:</strong>{" "}
+          {details.matchStats.home.penaltiesConceded}
+        </div>
+      </div>
+
+      <div>
+        <h3>{match.away.name}</h3>
+
+        <div className={styles.performance}>
+          <strong>Meters Made:</strong>{" "}
+          {details.matchStats.away.metresMade}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Carries:</strong>{" "}
+          {details.matchStats.away.carries}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Defenders Beaten:</strong>{" "}
+          {details.matchStats.away.defendersBeaten}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Clean Breaks:</strong>{" "}
+          {details.matchStats.away.cleanBreaks}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Offloads:</strong>{" "}
+          {details.matchStats.away.offloads}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Tackles Made:</strong>{" "}
+          {details.matchStats.away.tacklesMade}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Tackles Missed:</strong>{" "}
+          {details.matchStats.away.tacklesMissed}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Turnovers Won:</strong>{" "}
+          {details.matchStats.away.turnoversWon}
+        </div>
+
+        <div className={styles.performance}>
+          <strong>Penalties Conceded:</strong>{" "}
+          {details.matchStats.away.penaltiesConceded}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
       {/* ================= SVNS REPORT ================= */}
 
       {isSvns && (

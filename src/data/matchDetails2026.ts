@@ -18,9 +18,27 @@ export type PerformanceStat = {
   value: string;
 };
 
+export type MatchTeamStats = {
+  metresMade: number;
+  carries: number;
+  defendersBeaten: number;
+  cleanBreaks: number;
+  offloads: number;
+  tacklesMade: number;
+  tacklesMissed: number;
+  turnoversWon: number;
+  penaltiesConceded: number;
+};
+
+export type MatchStats = {
+  home: MatchTeamStats;
+  away: MatchTeamStats;
+};
+
 export type MatchDetails = {
   matchKey: string;
   highlightsUrl?: string;
+  matchStats?: MatchStats;
   timeline?: TimelineEvent[];
   lineups?: {
     homeStarting: Player[];
@@ -954,6 +972,35 @@ export const matchDetails2026: MatchDetails[] = [
 
 {
   matchKey: "bulls-vs-new-zealand",
+
+  highlightsUrl: "",
+
+  matchStats: {
+    home: {
+      metresMade: 0,
+      carries: 0,
+      defendersBeaten: 0,
+      cleanBreaks: 0,
+      offloads: 0,
+      tacklesMade: 0,
+      tacklesMissed: 0,
+      turnoversWon: 0,
+      penaltiesConceded: 0,
+    },
+
+    away: {
+      metresMade: 0,
+      carries: 0,
+      defendersBeaten: 0,
+      cleanBreaks: 0,
+      offloads: 0,
+      tacklesMade: 0,
+      tacklesMissed: 0,
+      turnoversWon: 0,
+      penaltiesConceded: 0,
+    },
+  },
+
   timeline: [
     { minute: "0'", label: "Kick-off — Loftus Versfeld, Pretoria" },
     { minute: "40'", label: "Half Time" },
