@@ -161,10 +161,8 @@ export default function TournamentPage() {
   );
 
   const hasStandings = useMemo(
-    () =>
-      competition?.supportsStandings ??
-      !["svns"].includes(tournament?.conceptId || ""),
-    [competition, tournament]
+    () => competition?.supportsStandings === true,
+    [competition]
   );
 
   const standings: TeamStanding[] = useMemo(() => {
@@ -272,15 +270,19 @@ export default function TournamentPage() {
         setLoading(true);
         setLoadingStandings(true);
 
-        const [matchesData, standingsData] = await Promise.all([
-          getTournamentMatches({
-            conceptId: tournament.conceptId,
-            gender: tournament.gender,
-            instanceId: tournament.instanceId,
-            name: tournament.name,
-          }),
-          getStandings(tournament.conceptId, tournament.year || 2026).catch(() => [])
-        ]);
+        const matchesData = await getTournamentMatches({
+          conceptId: tournament.conceptId,
+          gender: tournament.gender,
+          instanceId: tournament.instanceId,
+          name: tournament.name,
+        });
+
+        const standingsData = hasStandings
+          ? await getStandings(
+              tournament.conceptId,
+              tournament.year || 2026
+            ).catch(() => [])
+          : [];
 
         if (mounted) {
           setMatches(matchesData);
@@ -337,7 +339,7 @@ export default function TournamentPage() {
         clearInterval(interval);
       }
     };
-  }, [tournament]);
+  }, [tournament, hasStandings]);
 
   /* ==================================================
      4. EARLY RETURN (SAFELY PLACED AT THE BOTTOM OF ALL HOOKS)

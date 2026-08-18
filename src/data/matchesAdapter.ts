@@ -4,7 +4,7 @@
 //
 // PURPOSE:
 // - Highlightly is the live source of truth for match
-//   status and scores.
+//   status, scores and Highlightly match identity.
 // - Local matches2026 remains the fallback/curated
 //   fixture source.
 // - Local and Highlightly records are reconciled even
@@ -94,7 +94,9 @@ function formatDate(date: Date): string {
 function addDays(date: Date, amount: number): Date {
   const result = new Date(date);
 
-  result.setUTCDate(result.getUTCDate() + amount);
+  result.setUTCDate(
+    result.getUTCDate() + amount
+  );
 
   return result;
 }
@@ -114,10 +116,12 @@ function normalizeTeamName(value: string): string {
    MATCH IDENTITY
    ==================================================
 
-   IMPORTANT:
-
    Local curated matches and Highlightly matches can
    have different matchKey formats.
+
+   Primary identity:
+
+   home + away + date
 
    Example:
 
@@ -125,7 +129,7 @@ function normalizeTeamName(value: string): string {
    sa-nz-rival-tour_2026-08-07_stormers_new-zealand
 
    HIGHLIGHTLY:
-   stormers_new-zealand_2026-08-07
+   stormers-vs-new-zealand
 
    They are nevertheless the SAME match.
 
@@ -152,6 +156,30 @@ function buildMatchIdentityKey(
 }
 
 /* ==================================================
+   MATCH KEY NORMALISATION
+   ==================================================
+
+   Used as a SECONDARY reconciliation mechanism.
+
+   This is deliberately separate from the primary
+   team/date identity.
+
+   If both records carry the same canonical matchKey,
+   we can safely treat them as the same match even if
+   another part of the local identity differs.
+   ================================================== */
+
+function normalizeMatchKey(
+  value?: string
+): string {
+  return String(value || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/* ==================================================
    TOURNAMENT RESOLVER
    ================================================== */
 
@@ -163,15 +191,22 @@ function resolveTournamentInstanceId(
   }
 
   const normalize = (str: string) =>
-    str.toLowerCase().replace(/\s+/g, "");
+    str
+      .toLowerCase()
+      .replace(/\s+/g, "");
 
-  const matchKey = normalize(match.tournament);
+  const matchKey =
+    normalize(match.tournament);
 
-  const found = tournaments2026.find((t) => {
-    if (!t.matchKey) return false;
+  const found =
+    tournaments2026.find((t) => {
+      if (!t.matchKey) return false;
 
-    return normalize(t.matchKey) === matchKey;
-  });
+      return (
+        normalize(t.matchKey) ===
+        matchKey
+      );
+    });
 
   return found?.instanceId;
 }
@@ -183,19 +218,23 @@ function resolveTournamentInstanceId(
 async function fetchDateFromApi(
   date: string
 ): Promise<MatchData[]> {
-  const controller = new AbortController();
+  const controller =
+    new AbortController();
 
-  const timeout = window.setTimeout(() => {
-    controller.abort();
-  }, API_REQUEST_TIMEOUT);
+  const timeout =
+    window.setTimeout(() => {
+      controller.abort();
+    }, API_REQUEST_TIMEOUT);
 
   try {
-    const response = await fetch(
-      `${API_BASE_URL}/api/stats/fixtures?date=${date}`,
-      {
-        signal: controller.signal,
-      }
-    );
+    const response =
+      await fetch(
+        `${API_BASE_URL}/api/stats/fixtures?date=${date}`,
+        {
+          signal:
+            controller.signal,
+        }
+      );
 
     if (!response.ok) {
       throw new Error(
@@ -203,7 +242,8 @@ async function fetchDateFromApi(
       );
     }
 
-    const data = await response.json();
+    const data =
+      await response.json();
 
     if (!Array.isArray(data)) {
       console.warn(
@@ -250,109 +290,133 @@ async function fetchFromApi(
   _options?: GetMatchesOptions
 ): Promise<MatchData[]> {
   if (!apiMatchesRequest) {
-    apiMatchesRequest = (async () => {
-      const now = Date.now();
+    apiMatchesRequest =
+      (async () => {
+        const now =
+          Date.now();
 
-      if (
-        apiMatchesCache &&
-        now - apiMatchesCacheTime < API_CACHE_TTL
-      ) {
-        console.log(
-          "🔥 HIGHLIGHTLY CACHE HIT:",
-          apiMatchesCache.length
-        );
+        if (
+          apiMatchesCache &&
+          now -
+            apiMatchesCacheTime <
+            API_CACHE_TTL
+        ) {
+          console.log(
+            "🔥 HIGHLIGHTLY CACHE HIT:",
+            apiMatchesCache.length
+          );
 
-        return apiMatchesCache;
-      }
+          return apiMatchesCache;
+        }
 
-      const today = new Date();
+        const today =
+          new Date();
 
-      const dates: string[] = [];
+        const dates: string[] =
+          [];
 
-      for (
-        let offset = -PAST_DAYS;
-        offset <= FUTURE_DAYS;
-        offset++
-      ) {
-        dates.push(
-          formatDate(addDays(today, offset))
-        );
-      }
-
-      /*
-       * Fetch all dates concurrently.
-       *
-       * The backend itself protects Highlightly with its
-       * cache and request lock.
-       */
-
-      const responses = await Promise.all(
-        dates.map((date) =>
-          fetchDateFromApi(date)
-        )
-      );
-
-      const apiMatches = responses.flat();
-
-      /*
-       * Remove duplicates returned by the API.
-       */
-
-      const unique =
-        new Map<string, MatchData>();
-
-      apiMatches.forEach(
-        (match) => {
-          const key =
-            buildMatchIdentityKey(
-              match
-            );
-
-          if (!key) {
-            return;
-          }
-
-          unique.set(
-            key,
-            match
+        for (
+          let offset =
+            -PAST_DAYS;
+          offset <=
+            FUTURE_DAYS;
+          offset++
+        ) {
+          dates.push(
+            formatDate(
+              addDays(
+                today,
+                offset
+              )
+            )
           );
         }
-      );
 
-      const result =
-        Array.from(
-          unique.values()
+        /*
+         * Fetch all dates concurrently.
+         *
+         * The backend itself protects Highlightly with its
+         * cache and request lock.
+         */
+
+        const responses =
+          await Promise.all(
+            dates.map(
+              (date) =>
+                fetchDateFromApi(
+                  date
+                )
+            )
+          );
+
+        const apiMatches =
+          responses.flat();
+
+        /*
+         * Remove duplicates returned by the API.
+         */
+
+        const unique =
+          new Map<
+            string,
+            MatchData
+          >();
+
+        apiMatches.forEach(
+          (match) => {
+            const key =
+              buildMatchIdentityKey(
+                match
+              );
+
+            if (!key) {
+              return;
+            }
+
+            unique.set(
+              key,
+              match
+            );
+          }
         );
 
-      console.log(
-        "🔥 HIGHLIGHTLY ROLLING MATCHES:",
-        result.length
-      );
+        const result =
+          Array.from(
+            unique.values()
+          );
 
-      /*
-       * Only cache a successful API response.
-       *
-       * An empty response is NOT cached so that a
-       * temporary backend failure does not suppress
-       * Highlightly indefinitely.
-       */
+        console.log(
+          "🔥 HIGHLIGHTLY ROLLING MATCHES:",
+          result.length
+        );
 
-      if (result.length > 0) {
-        apiMatchesCache =
-          result;
+        /*
+         * Only cache a successful API response.
+         *
+         * An empty response is NOT cached so that a
+         * temporary backend failure does not suppress
+         * Highlightly indefinitely.
+         */
 
-        apiMatchesCacheTime =
-          Date.now();
-      }
+        if (
+          result.length > 0
+        ) {
+          apiMatchesCache =
+            result;
 
-      return result;
-    })();
+          apiMatchesCacheTime =
+            Date.now();
+        }
+
+        return result;
+      })();
   }
 
   try {
     return await apiMatchesRequest;
   } finally {
-    apiMatchesRequest = null;
+    apiMatchesRequest =
+      null;
   }
 }
 
@@ -367,18 +431,89 @@ function buildMatchKey(
     return match.matchKey;
   }
 
-  const normalize = (
-    value: string
-  ) =>
-    value
-      .toLowerCase()
-      .replace(/\s+/g, "-");
+  const normalize =
+    (value: string) =>
+      value
+        .toLowerCase()
+        .replace(/\s+/g, "-");
 
   return `${normalize(
     match.home.name
   )}-vs-${normalize(
     match.away.name
   )}`;
+}
+
+/* ==================================================
+   EXISTING MATCH RESOLUTION
+   ==================================================
+
+   Reconciliation order:
+
+   1. Exact team + date identity.
+   2. Exact normalised matchKey.
+
+   This allows Highlightly's real ID to be attached
+   to a local curated match even where the two records
+   do not have identical identity formatting.
+   ================================================== */
+
+function findExistingMatch(
+  mergedMap: Map<string, MatchData>,
+  apiMatch: MatchData
+): {
+  identity: string;
+  match: MatchData;
+} | undefined {
+  const identity =
+    buildMatchIdentityKey(
+      apiMatch
+    );
+
+  const direct =
+    mergedMap.get(identity);
+
+  if (direct) {
+    return {
+      identity,
+      match: direct,
+    };
+  }
+
+  const apiKey =
+    normalizeMatchKey(
+      apiMatch.matchKey
+    );
+
+  if (!apiKey) {
+    return undefined;
+  }
+
+  for (
+    const [
+      existingIdentity,
+      existingMatch,
+    ] of mergedMap.entries()
+  ) {
+    const existingKey =
+      normalizeMatchKey(
+        existingMatch.matchKey
+      );
+
+    if (
+      existingKey &&
+      existingKey === apiKey
+    ) {
+      return {
+        identity:
+          existingIdentity,
+        match:
+          existingMatch,
+      };
+    }
+  }
+
+  return undefined;
 }
 
 /* ==================================================
@@ -390,7 +525,10 @@ function mergeMatches(
   apiMatches: MatchData[]
 ): MatchData[] {
   const mergedMap =
-    new Map<string, MatchData>();
+    new Map<
+      string,
+      MatchData
+    >();
 
   /*
    * Start with local curated data.
@@ -402,7 +540,9 @@ function mergeMatches(
   localMatches.forEach(
     (match) => {
       const identity =
-        buildMatchIdentityKey(match);
+        buildMatchIdentityKey(
+          match
+        );
 
       if (!identity) {
         return;
@@ -417,27 +557,15 @@ function mergeMatches(
 
   /*
    * Overlay Highlightly.
-   *
-   * Highlightly owns:
-   * - live state
-   * - final state
-   * - score
-   * - live fixture information
    */
 
   apiMatches.forEach(
     (apiMatch) => {
-      const identity =
-        buildMatchIdentityKey(
+      const resolved =
+        findExistingMatch(
+          mergedMap,
           apiMatch
         );
-
-      if (!identity) {
-        return;
-      }
-
-      const existing =
-        mergedMap.get(identity);
 
       /*
        * No local record exists.
@@ -445,23 +573,38 @@ function mergeMatches(
        * This is a genuinely new Highlightly match.
        */
 
-      if (!existing) {
+      if (!resolved) {
+        const identity =
+          buildMatchIdentityKey(
+            apiMatch
+          );
+
         const key =
-          buildMatchKey(apiMatch);
+          buildMatchKey(
+            apiMatch
+          );
 
         mergedMap.set(
           identity,
           {
             ...apiMatch,
+
             highlightlyId:
               apiMatch.highlightlyId ??
               apiMatch.id,
-            matchKey: key,
+
+            matchKey:
+              key,
           }
         );
 
         return;
       }
+
+      const {
+        identity,
+        match: existing,
+      } = resolved;
 
       /*
        * The local record exists.
@@ -471,44 +614,56 @@ function mergeMatches(
        *
        * IMPORTANT:
        *
-       * Preserve the local ID.
+       * Preserve the local RAZ route ID.
        *
-       * MatchPage routes can use IDs such as:
-       *
-       * /matches/7001
-       *
-       * If Highlightly's ID replaced 7001, the route
-       * could no longer resolve the curated match.
+       * Preserve the REAL Highlightly ID separately.
        */
 
       const key =
         existing.matchKey ||
         apiMatch.matchKey ||
-        buildMatchKey(existing);
+        buildMatchKey(
+          existing
+        );
 
       const apiHasPriority =
-        apiMatch.state === "live" ||
-        apiMatch.state === "final" ||
+        apiMatch.state ===
+          "live" ||
+        apiMatch.state ===
+          "final" ||
         !!apiMatch.score;
 
-      if (apiHasPriority) {
-        const merged: MatchData = {
+      if (
+        apiHasPriority
+      ) {
+        const merged:
+          MatchData = {
           ...existing,
           ...apiMatch,
 
-          // Preserve the local route identity.
+          /*
+           * Preserve RAZ route identity.
+           */
           id: existing.id,
 
-          // Preserve the real Highlightly match ID.
+          /*
+           * ALWAYS preserve the real
+           * Highlightly match ID.
+           */
           highlightlyId:
             apiMatch.highlightlyId ??
+            apiMatch.id ??
             existing.highlightlyId,
 
-          // Preserve the curated match key.
-          matchKey: key,
+          /*
+           * Preserve curated match key.
+           */
+          matchKey:
+            key,
 
-          // Highlightly provides the live team record,
-          // but the local record owns the trusted flag identity.
+          /*
+           * Preserve trusted local flag identity.
+           */
           home: {
             ...apiMatch.home,
             country:
@@ -528,11 +683,20 @@ function mergeMatches(
           "🔄 MATCH RECONCILED:",
           {
             id: existing.id,
-            home: existing.home.name,
-            away: existing.away.name,
-            date: existing.date,
-            score: merged.score,
-            state: merged.state,
+            highlightlyId:
+              merged.highlightlyId,
+            matchKey:
+              merged.matchKey,
+            home:
+              existing.home.name,
+            away:
+              existing.away.name,
+            date:
+              existing.date,
+            score:
+              merged.score,
+            state:
+              merged.state,
           }
         );
 
@@ -545,10 +709,10 @@ function mergeMatches(
       }
 
       /*
-       * Highlightly has no useful live/final state
-       * yet.
+       * Highlightly has no useful live/final state yet.
        *
-       * Preserve the richer local curated record.
+       * Preserve the richer local curated record,
+       * but still retain the real Highlightly ID.
        */
 
       mergedMap.set(
@@ -561,9 +725,11 @@ function mergeMatches(
 
           highlightlyId:
             apiMatch.highlightlyId ??
+            apiMatch.id ??
             existing.highlightlyId,
 
-          matchKey: key,
+          matchKey:
+            key,
         }
       );
     }
@@ -584,7 +750,9 @@ export async function getMatches(
   let data: MatchData[];
 
   const apiData =
-    await fetchFromApi(options);
+    await fetchFromApi(
+      options
+    );
 
   /*
    * IMPORTANT:
@@ -595,17 +763,21 @@ export async function getMatches(
    * Local data remains the fallback.
    */
 
-  if (apiData.length === 0) {
+  if (
+    apiData.length === 0
+  ) {
     console.warn(
       "⚠️ USING LOCAL MATCHES ONLY"
     );
 
-    data = matches2026;
+    data =
+      matches2026;
   } else {
-    data = mergeMatches(
-      matches2026,
-      apiData
-    );
+    data =
+      mergeMatches(
+        matches2026,
+        apiData
+      );
   }
 
   /* ==================================================
@@ -617,7 +789,9 @@ export async function getMatches(
       isValidStructure
     );
 
-  if (!options?.includeAll) {
+  if (
+    !options?.includeAll
+  ) {
     filtered =
       filtered.filter(
         isValidCompetition
@@ -692,7 +866,9 @@ export async function getMatches(
      LEAGUE / COMPETITION FILTER
      ================================================== */
 
-  if (options?.leagueId) {
+  if (
+    options?.leagueId
+  ) {
     const key =
       options.leagueId.toLowerCase();
 
@@ -783,7 +959,8 @@ export async function getTournamentMatches(
 ): Promise<MatchData[]> {
   const allMatches =
     await getMatches({
-      includeAll: true,
+      includeAll:
+        true,
 
       gender:
         tournament.gender ===

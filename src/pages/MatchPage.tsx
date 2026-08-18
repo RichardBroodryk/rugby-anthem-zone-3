@@ -6,6 +6,12 @@ import { getMatches } from "../data/matchesAdapter";
 import { flagMap } from "../data/flagMap";
 import { getMatchDetails } from "../utils/matchDetailsResolver";
 import { tournaments2026 } from "../data/tournamentMeta";
+import {
+  getMatchHighlights,
+} from "../utils/highlights/highlightsService";
+import type {
+  MatchHighlight,
+} from "../utils/highlights/highlightsService";
 
 /* ==================================================
    MATCH RESOLUTION HELPERS
@@ -127,6 +133,9 @@ export default function MatchPage() {
   const [match, setMatch] = useState<any>(
     location.state || null
   );
+
+  const [matchHighlights, setMatchHighlights] =
+    useState<MatchHighlight[]>([]);
 
   const [userComments, setUserComments] =
     useState<any[]>([]);
@@ -317,6 +326,54 @@ export default function MatchPage() {
       cancelled = true;
     };
   }, [id, location.state]);
+
+  /* ==================================================
+     LOAD MATCH HIGHLIGHTS
+     ================================================== */
+
+  useEffect(() => {
+    if (!match?.highlightlyId) {
+      setMatchHighlights([]);
+      return;
+    }
+
+    let cancelled = false;
+
+    async function loadHighlights() {
+      try {
+        const highlights =
+          await getMatchHighlights(
+            match.highlightlyId
+          );
+
+        if (!cancelled) {
+          console.log(
+            "🎥 MATCH HIGHLIGHTS LOADED:",
+            highlights
+          );
+
+          setMatchHighlights(
+            highlights
+          );
+        }
+      } catch (error) {
+        console.warn(
+          "⚠️ MATCH HIGHLIGHTS FAILED:",
+          error
+        );
+
+        if (!cancelled) {
+          setMatchHighlights([]);
+        }
+      }
+    }
+
+    loadHighlights();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [match?.highlightlyId]);
 
   /* ==================================================
      TRACKING
@@ -621,6 +678,94 @@ export default function MatchPage() {
           </p>
         )}
       </section>
+
+     {/* ================= MATCH HIGHLIGHTS ================= */}
+
+{matchHighlights.length > 0 && (
+  <section
+    className={styles.section}
+  >
+    <h2>
+      Match Highlights
+    </h2>
+
+    {matchHighlights.map(
+      (highlight) => (
+        <div
+          key={highlight.id}
+          className={
+            styles.reportCard
+          }
+        >
+          {highlight.embedUrl && (
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                paddingBottom: "56.25%",
+                overflow: "hidden",
+                borderRadius: "8px",
+              }}
+            >
+              <iframe
+                src={
+                  highlight.embedUrl
+                }
+                title={
+                  highlight.title
+                }
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  border: 0,
+                }}
+                allowFullScreen
+              />
+            </div>
+          )}
+
+          <div
+            style={{
+              marginTop: "12px",
+            }}
+          >
+            <a
+              href={
+                highlight.url
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Watch on YouTube ↗
+            </a>
+          </div>
+
+          <p
+            className={
+              styles.reportText
+            }
+          >
+            {highlight.title}
+          </p>
+
+          {highlight.channel && (
+            <p
+              className={
+                styles.reportText
+              }
+            >
+              Source:{" "}
+              {highlight.channel}
+            </p>
+          )}
+        </div>
+      )
+    )}
+  </section>
+)}
 
       {/* ================= SVNS REPORT ================= */}
 
