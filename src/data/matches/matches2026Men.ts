@@ -1484,7 +1484,8 @@ export const matches2026Men: MatchData[] = [
     venue: "Loftus Versfeld, Pretoria",
     home: { name: "Bulls", country: "bulls" },
     away: { name: "New Zealand", country: "new-zealand" },
-    state: "upcoming",
+    score: { home: 19, away: 50 },
+    state: "final",
     startTime: "19:00",
   },
   {

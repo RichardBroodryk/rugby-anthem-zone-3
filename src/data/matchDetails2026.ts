@@ -971,35 +971,32 @@ export const matchDetails2026: MatchDetails[] = [
 },
 
 {
-  matchKey: "bulls-vs-new-zealand",
-
-  highlightsUrl: "",
-
-  matchStats: {
-    home: {
-      metresMade: 0,
-      carries: 0,
-      defendersBeaten: 0,
-      cleanBreaks: 0,
-      offloads: 0,
-      tacklesMade: 0,
-      tacklesMissed: 0,
-      turnoversWon: 0,
-      penaltiesConceded: 0,
-    },
-
-    away: {
-      metresMade: 0,
-      carries: 0,
-      defendersBeaten: 0,
-      cleanBreaks: 0,
-      offloads: 0,
-      tacklesMade: 0,
-      tacklesMissed: 0,
-      turnoversWon: 0,
-      penaltiesConceded: 0,
-    },
+matchKey: "bulls-vs-new-zealand",
+highlightsUrl: "https://www.youtube.com/watch?v=WaQkx8-PBdI",
+matchStats: {
+  home: { // Bulls
+    metresMade: 312,
+    carries: 98,
+    defendersBeaten: 14,
+    cleanBreaks: 5,
+    offloads: 8,
+    tacklesMade: 142,
+    tacklesMissed: 28,
+    turnoversWon: 6,
+    penaltiesConceded: 12,
   },
+  away: { // New Zealand
+    metresMade: 548,
+    carries: 126,
+    defendersBeaten: 31,
+    cleanBreaks: 12,
+    offloads: 15,
+    tacklesMade: 118,
+    tacklesMissed: 11,
+    turnoversWon: 11,
+    penaltiesConceded: 8,
+  },
+},
 
   timeline: [
     { minute: "0'", label: "Kick-off — Loftus Versfeld, Pretoria" },
