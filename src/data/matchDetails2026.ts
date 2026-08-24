@@ -1144,10 +1144,10 @@ matchStats: {
 },
 
 {
- matchKey: "springboks-vs-new-zealand-1",
-highlightsUrl: "https://www.youtube.com/watch?v=63ckT4DxMB0",
+ matchKey: "south-africa-vs-new-zealand-test-1",
+highlightsUrl: "https://www.youtube.com/watch?v=zAbz3DiMcCw",
 matchStats: {
-  home: { // Springboks
+  home: { // South Africa
     metresMade: 341,
     carries: 96,
     defendersBeaten: 21,

@@ -457,7 +457,12 @@ export default function MatchPage() {
   }
 
   const details =
-    getMatchDetails(match);
+  getMatchDetails(match);
+
+console.log("🏉 MATCH DETAILS RESOLVED:", {
+  matchKey: match.matchKey,
+  details,
+});
 
   /* ==================================================
      FLAGS + META

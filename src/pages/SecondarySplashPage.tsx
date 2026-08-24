@@ -132,7 +132,7 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                The World's Greatest Rivalry - now for the MAIN Event! Springboks vs All Blacks 22 August 2026 !!
+                The World's Greatest Rivalry - The All Blacks get the first win! Now for the Lions 25 August 2026 !!
               </span>
             </div>
           </div>
