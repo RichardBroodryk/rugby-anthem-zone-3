@@ -1501,7 +1501,7 @@ export const matches2026Men: MatchData[] = [
     home: { name: "Lions", country: "lions" },
     away: { name: "New Zealand", country: "new-zealand" },
     state: "upcoming",
-    startTime: "TBD",
+    startTime: "19:00",
   },
 
   // ----- TEST SERIES: "RUGBY'S GREATEST RIVALRY" -----
@@ -1517,7 +1517,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Ellis Park, Johannesburg",
   home: { name: "South Africa", country: "south-africa" },
   away: { name: "New Zealand", country: "new-zealand" },
-  state: "upcoming",
+  score: { home: 16, away: 33 },
+  state: "final",
   startTime: "17:10",
 },
   {

@@ -1144,8 +1144,33 @@ matchStats: {
 },
 
 {
-  matchKey: "south-africa-vs-new-zealand-test-1",
-  timeline: [
+ matchKey: "springboks-vs-new-zealand-1",
+highlightsUrl: "https://www.youtube.com/watch?v=63ckT4DxMB0",
+matchStats: {
+  home: { // Springboks
+    metresMade: 341,
+    carries: 96,
+    defendersBeaten: 21,
+    cleanBreaks: 7,
+    offloads: 2,
+    tacklesMade: 89,
+    tacklesMissed: 25,
+    turnoversWon: 5,
+    penaltiesConceded: 10,
+  },
+  away: { // New Zealand
+    metresMade: 255,
+    carries: 86,
+    defendersBeaten: 25,
+    cleanBreaks: 6,
+    offloads: 4,
+    tacklesMade: 129,
+    tacklesMissed: 21,
+    turnoversWon: 14,
+    penaltiesConceded: 14,
+  },
+},
+ timeline: [
     { minute: "0'", label: "Kick-off — Ellis Park, Johannesburg" },
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
