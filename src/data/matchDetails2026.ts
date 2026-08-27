@@ -1073,6 +1073,31 @@ matchStats: {
 },
 {
   matchKey: "lions-vs-new-zealand",
+highlightsUrl: "https://www.youtube.com/watch?v=OKP0LgC5psY",
+matchStats: {
+  home: { // Lions
+    metresMade: 322,
+    carries: 77,
+    defendersBeaten: 18,
+    cleanBreaks: 4,
+    offloads: 6,
+    tacklesMade: 147,
+    tacklesMissed: 38,
+    turnoversWon: 10,
+    penaltiesConceded: 11,
+  },
+  away: { // New Zealand
+    metresMade: 881,
+    carries: 150,
+    defendersBeaten: 32,
+    cleanBreaks: 15,
+    offloads: 12,
+    tacklesMade: 85,
+    tacklesMissed: 22,
+    turnoversWon: 9,
+    penaltiesConceded: 9,
+  },
+},
   timeline: [
     { minute: "0'", label: "Kick-off — Ellis Park, Johannesburg" },
     { minute: "40'", label: "Half Time" },

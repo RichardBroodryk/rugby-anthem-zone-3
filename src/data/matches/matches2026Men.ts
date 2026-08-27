@@ -1500,7 +1500,8 @@ export const matches2026Men: MatchData[] = [
     venue: "Ellis Park, Johannesburg",
     home: { name: "Lions", country: "lions" },
     away: { name: "New Zealand", country: "new-zealand" },
-    state: "upcoming",
+    score: { home: 35, away: 41 },
+    state: "final",
     startTime: "19:00",
   },
 

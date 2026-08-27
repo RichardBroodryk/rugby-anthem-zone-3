@@ -132,7 +132,7 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                The World's Greatest Rivalry - The All Blacks get the first win! Now for the Lions 25 August 2026 !!
+                The World's Greatest Rivalry - The All Blacks avoid an upset! Lions 35 NZ 41 ! Now for the 2nd test vs the Springboks!
               </span>
             </div>
           </div>
