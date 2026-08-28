@@ -338,7 +338,7 @@ export const matches2026Men: MatchData[] = [
     gender: "men",
     round: "Test Match",
     date: "2026-08-29",
-    venue: "Estadio José Amalfitani, Buenos Aires",
+    venue: "Estadio 23 de Agosto, Jujuy",
     home: { name: "Argentina", country: "argentina" },
     away: { name: "Australia", country: "australia" },
     state: "upcoming",
