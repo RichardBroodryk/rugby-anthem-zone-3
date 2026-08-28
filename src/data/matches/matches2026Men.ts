@@ -1535,7 +1535,7 @@ export const matches2026Men: MatchData[] = [
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "New Zealand", country: "new-zealand" },
     state: "upcoming",
-    startTime: "TBD",
+    startTime: "17:10",
   },
   {
     id: 7007,
