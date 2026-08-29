@@ -1291,7 +1291,7 @@ matchStats: {
       { number: 7, name: "Pieter-Steph du Toit" },
       { number: 8, name: "Jasper Wiese" },
       { number: 9, name: "Cobus Reinach" },
-      { number: 10, name: "Handré Pollard" },
+      { number: 10, name: "Sacha Feinberg-Mngomezulu" },
       { number: 11, name: "Ethan Hooker" },
       { number: 12, name: "Damian de Allende" },
       { number: 13, name: "Jesse Kriel" },
@@ -1306,7 +1306,7 @@ matchStats: {
       { number: 20, name: "Andre Esterhuizen" },
       { number: 21, name: "Cameron Hanekom" },
       { number: 22, name: "Morne van den Berg" },
-      { number: 23, name: "Sacha Feinberg-Mngomezulu" },
+      { number: 23, name: "Manie Libbok" },
     ],
     awayStarting: [
       { number: 1, name: "George Bower" },
