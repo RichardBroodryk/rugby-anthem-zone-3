@@ -1275,6 +1275,31 @@ matchStats: {
 
 {
   matchKey: "south-africa-vs-new-zealand-test-2",
+highlightsUrl: "https://www.youtube.com/watch?v=pZB1nHh1Hps",
+matchStats: {
+  home: { // South Africa
+    metresMade: 312,
+    carries: 104,
+    defendersBeaten: 19,
+    cleanBreaks: 5,
+    offloads: 7,
+    tacklesMade: 188,
+    tacklesMissed: 39,
+    turnoversWon: 11,
+    penaltiesConceded: 10,
+  },
+  away: { // New Zealand
+    metresMade: 428,
+    carries: 154,
+    defendersBeaten: 28,
+    cleanBreaks: 8,
+    offloads: 12,
+    tacklesMade: 122,
+    tacklesMissed: 26,
+    turnoversWon: 8,
+    penaltiesConceded: 12,
+  },
+},
   timeline: [
     { minute: "0'", label: "Kick-off — DHL Stadium, Cape Town" },
     { minute: "40'", label: "Half Time" },
@@ -1507,6 +1532,31 @@ matchStats: {
 
 {
   matchKey: "argentina-vs-australia-test-1",
+highlightsUrl: "https://www.youtube.com/watch?v=twiByM9GeKo",
+matchStats: {
+  home: { // Argentina
+    metresMade: 420,
+    carries: 88,
+    defendersBeaten: 16,
+    cleanBreaks: 4,
+    offloads: 3,
+    tacklesMade: 187,
+    tacklesMissed: 14,
+    turnoversWon: 5,
+    penaltiesConceded: 14,
+  },
+  away: { // Australia
+    metresMade: 358,
+    carries: 139,
+    defendersBeaten: 22,
+    cleanBreaks: 3,
+    offloads: 11,
+    tacklesMade: 112,
+    tacklesMissed: 18,
+    turnoversWon: 10,
+    penaltiesConceded: 9,
+  },
+},
   timeline: [
     { minute: "0'", label: "Kick-off — Estadio 23 de Agosto, Jujuy" },
     { minute: "40'", label: "Half Time" },
