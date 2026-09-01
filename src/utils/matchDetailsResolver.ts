@@ -1,6 +1,6 @@
-import { matchDetails2026 } from "../data/matchDetails2026";
+import { matchDetails2026 } from "../data/matchDetails";
 import type { MatchData } from "../data/matches/types";
-import type { MatchDetails } from "../data/matchDetails2026";
+import type { MatchDetails } from "../data/matchDetails/types";
 
 /* ==================================================
    NORMALIZERS

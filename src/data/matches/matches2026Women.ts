@@ -259,6 +259,40 @@ export const matches2026Women: MatchData[] = [
     state: "final",
   },
 
+  // ----- Japan Women vs Fiji Women -----
+  {
+    id: 217,
+    matchKey: "japan-w-vs-fiji-w",
+    competitionId: "womens-internationals",
+    tournamentInstanceId: WOMENS_TESTS_2026,
+    tournament: "Women's International Tests 2026",
+    gender: "women",
+    round: "Test Match",
+    date: "2026-09-04",
+    venue: "Japan Base, Fukuoka",
+    home: { name: "Japan W", country: "japan" },
+    away: { name: "Fiji W", country: "fiji" },
+    state: "upcoming",
+    startTime: "TBD",
+  },
+
+  // ----- South Africa Women vs New Zealand Women -----
+  {
+    id: 218,
+    matchKey: "south-africa-w-vs-new-zealand-w",
+    competitionId: "womens-internationals",
+    tournamentInstanceId: WOMENS_TESTS_2026,
+    tournament: "Women's International Tests 2026",
+    gender: "women",
+    round: "Test Match",
+    date: "2026-09-05",
+    venue: "FNB Stadium, Johannesburg",
+    home: { name: "South Africa W", country: "south-africa" },
+    away: { name: "New Zealand W", country: "new-zealand" },
+    state: "upcoming",
+    startTime: "TBD",
+  },
+
   // ----- South Africa vs Ireland Series -----
   {
     id: 102,
