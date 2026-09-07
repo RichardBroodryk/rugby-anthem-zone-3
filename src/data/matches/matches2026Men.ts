@@ -356,8 +356,8 @@ export const matches2026Men: MatchData[] = [
     venue: "Estadio Malvinas Argentinas, Mendoza",
     home: { name: "Argentina", country: "argentina" },
     away: { name: "Australia", country: "australia" },
-    state: "upcoming",
-    startTime: "TBD",
+    score: { home: 28, away: 28 },
+  state: "final",
   },
 
   // ==================================================
@@ -1550,8 +1550,9 @@ export const matches2026Men: MatchData[] = [
     venue: "FNB Stadium, Johannesburg",
     home: { name: "South Africa", country: "south-africa" },
     away: { name: "New Zealand", country: "new-zealand" },
-    state: "upcoming",
-    startTime: "TBD",
+    score: { home: 29, away: 24 },
+    state: "final",
+    startTime: "17:10",
   },
   {
     id: 7008,

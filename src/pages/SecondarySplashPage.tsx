@@ -132,7 +132,7 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                The World's Greatest Rivalry - GAME ON! Springboks 33 NZ 26 ! One - One!!Now for the 3rd test vs the Springboks!
+                The World's Greatest Rivalry - GAME ON! Springboks 29 NZ 24 ! Two - One!!Now for the 4th test vs the Springboks in Baltimore!
               </span>
             </div>
           </div>

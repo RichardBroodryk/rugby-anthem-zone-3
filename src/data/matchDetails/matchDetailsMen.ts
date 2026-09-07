@@ -1030,6 +1030,31 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
   matchKey: "south-africa-vs-new-zealand-test-3",
+highlightsUrl: "https://www.youtube.com/watch?v=mfz8yB0jOT0",
+matchStats: {
+  home: { // South Africa
+    metresMade: 340,
+    carries: 110,
+    defendersBeaten: 18,
+    cleanBreaks: 5,
+    offloads: 6,
+    tacklesMade: 150,
+    tacklesMissed: 32,
+    turnoversWon: 9,
+    penaltiesConceded: 11,
+  },
+  away: { // New Zealand
+    metresMade: 410,
+    carries: 145,
+    defendersBeaten: 26,
+    cleanBreaks: 7,
+    offloads: 10,
+    tacklesMade: 106,
+    tacklesMissed: 21,
+    turnoversWon: 8,
+    penaltiesConceded: 12,
+  },
+},
   timeline: [
     { minute: "0'", label: "Kick-off — FNB Stadium, Johannesburg" },
     { minute: "40'", label: "Half Time" },
@@ -1364,6 +1389,31 @@ export const matchDetailsMen: MatchDetails[] = [
 
 {
   matchKey: "argentina-vs-australia-test-2",
+highlightsUrl: "https://www.youtube.com/watch?v=PpCJ4WIGyPY",
+matchStats: {
+  home: { // Argentina
+    metresMade: 385,
+    carries: 153,
+    defendersBeaten: 20,
+    cleanBreaks: 3,
+    offloads: 8,
+    tacklesMade: 119,
+    tacklesMissed: 17,
+    turnoversWon: 6,
+    penaltiesConceded: 12,
+  },
+  away: { // Australia
+    metresMade: 295,
+    carries: 94,
+    defendersBeaten: 15,
+    cleanBreaks: 4,
+    offloads: 5,
+    tacklesMade: 220,
+    tacklesMissed: 32,
+    turnoversWon: 5,
+    penaltiesConceded: 10,
+  },
+},
   timeline: [
     { minute: "0'", label: "Kick-off — Estadio Malvinas Argentinas, Mendoza" },
     { minute: "40'", label: "Half Time" },
