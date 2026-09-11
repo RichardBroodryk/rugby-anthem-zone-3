@@ -37,7 +37,6 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -101,14 +100,15 @@ export default function SignupPage() {
 
               <div className={styles.heroText}>
                 <span className={styles.kicker}>
-                  RAZ MEMBERSHIP • ACCOUNT SETUP • INTERNATIONAL RUGBY
+                  RAZ ACCESS • ACCOUNT SETUP • INTERNATIONAL RUGBY
                 </span>
 
                 <h1>RAZ Premium Access</h1>
 
                 <p className={styles.subtitle}>
-                  Create your Rugby Anthem Zone account to continue to terms and
-                  checkout, and unlock the full international rugby experience.
+                  Create your Rugby Anthem Zone account to continue to terms
+                  and checkout, and unlock the full international rugby
+                  experience.
                 </p>
               </div>
             </div>
@@ -116,8 +116,12 @@ export default function SignupPage() {
             <div className={styles.formCardWrap}>
               <section className={styles.formCard}>
                 <div className={styles.formHeader}>
-                  <span className={styles.formEyebrow}>Monthly Membership</span>
+                  <span className={styles.formEyebrow}>
+                    Once-Off Access
+                  </span>
+
                   <h2>Create Your Account</h2>
+
                   <p className={styles.formIntro}>
                     Set up your Rugby Anthem Zone account, choose your country,
                     and continue into terms and checkout.
@@ -126,9 +130,12 @@ export default function SignupPage() {
 
                 <div className={styles.unlockBlock}>
                   <h3>What You’re Unlocking</h3>
+
                   <ul className={styles.unlockList}>
                     <li>Match centre, fixtures, results, and stats</li>
-                    <li>Anthems, tournaments, media, and matchday tools</li>
+                    <li>
+                      Anthems, tournaments, media, and matchday tools
+                    </li>
                     <li>Heritage and defining rugby moments</li>
                     <li>One Rugby Anthem Zone account across the platform</li>
                   </ul>
@@ -137,6 +144,7 @@ export default function SignupPage() {
                 <div className={styles.formFields}>
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Email</label>
+
                     <input
                       type="email"
                       className={styles.input}
@@ -151,6 +159,7 @@ export default function SignupPage() {
 
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Password</label>
+
                     <div className={styles.passwordWrap}>
                       <input
                         type={showPassword ? "text" : "password"}
@@ -177,7 +186,10 @@ export default function SignupPage() {
                   </div>
 
                   <div className={styles.fieldGroup}>
-                    <label className={styles.label}>Select your country</label>
+                    <label className={styles.label}>
+                      Select your country
+                    </label>
+
                     <select
                       value={country}
                       onChange={(e) => {
@@ -187,6 +199,7 @@ export default function SignupPage() {
                       className={styles.select}
                     >
                       <option value="">— Select country —</option>
+
                       {COUNTRIES.map((c) => (
                         <option key={c} value={c}>
                           {c === "Other" ? "Other (Global)" : c}
@@ -200,8 +213,9 @@ export default function SignupPage() {
 
                 <div className={styles.pricingBox}>
                   <p className={styles.price}>RAZ Premium</p>
+
                   <p className={styles.psychology}>
-                    Secure monthly paid access. Final pricing and billing details
+                    Secure once-off access. Final pricing and payment details
                     are shown at checkout.
                   </p>
                 </div>
