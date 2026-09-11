@@ -266,6 +266,19 @@ export const COMPETITIONS: Competition[] = [
     supportsPlayers: true,
   },
 
+  {
+  conceptId: "wxv-challenger",
+  name: "WXV Global Series Challenger",
+  category: "international",
+  gender: "women",
+  supportsStandings: true,
+  supportsStatistics: true,
+    supportsFixtures: true,
+    supportsResults: true,
+    supportsSquads: true,
+    supportsPlayers: true,
+},
+
   // ==================================================
   // 🏉 DOMESTIC — MEN
   // ==================================================

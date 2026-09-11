@@ -19,6 +19,9 @@ import internationalTestsWomen from "../assets/images/tournaments/international-
 /* 🔥 WXV (INTENTIONAL REUSE — LOCKED) */
 import wxvHero from "../assets/images/tournaments/nations-championship-2026.jpg";
 
+/* 🆕 WXV CHALLENGER */
+import wxvChallengerWomen from "../assets/images/raz/wxv-challenger-women.jpg";
+
 /* 🆕 SVNS */
 import svnsHero from "../assets/images/tournaments/svns-2026.jpg";
 
@@ -123,6 +126,15 @@ export const tournamentVisuals: TournamentVisual[] = [
     conceptId: "wxv1",
     heroImageWomen: wxvHero,
     logo: wxvHero,
+    heroLayout: "contained",
+    anthemMode: "global",
+  },
+
+  // ================= WXV CHALLENGER =================
+  {
+    conceptId: "wxv-challenger",
+    heroImageWomen: wxvChallengerWomen,
+    logo: wxvChallengerWomen,
     heroLayout: "contained",
     anthemMode: "global",
   },
