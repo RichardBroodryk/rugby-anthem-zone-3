@@ -58,14 +58,14 @@ export default function TermsPage() {
 
               <div className={styles.heroText}>
                 <span className={styles.kicker}>
-                  RAZ TERMS • MEMBERSHIP ACCESS • INTERNATIONAL RUGBY
+                  RAZ TERMS • ONCE-OFF ACCESS • INTERNATIONAL RUGBY
                 </span>
 
                 <h1>Terms &amp; Conditions</h1>
 
                 <p className={styles.subtitle}>
                   Please review the terms of access to Rugby Anthem Zone before
-                  continuing to membership checkout.
+                  continuing to checkout.
                   {country && (
                     <>
                       {" "}
@@ -80,12 +80,12 @@ export default function TermsPage() {
               <section className={styles.termsCard}>
                 <div className={styles.cardHeader}>
                   <span className={styles.cardEyebrow}>
-                    Membership Terms
+                    Access Terms
                   </span>
                   <h2>Rugby Anthem Zone Access</h2>
                   <p className={styles.cardIntro}>
-                    Rugby Anthem Zone is a paid membership product. Please
-                    review the terms below before continuing.
+                    Rugby Anthem Zone is a paid access product. Please review
+                    the terms below before continuing.
                   </p>
                 </div>
 
@@ -112,27 +112,26 @@ export default function TermsPage() {
                   </section>
 
                   <section className={styles.block}>
-                    <h3>Subscription Terms</h3>
+                    <h3>Payment Terms</h3>
                     <ul>
                       <li>
-                        Access is billed on a recurring basis according to the
-                        active billing setup.
+                        Access is purchased through a once-off payment according
+                        to the price presented during checkout.
                       </li>
                       <li>
-                        You may cancel according to the subscription and billing
-                        rules applicable at the time of purchase.
+                        The once-off payment does not create a recurring
+                        subscription or automatic renewal.
                       </li>
                       <li>
-                        Where cancellation is available, access remains active
-                        until the end of the paid billing period unless
-                        otherwise stated.
+                        Access is activated following successful confirmation of
+                        the payment.
                       </li>
                       <li>
-                        No partial refunds are issued for unused time within a
-                        billing period unless required by law or provider policy.
+                        No partial refunds are issued for unused access unless
+                        required by law or provider policy.
                       </li>
                       <li>
-                        Pricing and billing presentation may vary by platform
+                        Pricing and payment presentation may vary by platform
                         and region.
                       </li>
                     </ul>
@@ -149,7 +148,7 @@ export default function TermsPage() {
                     </div>
 
                     <p className={styles.summaryNote}>
-                      Secure checkout • Access unlocks after successful payment
+                      Once-off payment • Access unlocks after successful payment
                     </p>
 
                     <p className={styles.currencyNote}>

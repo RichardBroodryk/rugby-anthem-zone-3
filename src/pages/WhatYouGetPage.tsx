@@ -31,7 +31,7 @@ export default function WhatYouGetPage() {
 
               <div className={styles.heroText}>
                 <span className={styles.kicker}>
-                  RAZ ACCESS • MEMBERSHIP OVERVIEW • INTERNATIONAL RUGBY
+                  RAZ ACCESS • ONCE-OFF ACCESS • INTERNATIONAL RUGBY
                 </span>
 
                 <h1>What You Get</h1>
@@ -52,26 +52,27 @@ export default function WhatYouGetPage() {
               <section className={styles.summaryCard}>
                 <div className={styles.summaryHeader}>
                   <span className={styles.summaryEyebrow}>
-                    Monthly Membership
+                    Once-Off Access
                   </span>
                   <h2>RAZ Access</h2>
                   <p className={styles.summaryTagline}>
-                    One monthly paid membership for the full Rugby Anthem Zone
-                    experience.
+                    One once-off payment for full Rugby Anthem Zone access.
                   </p>
                 </div>
 
                 <p className={styles.summaryDescription}>
-                  Access Rugby Anthem Zone through a monthly paid membership
-                  built around matchdays, tournaments, rugby media, heritage,
-                  stadium atmosphere, and the broader international game
-                  experience.
+                  Access Rugby Anthem Zone with a once-off payment and enjoy the
+                  full experience built around matchdays, tournaments, rugby
+                  media, heritage, stadium atmosphere, and the broader
+                  international game.
                 </p>
 
                 <div className={styles.summaryMeta}>
                   <div className={styles.metaItem}>
                     <span className={styles.metaLabel}>Access Model</span>
-                    <span className={styles.metaValue}>Monthly paid RAZ access</span>
+                    <span className={styles.metaValue}>
+                      Once-off paid RAZ access
+                    </span>
                   </div>
                   <div className={styles.metaItem}>
                     <span className={styles.metaLabel}>Coverage</span>
@@ -145,7 +146,11 @@ export default function WhatYouGetPage() {
                 </Section>
 
                 <Section title="Access Model">
-                  <Boundary label="Membership" value="Monthly paid RAZ access" />
+                  <Boundary label="Payment" value="Once-off payment" />
+                  <Boundary
+                    label="Access"
+                    value="RAZ access following successful payment"
+                  />
                   <Boundary
                     label="Advertising"
                     value="Contextual platform advertising may appear during Wave 1 transition"

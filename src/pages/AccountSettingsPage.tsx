@@ -165,14 +165,16 @@ export default function AccountSettingsPage() {
         </div>
       </section>
 
-      {/* SUBSCRIPTION */}
+      {/* ACCESS */}
       <section className={styles.section}>
-        <h2>Subscription</h2>
+        <h2>Rugby Anthem Zone Access</h2>
 
         <div className={styles.card}>
           {hasPaidAccess ? (
             <>
-              <p>You currently have active Rugby Anthem Zone access.</p>
+              <p>
+                You currently have active Rugby Anthem Zone access.
+              </p>
 
               {isCancellationPending ? (
                 <div className={styles.successBox}>
@@ -201,26 +203,15 @@ export default function AccountSettingsPage() {
               ) : (
                 <>
                   <p>
-                    Your subscription renews automatically where applicable.
-                    You can cancel at any time and access will remain active
-                    until the end of your current billing period.
+                    Your RAZ access was purchased through a once-off payment.
+                    There are no automatic recurring payments or renewals.
                   </p>
-
-                  <button
-                    className={styles.dangerButton}
-                    onClick={handleCancelSubscription}
-                    disabled={isCancelling}
-                  >
-                    {isCancelling
-                      ? "Cancelling..."
-                      : "Cancel Subscription"}
-                  </button>
                 </>
               )}
             </>
           ) : (
             <>
-              <p>No active Rugby Anthem Zone subscription was found.</p>
+              <p>No active Rugby Anthem Zone access was found.</p>
 
               <button
                 className={styles.button}
