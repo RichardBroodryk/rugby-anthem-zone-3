@@ -51,18 +51,19 @@ export default function WelcomePage() {
             <div className={styles.cardWrap}>
               <section className={styles.card}>
                 <div className={styles.cardHeader}>
-                  <span className={styles.cardEyebrow}>Monthly Membership</span>
+                  <span className={styles.cardEyebrow}>
+                    Once-Off Access
+                  </span>
                   <h2>RAZ Access</h2>
                   <p className={styles.tagline}>
-                    One monthly paid membership. Full Rugby Anthem Zone
-                    experience.
+                    One once-off payment. Full Rugby Anthem Zone experience.
                   </p>
                 </div>
 
                 <p className={styles.description}>
-                  Access Rugby Anthem Zone through a monthly paid membership
-                  built around matchdays, tournaments, rugby media, heritage,
-                  and the broader international game experience.
+                  Access Rugby Anthem Zone through a once-off payment and enjoy
+                  the full experience built around matchdays, tournaments,
+                  rugby media, heritage, and the broader international game.
                 </p>
 
                 <div className={styles.actions}>
