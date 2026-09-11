@@ -1,31 +1,7 @@
 import styles from "./AccountSettingsPage.module.css";
 import { useNavigate } from "react-router-dom";
-import { useMemo, useState } from "react";
-import { API_BASE_URL } from "../config/api";
+import { useState } from "react";
 import { getStoredEmail, getStoredTier, logoutUser } from "../services/auth";
-
-type CancelSubscriptionResponse = {
-  success?: boolean;
-  alreadyPendingCancellation?: boolean;
-  subscriptionStatus?: string | null;
-  nextBillingDate?: string | null;
-  cancelledAt?: string | null;
-  message?: string;
-  error?: string;
-};
-
-function formatDate(value?: string | null): string | null {
-  if (!value) return null;
-
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return null;
-
-  return parsed.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 
 export default function AccountSettingsPage() {
   const navigate = useNavigate();
@@ -34,27 +10,6 @@ export default function AccountSettingsPage() {
   const email = getStoredEmail() || "No email";
   const tier = getStoredTier();
   const hasPaidAccess = tier === "active";
-
-  /* ================= SUBSCRIPTION STATE ================= */
-  const [isCancelling, setIsCancelling] = useState(false);
-  const [cancelStatus, setCancelStatus] = useState<string | null>(null);
-  const [cancelledAt, setCancelledAt] = useState<string | null>(null);
-  const [nextBillingDate, setNextBillingDate] = useState<string | null>(null);
-
-  const isCancellationPending = useMemo(() => {
-    if (!cancelStatus) return false;
-
-    const normalized = cancelStatus.toLowerCase();
-    return (
-      normalized === "canceling" ||
-      normalized === "cancelling" ||
-      normalized === "canceled" ||
-      normalized === "cancelled"
-    );
-  }, [cancelStatus]);
-
-  const formattedCancelledAt = formatDate(cancelledAt);
-  const formattedNextBillingDate = formatDate(nextBillingDate);
 
   /* ================= AVATAR ================= */
   const [avatar, setAvatar] = useState<string | null>(
@@ -82,56 +37,6 @@ export default function AccountSettingsPage() {
     localStorage.removeItem("raz_avatar");
     setAvatar(null);
   }
-
-  /* ================= CANCEL SUBSCRIPTION ================= */
-  const handleCancelSubscription = async () => {
-    const confirmCancel = window.confirm(
-      "Are you sure you want to cancel your Rugby Anthem Zone subscription?\n\nYou will keep access until the end of your current billing period."
-    );
-
-    if (!confirmCancel) return;
-
-    try {
-      setIsCancelling(true);
-
-      const token = localStorage.getItem("raz_token");
-
-      if (!token) {
-        alert("You must be logged in.");
-        return;
-      }
-
-      const res = await fetch(`${API_BASE_URL}/api/cancel-subscription`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = (await res.json()) as CancelSubscriptionResponse;
-
-      if (!res.ok) {
-        throw new Error(data.error || "Cancellation failed");
-      }
-
-      setCancelStatus(data.subscriptionStatus || "canceling");
-      setCancelledAt(data.cancelledAt || null);
-      setNextBillingDate(data.nextBillingDate || null);
-
-      if (data.alreadyPendingCancellation) {
-        alert(
-          data.message ||
-            "Your subscription is already scheduled for cancellation."
-        );
-      }
-    } catch (err: any) {
-      console.error(err);
-      alert(err.message || "Something went wrong.");
-    } finally {
-      setIsCancelling(false);
-    }
-  };
 
   /* ================= LOGOUT ================= */
   const handleLogout = () => {
@@ -165,7 +70,7 @@ export default function AccountSettingsPage() {
         </div>
       </section>
 
-      {/* ACCESS */}
+      {/* RUGBY ANTHEM ZONE ACCESS */}
       <section className={styles.section}>
         <h2>Rugby Anthem Zone Access</h2>
 
@@ -176,38 +81,10 @@ export default function AccountSettingsPage() {
                 You currently have active Rugby Anthem Zone access.
               </p>
 
-              {isCancellationPending ? (
-                <div className={styles.successBox}>
-                  <p>✅ Your subscription is scheduled for cancellation.</p>
-
-                  {formattedNextBillingDate ? (
-                    <p>
-                      Your Rugby Anthem Zone access should remain available
-                      until the end of your current billing period on{" "}
-                      <strong>{formattedNextBillingDate}</strong>.
-                    </p>
-                  ) : (
-                    <p>
-                      Your Rugby Anthem Zone access will remain available until
-                      the end of your current billing period.
-                    </p>
-                  )}
-
-                  {formattedCancelledAt && (
-                    <p>
-                      Cancellation requested on{" "}
-                      <strong>{formattedCancelledAt}</strong>.
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <>
-                  <p>
-                    Your RAZ access was purchased through a once-off payment.
-                    There are no automatic recurring payments or renewals.
-                  </p>
-                </>
-              )}
+              <p>
+                Your RAZ access was purchased through a once-off payment.
+                There are no automatic recurring payments or renewals.
+              </p>
             </>
           ) : (
             <>
