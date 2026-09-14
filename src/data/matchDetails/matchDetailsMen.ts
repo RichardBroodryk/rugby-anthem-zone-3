@@ -1131,6 +1131,31 @@ matchStats: {
 
 {
   matchKey: "south-africa-vs-new-zealand-test-4",
+  highlightsUrl: "https://www.youtube.com/watch?v=AdJgQNNSodM",
+matchStats: {
+  home: { // South Africa
+    metresMade: 520,
+    carries: 142,
+    defendersBeaten: 28,
+    cleanBreaks: 11,
+    offloads: 9,
+    tacklesMade: 161,
+    tacklesMissed: 32,
+    turnoversWon: 8,
+    penaltiesConceded: 9,
+  },
+  away: { // New Zealand
+    metresMade: 410,
+    carries: 136,
+    defendersBeaten: 22,
+    cleanBreaks: 9,
+    offloads: 11,
+    tacklesMade: 184,
+    tacklesMissed: 32,
+    turnoversWon: 7,
+    penaltiesConceded: 9,
+  },
+},
   timeline: [
     { minute: "0'", label: "Kick-off — M&T Bank Stadium, Baltimore" },
     { minute: "40'", label: "Half Time" },
@@ -1571,6 +1596,31 @@ matchStats: {
 
   {
   matchKey: "fiji-vs-canada",
+  highlightsUrl: "https://www.youtube.com/watch?v=vp_oBxY1rlY",
+matchStats: {
+  home: { // Fiji
+    metresMade: 480,
+    carries: 135,
+    defendersBeaten: 32,
+    cleanBreaks: 10,
+    offloads: 14,
+    tacklesMade: 110,
+    tacklesMissed: 28,
+    turnoversWon: 9,
+    penaltiesConceded: 11,
+  },
+  away: { // Canada
+    metresMade: 310,
+    carries: 95,
+    defendersBeaten: 18,
+    cleanBreaks: 5,
+    offloads: 6,
+    tacklesMade: 155,
+    tacklesMissed: 35,
+    turnoversWon: 6,
+    penaltiesConceded: 10,
+  },
+},
   timeline: [
     { minute: "0'", label: "Kick-off — Hanazono Rugby Stadium, Osaka" },
     { minute: "40'", label: "Half Time" },
@@ -1643,6 +1693,31 @@ matchStats: {
 
 {
   matchKey: "japan-vs-usa",
+  highlightsUrl: "https://www.world.rugby/pacific-nations-cup/en/",
+matchStats: {
+  home: { // Japan
+    metresMade: 620,
+    carries: 155,
+    defendersBeaten: 38,
+    cleanBreaks: 14,
+    offloads: 12,
+    tacklesMade: 95,
+    tacklesMissed: 18,
+    turnoversWon: 8,
+    penaltiesConceded: 8,
+  },
+  away: { // USA
+    metresMade: 240,
+    carries: 85,
+    defendersBeaten: 12,
+    cleanBreaks: 3,
+    offloads: 4,
+    tacklesMade: 175,
+    tacklesMissed: 42,
+    turnoversWon: 4,
+    penaltiesConceded: 12,
+  },
+},
   timeline: [
     { minute: "0'", label: "Kick-off — Hanazono Rugby Stadium, Osaka" },
     { minute: "40'", label: "Half Time" },
@@ -1710,6 +1785,38 @@ matchStats: {
     { category: "Captain", player: "Naoto Saito", value: "Japan" },
     { category: "Captain", player: "TBD", value: "USA" },
     { category: "Venue", player: "Hanazono Rugby Stadium", value: "Osaka" },
+  ],
+},
+
+{
+  matchKey: "japan-vs-fiji",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Prince Chichibu Memorial Stadium, Tokyo" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  performances: [
+    { category: "Coach", player: "Eddie Jones", value: "Japan" },
+    { category: "Coach", player: "Senirusi Seruvakula", value: "Fiji" },
+    { category: "Captain", player: "TBD", value: "Japan" },
+    { category: "Captain", player: "Tevita Ikanivere", value: "Fiji" },
+    { category: "Venue", player: "Prince Chichibu Memorial Stadium", value: "Tokyo" },
+  ],
+},
+
+{
+  matchKey: "canada-vs-usa",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Prince Chichibu Memorial Stadium, Tokyo" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  performances: [
+    { category: "Coach", player: "Stephen Meehan", value: "Canada" },
+    { category: "Coach", player: "TBD", value: "USA" },
+    { category: "Captain", player: "Lucas Rumball", value: "Canada" },
+    { category: "Captain", player: "TBD", value: "USA" },
+    { category: "Venue", player: "Prince Chichibu Memorial Stadium", value: "Tokyo" },
   ],
 },
 
