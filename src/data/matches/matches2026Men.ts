@@ -360,6 +360,22 @@ export const matches2026Men: MatchData[] = [
   state: "final",
   },
 
+  {
+  id: 8001,
+  matchKey: "polska-vs-czechy-2026",
+  competitionId: "international-tests",
+  tournamentInstanceId: INTERNATIONAL_TESTS_2026,
+  tournament: "Men's International Tests 2026",
+  gender: "men",
+  round: "Friendly",
+  date: "2026-09-19",
+  venue: "Stadion Miejski im. Ojca Władysława Augustynka, Nowy Sącz",
+  home: { name: "Polska", country: "poland" },
+  away: { name: "Czechy", country: "czech-republic" },
+  state: "upcoming",
+  startTime: "20:00",
+},
+
   // ==================================================
   // NATIONS CHAMPIONSHIP 2026
   // ==================================================

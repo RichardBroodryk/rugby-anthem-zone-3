@@ -29,6 +29,8 @@ import chileFlag from "../assets/images/flags/chile.jpg";
 import canadaFlag from "../assets/images/flags/canada.jpg";
 import georgiaFlag from "../assets/images/flags/georgia.jpg";
 import hongKongFlag from "../assets/images/flags/hong-kong-china.jpg";
+import polandFlag from "../assets/images/flags/poland.jpg";
+import czechRepublicFlag from "../assets/images/flags/czech-republic.jpg";
 
 const TEAM_IMAGES: Record<string, string> = {
   // ==================================================
@@ -76,6 +78,8 @@ const TEAM_IMAGES: Record<string, string> = {
   "hong kong china": hongKongFlag,
   usa: usaFlag,
   "united states": usaFlag,
+  polska: polandFlag,
+  czechy: czechRepublicFlag,
 };
 
 export function getTeamImage(teamName: string): string {

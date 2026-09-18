@@ -34,13 +34,8 @@ import CalendarIcon from "../components/icons/CalendarIcon";
 import ShoppingBagIcon from "../components/icons/ShoppingBagIcon";
 import ArchiveIcon from "../components/icons/ArchiveIcon";
 
-/* RIVALRY BANNER IMAGES */
-import rivalry1 from "../assets/images/rivalry/rivalry1.jpg";
-import rivalry2 from "../assets/images/rivalry/rivalry2.jpg";
-import rivalry3 from "../assets/images/rivalry/rivalry3.jpg";
-import rivalry4 from "../assets/images/rivalry/rivalry4.jpg";
-import rivalry5 from "../assets/images/rivalry/rivalry5.jpg";
-import rivalry6 from "../assets/images/rivalry/rivalry6.jpg";
+/* WOMEN'S RUGBY BANNER */
+import wxvWomensBanner from "../assets/images/raz/wxv-womens-banner.png";
 
 /* IMAGES */
 import anthemsImage from "../assets/images/raz/anthems-page.png";
@@ -59,8 +54,6 @@ import definingMomentsImage from "../assets/images/raz/moments-hero.jpg";
 /* DATA */
 import { getMatches } from "../data/matchesAdapter";
 import type { MatchData } from "../data/matches/types";
-
-const rivalryImages = [rivalry1, rivalry2, rivalry3, rivalry4, rivalry5, rivalry6];
 
 /**
  * HOME PAGE — WAVE 2
@@ -102,24 +95,15 @@ export default function HomePage() {
 
         <InfoBar />
 
-        {/* ====== RIVALRY BANNER ====== */}
-        <section className={styles.rivalryBannerSection}>
-          <div className={styles.rivalryBannerContainer}>
-            <div className={styles.rivalryBannerTrack}>
-              {rivalryImages.map((image, index) => (
-                <div key={index} className={styles.rivalryBannerItem}>
-                  <img src={image} alt={`Rivalry Tour ${index + 1}`} />
-                </div>
-              ))}
-              {rivalryImages.map((image, index) => (
-                <div key={`dup-${index}`} className={styles.rivalryBannerItem}>
-                  <img src={image} alt={`Rivalry Tour ${index + 1}`} />
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* ====== WXV WOMEN'S RUGBY BANNER ====== */}
+        <section className={styles.womensBannerSection}>
+          <img
+            src={wxvWomensBanner}
+            alt="WXV Women's Rugby"
+            className={styles.womensBannerImage}
+          />
         </section>
-        {/* ====== END RIVALRY BANNER ====== */}
+        {/* ====== END WXV WOMEN'S RUGBY BANNER ====== */}
 
         <FeaturedMatchCard
           matches={matches}

@@ -132,8 +132,8 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                The World's Greatest Rivalry - THE SPRINGBOKS TAKE THE WORLD"S GREATEST RIVARY!! Three - One in Baltimore SA 43 vs NZ 28!
-              </span>
+                The World Fifteen Women is now in Round 2 with Wales playing South Africa 18 September 2026! Also check out the Friendly between Polska-vs-Czechy !
+                </span>
             </div>
           </div>
 

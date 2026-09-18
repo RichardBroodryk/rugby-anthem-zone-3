@@ -26,6 +26,8 @@ import usa from "../assets/images/flags/united-states-of-america.jpg";
 import uruguay from "../assets/images/flags/uruguay.jpg";
 import wales from "../assets/images/flags/wales.jpg";
 import barbarians from "../assets/images/logos/solid/barbarians.jpg";
+import poland from "../assets/images/flags/poland.jpg";
+import czechRepublic from "../assets/images/flags/czech-republic.jpg";
 
 import bulls from "../assets/images/rivalry/bulls.jpg";
 import stormers from "../assets/images/rivalry/stormers.jpg";
@@ -61,6 +63,8 @@ export const flagMap: Record<string, string> = {
   "uruguay": uruguay,
   "wales": wales,
   "barbarians": barbarians,
+  "poland": poland,
+  "czech-republic": czechRepublic,
 
   /* TEMP FIX */
   "great-britain": england,

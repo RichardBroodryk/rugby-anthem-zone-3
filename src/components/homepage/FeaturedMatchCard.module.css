@@ -52,7 +52,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    transparent 50%
+  );
   pointer-events: none;
 }
 
@@ -136,7 +140,7 @@
 }
 
 .vsBadge {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(10, 10, 10, 0.65);
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -161,7 +165,7 @@
 }
 
 .detailLabel {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(10, 10, 10, 0.55);
   font-size: 0.7rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -180,13 +184,14 @@
 }
 
 .clickHint {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(10, 10, 10, 0.45);
   font-size: 0.7rem;
   font-weight: 400;
   letter-spacing: 0.05em;
 }
 
 /* Responsive */
+
 @media (max-width: 768px) {
   .matchesGrid {
     grid-template-columns: 1fr;
