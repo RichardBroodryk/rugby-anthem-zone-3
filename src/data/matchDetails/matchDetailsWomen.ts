@@ -844,6 +844,7 @@ matchStats: {
 
 {
   matchKey: "wales-w-vs-south-africa-w",
+  highlightsUrl: "https://www.youtube.com/watch?v=8pUl5kOHgyE",
   timeline: [
     { minute: "0'", label: "Kick-off — Cardiff Arms Park, Cardiff" },
     { minute: "40'", label: "Half Time" },
@@ -918,6 +919,7 @@ matchStats: {
 
 {
   matchKey: "england-w-vs-canada-w",
+  highlightsUrl: "https://www.youtube.com/watch?v=hRdgyCIaM-g",
   timeline: [
     { minute: "0'", label: "Kick-off — Sandy Park, Exeter" },
     { minute: "40'", label: "Half Time" },
@@ -989,6 +991,7 @@ matchStats: {
 },
 {
   matchKey: "france-w-vs-australia-w",
+  highlightsUrl: "https://www.youtube.com/watch?v=tjQAyN4s3zU",
   timeline: [
     { minute: "0'", label: "Kick-off — Matmut Stadium de Gerland, Lyon" },
     { minute: "40'", label: "Half Time" },
@@ -1060,6 +1063,7 @@ matchStats: {
 },
 {
   matchKey: "scotland-w-vs-new-zealand-w",
+  highlightsUrl: "https://www.youtube.com/watch?v=64bG00f00lU",
   timeline: [
     { minute: "0'", label: "Kick-off — Hive Stadium, Edinburgh" },
     { minute: "40'", label: "Half Time" },
@@ -1131,6 +1135,7 @@ matchStats: {
 },
 {
   matchKey: "italy-w-vs-japan-w",
+  highlightsUrl: "https://www.youtube.com/watch?v=c7ikWeMsYnA",
   timeline: [
     { minute: "0'", label: "Kick-off — Stadio Omero Tognon, Fontanafredda" },
     { minute: "40'", label: "Half Time" },
@@ -1383,51 +1388,6 @@ lineups: {
     { category: "Venue", player: "Kai Tak Youth Sports Ground", value: "Hong Kong" },
   ],
 },
-{
-  matchKey: "samoa-w-vs-spain-w",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Kai Tak Youth Sports Ground, Hong Kong" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  performances: [
-    { category: "Coach", player: "TBD", value: "Samoa W" },
-    { category: "Coach", player: "Régis Sonnes", value: "Spain W" },
-    { category: "Captain", player: "TBD", value: "Samoa W" },
-    { category: "Captain", player: "Lourdes Alameda", value: "Spain W" },
-    { category: "Venue", player: "Kai Tak Youth Sports Ground", value: "Hong Kong" },
-  ],
-},
-{
-  matchKey: "hong-kong-china-w-vs-fiji-w",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Kai Tak Youth Sports Ground, Hong Kong" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  performances: [
-    { category: "Coach", player: "Tumua Ioane", value: "Hong Kong China W" },
-    { category: "Coach", player: "Willie Walker", value: "Fiji W" },
-    { category: "Captain", player: "Lara Schats", value: "Hong Kong China W" },
-    { category: "Captain", player: "Kolora Lomani", value: "Fiji W" },
-    { category: "Venue", player: "Kai Tak Youth Sports Ground", value: "Hong Kong" },
-  ],
-},
-{
-  matchKey: "brazil-w-vs-netherlands-w",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Kai Tak Youth Sports Ground, Hong Kong" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  performances: [
-    { category: "Coach", player: "Guilherme Coghetto", value: "Brazil W" },
-    { category: "Coach", player: "Gareth Gilbert", value: "Netherlands W" },
-    { category: "Captain", player: "Luiza Campos", value: "Brazil W" },
-    { category: "Captain", player: "TBD", value: "Netherlands W" },
-    { category: "Venue", player: "Kai Tak Youth Sports Ground", value: "Hong Kong" },
-  ],
-},
 
 // ==================================================
 // WXV GLOBAL SERIES CHALLENGER 2026 — ROUND 2
@@ -1435,6 +1395,7 @@ lineups: {
 
 {
   matchKey: "samoa-w-vs-spain-w",
+  highlightsUrl: "https://www.youtube.com/watch?v=hpGh-Z_j88E",
   timeline: [
     { minute: "0'", label: "Kick-off — Kai Tak Youth Sports Ground, Hong Kong" },
     { minute: "40'", label: "Half Time" },
@@ -1450,6 +1411,7 @@ lineups: {
 },
 {
   matchKey: "fiji-w-vs-hong-kong-china-w",
+  highlightsUrl: "https://www.youtube.com/watch?v=ns978KpRWO8",
   timeline: [
     { minute: "0'", label: "Kick-off — Kai Tak Youth Sports Ground, Hong Kong" },
     { minute: "40'", label: "Half Time" },
@@ -1521,6 +1483,7 @@ lineups: {
 },
 {
   matchKey: "brazil-w-vs-netherlands-w",
+  highlightsUrl: "https://www.youtube.com/watch?v=3eN3HpBnbbE",
   timeline: [
     { minute: "0'", label: "Kick-off — Kai Tak Youth Sports Ground, Hong Kong" },
     { minute: "40'", label: "Half Time" },

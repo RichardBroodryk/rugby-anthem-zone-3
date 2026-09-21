@@ -1804,6 +1804,7 @@ matchStats: {
 
 {
   matchKey: "japan-vs-fiji",
+  highlightsUrl: "https://www.youtube.com/watch?v=r_Vwr3Gw3lY",
   timeline: [
     { minute: "0'", label: "Kick-off — Prince Chichibu Memorial Stadium, Tokyo" },
     { minute: "40'", label: "Half Time" },
@@ -1876,6 +1877,7 @@ matchStats: {
 
 {
   matchKey: "canada-vs-usa",
+  highlightsUrl: "https://www.youtube.com/watch?v=V07GdmaihRo",
   timeline: [
     { minute: "0'", label: "Kick-off — Prince Chichibu Memorial Stadium, Tokyo" },
     { minute: "40'", label: "Half Time" },

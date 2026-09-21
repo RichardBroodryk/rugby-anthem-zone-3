@@ -395,8 +395,9 @@ export const matches2026Women: MatchData[] = [
   venue: "Cardiff Arms Park, Cardiff",
   home: { name: "Wales W", country: "wales" },
   away: { name: "South Africa W", country: "south-africa" },
-  state: "upcoming",
-  startTime: "19:15",
+   score: { home: 50, away: 19 },
+  state: "final",
+  startTime: "20:15",
 },
 
 // ----- SATURDAY 19 SEPTEMBER 2026 -----
@@ -414,8 +415,9 @@ export const matches2026Women: MatchData[] = [
   venue: "Sandy Park, Exeter",
   home: { name: "England W", country: "england" },
   away: { name: "Canada W", country: "canada" },
-  state: "upcoming",
-  startTime: "15:00",
+  score: { home: 26, away: 26 },
+  state: "final",
+  startTime: "16:00",
 },
 {
   id: 205,
@@ -430,8 +432,9 @@ export const matches2026Women: MatchData[] = [
   venue: "Matmut Stadium de Gerland, Lyon",
   home: { name: "France W", country: "france" },
   away: { name: "Australia W", country: "australia" },
-  state: "upcoming",
-  startTime: "16:45",
+  score: { home: 29, away: 26 },
+  state: "final",
+  startTime: "17:45",
 },
 {
   id: 204,
@@ -462,8 +465,9 @@ export const matches2026Women: MatchData[] = [
   venue: "Stadio Omero Tognon, Fontanafredda",
   home: { name: "Italy W", country: "italy" },
   away: { name: "Japan W", country: "japan" },
-  state: "upcoming",
-  startTime: "13:30",
+  score: { home: 55, away: 21 },
+  state: "final",
+  startTime: "14:30",
 },
 
   // ----- ROUND 3 (UPCOMING) -----
