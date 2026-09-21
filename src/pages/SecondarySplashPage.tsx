@@ -132,7 +132,7 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                The World Fifteen Women is now in Round 2 with Wales playing South Africa 18 September 2026! Also check out the Friendly between Polska-vs-Czechy !
+                The World Fifteen Women Round 2 is completed with Wales dominating South Africa! The Friendly between Polska-vs-Czechy won by Polska!!
                 </span>
             </div>
           </div>
