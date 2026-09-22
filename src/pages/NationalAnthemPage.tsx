@@ -38,6 +38,10 @@ export default function NationalAnthemPage() {
   const accentColor = nation.colors[0];
   const haka = nation.anthem.haka;
 
+  const hasLyrics =
+    nation.anthem.lyrics.original.trim() !== "" ||
+    nation.anthem.lyrics.english.trim() !== "";
+
   const renderLyrics = (text: string) => {
     return text.split("\n").map((line, i) => {
       const trimmed = line.trim();
@@ -62,16 +66,21 @@ export default function NationalAnthemPage() {
 
   const displayedOriginal = expanded
     ? nation.anthem.lyrics.original
-    : nation.anthem.lyrics.original.split("\n").slice(0, 12).join("\n");
+    : nation.anthem.lyrics.original
+        .split("\n")
+        .slice(0, 12)
+        .join("\n");
 
   const displayedEnglish = expanded
     ? nation.anthem.lyrics.english
-    : nation.anthem.lyrics.english.split("\n").slice(0, 8).join("\n");
+    : nation.anthem.lyrics.english
+        .split("\n")
+        .slice(0, 8)
+        .join("\n");
 
   return (
     <PageWrapper imageUrl={razLight}>
       <main className={styles.page}>
-        {/* HEADER */}
         <header className={styles.header}>
           <div className={styles.titleRow}>
             <span
@@ -93,7 +102,6 @@ export default function NationalAnthemPage() {
           </div>
         </header>
 
-        {/* BACK BUTTON */}
         <div className={styles.backWrapper}>
           <button
             className={styles.backButton}
@@ -112,9 +120,7 @@ export default function NationalAnthemPage() {
           </button>
         </div>
 
-        {/* GRID */}
         <section className={styles.mainGrid}>
-          {/* LEFT */}
           <aside className={styles.leftColumn}>
             <div
               className={styles.identityBlock}
@@ -139,40 +145,53 @@ export default function NationalAnthemPage() {
             </div>
           </aside>
 
-          {/* RIGHT */}
           <article className={styles.rightColumn}>
-            {/* LYRICS */}
-            <section
-              className={styles.contentSection}
-              style={{ borderColor: accentColor }}
-            >
-              <div className={styles.sectionHeader}>
-                📜 Lyrics
-              </div>
-
-              {/* ORIGINAL */}
-              <div className={styles.lyricsBlock}>
-                {renderLyrics(displayedOriginal)}
-              </div>
-
-              {/* ENGLISH */}
-              {nation.anthem.lyrics.english && (
-                <div className={styles.lyricsBlockSecondary}>
-                  {renderLyrics(displayedEnglish)}
-                </div>
-              )}
-
-              <button
-                className={styles.expandButton}
-                onClick={() => setExpanded(!expanded)}
+            {hasLyrics ? (
+              <section
+                className={styles.contentSection}
+                style={{ borderColor: accentColor }}
               >
-                {expanded
-                  ? "Collapse Lyrics"
-                  : "Expand Full Lyrics"}
-              </button>
-            </section>
+                <div className={styles.sectionHeader}>
+                  📜 Lyrics
+                </div>
 
-            {/* HISTORY */}
+                <div className={styles.lyricsBlock}>
+                  {renderLyrics(displayedOriginal)}
+                </div>
+
+                {nation.anthem.lyrics.english && (
+                  <div className={styles.lyricsBlockSecondary}>
+                    {renderLyrics(displayedEnglish)}
+                  </div>
+                )}
+
+                <button
+                  className={styles.expandButton}
+                  onClick={() => setExpanded(!expanded)}
+                >
+                  {expanded
+                    ? "Collapse Lyrics"
+                    : "Expand Full Lyrics"}
+                </button>
+              </section>
+            ) : (
+              <section
+                className={styles.contentSection}
+                style={{ borderColor: accentColor }}
+              >
+                <div className={styles.sectionHeader}>
+                  📜 Lyrics
+                </div>
+
+                <div className={styles.textBlock}>
+                  <p>
+                    This is an instrumental national anthem
+                    and has no official lyrics.
+                  </p>
+                </div>
+              </section>
+            )}
+
             <section
               className={styles.contentSection}
               style={{ borderColor: accentColor }}
@@ -190,7 +209,6 @@ export default function NationalAnthemPage() {
               </div>
             </section>
 
-            {/* FACTS */}
             <section
               className={styles.contentSection}
               style={{ borderColor: accentColor }}
@@ -206,7 +224,6 @@ export default function NationalAnthemPage() {
               </ul>
             </section>
 
-            {/* HAKA */}
             {haka && (
               <section
                 className={styles.hakaSection}

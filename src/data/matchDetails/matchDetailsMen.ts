@@ -1604,6 +1604,51 @@ matchStats: {
   ],
 },
 
+{
+  matchKey: "australia-vs-south-africa-2026",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Optus Stadium, Perth" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { // Australia
+      metresMade: 0,
+      carries: 0,
+      defendersBeaten: 0,
+      cleanBreaks: 0,
+      offloads: 0,
+      tacklesMade: 0,
+      tacklesMissed: 0,
+      turnoversWon: 0,
+      penaltiesConceded: 0,
+    },
+    away: { // South Africa
+      metresMade: 0,
+      carries: 0,
+      defendersBeaten: 0,
+      cleanBreaks: 0,
+      offloads: 0,
+      tacklesMade: 0,
+      tacklesMissed: 0,
+      turnoversWon: 0,
+      penaltiesConceded: 0,
+    },
+  },
+  performances: [
+    { category: "Coach", player: "Les Kiss", value: "Australia" },
+    { category: "Coach", player: "Rassie Erasmus", value: "South Africa" },
+    { category: "Captain", player: "TBD", value: "Australia" },
+    { category: "Captain", player: "Siya Kolisi", value: "South Africa" },
+    { category: "Venue", player: "Optus Stadium", value: "Perth" },
+    { category: "Competition", player: "Flight Centre Series", value: "One-off Test" },
+    { category: "Note", player: "Pieter-Steph du Toit & Damian de Allende", value: "Rested for South Africa" },
+    { category: "Note", player: "Charlie Cale", value: "Out for Australia (shoulder surgery)" },
+    { category: "Note", player: "Jordan Petaia", value: "Returns to Wallabies squad" },
+  ],
+},
+
 // ==================================================
   // PACIFIC NATIONS CUP 2026
   // ==================================================

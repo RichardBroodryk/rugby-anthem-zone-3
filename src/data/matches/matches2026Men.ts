@@ -377,6 +377,22 @@ export const matches2026Men: MatchData[] = [
   startTime: "20:00",
 },
 
+{
+  id: 3010,
+  matchKey: "south-africa-vs-australia-2026",
+  competitionId: "international-tests",
+  tournamentInstanceId: INTERNATIONAL_TESTS_2026,
+  tournament: "Men's International Tests 2026",
+  gender: "men",
+  round: "Test Match",
+  date: "2026-09-27",
+  venue: "Optus Stadium, Perth",
+  home: { name: "Australia", country: "australia" },
+  away: { name: "South Africa", country: "south-africa" },
+  state: "upcoming",
+  startTime: "11:45",
+},
+
   // ==================================================
   // NATIONS CHAMPIONSHIP 2026
   // ==================================================

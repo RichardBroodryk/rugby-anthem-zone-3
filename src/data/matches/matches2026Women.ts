@@ -262,7 +262,7 @@ export const matches2026Women: MatchData[] = [
 
   // ----- Japan Women vs Fiji Women -----
   {
-    id: 217,
+    id: 102,
     matchKey: "japan-w-vs-fiji-w",
     competitionId: "womens-internationals",
     tournamentInstanceId: WOMENS_TESTS_2026,
@@ -279,7 +279,7 @@ export const matches2026Women: MatchData[] = [
 
   // ----- South Africa Women vs New Zealand Women -----
   {
-    id: 218,
+    id: 103,
     matchKey: "south-africa-w-vs-new-zealand-w",
     competitionId: "womens-internationals",
     tournamentInstanceId: WOMENS_TESTS_2026,
@@ -296,7 +296,7 @@ export const matches2026Women: MatchData[] = [
 
   // ----- South Africa vs Ireland Series -----
   {
-    id: 102,
+    id: 104,
     matchKey: "south-africa-w-vs-ireland-w-20261024",
     competitionId: "womens-internationals",
     tournamentInstanceId: WOMENS_TESTS_2026,
@@ -311,7 +311,7 @@ export const matches2026Women: MatchData[] = [
     startTime: "TBD",
   },
   {
-    id: 103,
+    id: 105,
     matchKey: "south-africa-w-vs-ireland-w-20261031",
     competitionId: "womens-internationals",
     tournamentInstanceId: WOMENS_TESTS_2026,
@@ -330,7 +330,7 @@ export const matches2026Women: MatchData[] = [
   // WXV GLOBAL SERIES 2026 (WXV 1)
   // ==================================================
 
-  // ----- ROUND 1 (UPCOMING) -----
+  // ----- ROUND 1 -----
   {
     id: 200,
     matchKey: "england-w-vs-australia-w",
@@ -381,9 +381,10 @@ export const matches2026Women: MatchData[] = [
   },
 
 // ----- FRIDAY 18 SEPTEMBER 2026 -----
+// ----- ROUND 2 -----
 
 {
-  id: 220,
+  id: 203,
   matchKey: "wales-w-vs-south-africa-w",
   competitionId: "wxv1",
   tournamentInstanceId: WXV1_2026,
@@ -403,7 +404,7 @@ export const matches2026Women: MatchData[] = [
 // ----- SATURDAY 19 SEPTEMBER 2026 -----
 
 {
-  id: 203,
+  id: 204,
   matchKey: "england-w-vs-canada-w",
   competitionId: "wxv1",
   tournamentInstanceId: WXV1_2026,
@@ -421,6 +422,23 @@ export const matches2026Women: MatchData[] = [
 },
 {
   id: 205,
+  matchKey: "scotland-w-vs-new-zealand-w",
+  competitionId: "wxv1",
+  tournamentInstanceId: WXV1_2026,
+  tournament: "WXV Global Series 2026",
+  gender: "women",
+  stage: "Pool",
+  round: "Round 2",
+  date: "2026-09-19",
+  venue: "Hive Stadium, Edinburgh",
+  home: { name: "Scotland W", country: "scotland" },
+  away: { name: "New Zealand W", country: "new-zealand" },
+  score: { home: 14, away: 66 },
+  state: "final",
+  startTime: "17:10",
+},
+{
+  id: 206,
   matchKey: "france-w-vs-australia-w",
   competitionId: "wxv1",
   tournamentInstanceId: WXV1_2026,
@@ -437,23 +455,7 @@ export const matches2026Women: MatchData[] = [
   startTime: "17:45",
 },
 {
-  id: 204,
-  matchKey: "scotland-w-vs-new-zealand-w",
-  competitionId: "wxv1",
-  tournamentInstanceId: WXV1_2026,
-  tournament: "WXV Global Series 2026",
-  gender: "women",
-  stage: "Pool",
-  round: "Round 2",
-  date: "2026-09-19",
-  venue: "Hive Stadium, Edinburgh",
-  home: { name: "Scotland W", country: "scotland" },
-  away: { name: "New Zealand W", country: "new-zealand" },
-  state: "upcoming",
-  startTime: "17:10",
-},
-{
-  id: 206,
+  id: 207,
   matchKey: "italy-w-vs-japan-w",
   competitionId: "wxv1",
   tournamentInstanceId: WXV1_2026,
@@ -471,8 +473,24 @@ export const matches2026Women: MatchData[] = [
 },
 
   // ----- ROUND 3 (UPCOMING) -----
+
   {
-    id: 206,
+    id: 208,
+  matchKey: "italy-w-vs-south-africa-w",
+  competitionId: "wxv1",
+  tournamentInstanceId: WXV1_2026,
+  tournament: "WXV Global Series 2026",
+  gender: "women",
+  round: "Round 3",
+  date: "2026-09-26",
+  venue: "Stadio Omero Tognon, Fontanafredda",
+  home: { name: "Italy", country: "italy" },
+  away: { name: "South Africa", country: "south-africa" },
+  state: "upcoming",
+  startTime: "14:30",
+  },
+  {
+    id: 209,
     matchKey: "england-w-vs-new-zealand-w",
     competitionId: "wxv1",
     tournamentInstanceId: WXV1_2026,
@@ -488,7 +506,7 @@ export const matches2026Women: MatchData[] = [
     startTime: "TBD",
   },
   {
-    id: 207,
+    id: 210,
     matchKey: "scotland-w-vs-australia-w",
     competitionId: "wxv1",
     tournamentInstanceId: WXV1_2026,
@@ -504,7 +522,7 @@ export const matches2026Women: MatchData[] = [
     startTime: "TBD",
   },
   {
-    id: 208,
+    id: 211,
     matchKey: "france-w-vs-canada-w",
     competitionId: "wxv1",
     tournamentInstanceId: WXV1_2026,
@@ -519,95 +537,43 @@ export const matches2026Women: MatchData[] = [
     state: "upcoming",
     startTime: "TBD",
   },
-
-  // ----- STANDALONE MATCHES (OCTOBER 2026) -----
-  {
-    id: 209,
-    matchKey: "canada-w-vs-england-w-20261016",
-    competitionId: "wxv1",
-    tournamentInstanceId: WXV1_2026,
-    tournament: "WXV Global Series 2026",
-    gender: "women",
-    stage: "Pool",
-    round: "Standalone",
-    date: "2026-10-16",
-    venue: "BMO Field, Toronto",
-    home: { name: "Canada W", country: "canada" },
-    away: { name: "England W", country: "england" },
-    state: "upcoming",
-    startTime: "TBD",
-  },
-  {
-    id: 210,
-    matchKey: "new-zealand-w-vs-france-w-20261017",
-    competitionId: "wxv1",
-    tournamentInstanceId: WXV1_2026,
-    tournament: "WXV Global Series 2026",
-    gender: "women",
-    stage: "Pool",
-    round: "Standalone",
-    date: "2026-10-17",
-    venue: "Waikato Stadium, Hamilton",
-    home: { name: "New Zealand W", country: "new-zealand" },
-    away: { name: "France W", country: "france" },
-    state: "upcoming",
-    startTime: "TBD",
-  },
-  {
-    id: 211,
-    matchKey: "canada-w-vs-england-w-20261023",
-    competitionId: "wxv1",
-    tournamentInstanceId: WXV1_2026,
-    tournament: "WXV Global Series 2026",
-    gender: "women",
-    stage: "Pool",
-    round: "Standalone",
-    date: "2026-10-23",
-    venue: "TD Place, Ottawa",
-    home: { name: "Canada W", country: "canada" },
-    away: { name: "England W", country: "england" },
-    state: "upcoming",
-    startTime: "TBD",
-  },
-  {
-    id: 212,
-    matchKey: "new-zealand-w-vs-france-w-20261024",
-    competitionId: "wxv1",
-    tournamentInstanceId: WXV1_2026,
-    tournament: "WXV Global Series 2026",
-    gender: "women",
-    stage: "Pool",
-    round: "Standalone",
-    date: "2026-10-24",
-    venue: "Okara Park, Whangārei",
-    home: { name: "New Zealand W", country: "new-zealand" },
-    away: { name: "France W", country: "france" },
-    state: "upcoming",
-    startTime: "TBD",
-  },
-  {
-    id: 213,
-    matchKey: "new-zealand-w-vs-france-w-20261031",
-    competitionId: "wxv1",
-    tournamentInstanceId: WXV1_2026,
-    tournament: "WXV Global Series 2026",
-    gender: "women",
-    stage: "Pool",
-    round: "Standalone",
-    date: "2026-10-31",
-    venue: "Te Kaha, Christchurch",
-    home: { name: "New Zealand W", country: "new-zealand" },
-    away: { name: "France W", country: "france" },
-    state: "upcoming",
-    startTime: "TBD",
-  },
+{
+  id: 212,
+  matchKey: "wales-w-vs-usa-w",
+  competitionId: "wxv1",
+  tournamentInstanceId: WXV1_2026,
+  tournament: "WXV Global Series 2026",
+  gender: "women",
+  round: "Round 3",
+  date: "2026-09-26",
+  venue: "Cardiff Arms Park, Cardiff",
+  home: { name: "Wales", country: "wales" },
+  away: { name: "USA", country: "usa" },
+  state: "upcoming",
+  startTime: "16:00",
+},
+{
+  id: 213,
+  matchKey: "ireland-w-vs-japan-w",
+  competitionId: "wxv1",
+  tournamentInstanceId: WXV1_2026,
+  tournament: "WXV Global Series 2026",
+  gender: "women",
+  round: "Round 3",
+  date: "2026-09-27",
+  venue: "Dexcom Stadium, Galway",
+  home: { name: "Ireland", country: "ireland" },
+  away: { name: "Japan", country: "japan" },
+  state: "upcoming",
+  startTime: "13:45",
+},
 
   // ==================================================
   // WXV GLOBAL SERIES CHALLENGER 2026
   // ==================================================
 
  {
-  id: 214,
+  id: 300,
   matchKey: "spain-w-vs-fiji-w",
   competitionId: "wxv-challenger",
   tournamentInstanceId: WXV_CHALLENGER_2026,
@@ -623,7 +589,7 @@ export const matches2026Women: MatchData[] = [
   state: "final",
 },
  {
-  id: 215,
+  id: 301,
   matchKey: "hong-kong-china-w-vs-brazil-w",
   competitionId: "wxv-challenger",
   tournamentInstanceId: WXV_CHALLENGER_2026,
@@ -639,7 +605,7 @@ export const matches2026Women: MatchData[] = [
   state: "final",
 },
  {
-  id: 216,
+  id: 302,
   matchKey: "netherlands-w-vs-samoa-w",
   competitionId: "wxv-challenger",
   tournamentInstanceId: WXV_CHALLENGER_2026,
@@ -654,54 +620,6 @@ export const matches2026Women: MatchData[] = [
   score: { home: 70, away: 0 },
   state: "final",
 },
-{
-  id: 217,
-  matchKey: "samoa-w-vs-spain-w",
-  competitionId: "wxv-challenger",
-  tournamentInstanceId: WXV_CHALLENGER_2026,
-  tournament: "WXV Global Series Challenger 2026",
-  gender: "women",
-  stage: "Pool",
-  round: "Round 2",
-  date: "2026-09-19",
-  venue: "Kai Tak Youth Sports Ground, Hong Kong",
-  home: { name: "Samoa W", country: "samoa" },
-  away: { name: "Spain W", country: "spain" },
-  state: "upcoming",
-  startTime: "12:00",
-},
-{
-  id: 218,
-  matchKey: "hong-kong-china-w-vs-fiji-w",
-  competitionId: "wxv-challenger",
-  tournamentInstanceId: WXV_CHALLENGER_2026,
-  tournament: "WXV Global Series Challenger 2026",
-  gender: "women",
-  stage: "Pool",
-  round: "Round 2",
-  date: "2026-09-19",
-  venue: "Kai Tak Youth Sports Ground, Hong Kong",
-  home: { name: "Hong Kong China W", country: "hong-kong-china" },
-  away: { name: "Fiji W", country: "fiji" },
-  state: "upcoming",
-  startTime: "15:30",
-},
-{
-  id: 219,
-  matchKey: "brazil-w-vs-netherlands-w",
-  competitionId: "wxv-challenger",
-  tournamentInstanceId: WXV_CHALLENGER_2026,
-  tournament: "WXV Global Series Challenger 2026",
-  gender: "women",
-  stage: "Pool",
-  round: "Round 2",
-  date: "2026-09-19",
-  venue: "Kai Tak Youth Sports Ground, Hong Kong",
-  home: { name: "Brazil W", country: "brazil" },
-  away: { name: "Netherlands W", country: "netherlands" },
-  state: "upcoming",
-  startTime: "19:00",
-},
 
 // ==================================================
 // WXV GLOBAL SERIES CHALLENGER 2026 — ROUND 2
@@ -710,7 +628,7 @@ export const matches2026Women: MatchData[] = [
 // ----- SATURDAY 19 SEPTEMBER 2026 -----
 
 {
-  id: 221,
+  id: 303,
   matchKey: "samoa-w-vs-spain-w",
   competitionId: "wxv-challenger",
   tournamentInstanceId: WXV_CHALLENGER_2026,
@@ -722,11 +640,11 @@ export const matches2026Women: MatchData[] = [
   venue: "Kai Tak Youth Sports Ground, Hong Kong",
   home: { name: "Samoa W", country: "samoa" },
   away: { name: "Spain W", country: "spain" },
-  state: "upcoming",
-  startTime: "12:00",
+  score: { home: 21, away: 61 },
+  state: "final",
 },
 {
-  id: 222,
+  id: 304,
   matchKey: "fiji-w-vs-hong-kong-china-w",
   competitionId: "wxv-challenger",
   tournamentInstanceId: WXV_CHALLENGER_2026,
@@ -738,11 +656,11 @@ export const matches2026Women: MatchData[] = [
   venue: "Kai Tak Youth Sports Ground, Hong Kong",
   home: { name: "Fiji W", country: "fiji" },
   away: { name: "Hong Kong China W", country: "hong-kong-china" },
-  state: "upcoming",
-  startTime: "15:30",
+  score: { home: 54, away: 26 },
+  state: "final",
 },
 {
-  id: 223,
+  id: 305,
   matchKey: "brazil-w-vs-netherlands-w",
   competitionId: "wxv-challenger",
   tournamentInstanceId: WXV_CHALLENGER_2026,
@@ -754,8 +672,94 @@ export const matches2026Women: MatchData[] = [
   venue: "Kai Tak Youth Sports Ground, Hong Kong",
   home: { name: "Brazil W", country: "brazil" },
   away: { name: "Netherlands W", country: "netherlands" },
+  score: { home: 15, away: 17 },
+  state: "final",
+},
+
+// ==================================================
+// WXV GLOBAL SERIES CHALLENGER 2026 — ROUND 3
+// ==================================================
+
+// ----- SATURDAY 26 SEPTEMBER 2026 -----
+
+{
+  id: 306,
+  matchKey: "fiji-w-vs-netherlands-w",
+  competitionId: "wxv-challenger",
+  tournamentInstanceId: WXV_CHALLENGER_2026,
+  tournament: "WXV Global Series Challenger 2026",
+  gender: "women",
+  round: "Round 3",
+  date: "2026-09-26",
+  venue: "Kai Tak Youth Sports Ground, Hong Kong",
+  home: { name: "Fiji", country: "fiji" },
+  away: { name: "Netherlands", country: "netherlands" },
   state: "upcoming",
-  startTime: "19:00",
+  startTime: "06:00",
+},
+{
+  id: 307,
+  matchKey: "hong-kong-china-w-vs-samoa-w",
+  competitionId: "wxv-challenger",
+  tournamentInstanceId: WXV_CHALLENGER_2026,
+  tournament: "WXV Global Series Challenger 2026",
+  gender: "women",
+  round: "Round 3",
+  date: "2026-09-26",
+  venue: "Kai Tak Youth Sports Ground, Hong Kong",
+  home: { name: "Hong Kong China", country: "hong-kong-china" },
+  away: { name: "Samoa", country: "samoa" },
+  state: "upcoming",
+  startTime: "09:30",
+},
+{
+  id: 308,
+  matchKey: "spain-w-vs-brazil-w",
+  competitionId: "wxv-challenger",
+  tournamentInstanceId: WXV_CHALLENGER_2026,
+  tournament: "WXV Global Series Challenger 2026",
+  gender: "women",
+  round: "Round 3",
+  date: "2026-09-26",
+  venue: "Kai Tak Youth Sports Ground, Hong Kong",
+  home: { name: "Spain", country: "spain" },
+  away: { name: "Brazil", country: "brazil" },
+  state: "upcoming",
+  startTime: "13:00",
+},
+
+
+// ----- STANDALONE MATCHES (OCTOBER 2026) -----
+
+{
+  id: 400,
+  matchKey: "ireland-w-vs-japan-w-standalone",
+  competitionId: "womens-internationals",
+  tournamentInstanceId: WOMENS_TESTS_2026,
+  tournament: "Women's International Tests 2026",
+  gender: "women",
+  round: "Test Match",
+  date: "2026-10-03",
+  venue: "Virgin Media Park, Cork",
+  home: { name: "Ireland", country: "ireland" },
+  away: { name: "Japan", country: "japan" },
+  state: "upcoming",
+  startTime: "TBD",
+},
+{
+  id: 401,
+  matchKey: "spain-w-vs-south-africa-w",
+  competitionId: "wxv1",
+  tournamentInstanceId: WXV1_2026,
+  tournament: "WXV Global Series 2026",
+  gender: "women",
+  round: "Round 4",
+  date: "2026-10-04",
+  venue: "Instalaciones deportivas La Cartuja, Seville",
+  home: { name: "Spain", country: "spain" },
+  away: { name: "South Africa", country: "south-africa" },
+  state: "upcoming",
+  startTime: "TBD",
 },
 
 ];

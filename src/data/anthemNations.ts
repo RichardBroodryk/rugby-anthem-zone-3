@@ -659,6 +659,91 @@ At Murrayfield, the anthem is sung with intense emotion. The crowd famously roar
   }
 },
 
+/* ================= BRAZIL ================= */
+{
+  id: "brazil",
+  name: "Brazil",
+  code: "br",
+  colors: ["#009B3A", "#FFDF00", "#002776"],
+  anthem: {
+    title: "Hino Nacional Brasileiro",
+    audioUrl: "/audio/anthems/brazilian-anthem.mp3",
+    lyrics: {
+      original: `The Brazilian national anthem is performed in Portuguese.
+
+--- RUGBY MATCH VERSION ---
+The anthem celebrates Brazil, its natural beauty, national unity,
+and the country's independence and sovereignty.`,
+      english: `The Brazilian national anthem celebrates the country,
+its natural beauty, independence, unity, and national identity.`
+    },
+    history: `The Brazilian national anthem, "Hino Nacional Brasileiro", has music by Francisco Manuel da Silva and lyrics by Joaquim Osório Duque Estrada. The lyrics were officially adopted in 1922, and the anthem forms part of Brazil's official national symbols.
+
+🏉 Rugby Context:
+The anthem represents Brazilian national identity before international sporting contests and is used when Brazil competes internationally.`,
+    facts: [
+      "Music composed by Francisco Manuel da Silva",
+      "Lyrics written by Joaquim Osório Duque Estrada",
+      "Officially adopted in its present form in 1922",
+      "One of Brazil's official national symbols"
+    ]
+  }
+},
+
+/* ================= HONG KONG ================= */
+{
+  id: "hong-kong",
+  name: "Hong Kong",
+  code: "hk",
+  colors: ["#DE2910", "#FFFFFF"],
+  anthem: {
+    title: "March of the Volunteers",
+    audioUrl: "/audio/anthems/hongkong-anthem.mp3",
+    lyrics: {
+      original: `The national anthem used in Hong Kong is "March of the Volunteers",
+      (义勇军进行曲), the national anthem of the People's Republic of China.`,
+      english: `The national anthem used in Hong Kong is "March of the Volunteers",
+      and it represents the national anthem of the People's Republic of China.`
+    },
+    history: `Hong Kong does not have a separate sovereign national anthem. Under Article 141 of the Basic Law, the national anthem of the People's Republic of China is the national anthem used in Hong Kong. The National Anthem Ordinance provides the legal framework for its use and protection in Hong Kong.
+
+🏉 Rugby Context:
+"March of the Volunteers" is used for Hong Kong's international sporting representation where the national anthem is required.`,
+    facts: [
+      "Hong Kong has no separate sovereign national anthem",
+      "The national anthem is 'March of the Volunteers'",
+      "The anthem is the national anthem of the People's Republic of China",
+      "Its use in Hong Kong is governed by the Basic Law and National Anthem Ordinance"
+    ]
+  }
+},
+
+/* ================= SPAIN ================= */
+{
+  id: "spain",
+  name: "Spain",
+  code: "es",
+  colors: ["#AA151B", "#F1BF00"],
+  anthem: {
+    title: "Marcha Real Española",
+    audioUrl: "/audio/anthems/spanish-anthem.mp3",
+    lyrics: {
+      original: "",
+      english: ""
+    },
+    history: `The "Marcha Real Española" is the national anthem of Spain. It is an instrumental anthem and has no official lyrics. Its history is associated with the eighteenth-century "Marcha Granadera", which became a March of Honour under Carlos III in 1770. Its official characteristics and use are regulated by Royal Decree 1560/1997.
+
+🏉 Rugby Context:
+The Marcha Real is played before Spain's international sporting contests, including international rugby matches.`,
+    facts: [
+      "Spain's national anthem is instrumental",
+      "It has no official lyrics",
+      "Its historical origins date to the eighteenth century",
+      "Its official characteristics are regulated by Royal Decree 1560/1997"
+    ]
+  }
+},
+
 /* ================= ITALY ================= */
 {
   id: "italy",

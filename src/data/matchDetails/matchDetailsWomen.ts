@@ -790,54 +790,9 @@ matchStats: {
     { category: "Venue", player: "Matmut Stadium de Gerland", value: "Lyon" },
   ],
 },
-{
-  matchKey: "england-w-vs-canada-w",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Sandy Park, Exeter" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  performances: [
-    { category: "Coach", player: "John Mitchell", value: "England W" },
-    { category: "Coach", player: "Kévin Rouet", value: "Canada W" },
-    { category: "Captain", player: "Meg Jones", value: "England W" },
-    { category: "Captain", player: "Alexandra Tessier", value: "Canada W" },
-    { category: "Venue", player: "Sandy Park", value: "Exeter" },
-  ],
-},
-{
-  matchKey: "scotland-w-vs-new-zealand-w",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Hive Stadium, Edinburgh" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  performances: [
-    { category: "Coach", player: "Dave Butcher (interim)", value: "Scotland W" },
-    { category: "Coach", player: "Whitney Hansen", value: "New Zealand W" },
-    { category: "Captain", player: "Rachel Malcolm", value: "Scotland W" },
-    { category: "Captain", player: "Georgia Ponsonby", value: "New Zealand W" },
-    { category: "Venue", player: "Hive Stadium", value: "Edinburgh" },
-  ],
-},
-{
-  matchKey: "italy-w-vs-japan-w",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Stadio Omero Tognon, Fontanafredda" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  performances: [
-    { category: "Coach", player: "Plinio Sciamanna", value: "Italy W" },
-    { category: "Coach", player: "TBD", value: "Japan W" },
-    { category: "Captain", player: "Sofia Stefan", value: "Italy W" },
-    { category: "Captain", player: "TBD", value: "Japan W" },
-    { category: "Venue", player: "Stadio Omero Tognon", value: "Fontanafredda" },
-  ],
-},
 
 // ==================================================
-// WXV GLOBAL SERIES 2026 (WXV 1) — MATCH DETAILS
+// WXV GLOBAL SERIES 2026 (WXV 1) — ROUND 2
 // ==================================================
 
 // ----- FRIDAY 18 SEPTEMBER 2026 -----
@@ -1206,6 +1161,131 @@ matchStats: {
   ],
 },
 
+// ==================================================
+// WXV GLOBAL SERIES 2026 (WXV 1) — ROUND 3
+// ==================================================
+
+{
+  matchKey: "italy-w-vs-south-africa-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Stadio Omero Tognon, Fontanafredda" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Italy W" },
+    { category: "Coach", player: "TBD", value: "South Africa W" },
+    { category: "Captain", player: "TBD", value: "Italy W" },
+    { category: "Captain", player: "TBD", value: "South Africa W" },
+    { category: "Venue", player: "Stadio Omero Tognon", value: "Fontanafredda" },
+  ],
+},
+{
+  matchKey: "england-w-vs-new-zealand-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Allianz Stadium, Twickenham" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "John Mitchell", value: "England W" },
+    { category: "Coach", player: "Whitney Hansen", value: "New Zealand W" },
+    { category: "Captain", player: "TBD", value: "England W" },
+    { category: "Captain", player: "TBD", value: "New Zealand W" },
+    { category: "Venue", player: "Allianz Stadium", value: "Twickenham" },
+  ],
+},
+{
+  matchKey: "wales-w-vs-usa-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Cardiff Arms Park, Cardiff" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Sean Lynn", value: "Wales W" },
+    { category: "Coach", player: "TBD", value: "USA W" },
+    { category: "Captain", player: "TBD", value: "Wales W" },
+    { category: "Captain", player: "TBD", value: "USA W" },
+    { category: "Venue", player: "Cardiff Arms Park", value: "Cardiff" },
+  ],
+},
+{
+  matchKey: "scotland-w-vs-australia-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Hive Stadium, Edinburgh" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Scotland W" },
+    { category: "Coach", player: "TBD", value: "Australia W" },
+    { category: "Captain", player: "TBD", value: "Scotland W" },
+    { category: "Captain", player: "TBD", value: "Australia W" },
+    { category: "Venue", player: "Hive Stadium", value: "Edinburgh" },
+  ],
+},
+{
+  matchKey: "france-w-vs-canada-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Stade Marcel-Deflandre, La Rochelle" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "François Ratier", value: "France W" },
+    { category: "Coach", player: "TBD", value: "Canada W" },
+    { category: "Captain", player: "Pauline Bourdon Sansus", value: "France W" },
+    { category: "Captain", player: "TBD", value: "Canada W" },
+    { category: "Venue", player: "Stade Marcel-Deflandre", value: "La Rochelle" },
+  ],
+},
+{
+  matchKey: "ireland-w-vs-japan-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Dexcom Stadium, Galway" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Ireland W" },
+    { category: "Coach", player: "TBD", value: "Japan W" },
+    { category: "Captain", player: "TBD", value: "Ireland W" },
+    { category: "Captain", player: "TBD", value: "Japan W" },
+    { category: "Venue", player: "Dexcom Stadium", value: "Galway" },
+  ],
+},
+
   // ==================================================
 // WXV GLOBAL SERIES CHALLENGER 2026 — ROUND 1
 // ==================================================
@@ -1494,6 +1574,71 @@ lineups: {
     { category: "Coach", player: "Gareth Gilbert", value: "Netherlands W" },
     { category: "Captain", player: "Luiza Campos", value: "Brazil W" },
     { category: "Captain", player: "TBD", value: "Netherlands W" },
+    { category: "Venue", player: "Kai Tak Youth Sports Ground", value: "Hong Kong" },
+  ],
+},
+
+  // ==================================================
+// WXV GLOBAL SERIES CHALLENGER 2026 — ROUND 3
+// ==================================================
+
+{
+  matchKey: "fiji-w-vs-netherlands-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Kai Tak Youth Sports Ground, Hong Kong" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Fiji W" },
+    { category: "Coach", player: "TBD", value: "Netherlands W" },
+    { category: "Captain", player: "TBD", value: "Fiji W" },
+    { category: "Captain", player: "TBD", value: "Netherlands W" },
+    { category: "Venue", player: "Kai Tak Youth Sports Ground", value: "Hong Kong" },
+  ],
+},
+{
+  matchKey: "hong-kong-china-w-vs-samoa-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Kai Tak Youth Sports Ground, Hong Kong" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Hong Kong China W" },
+    { category: "Coach", player: "TBD", value: "Samoa W" },
+    { category: "Captain", player: "TBD", value: "Hong Kong China W" },
+    { category: "Captain", player: "TBD", value: "Samoa W" },
+    { category: "Venue", player: "Kai Tak Youth Sports Ground", value: "Hong Kong" },
+  ],
+},
+{
+  matchKey: "spain-w-vs-brazil-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Kai Tak Youth Sports Ground, Hong Kong" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Spain W" },
+    { category: "Coach", player: "TBD", value: "Brazil W" },
+    { category: "Captain", player: "TBD", value: "Spain W" },
+    { category: "Captain", player: "TBD", value: "Brazil W" },
     { category: "Venue", player: "Kai Tak Youth Sports Ground", value: "Hong Kong" },
   ],
 },

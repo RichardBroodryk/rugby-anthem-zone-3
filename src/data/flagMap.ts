@@ -28,6 +28,7 @@ import wales from "../assets/images/flags/wales.jpg";
 import barbarians from "../assets/images/logos/solid/barbarians.jpg";
 import poland from "../assets/images/flags/poland.jpg";
 import czechRepublic from "../assets/images/flags/czech-republic.jpg";
+import hongkong from "../assets/images/flags/hong-kong-china.jpg";
 
 import bulls from "../assets/images/rivalry/bulls.jpg";
 import stormers from "../assets/images/rivalry/stormers.jpg";
@@ -65,6 +66,7 @@ export const flagMap: Record<string, string> = {
   "barbarians": barbarians,
   "poland": poland,
   "czech-republic": czechRepublic,
+  "hong-kong-china": hongkong,
 
   /* TEMP FIX */
   "great-britain": england,
