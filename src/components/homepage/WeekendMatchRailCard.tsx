@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+
 import styles from "./WeekendMatchRailCard.module.css";
 
 import { getTeamImage } from "../../utils/teamImageResolver";
+
 import type { MatchData } from "../../data/matches/types";
 
 type WeekendMatchRailCardProps = {
@@ -13,12 +15,19 @@ export default function WeekendMatchRailCard({
 }: WeekendMatchRailCardProps) {
   const navigate = useNavigate();
 
-  const homeImage = getTeamImage(match.home.name);
-  console.log(match.home.name);
-console.log(match.away.name);
-  const awayImage = getTeamImage(match.away.name);
+  const homeImage = getTeamImage(
+    match.home.name,
+    match.competitionId
+  );
 
-  const formattedDate = new Date(match.date).toLocaleDateString("en-GB", {
+  const awayImage = getTeamImage(
+    match.away.name,
+    match.competitionId
+  );
+
+  const formattedDate = new Date(
+    match.date
+  ).toLocaleDateString("en-GB", {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -27,7 +36,9 @@ console.log(match.away.name);
   return (
     <article
       className={styles.card}
-      onClick={() => navigate(`/match/${match.id}`)}
+      onClick={() =>
+        navigate(`/match/${match.id}`)
+      }
     >
       <div className={styles.hero}>
         <div className={styles.left}>
@@ -51,22 +62,38 @@ console.log(match.away.name);
         </div>
 
         <div className={styles.overlay}>
-          <div className={styles.vs}>VS</div>
+          <div className={styles.vs}>
+            VS
+          </div>
         </div>
       </div>
 
       <div className={styles.content}>
         <div className={styles.teams}>
           <span>{match.home.name}</span>
-          <span className={styles.separator}>vs</span>
+
+          <span className={styles.separator}>
+            vs
+          </span>
+
           <span>{match.away.name}</span>
         </div>
 
-        <div className={styles.meta}>{formattedDate}</div>
-        <div className={styles.meta}>{match.venue}</div>
-        <div className={styles.meta}>{match.tournament}</div>
+        <div className={styles.meta}>
+          {formattedDate}
+        </div>
 
-        <div className={styles.cta}>View Match →</div>
+        <div className={styles.meta}>
+          {match.venue}
+        </div>
+
+        <div className={styles.meta}>
+          {match.tournament}
+        </div>
+
+        <div className={styles.cta}>
+          View Match →
+        </div>
       </div>
     </article>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./HomePage.module.css";
 
 import PageWrapper from "../components/layout/PageWrapper";
@@ -68,6 +68,12 @@ export default function HomePage() {
   const [matches, setMatches] = useState<MatchData[]>([]);
   const [loadingMatches, setLoadingMatches] = useState(true);
 
+  /*
+   * IDs of the matches currently displayed in the
+   * Featured Match block.
+   */
+  const [featuredMatchIds, setFeaturedMatchIds] = useState<number[]>([]);
+
   const featuredTournament =
     tournaments2026.find((t) => t.conceptId === "nations-championship") ??
     tournaments2026.find((t) => t.status === "active") ??
@@ -87,6 +93,26 @@ export default function HomePage() {
 
     load();
   }, []);
+
+  /*
+   * Keep the callback reference stable so the Featured
+   * component does not repeatedly trigger this effect.
+   */
+  const handleFeaturedMatchesChange = useCallback(
+    (matchIds: number[]) => {
+      setFeaturedMatchIds(matchIds);
+    },
+    []
+  );
+
+  /*
+   * Remove matches already displayed in the Featured
+   * section before passing the remaining data to the
+   * Weekend Matches section.
+   */
+  const weekendMatches = matches.filter(
+    (match) => !featuredMatchIds.includes(match.id)
+  );
 
   return (
     <PageWrapper imageUrl={razLight}>
@@ -108,10 +134,11 @@ export default function HomePage() {
         <FeaturedMatchCard
           matches={matches}
           loading={loadingMatches}
+          onFeaturedMatchesChange={handleFeaturedMatchesChange}
         />
 
         <WeekendMatchesRail
-          matches={matches}
+          matches={weekendMatches}
           loading={loadingMatches}
         />
 

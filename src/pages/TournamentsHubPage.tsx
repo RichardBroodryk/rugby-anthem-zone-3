@@ -39,59 +39,139 @@ export default function TournamentsHubPage() {
     return map;
   }, []);
 
+  /* ==================================================
+     MEN'S INTERNATIONAL TOURNAMENTS
+     ================================================== */
+
   const mensTournaments: TournamentRow[] = useMemo(
     () =>
       tournaments2026
-        .filter((t) => t.gender === "men" || t.gender === "mixed")
+        .filter(
+          (t) =>
+            (t.gender === "men" ||
+              t.gender === "mixed") &&
+            t.type !== "domestic"
+        )
         .map((t) => {
-          const visual = getTournamentVisual(t.conceptId);
+          const visual =
+            getTournamentVisual(
+              t.conceptId
+            );
 
           return {
             name:
-              competitionMap.get(t.conceptId)?.name ??
+              competitionMap.get(
+                t.conceptId
+              )?.name ??
               t.name,
+
             year: t.year,
+
             description:
               t.heroSubtitle ??
-              competitionMap.get(t.conceptId)?.name ??
+              competitionMap.get(
+                t.conceptId
+              )?.name ??
               "International rugby competition",
+
             logo:
               visual?.heroImageMen ||
               visual?.heroImageWomen ||
               visual?.logo ||
               defaultTournamentHero,
+
             route: t.route,
           };
         }),
     [competitionMap]
   );
 
-  const womensTournaments: TournamentRow[] = useMemo(
-    () =>
-      tournaments2026
-        .filter((t) => t.gender === "women" || t.gender === "mixed")
-        .map((t) => {
-          const visual = getTournamentVisual(t.conceptId);
+  /* ==================================================
+     MEN'S DOMESTIC LEAGUES
+     ================================================== */
 
-          return {
-            name:
-              competitionMap.get(t.conceptId)?.name ??
-              t.name,
-            year: t.year,
-            description:
-              t.heroSubtitle ??
-              competitionMap.get(t.conceptId)?.name ??
-              "International rugby competition",
-            logo:
-              visual?.heroImageWomen ||
-              visual?.heroImageMen ||
-              visual?.logo ||
-              defaultTournamentHero,
-            route: t.route,
-          };
-        }),
-    [competitionMap]
-  );
+  const mensDomesticLeagues: TournamentRow[] =
+    useMemo(
+      () =>
+        tournaments2026
+          .filter(
+            (t) =>
+              t.gender === "men" &&
+              t.type === "domestic"
+          )
+          .map((t) => {
+            const visual =
+              getTournamentVisual(
+                t.conceptId
+              );
+
+            return {
+              name: t.name,
+
+              year: t.year,
+
+              description:
+                t.heroSubtitle ??
+                t.name,
+
+              logo:
+                visual?.heroImageMen ||
+                visual?.heroImageWomen ||
+                visual?.logo ||
+                defaultTournamentHero,
+
+              route: t.route,
+            };
+          }),
+      []
+    );
+
+  /* ==================================================
+     WOMEN'S TOURNAMENTS
+     ================================================== */
+
+  const womensTournaments: TournamentRow[] =
+    useMemo(
+      () =>
+        tournaments2026
+          .filter(
+            (t) =>
+              t.gender === "women" ||
+              t.gender === "mixed"
+          )
+          .map((t) => {
+            const visual =
+              getTournamentVisual(
+                t.conceptId
+              );
+
+            return {
+              name:
+                competitionMap.get(
+                  t.conceptId
+                )?.name ??
+                t.name,
+
+              year: t.year,
+
+              description:
+                t.heroSubtitle ??
+                competitionMap.get(
+                  t.conceptId
+                )?.name ??
+                "International rugby competition",
+
+              logo:
+                visual?.heroImageWomen ||
+                visual?.heroImageMen ||
+                visual?.logo ||
+                defaultTournamentHero,
+
+              route: t.route,
+            };
+          }),
+      [competitionMap]
+    );
 
   return (
     <PageWrapper imageUrl={razLight}>
@@ -99,10 +179,13 @@ export default function TournamentsHubPage() {
         {/* ================= HERO ================= */}
         <header
           className={styles.hero}
-          style={{ backgroundImage: `url(${tournamentHero})` }}
+          style={{
+            backgroundImage: `url(${tournamentHero})`,
+          }}
         >
           <div className={styles.heroContent}>
             <h1>Tournaments</h1>
+
             <p>
               International rugby competitions — shared identity,
               rivalry, and tradition.
@@ -114,115 +197,339 @@ export default function TournamentsHubPage() {
         <section className={styles.section}>
           <div
             className={styles.rankingsStrip}
-            onClick={() => navigate("/rankings/men")}
+            onClick={() =>
+              navigate("/rankings/men")
+            }
           >
             <div className={styles.rankingsText}>
-              <span className={styles.rankingsTitle}>
+              <span
+                className={
+                  styles.rankingsTitle
+                }
+              >
                 International Standings
               </span>
-              <span className={styles.rankingsMain}>
+
+              <span
+                className={
+                  styles.rankingsMain
+                }
+              >
                 World Rankings — Men
               </span>
             </div>
-            <span className={styles.rankingsArrow}>→</span>
+
+            <span
+              className={
+                styles.rankingsArrow
+              }
+            >
+              →
+            </span>
           </div>
 
-          <div className={styles.sectionHeader}>
-            <div className={styles.headerRow}>
-              <h2>Men's Tournaments</h2>
+          <div
+            className={
+              styles.sectionHeader
+            }
+          >
+            <div
+              className={
+                styles.headerRow
+              }
+            >
+              <h2>
+                Men's Tournaments
+              </h2>
+
               <button
-                className={styles.viewAll}
-                onClick={() => navigate("/tournaments/men")}
+                className={
+                  styles.viewAll
+                }
+                onClick={() =>
+                  navigate(
+                    "/tournaments/men"
+                  )
+                }
               >
                 View all →
               </button>
             </div>
-            <p>Historic competitions shaping the global men's game.</p>
+
+            <p>
+              Historic competitions shaping
+              the global men's game.
+            </p>
           </div>
 
           <div className={styles.list}>
-            {mensTournaments.map((t) => (
-              <div
-                key={`${t.name}-${t.year}`}
-                className={styles.row}
-                onClick={() => navigate(t.route)}
-                style={{ cursor: "pointer" }}
-              >
-                {t.logo && (
-                  <img
-                    src={t.logo}
-                    alt={t.name}
-                    className={styles.logo}
-                  />
-                )}
+            {mensTournaments.map(
+              (t) => (
+                <div
+                  key={`${t.name}-${t.year}`}
+                  className={
+                    styles.row
+                  }
+                  onClick={() =>
+                    navigate(
+                      t.route
+                    )
+                  }
+                  style={{
+                    cursor:
+                      "pointer",
+                  }}
+                >
+                  {t.logo && (
+                    <img
+                      src={t.logo}
+                      alt={t.name}
+                      className={
+                        styles.logo
+                      }
+                    />
+                  )}
 
-                <div className={styles.text}>
-                  <h3>
-                    {t.name} {t.year}
-                  </h3>
-                  <p className={styles.subtext}>{t.description}</p>
+                  <div
+                    className={
+                      styles.text
+                    }
+                  >
+                    <h3>
+                      {t.name}{" "}
+                      {t.year}
+                    </h3>
+
+                    <p
+                      className={
+                        styles.subtext
+                      }
+                    >
+                      {
+                        t.description
+                      }
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
+
+          {/* ================= DOMESTIC LEAGUES ================= */}
+          {mensDomesticLeagues.length >
+            0 && (
+            <>
+              <div
+                className={
+                  styles.sectionHeader
+                }
+                style={{
+                  marginTop:
+                    "2rem",
+                }}
+              >
+                <div
+                  className={
+                    styles.headerRow
+                  }
+                >
+                  <h2>
+                    Domestic Leagues
+                  </h2>
+                </div>
+
+                <p>
+                  Elite domestic competitions
+                  from around the rugby world.
+                </p>
+              </div>
+
+              <div
+                className={
+                  styles.list
+                }
+              >
+                {mensDomesticLeagues.map(
+                  (t) => (
+                    <div
+                      key={`${t.name}-${t.year}`}
+                      className={
+                        styles.row
+                      }
+                      onClick={() =>
+                        navigate(
+                          t.route
+                        )
+                      }
+                      style={{
+                        cursor:
+                          "pointer",
+                      }}
+                    >
+                      {t.logo && (
+                        <img
+                          src={t.logo}
+                          alt={t.name}
+                          className={
+                            styles.logo
+                          }
+                        />
+                      )}
+
+                      <div
+                        className={
+                          styles.text
+                        }
+                      >
+                        <h3>
+                          {t.name}{" "}
+                          {t.year}
+                        </h3>
+
+                        <p
+                          className={
+                            styles.subtext
+                          }
+                        >
+                          {
+                            t.description
+                          }
+                        </p>
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            </>
+          )}
         </section>
 
         {/* ================= WOMEN ================= */}
         <section className={styles.section}>
           <div
             className={styles.rankingsStrip}
-            onClick={() => navigate("/rankings/women")}
+            onClick={() =>
+              navigate(
+                "/rankings/women"
+              )
+            }
           >
-            <div className={styles.rankingsText}>
-              <span className={styles.rankingsTitle}>
+            <div
+              className={
+                styles.rankingsText
+              }
+            >
+              <span
+                className={
+                  styles.rankingsTitle
+                }
+              >
                 International Standings
               </span>
-              <span className={styles.rankingsMain}>
+
+              <span
+                className={
+                  styles.rankingsMain
+                }
+              >
                 World Rankings — Women
               </span>
             </div>
-            <span className={styles.rankingsArrow}>→</span>
+
+            <span
+              className={
+                styles.rankingsArrow
+              }
+            >
+              →
+            </span>
           </div>
 
-          <div className={styles.sectionHeader}>
-            <div className={styles.headerRow}>
-              <h2>Women's Tournaments</h2>
+          <div
+            className={
+              styles.sectionHeader
+            }
+          >
+            <div
+              className={
+                styles.headerRow
+              }
+            >
+              <h2>
+                Women's Tournaments
+              </h2>
+
               <button
-                className={styles.viewAll}
-                onClick={() => navigate("/tournaments/women")}
+                className={
+                  styles.viewAll
+                }
+                onClick={() =>
+                  navigate(
+                    "/tournaments/women"
+                  )
+                }
               >
                 View all →
               </button>
             </div>
+
             <p>
-              Elite competitions defining women's international rugby.
+              Elite competitions defining
+              women's international rugby.
             </p>
           </div>
 
           <div className={styles.list}>
-            {womensTournaments.map((t) => (
-              <div
-                key={`${t.name}-${t.year}`}
-                className={styles.row}
-                onClick={() => navigate(t.route)}
-                style={{ cursor: "pointer" }}
-              >
-                {t.logo && (
-                  <img
-                    src={t.logo}
-                    alt={t.name}
-                    className={styles.logo}
-                  />
-                )}
+            {womensTournaments.map(
+              (t) => (
+                <div
+                  key={`${t.name}-${t.year}`}
+                  className={
+                    styles.row
+                  }
+                  onClick={() =>
+                    navigate(
+                      t.route
+                    )
+                  }
+                  style={{
+                    cursor:
+                      "pointer",
+                  }}
+                >
+                  {t.logo && (
+                    <img
+                      src={t.logo}
+                      alt={t.name}
+                      className={
+                        styles.logo
+                      }
+                    />
+                  )}
 
-                <div className={styles.text}>
-                  <h3>
-                    {t.name} {t.year}
-                  </h3>
-                  <p className={styles.subtext}>{t.description}</p>
+                  <div
+                    className={
+                      styles.text
+                    }
+                  >
+                    <h3>
+                      {t.name}{" "}
+                      {t.year}
+                    </h3>
+
+                    <p
+                      className={
+                        styles.subtext
+                      }
+                    >
+                      {
+                        t.description
+                      }
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
         </section>
       </main>

@@ -132,14 +132,14 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                The World Fifteen Women Round 2 is completed with Wales dominating South Africa! The Friendly between Polska-vs-Czechy won by Polska!!
+                The World Fifteen Women Round 3 is about to start! Then it's Aus vs SA on Sunday! We also have the United Rugby Challenge starting 25 September 2026!
                 </span>
             </div>
           </div>
 
           <div className={styles.kickerRow}>
             <span className={styles.kicker}>
-              INTERNATIONAL RUGBY • MATCHDAY ATMOSPHERE • ANTHEMS
+              INTERNATIONAL RUGBY • DOMESTIC RUGBY • MATCHDAY ATMOSPHERE • ANTHEMS
             </span>
           </div>
 

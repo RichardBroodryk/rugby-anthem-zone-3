@@ -103,6 +103,18 @@ export default function LeagueTablePage() {
     competitionQualification[id];
 
   /* ==================================================
+     MATCH NAVIGATION
+     ================================================== */
+
+  const openMatch = (
+    match: MatchData
+  ) => {
+    navigate(
+      `/match/${match.id}`
+    );
+  };
+
+  /* ==================================================
      LOAD MATCHES + STANDINGS
 
      IMPORTANT:
@@ -734,6 +746,22 @@ export default function LeagueTablePage() {
                   className={
                     styles.matchItem
                   }
+                  role="button"
+                  tabIndex={0}
+                  onClick={() =>
+                    openMatch(match)
+                  }
+                  onKeyDown={(event) => {
+                    if (
+                      event.key ===
+                        "Enter" ||
+                      event.key ===
+                        " "
+                    ) {
+                      event.preventDefault();
+                      openMatch(match);
+                    }
+                  }}
                 >
                   <div
                     className={
@@ -793,6 +821,22 @@ export default function LeagueTablePage() {
                   className={
                     styles.matchItem
                   }
+                  role="button"
+                  tabIndex={0}
+                  onClick={() =>
+                    openMatch(match)
+                  }
+                  onKeyDown={(event) => {
+                    if (
+                      event.key ===
+                        "Enter" ||
+                      event.key ===
+                        " "
+                    ) {
+                      event.preventDefault();
+                      openMatch(match);
+                    }
+                  }}
                 >
                   <div
                     className={
@@ -853,6 +897,22 @@ export default function LeagueTablePage() {
                   className={
                     styles.matchItem
                   }
+                  role="button"
+                  tabIndex={0}
+                  onClick={() =>
+                    openMatch(match)
+                  }
+                  onKeyDown={(event) => {
+                    if (
+                      event.key ===
+                        "Enter" ||
+                      event.key ===
+                        " "
+                    ) {
+                      event.preventDefault();
+                      openMatch(match);
+                    }
+                  }}
                 >
                   <div
                     className={
@@ -904,7 +964,7 @@ export default function LeagueTablePage() {
                     className={
                       styles.playoffTeams
                   }
-                  >
+                    >
                     <span>
                       {match.home}
                     </span>

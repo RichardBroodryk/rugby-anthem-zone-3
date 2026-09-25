@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 
 import styles from "./FeaturedMatchCard.module.css";
 
 import type { MatchData } from "../../data/matches/types";
+
 import { getTeamImage } from "../../utils/teamImageResolver";
 
 interface FeaturedMatch extends MatchData {
@@ -14,6 +16,7 @@ interface FeaturedMatch extends MatchData {
 interface FeaturedMatchCardProps {
   matches: MatchData[];
   loading: boolean;
+  onFeaturedMatchesChange?: (matchIds: number[]) => void;
 }
 
 /* ==================================================
@@ -21,13 +24,14 @@ interface FeaturedMatchCardProps {
    ================================================== */
 
 function formatCountdown(match: MatchData): string {
-  // If no startTime or it's explicitly "TBD", show TBC
   if (!match.startTime || match.startTime === "TBD") {
     return "Kick-off time TBC";
   }
 
-  // Build the full date using match.date + match.startTime
-  const target = new Date(`${match.date}T${match.startTime}`).getTime();
+  const target = new Date(
+    `${match.date}T${match.startTime}`
+  ).getTime();
+
   const now = Date.now();
   const difference = target - now;
 
@@ -35,27 +39,57 @@ function formatCountdown(match: MatchData): string {
     return "Starting now";
   }
 
-  const totalSeconds = Math.floor(difference / 1000);
-  const days = Math.floor(totalSeconds / 86400);
-  const hours = Math.floor((totalSeconds % 86400) / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const totalSeconds = Math.floor(
+    difference / 1000
+  );
+
+  const days = Math.floor(
+    totalSeconds / 86400
+  );
+
+  const hours = Math.floor(
+    (totalSeconds % 86400) / 3600
+  );
+
+  const minutes = Math.floor(
+    (totalSeconds % 3600) / 60
+  );
+
   const seconds = totalSeconds % 60;
 
   if (days > 0) {
-    return `${days}d ${String(hours).padStart(2, "0")}h ${String(minutes).padStart(2, "0")}m`;
+    return `${days}d ${String(hours).padStart(
+      2,
+      "0"
+    )}h ${String(minutes).padStart(
+      2,
+      "0"
+    )}m`;
   }
 
-  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  return `${String(hours).padStart(
+    2,
+    "0"
+  )}:${String(minutes).padStart(
+    2,
+    "0"
+  )}:${String(seconds).padStart(
+    2,
+    "0"
+  )}`;
 }
 
 /* ==================================================
    COMPETITION LABEL
    ================================================== */
 
-function getCompetitionLabel(match: MatchData): string {
+function getCompetitionLabel(
+  match: MatchData
+): string {
   if (match.tournament) {
     return match.tournament;
   }
+
   return "Rugby Match";
 }
 
@@ -68,9 +102,10 @@ function formatDate(match: MatchData): string {
     return match.date;
   }
 
-  // If startTime is "TBD", just show the date
   if (match.startTime === "TBD") {
-    return new Date(`${match.date}T00:00:00`).toLocaleString("en-GB", {
+    return new Date(
+      `${match.date}T00:00:00`
+    ).toLocaleString("en-GB", {
       weekday: "short",
       day: "numeric",
       month: "short",
@@ -78,7 +113,9 @@ function formatDate(match: MatchData): string {
     });
   }
 
-  return new Date(`${match.date}T${match.startTime}`).toLocaleString("en-GB", {
+  return new Date(
+    `${match.date}T${match.startTime}`
+  ).toLocaleString("en-GB", {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -92,8 +129,13 @@ function formatDate(match: MatchData): string {
    COMPONENT
    ================================================== */
 
-export default function FeaturedMatchCard({ matches, loading }: FeaturedMatchCardProps) {
+export default function FeaturedMatchCard({
+  matches,
+  loading,
+  onFeaturedMatchesChange,
+}: FeaturedMatchCardProps) {
   const navigate = useNavigate();
+
   const [now, setNow] = useState(Date.now());
 
   /* ==================================================
@@ -114,88 +156,125 @@ export default function FeaturedMatchCard({ matches, loading }: FeaturedMatchCar
      FEATURED MATCH SELECTION
      ================================================== */
 
-  const featuredMatches = useMemo<FeaturedMatch[]>(() => {
-    // Step 1: Build one array of all upcoming matches
+  const featuredMatches = useMemo<
+    FeaturedMatch[]
+  >(() => {
+    /*
+     * Build one clean list of upcoming matches.
+     *
+     * Completed, live and starting matches are excluded.
+     * Matches are ordered chronologically.
+     */
+
     const upcoming = matches
       .filter((match) => {
-        const reasons: string[] = [];
-
-        if (match.state === "final") {
-          reasons.push("final");
+        if (
+          match.state === "final" ||
+          match.state === "live" ||
+          match.state === "starting"
+        ) {
+          return false;
         }
 
-        if (match.state === "live") {
-          reasons.push("live");
-        }
-
-        if (match.state === "starting") {
-          reasons.push("starting");
-        }
-
-        // Build kick-off time using match.date + match.startTime
         let kickOff: number;
 
-        if (match.startTime && match.startTime !== "TBD") {
-          kickOff = new Date(`${match.date}T${match.startTime}`).getTime();
+        if (
+          match.startTime &&
+          match.startTime !== "TBD"
+        ) {
+          kickOff = new Date(
+            `${match.date}T${match.startTime}`
+          ).getTime();
         } else {
-          // No kick-off time yet. Treat as midday so upcoming fixtures still appear.
-          kickOff = new Date(`${match.date}T12:00:00`).getTime();
+          kickOff = new Date(
+            `${match.date}T12:00:00`
+          ).getTime();
         }
 
-        if (!(kickOff > now)) {
-          reasons.push(`kickOff invalid (${match.startTime || "no time"})`);
-        }
-
-        return reasons.length === 0;
+        return kickOff > now;
       })
       .sort((a, b) => {
-        const aTime = a.startTime && a.startTime !== "TBD"
-          ? new Date(`${a.date}T${a.startTime}`).getTime()
-          : new Date(`${a.date}T12:00:00`).getTime();
+        const aTime =
+          a.startTime &&
+          a.startTime !== "TBD"
+            ? new Date(
+                `${a.date}T${a.startTime}`
+              ).getTime()
+            : new Date(
+                `${a.date}T12:00:00`
+              ).getTime();
 
-        const bTime = b.startTime && b.startTime !== "TBD"
-          ? new Date(`${b.date}T${b.startTime}`).getTime()
-          : new Date(`${b.date}T12:00:00`).getTime();
+        const bTime =
+          b.startTime &&
+          b.startTime !== "TBD"
+            ? new Date(
+                `${b.date}T${b.startTime}`
+              ).getTime()
+            : new Date(
+                `${b.date}T12:00:00`
+              ).getTime();
 
         return aTime - bTime;
       });
 
-    // Step 2: Split them into two groups
-    const domestic = upcoming.filter(
-      (match) =>
-        match.competitionId === "sa-nz-rival-tour"
-    );
+    /*
+     * Take the first two different matches.
+     *
+     * This intentionally removes the old
+     * competition-specific selection logic.
+     */
 
-    const international = upcoming.filter(
-      (match) =>
-        match.competitionId !== "sa-nz-rival-tour"
-    );
+    const selected: MatchData[] = [];
+    const selectedIds = new Set<string>();
 
-    // Step 3: Take the first domestic match
-    const featuredDomestic = domestic[0];
+    for (const match of upcoming) {
+      const matchId = String(match.id);
 
-    // Step 4: Take the first international match
-    const featuredInternational = international[0];
+      if (selectedIds.has(matchId)) {
+        continue;
+      }
 
-    // Step 5: Build the featured rail in the order you want
-    const featured = [
-      featuredDomestic,
-      featuredInternational,
-    ].filter(Boolean);
+      selected.push(match);
+      selectedIds.add(matchId);
 
-    // Step 6: Map the images exactly as you already do
-    return featured.map((match) => ({
+      if (selected.length === 2) {
+        break;
+      }
+    }
+
+    return selected.map((match) => ({
       ...match,
-      displayHomeImage: getTeamImage(match.home.name),
-      displayAwayImage: getTeamImage(match.away.name),
+      displayHomeImage: getTeamImage(
+        match.home.name,
+        match.competitionId
+      ),
+      displayAwayImage: getTeamImage(
+        match.away.name,
+        match.competitionId
+      ),
     }));
   }, [matches, now]);
+
+  /* ==================================================
+     REPORT FEATURED MATCH IDS
+     ================================================== */
+
+  useEffect(() => {
+    onFeaturedMatchesChange?.(
+      featuredMatches.map((match) => match.id)
+    );
+  }, [
+    featuredMatches,
+    onFeaturedMatchesChange,
+  ]);
 
   /* ==================================================
      CLICK
      ================================================== */
 
-  const handleMatchClick = (matchId: number) => {
+  const handleMatchClick = (
+    matchId: number
+  ) => {
     navigate(`/match/${matchId}`);
   };
 
@@ -210,8 +289,11 @@ export default function FeaturedMatchCard({ matches, loading }: FeaturedMatchCar
           <h2>⚡ Upcoming Featured Matches</h2>
           <p>Don't miss the action</p>
         </div>
+
         <div className={styles.matchesGrid}>
-          <div className={styles.matchCard}>Loading featured matches...</div>
+          <div className={styles.matchCard}>
+            Loading featured matches...
+          </div>
         </div>
       </section>
     );
@@ -228,8 +310,11 @@ export default function FeaturedMatchCard({ matches, loading }: FeaturedMatchCar
           <h2>⚡ Upcoming Featured Matches</h2>
           <p>Don't miss the action</p>
         </div>
+
         <div className={styles.matchesGrid}>
-          <div className={styles.matchCard}>No upcoming featured matches available.</div>
+          <div className={styles.matchCard}>
+            No upcoming featured matches available.
+          </div>
         </div>
       </section>
     );
@@ -251,62 +336,218 @@ export default function FeaturedMatchCard({ matches, loading }: FeaturedMatchCar
           <div
             key={match.id}
             className={styles.matchCard}
-            onClick={() => handleMatchClick(match.id)}
+            onClick={() =>
+              handleMatchClick(match.id)
+            }
           >
             {/* COMPETITION */}
-            <div className={styles.competitionBadge}>{getCompetitionLabel(match)}</div>
+
+            <div
+              className={
+                styles.competitionBadge
+              }
+            >
+              {getCompetitionLabel(match)}
+            </div>
 
             {/* TEAMS */}
-            <div className={styles.teamsContainer}>
+
+            <div
+              className={
+                styles.teamsContainer
+              }
+            >
               {/* HOME */}
-              <div className={styles.teamBlock}>
-                <div className={styles.flagWrapper}>
+
+              <div
+                className={
+                  styles.teamBlock
+                }
+              >
+                <div
+                  className={
+                    styles.flagWrapper
+                  }
+                >
                   {match.displayHomeImage ? (
-                    <img src={match.displayHomeImage} alt={match.home.name} className={styles.flag} />
+                    <img
+                      src={
+                        match.displayHomeImage
+                      }
+                      alt={
+                        match.home.name
+                      }
+                      className={
+                        styles.flag
+                      }
+                    />
                   ) : (
-                    <div className={styles.flag} />
+                    <div
+                      className={
+                        styles.flag
+                      }
+                    />
                   )}
                 </div>
-                <span className={styles.teamName}>{match.home.name}</span>
+
+                <span
+                  className={
+                    styles.teamName
+                  }
+                >
+                  {match.home.name}
+                </span>
               </div>
 
               {/* VS */}
-              <div className={styles.vsContainer}>
-                <span className={styles.vsBadge}>VS</span>
+
+              <div
+                className={
+                  styles.vsContainer
+                }
+              >
+                <span
+                  className={
+                    styles.vsBadge
+                  }
+                >
+                  VS
+                </span>
               </div>
 
               {/* AWAY */}
-              <div className={styles.teamBlock}>
-                <div className={styles.flagWrapper}>
+
+              <div
+                className={
+                  styles.teamBlock
+                }
+              >
+                <div
+                  className={
+                    styles.flagWrapper
+                  }
+                >
                   {match.displayAwayImage ? (
-                    <img src={match.displayAwayImage} alt={match.away.name} className={styles.flag} />
+                    <img
+                      src={
+                        match.displayAwayImage
+                      }
+                      alt={
+                        match.away.name
+                      }
+                      className={
+                        styles.flag
+                      }
+                    />
                   ) : (
-                    <div className={styles.flag} />
+                    <div
+                      className={
+                        styles.flag
+                      }
+                    />
                   )}
                 </div>
-                <span className={styles.teamName}>{match.away.name}</span>
+
+                <span
+                  className={
+                    styles.teamName
+                  }
+                >
+                  {match.away.name}
+                </span>
               </div>
             </div>
 
             {/* COUNTDOWN */}
-            <div className={styles.matchDetails}>
-              <div className={styles.detailItem}>
-                <span className={styles.detailLabel}>⏱ Kick-off</span>
-                <span className={styles.detailValue}>{formatCountdown(match)}</span>
+
+            <div
+              className={
+                styles.matchDetails
+              }
+            >
+              <div
+                className={
+                  styles.detailItem
+                }
+              >
+                <span
+                  className={
+                    styles.detailLabel
+                  }
+                >
+                  ⏱ Kick-off
+                </span>
+
+                <span
+                  className={
+                    styles.detailValue
+                  }
+                >
+                  {formatCountdown(
+                    match
+                  )}
+                </span>
               </div>
-              <div className={styles.detailItem}>
-                <span className={styles.detailLabel}>📅 Date</span>
-                <span className={styles.detailValue}>{formatDate(match)}</span>
+
+              <div
+                className={
+                  styles.detailItem
+                }
+              >
+                <span
+                  className={
+                    styles.detailLabel
+                  }
+                >
+                  📅 Date
+                </span>
+
+                <span
+                  className={
+                    styles.detailValue
+                  }
+                >
+                  {formatDate(match)}
+                </span>
               </div>
-              <div className={styles.detailItem}>
-                <span className={styles.detailLabel}>📍 Venue</span>
-                <span className={styles.detailValue}>{match.venue}</span>
+
+              <div
+                className={
+                  styles.detailItem
+                }
+              >
+                <span
+                  className={
+                    styles.detailLabel
+                  }
+                >
+                  📍 Venue
+                </span>
+
+                <span
+                  className={
+                    styles.detailValue
+                  }
+                >
+                  {match.venue}
+                </span>
               </div>
             </div>
 
             {/* FOOTER */}
-            <div className={styles.matchFooter}>
-              <span className={styles.clickHint}>Click to view match →</span>
+
+            <div
+              className={
+                styles.matchFooter
+              }
+            >
+              <span
+                className={
+                  styles.clickHint
+                }
+              >
+                Click to view match →
+              </span>
             </div>
           </div>
         ))}

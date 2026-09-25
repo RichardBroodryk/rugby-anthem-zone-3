@@ -379,7 +379,7 @@ export const matches2026Men: MatchData[] = [
 
 {
   id: 3010,
-  matchKey: "south-africa-vs-australia-2026",
+  matchKey: "australia-vs-south-africa-2026",
   competitionId: "international-tests",
   tournamentInstanceId: INTERNATIONAL_TESTS_2026,
   tournament: "Men's International Tests 2026",
@@ -491,7 +491,7 @@ export const matches2026Men: MatchData[] = [
 
   // ----- ROUND 2 (FINAL) -----
   {
-    id: 3010,
+    id: 3011,
     matchKey: "new-zealand-vs-italy",
     competitionId: "nations-championship",
     tournamentInstanceId: NATIONS_CHAMPIONSHIP_2026,

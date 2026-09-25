@@ -16,6 +16,10 @@ import greatestRivalry from "../assets/images/tournaments/greatest-rivalry-2026.
 import internationalTestsMen from "../assets/images/tournaments/international-tests-men-hero.jpg";
 import internationalTestsWomen from "../assets/images/tournaments/international-tests-women-hero.jpg";
 
+/* 🆕 URC */
+
+import urcHero from "../assets/images/domestic/urc-rugby.jpg";
+
 /* 🔥 WXV (INTENTIONAL REUSE — LOCKED) */
 import wxvHero from "../assets/images/tournaments/nations-championship-2026.jpg";
 
@@ -120,6 +124,16 @@ export const tournamentVisuals: TournamentVisual[] = [
     heroLayout: "contained",
     anthemMode: "global",
   },
+
+  // ================= UNITED RUGBY CHAMPIONSHIP =================
+
+{
+  conceptId: "urc",
+  heroImageMen: urcHero,
+  logo: urcHero,
+  heroLayout: "contained",
+  anthemMode: "global",
+},
 
   // ================= WXV 1 =================
   {

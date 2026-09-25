@@ -139,6 +139,21 @@ export const tournaments2026: TournamentMeta[] = [
     totalMatches: 8,
   },
 
+    // ================= MEN — DOMESTIC =================
+
+  {
+    conceptId: "urc",
+    instanceId: "urc-2027",
+    name: "United Rugby Championship",
+    year: 2026,
+    gender: "men",
+    type: "domestic",
+    status: "active",
+    matchKey: "United Rugby Championship 2026/27",
+    route: "/tournaments/men/urc-2027",
+    currentRound: 1,
+  },
+
   // ================= SVNS (MEN + WOMEN COMBINED) =================
 
   {

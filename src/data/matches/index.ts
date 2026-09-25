@@ -13,6 +13,7 @@ import type { MatchData } from "./types";
    ================================================== */
 
 import { matches2026Men } from "./matches2026Men";
+import { matches2026DomesticMen } from "./matches2026DomesticMen";
 import { matches2026Women } from "./matches2026Women";
 import { svnsMatches2026 } from "./matches2026Svns";
 
@@ -76,6 +77,7 @@ const isValidMatch = (match: MatchData): boolean => {
 
 export const matches2026: MatchData[] = [
   ...matches2026Men,
+  ...matches2026DomesticMen,
   ...matches2026Women,
   ...svnsMatches2026,
 ]
@@ -92,6 +94,9 @@ export const matches2026: MatchData[] = [
 
 export const getMensMatches = (): MatchData[] =>
   matches2026Men.slice().sort(sortByDate);
+
+export const getDomesticMensMatches = (): MatchData[] =>
+  matches2026DomesticMen.slice().sort(sortByDate);
 
 export const getWomensMatches = (): MatchData[] =>
   matches2026Women.slice().sort(sortByDate);
