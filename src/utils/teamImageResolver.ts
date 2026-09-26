@@ -61,7 +61,9 @@ import polandFlag from "../assets/images/flags/poland.jpg";
 import czechRepublicFlag from "../assets/images/flags/czech-republic.jpg";
 
 /* ==================================================
+
    URC — MEN 2026/27
+
    ================================================== */
 
 import urcBenetton from "../assets/images/teams/men/urc/benetton.jpg";
@@ -97,12 +99,43 @@ import urcUlster from "../assets/images/teams/men/urc/ulster.jpg";
 import urcZebreParma from "../assets/images/teams/men/urc/zebre-parma.jpg";
 
 /* ==================================================
+
+   GALLAGHER PREM — MEN 2026/27
+
+   ================================================== */
+
+import premBath from "../assets/images/teams/men/gallagher-prem/bath.jpg";
+
+import premBristolBears from "../assets/images/teams/men/gallagher-prem/bristol-bears.jpg";
+
+import premExeterChiefs from "../assets/images/teams/men/gallagher-prem/exeter-chiefs.jpg";
+
+import premGloucester from "../assets/images/teams/men/gallagher-prem/gloucester.jpg";
+
+import premHarlequins from "../assets/images/teams/men/gallagher-prem/harlequins.jpg";
+
+import premLeicesterTigers from "../assets/images/teams/men/gallagher-prem/leicester-tigers.jpg";
+
+import premNewcastleRedBulls from "../assets/images/teams/men/gallagher-prem/newcastle-red-bulls.jpg";
+
+import premNorthamptonSaints from "../assets/images/teams/men/gallagher-prem/northampton-saints.jpg";
+
+import premSaleSharks from "../assets/images/teams/men/gallagher-prem/sale-sharks.jpg";
+
+import premSaracens from "../assets/images/teams/men/gallagher-prem/saracens.jpg";
+
+/* ==================================================
+
    GENERAL TEAM IMAGE MAP
+
    ================================================== */
 
 const TEAM_IMAGES: Record<string, string> = {
+
   // ==================================================
+
   // RAZ PLACEHOLDER
+
   // ==================================================
 
   tbd: splashLogo,
@@ -110,8 +143,11 @@ const TEAM_IMAGES: Record<string, string> = {
   unknown: splashLogo,
 
   // ==================================================
+
   // SOUTH AFRICAN FRANCHISES
+
   // Greatest Rivalry images preserved.
+
   // ==================================================
 
   stormers: stormersLogo,
@@ -123,7 +159,9 @@ const TEAM_IMAGES: Record<string, string> = {
   lions: lionsLogo,
 
   // ==================================================
+
   // INTERNATIONAL FLAGS
+
   // ==================================================
 
   "south africa": southAfricaFlag,
@@ -179,13 +217,17 @@ const TEAM_IMAGES: Record<string, string> = {
   polska: polandFlag,
 
   czechy: czechRepublicFlag,
+
 };
 
 /* ==================================================
+
    URC TEAM IMAGE MAP
+
    ================================================== */
 
 const URC_TEAM_IMAGES: Record<string, string> = {
+
   benetton: urcBenetton,
 
   bulls: urcBulls,
@@ -217,32 +259,91 @@ const URC_TEAM_IMAGES: Record<string, string> = {
   ulster: urcUlster,
 
   "zebre parma": urcZebreParma,
+
 };
 
 /* ==================================================
+
+   GALLAGHER PREM TEAM IMAGE MAP
+
+   ================================================== */
+
+const PREM_TEAM_IMAGES: Record<string, string> = {
+
+  bath: premBath,
+
+  "bristol bears": premBristolBears,
+
+  "exeter chiefs": premExeterChiefs,
+
+  gloucester: premGloucester,
+
+  harlequins: premHarlequins,
+
+  "leicester tigers": premLeicesterTigers,
+
+  "newcastle red bulls": premNewcastleRedBulls,
+
+  "northampton saints": premNorthamptonSaints,
+
+  "sale sharks": premSaleSharks,
+
+  saracens: premSaracens,
+
+};
+
+/* ==================================================
+
    TEAM IMAGE RESOLVER
+
    ================================================== */
 
 export function getTeamImage(
+
   teamName: string,
+
   competitionId?: string
+
 ): string {
+
   const key = teamName
+
     .trim()
+
     .toLowerCase()
+
     .replace(/\s+w$/, "");
 
   /* ==================================================
+
      URC
+
      ================================================== */
 
   if (competitionId === "urc") {
+
     return URC_TEAM_IMAGES[key] ?? splashLogo;
+
   }
 
   /* ==================================================
+
+     GALLAGHER PREM
+
+     ================================================== */
+
+  if (competitionId === "premiership") {
+
+    return PREM_TEAM_IMAGES[key] ?? splashLogo;
+
+  }
+
+  /* ==================================================
+
      EXISTING TEAM / INTERNATIONAL RESOLUTION
+
      ================================================== */
 
   return TEAM_IMAGES[key] ?? splashLogo;
+
 }

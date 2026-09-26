@@ -154,6 +154,19 @@ export const tournaments2026: TournamentMeta[] = [
     currentRound: 1,
   },
 
+    {
+    conceptId: "premiership",
+    instanceId: "premiership-2027",
+    name: "Gallagher PREM",
+    year: 2026,
+    gender: "men",
+    type: "domestic",
+    status: "active",
+    matchKey: "Gallagher PREM 2026/27",
+    route: "/tournaments/men/premiership-2027",
+    currentRound: 1,
+  },
+
   // ================= SVNS (MEN + WOMEN COMBINED) =================
 
   {

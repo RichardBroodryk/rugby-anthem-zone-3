@@ -5,6 +5,7 @@
 import type { MatchDetails } from "./types";
 import { matchDetailsMen } from "./matchDetailsMen";
 import { matchDetailsDomesticMen } from "./matchDetailsDomesticMen";
+import { matchDetailsPremMen } from "./matchDetailsPremMen";
 import { matchDetailsWomen } from "./matchDetailsWomen";
 import { getCompetition } from "../../contracts/competitionRegistry";
 
@@ -15,6 +16,7 @@ import { getCompetition } from "../../contracts/competitionRegistry";
 export const matchDetails2026: MatchDetails[] = [
   ...matchDetailsMen,
   ...matchDetailsDomesticMen,
+  ...matchDetailsPremMen,
   ...matchDetailsWomen,
 ];
 
@@ -24,6 +26,7 @@ export const matchDetails2026: MatchDetails[] = [
 
 export const matchDetailsMen2026 = matchDetailsMen;
 export const matchDetailsDomesticMen2026 = matchDetailsDomesticMen;
+export const matchDetailsPremMen2026 = matchDetailsPremMen;
 export const matchDetailsWomen2026 = matchDetailsWomen;
 
 // ==================================================
@@ -56,6 +59,20 @@ export const getMatchDetails = (
 
   const competition = getCompetition(match.competitionId);
 
+  // ==================================================
+  // GALLAGHER PREM — MEN
+  // ==================================================
+
+  if (match.competitionId === "premiership") {
+    return matchDetailsPremMen.find(
+      (d) => d.matchKey === expectedKey
+    );
+  }
+
+  // ==================================================
+  // OTHER DOMESTIC MEN
+  // ==================================================
+
   if (
     competition?.category === "domestic" &&
     competition.gender === "men"
@@ -64,6 +81,10 @@ export const getMatchDetails = (
       (d) => d.matchKey === expectedKey
     );
   }
+
+  // ==================================================
+  // INTERNATIONAL MEN
+  // ==================================================
 
   return matchDetailsMen.find(
     (d) => d.matchKey === expectedKey

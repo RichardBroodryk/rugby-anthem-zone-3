@@ -69,7 +69,9 @@ import sharks from "../assets/images/rivalry/sharks.jpg";
 import lions from "../assets/images/rivalry/lions.jpg";
 
 /* ==================================================
+
    URC — MEN 2026/27
+
    ================================================== */
 
 import urcBenetton from "../assets/images/teams/men/urc/benetton.jpg";
@@ -103,6 +105,32 @@ import urcStormers from "../assets/images/teams/men/urc/stormers.jpg";
 import urcUlster from "../assets/images/teams/men/urc/ulster.jpg";
 
 import urcZebreParma from "../assets/images/teams/men/urc/zebre-parma.jpg";
+
+/* ==================================================
+
+   GALLAGHER PREM — MEN 2026/27
+
+   ================================================== */
+
+import premBath from "../assets/images/teams/men/gallagher-prem/bath.jpg";
+
+import premBristolBears from "../assets/images/teams/men/gallagher-prem/bristol-bears.jpg";
+
+import premExeterChiefs from "../assets/images/teams/men/gallagher-prem/exeter-chiefs.jpg";
+
+import premGloucester from "../assets/images/teams/men/gallagher-prem/gloucester.jpg";
+
+import premHarlequins from "../assets/images/teams/men/gallagher-prem/harlequins.jpg";
+
+import premLeicesterTigers from "../assets/images/teams/men/gallagher-prem/leicester-tigers.jpg";
+
+import premNewcastleRedBulls from "../assets/images/teams/men/gallagher-prem/newcastle-red-bulls.jpg";
+
+import premNorthamptonSaints from "../assets/images/teams/men/gallagher-prem/northampton-saints.jpg";
+
+import premSaleSharks from "../assets/images/teams/men/gallagher-prem/sale-sharks.jpg";
+
+import premSaracens from "../assets/images/teams/men/gallagher-prem/saracens.jpg";
 
 export const flagMap: Record<string, string> = {
 
@@ -173,8 +201,11 @@ export const flagMap: Record<string, string> = {
   "great-britain": england,
 
   /* ==================================================
+
      GREATEST RIVALRY
+
      Existing mappings preserved intentionally.
+
      ================================================== */
 
   "bulls": bulls,
@@ -186,7 +217,9 @@ export const flagMap: Record<string, string> = {
   "lions": lions,
 
   /* ==================================================
+
      URC — MEN 2026/27
+
      ================================================== */
 
   "urc-benetton": urcBenetton,
@@ -221,4 +254,29 @@ export const flagMap: Record<string, string> = {
 
   "urc-zebre-parma": urcZebreParma,
 
+  /* ==================================================
+
+     GALLAGHER PREM — MEN 2026/27
+
+     ================================================== */
+
+  "prem-bath": premBath,
+
+  "prem-bristol-bears": premBristolBears,
+
+  "prem-exeter-chiefs": premExeterChiefs,
+
+  "prem-gloucester": premGloucester,
+
+  "prem-harlequins": premHarlequins,
+
+  "prem-leicester-tigers": premLeicesterTigers,
+
+  "prem-newcastle-red-bulls": premNewcastleRedBulls,
+
+  "prem-northampton-saints": premNorthamptonSaints,
+
+  "prem-sale-sharks": premSaleSharks,
+
+  "prem-saracens": premSaracens,
 };

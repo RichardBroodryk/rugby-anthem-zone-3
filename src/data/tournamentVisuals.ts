@@ -1,8 +1,11 @@
 /* ==================================================
+
    TOURNAMENT VISUALS — AUTHORITATIVE (ABSOLUTE FINAL)
+
    ================================================== */
 
 import sixNationsMen from "../assets/images/tournaments/six-nations-men-2026.jpg";
+
 import sixNationsWomen from "../assets/images/tournaments/six-nations-women-2026.jpg";
 
 import nationsChampionship from "../assets/images/tournaments/nations-championship-2026.jpg";
@@ -14,19 +17,27 @@ import bledisloe from "../assets/images/tournaments/bledisloe.jpg";
 import greatestRivalry from "../assets/images/tournaments/greatest-rivalry-2026.jpg";
 
 import internationalTestsMen from "../assets/images/tournaments/international-tests-men-hero.jpg";
+
 import internationalTestsWomen from "../assets/images/tournaments/international-tests-women-hero.jpg";
 
 /* 🆕 URC */
 
 import urcHero from "../assets/images/domestic/urc-rugby.jpg";
 
+/* 🆕 GALLAGHER PREM */
+
+import premiershipHero from "../assets/images/domestic/premier-league.jpg";
+
 /* 🔥 WXV (INTENTIONAL REUSE — LOCKED) */
+
 import wxvHero from "../assets/images/tournaments/nations-championship-2026.jpg";
 
 /* 🆕 WXV CHALLENGER */
+
 import wxvChallengerWomen from "../assets/images/raz/wxv-challenger-women.jpg";
 
 /* 🆕 SVNS */
+
 import svnsHero from "../assets/images/tournaments/svns-2026.jpg";
 
 import fallbackHero from "../assets/images/tournaments/default-tournament.jpg";
@@ -46,23 +57,23 @@ export type AnthemMode =
 
 export interface TournamentVisual {
   conceptId: string;
-
   heroImageMen?: string;
   heroImageWomen?: string;
   heroLayout?: HeroLayout;
-
   logo?: string;
-
   anthemMode?: AnthemMode;
 }
 
 /* ==================================================
+
    VISUAL MAP — COMPLETE (NO UNUSED ENTRIES)
+
    ================================================== */
 
 export const tournamentVisuals: TournamentVisual[] = [
 
   // ================= SIX NATIONS =================
+
   {
     conceptId: "six-nations",
     heroImageMen: sixNationsMen,
@@ -79,6 +90,7 @@ export const tournamentVisuals: TournamentVisual[] = [
   },
 
   // ================= NATIONS CHAMPIONSHIP =================
+
   {
     conceptId: "nations-championship",
     heroImageMen: nationsChampionship,
@@ -89,6 +101,7 @@ export const tournamentVisuals: TournamentVisual[] = [
   },
 
   // ================= PACIFIC (MEN) =================
+
   {
     conceptId: "pacific-nations",
     heroImageMen: pacificMen,
@@ -98,6 +111,7 @@ export const tournamentVisuals: TournamentVisual[] = [
   },
 
   // ================= BLEDISLOE =================
+
   {
     conceptId: "bledisloe-cup",
     heroImageMen: bledisloe,
@@ -107,6 +121,7 @@ export const tournamentVisuals: TournamentVisual[] = [
   },
 
   // ================= RIVALRY TOUR =================
+
   {
     conceptId: "sa-nz-rival-tour",
     heroImageMen: greatestRivalry,
@@ -117,6 +132,7 @@ export const tournamentVisuals: TournamentVisual[] = [
   },
 
   // ================= INTERNATIONAL TESTS =================
+
   {
     conceptId: "international-tests",
     heroImageMen: internationalTestsMen,
@@ -127,15 +143,26 @@ export const tournamentVisuals: TournamentVisual[] = [
 
   // ================= UNITED RUGBY CHAMPIONSHIP =================
 
-{
-  conceptId: "urc",
-  heroImageMen: urcHero,
-  logo: urcHero,
-  heroLayout: "contained",
-  anthemMode: "global",
-},
+  {
+    conceptId: "urc",
+    heroImageMen: urcHero,
+    logo: urcHero,
+    heroLayout: "contained",
+    anthemMode: "global",
+  },
+
+  // ================= GALLAGHER PREM =================
+
+  {
+    conceptId: "premiership",
+    heroImageMen: premiershipHero,
+    logo: premiershipHero,
+    heroLayout: "contained",
+    anthemMode: "global",
+  },
 
   // ================= WXV 1 =================
+
   {
     conceptId: "wxv1",
     heroImageWomen: wxvHero,
@@ -145,6 +172,7 @@ export const tournamentVisuals: TournamentVisual[] = [
   },
 
   // ================= WXV CHALLENGER =================
+
   {
     conceptId: "wxv-challenger",
     heroImageWomen: wxvChallengerWomen,
@@ -154,6 +182,7 @@ export const tournamentVisuals: TournamentVisual[] = [
   },
 
   // ================= SVNS =================
+
   {
     conceptId: "svns",
     heroImageMen: svnsHero,
@@ -162,13 +191,17 @@ export const tournamentVisuals: TournamentVisual[] = [
     heroLayout: "contained",
     anthemMode: "global",
   },
+
 ];
 
 /* ==================================================
+
    RESOLVER (HARDENED — ZERO UI FAILURE)
+
    ================================================== */
 
 export function getTournamentVisual(conceptId: string): TournamentVisual {
+
   const visual = tournamentVisuals.find(
     (v) => v.conceptId === conceptId
   );

@@ -40,7 +40,8 @@ export const matches2026DomesticMen: MatchData[] = [
 
     away: { name: "Dragons", country: "urc-dragons" },
 
-    state: "upcoming",
+    score: { home: 19, away: 19 },
+    state: "final",
 
     startTime: "20:45",
 
@@ -70,7 +71,8 @@ export const matches2026DomesticMen: MatchData[] = [
 
     away: { name: "Stormers", country: "urc-stormers" },
 
-    state: "upcoming",
+    score: { home: 15, away: 29 },
+    state: "final",
 
     startTime: "20:45",
 
@@ -100,7 +102,8 @@ export const matches2026DomesticMen: MatchData[] = [
 
     away: { name: "Edinburgh", country: "urc-edinburgh" },
 
-    state: "upcoming",
+    score: { home: 29, away: 34 },
+    state: "final",
 
     startTime: "20:45",
 
@@ -129,7 +132,7 @@ export const matches2026DomesticMen: MatchData[] = [
     home: { name: "Lions", country: "urc-lions" },
 
     away: { name: "Leinster", country: "urc-leinster" },
-
+    score: { home: 0, away: 0 },
     state: "upcoming",
 
     startTime: "13:30",
@@ -159,7 +162,7 @@ export const matches2026DomesticMen: MatchData[] = [
     home: { name: "Sharks", country: "urc-sharks" },
 
     away: { name: "Ospreys", country: "urc-ospreys" },
-
+    score: { home: 0, away: 0 },
     state: "upcoming",
 
     startTime: "16:00",
@@ -189,7 +192,7 @@ export const matches2026DomesticMen: MatchData[] = [
     home: { name: "Munster", country: "urc-munster" },
 
     away: { name: "Glasgow Warriors", country: "urc-glasgow-warriors" },
-
+    score: { home: 0, away: 0 },
     state: "upcoming",
 
     startTime: "18:30",
@@ -219,7 +222,7 @@ export const matches2026DomesticMen: MatchData[] = [
     home: { name: "Zebre Parma", country: "urc-zebre-parma" },
 
     away: { name: "Bulls", country: "urc-bulls" },
-
+    score: { home: 0, away: 0 },
     state: "upcoming",
 
     startTime: "18:30",
@@ -249,7 +252,7 @@ export const matches2026DomesticMen: MatchData[] = [
     home: { name: "Scarlets", country: "urc-scarlets" },
 
     away: { name: "Cardiff", country: "urc-cardiff" },
-
+    score: { home: 0, away: 0 },
     state: "upcoming",
 
     startTime: "20:45",
