@@ -13,7 +13,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
 
   {
     matchKey: "benetton-vs-dragons",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=64V9jWnjamo",
     timeline: [
       { minute: "0'", label: "Kick-off — Stadio Monigo, Treviso" },
       { minute: "40'", label: "Half Time" },
@@ -41,7 +41,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
 
   {
     matchKey: "ulster-vs-edinburgh",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=REM9BUOJ1Vo",
     timeline: [
       { minute: "0'", label: "Kick-off — Affidea Stadium, Belfast" },
       { minute: "40'", label: "Half Time" },
@@ -93,7 +93,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
 
   {
     matchKey: "lions-vs-leinster",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=E1Y01d6DsH0",
     timeline: [
       { minute: "0'", label: "Kick-off — 10bet Ellis Park, Johannesburg" },
       { minute: "40'", label: "Half Time" },
@@ -171,7 +171,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
 
   {
     matchKey: "sharks-vs-ospreys",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=CpxAbDlAEtA",
     timeline: [
       { minute: "0'", label: "Kick-off — Hollywoodbets Kings Park, Durban" },
       { minute: "40'", label: "Half Time" },
@@ -189,7 +189,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
 
   {
     matchKey: "munster-vs-glasgow-warriors",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=ple50BaeYwM",
     timeline: [
       { minute: "0'", label: "Kick-off — Thomond Park, Limerick" },
       { minute: "40'", label: "Half Time" },
@@ -271,7 +271,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
 
   {
     matchKey: "zebre-parma-vs-bulls",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=fhjqsDpXBpQ",
     timeline: [
       { minute: "0'", label: "Kick-off — Stadio Sergio Lanfranchi, Parma" },
       { minute: "40'", label: "Half Time" },
@@ -289,7 +289,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
 
   {
     matchKey: "scarlets-vs-cardiff",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=ZNVD0Apr088",
     timeline: [
       { minute: "0'", label: "Kick-off — Parc y Scarlets, Llanelli" },
       { minute: "40'", label: "Half Time" },

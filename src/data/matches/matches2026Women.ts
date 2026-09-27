@@ -472,7 +472,7 @@ export const matches2026Women: MatchData[] = [
   startTime: "14:30",
 },
 
-  // ----- ROUND 3 (UPCOMING) -----
+  // ----- ROUND 3 -----
 
   {
     id: 208,
@@ -486,7 +486,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Stadio Omero Tognon, Fontanafredda",
   home: { name: "Italy", country: "italy" },
   away: { name: "South Africa", country: "south-africa" },
-  state: "upcoming",
+  score: { home: 29, away: 37 },
+    state: "final",
   startTime: "14:30",
   },
   {
@@ -502,7 +503,8 @@ export const matches2026Women: MatchData[] = [
     venue: "Twickenham, London",
     home: { name: "England W", country: "england" },
     away: { name: "New Zealand W", country: "new-zealand" },
-    state: "upcoming",
+    score: { home: 26, away: 19 },
+    state: "final",
     startTime: "TBD",
   },
   {
@@ -518,8 +520,8 @@ export const matches2026Women: MatchData[] = [
     venue: "Murrayfield, Edinburgh",
     home: { name: "Scotland W", country: "scotland" },
     away: { name: "Australia W", country: "australia" },
-    state: "upcoming",
-    startTime: "TBD",
+    score: { home: 10, away: 30 },
+    state: "final",
   },
   {
     id: 211,
@@ -534,8 +536,8 @@ export const matches2026Women: MatchData[] = [
     venue: "Matmut Stadium de Gerland, Lyon",
     home: { name: "France W", country: "france" },
     away: { name: "Canada W", country: "canada" },
-    state: "upcoming",
-    startTime: "TBD",
+    score: { home: 21, away: 5 },
+    state: "final",
   },
 {
   id: 212,
@@ -549,7 +551,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Cardiff Arms Park, Cardiff",
   home: { name: "Wales", country: "wales" },
   away: { name: "USA", country: "usa" },
-  state: "upcoming",
+  score: { home: 24, away: 26 },
+    state: "final",
   startTime: "16:00",
 },
 {
@@ -694,7 +697,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Kai Tak Youth Sports Ground, Hong Kong",
   home: { name: "Fiji", country: "fiji" },
   away: { name: "Netherlands", country: "netherlands" },
-  state: "upcoming",
+  score: { home: 20, away: 17 },
+  state: "final",
   startTime: "06:00",
 },
 {
@@ -709,7 +713,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Kai Tak Youth Sports Ground, Hong Kong",
   home: { name: "Hong Kong China", country: "hong-kong-china" },
   away: { name: "Samoa", country: "samoa" },
-  state: "upcoming",
+  score: { home: 17, away: 34 },
+  state: "final",
   startTime: "09:30",
 },
 {
@@ -724,7 +729,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Kai Tak Youth Sports Ground, Hong Kong",
   home: { name: "Spain", country: "spain" },
   away: { name: "Brazil", country: "brazil" },
-  state: "upcoming",
+  score: { home: 0, away: 0 },
+  state: "final",
   startTime: "13:00",
 },
 

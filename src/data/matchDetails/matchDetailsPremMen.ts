@@ -13,7 +13,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
 
   {
     matchKey: "northampton-saints-vs-newcastle-red-bulls",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=WJDcl1C4GGk",
     timeline: [
       {
         minute: "0'",
@@ -146,7 +146,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
 
   {
     matchKey: "harlequins-vs-bath",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=O54NNnFGLWs",
     timeline: [
       {
         minute: "0'",
@@ -345,7 +345,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
 
   {
     matchKey: "exeter-chiefs-vs-gloucester",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=1GxZyBZHS1M",
     timeline: [
       {
         minute: "0'",
@@ -417,7 +417,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
 
   {
     matchKey: "sale-sharks-vs-bristol-bears",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=k14sxXEHf9s",
     timeline: [
       {
         minute: "0'",

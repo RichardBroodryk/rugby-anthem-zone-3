@@ -129,7 +129,8 @@ export const matches2026PremMen: MatchData[] = [
       country: "prem-gloucester",
     },
 
-    state: "upcoming",
+    score: { home: 24, away: 45 },
+    state: "final",
 
     startTime: "15:05",
   },
@@ -163,7 +164,8 @@ export const matches2026PremMen: MatchData[] = [
       country: "prem-bristol-bears",
     },
 
-    state: "upcoming",
+    score: { home: 24, away: 34 },
+    state: "final",
 
     startTime: "17:30",
   },
