@@ -11,16 +11,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "south-africa-vs-barbarians",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Nelson Mandela Bay Stadium" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
-    performances: [
-      { category: "Captain", player: "Siya Kolisi", value: "South Africa" },
-      { category: "Captain", player: "TJ Perenara", value: "Barbarians" },
-      { category: "Venue", player: "Nelson Mandela Bay Stadium", value: "Gqeberha" },
-    ],
   },
 
   // ==================================================
@@ -29,11 +19,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "south-africa-vs-england",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Ellis Park, Johannesburg" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Siya Kolisi", value: "South Africa" },
       { category: "Captain", player: "Jamie George", value: "England" },
@@ -43,11 +28,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "new-zealand-vs-france",
-    timeline: [
-      { minute: "0'", label: "Kick-off — One New Zealand Stadium, Christchurch" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Ardie Savea", value: "New Zealand" },
       { category: "Captain", player: "Maxime Lucu", value: "France" },
@@ -57,11 +37,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "australia-vs-ireland",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Allianz Stadium, Sydney" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Harry Wilson", value: "Australia" },
       { category: "Captain", player: "Dan Sheehan", value: "Ireland" },
@@ -71,11 +46,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "japan-vs-italy",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Chichibunomiya Rugby Stadium, Tokyo" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Warner Dearns", value: "Japan" },
       { category: "Captain", player: "Michele Lamaro", value: "Italy" },
@@ -85,11 +55,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "fiji-vs-wales",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Cardiff City Stadium, Cardiff" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Tevita Ikanivere", value: "Fiji" },
       { category: "Captain", player: "Dewi Lake", value: "Wales" },
@@ -99,11 +64,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "argentina-vs-scotland",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio Mario Alberto Kempes, Cordoba" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Julian Montoya", value: "Argentina" },
       { category: "Captain", player: "Sione Tuipulotu", value: "Scotland" },
@@ -117,11 +77,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "new-zealand-vs-italy",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Sky Stadium, Wellington" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Ardie Savea", value: "New Zealand" },
       { category: "Captain", player: "Michele Lamaro", value: "Italy" },
@@ -131,11 +86,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "australia-vs-france",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Suncorp Stadium, Brisbane" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Harry Wilson", value: "Australia" },
       { category: "Captain", player: "Maxime Lucu", value: "France" },
@@ -145,11 +95,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "japan-vs-ireland",
-    timeline: [
-      { minute: "0'", label: "Kick-off — McDonald Jones Stadium, Newcastle" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Warner Dearns", value: "Japan" },
       { category: "Captain", player: "Tadhg Beirne", value: "Ireland" },
@@ -159,11 +104,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "fiji-vs-england",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Hill Dickinson Stadium, Liverpool" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Tevita Ikanivere", value: "Fiji" },
       { category: "Captain", player: "Jamie George", value: "England" },
@@ -173,11 +113,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "south-africa-vs-scotland",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Loftus Versfeld, Pretoria" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Pieter-Steph du Toit", value: "South Africa" },
       { category: "Captain", player: "Sione Tuipulotu", value: "Scotland" },
@@ -187,11 +122,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "argentina-vs-wales",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio San Juan del Bicentenario, San Juan" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Julian Montoya", value: "Argentina" },
       { category: "Captain", player: "Dewi Lake", value: "Wales" },
@@ -205,11 +135,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "uruguay-vs-romania",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio Charrúa, Montevideo" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Felipe Aliaga", value: "Uruguay" },
       { category: "Captain", player: "Cristi Boboc", value: "Romania" },
@@ -219,11 +144,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "chile-vs-hong-kong-china",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio Sausalito, Viña del Mar" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Martín Sigren", value: "Chile" },
       { category: "Captain", player: "Josh Hrstich", value: "Hong Kong China" },
@@ -233,11 +153,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "canada-vs-portugal",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Clarke Stadium, Edmonton" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Andrew Quattrin", value: "Canada" },
       { category: "Captain", player: "José Madeira", value: "Portugal" },
@@ -247,11 +162,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "tonga-vs-spain",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Clarke Stadium, Edmonton" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Sonatane Takulua", value: "Tonga" },
       { category: "Captain", player: "TBD", value: "Spain" },
@@ -261,11 +171,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "samoa-vs-georgia",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio Sausalito, Viña del Mar" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "TBD", value: "Samoa" },
       { category: "Captain", player: "Davit Niniashvili", value: "Georgia" },
@@ -275,11 +180,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "usa-vs-zimbabwe",
-    timeline: [
-      { minute: "0'", label: "Kick-off — American Legion Memorial Stadium, Charlotte" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Jason Damm", value: "USA" },
       { category: "Captain", player: "Tino Mavesere", value: "Zimbabwe" },
@@ -293,11 +193,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "samoa-vs-romania",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio Charrúa, Montevideo" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "TBD", value: "Samoa" },
       { category: "Captain", player: "Cristi Boboc", value: "Romania" },
@@ -307,11 +202,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "uruguay-vs-hong-kong-china",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio Charrúa, Montevideo" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Felipe Aliaga", value: "Uruguay" },
       { category: "Captain", player: "Joshua Hrstich", value: "Hong Kong China" },
@@ -321,11 +211,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "tonga-vs-portugal",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Princess Auto Stadium, Winnipeg" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "TBD", value: "Tonga" },
       { category: "Captain", player: "TBD", value: "Portugal" },
@@ -335,11 +220,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "chile-vs-georgia",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio La Portada, La Serena" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Martín Sigren", value: "Chile" },
       { category: "Captain", player: "Davit Niniashvili", value: "Georgia" },
@@ -349,11 +229,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "usa-vs-spain",
-    timeline: [
-      { minute: "0'", label: "Kick-off — WakeMed Soccer Park, Cary" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Jason Damm", value: "USA" },
       { category: "Captain", player: "TBD", value: "Spain" },
@@ -363,11 +238,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "canada-vs-zimbabwe",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Princess Auto Stadium, Winnipeg" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Andrew Quattrin", value: "Canada" },
       { category: "Captain", player: "Tinotenda Mavesere", value: "Zimbabwe" },
@@ -381,11 +251,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "new-zealand-vs-ireland",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Eden Park, Auckland" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Ardie Savea", value: "New Zealand" },
       { category: "Captain", player: "Dan Sheehan", value: "Ireland" },
@@ -395,11 +260,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "japan-vs-france",
-    timeline: [
-      { minute: "0'", label: "Kick-off — MUFG Stadium, Tokyo" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Warner Dearns", value: "Japan" },
       { category: "Captain", player: "Maxime Lucu", value: "France" },
@@ -409,11 +269,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "australia-vs-italy",
-    timeline: [
-      { minute: "0'", label: "Kick-off — HBF Park, Perth" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Harry Wilson", value: "Australia" },
       { category: "Captain", player: "Michele Lamaro", value: "Italy" },
@@ -423,11 +278,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "fiji-vs-scotland",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Murrayfield, Edinburgh" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Tevita Ikanivere", value: "Fiji" },
       { category: "Captain", player: "Stafford McDowall", value: "Scotland" },
@@ -437,11 +287,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "south-africa-vs-wales",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Hollywoodbets Kings Park, Durban" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Pieter-Steph du Toit", value: "South Africa" },
       { category: "Captain", player: "Dewi Lake", value: "Wales" },
@@ -451,11 +296,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "argentina-vs-england",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio Único Madre de Ciudades, Santiago del Estero" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
     performances: [
       { category: "Captain", player: "Julian Montoya", value: "Argentina" },
       { category: "Captain", player: "Jamie George", value: "England" },
@@ -469,67 +309,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "stormers-vs-new-zealand",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Cape Town Stadium, Cape Town" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
-    lineups: {
-      homeStarting: [
-        { number: 1, name: "Vernon Matongo" },
-        { number: 2, name: "André-Hugo Venter" },
-        { number: 3, name: "Neethling Fouché" },
-        { number: 4, name: "Adré Smith" },
-        { number: 5, name: "Connor Evans" },
-        { number: 6, name: "Deon Fourie" },
-        { number: 7, name: "Hacjivah Dayimani" },
-        { number: 8, name: "Evan Roos" },
-        { number: 9, name: "Imad Khan" },
-        { number: 10, name: "Yaqeen Ahmed" },
-        { number: 11, name: "Leolin Zas" },
-        { number: 12, name: "Jonathan Roche" },
-        { number: 13, name: "Ruhan Nel (C)" },
-        { number: 14, name: "Seabelo Senatla" },
-        { number: 15, name: "Warrick Gelant" },
-      ],
-      homeBench: [
-        { number: 16, name: "JJ Kotzé" },
-        { number: 17, name: "Ntuthuko Mchunu" },
-        { number: 18, name: "Sazi Sandi" },
-        { number: 19, name: "Ruan Ackermann" },
-        { number: 20, name: "Keke Morabe" },
-        { number: 21, name: "Wandile Mlaba" },
-        { number: 22, name: "Dewaldt Duvenage" },
-        { number: 23, name: "Wandisile Simelane" },
-      ],
-      awayStarting: [
-        { number: 1, name: "George Bower" },
-        { number: 2, name: "Samisoni Taukei'aho" },
-        { number: 3, name: "Pasilio Tosi" },
-        { number: 4, name: "Fabian Holland" },
-        { number: 5, name: "Patrick Tuipulotu (C)" },
-        { number: 6, name: "Simon Parker" },
-        { number: 7, name: "Peter Lakai" },
-        { number: 8, name: "Wallace Sititi" },
-        { number: 9, name: "Cortez Ratima" },
-        { number: 10, name: "Beauden Barrett" },
-        { number: 11, name: "Rieko Ioane" },
-        { number: 12, name: "Anton Lienert-Brown" },
-        { number: 13, name: "Billy Proctor" },
-        { number: 14, name: "Leroy Carter" },
-        { number: 15, name: "Josh Moorby" },
-      ],
-      awayBench: [
-        { number: 16, name: "Asafo Aumua" },
-        { number: 17, name: "Ollie Norris" },
-        { number: 18, name: "Siale Lauaki" },
-        { number: 19, name: "Sam Darry" },
-        { number: 20, name: "Ethan Blackadder" },
-        { number: 21, name: "Kyle Preston" },
-        { number: 22, name: "Josh Jacomb" },
-        { number: 23, name: "Caleb Clarke" },
-      ],
-    },
     performances: [
       { category: "Coach", player: "John Dobson", value: "Stormers" },
       { category: "Coach", player: "Dave Rennie", value: "New Zealand" },
@@ -546,67 +325,6 @@ export const matchDetailsMen: MatchDetails[] = [
 
   {
     matchKey: "sharks-vs-new-zealand",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Kings Park, Durban" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
-    lineups: {
-      homeStarting: [
-        { number: 1, name: "Nemo Roelofse" },
-        { number: 2, name: "Eduan Swart" },
-        { number: 3, name: "Vincent Koch" },
-        { number: 4, name: "Hendre Stassen" },
-        { number: 5, name: "Deon Slabbert" },
-        { number: 6, name: "Phepsi Buthelezi" },
-        { number: 7, name: "Manu Tshituka" },
-        { number: 8, name: "Nick Hatton (C)" },
-        { number: 9, name: "Bradley Davids" },
-        { number: 10, name: "Vusi Moyo" },
-        { number: 11, name: "Litelihle Bester" },
-        { number: 12, name: "Murray Koster" },
-        { number: 13, name: "Jurenzo Julius" },
-        { number: 14, name: "Donovan Don" },
-        { number: 15, name: "Zekhethelo Siyaya" },
-      ],
-      homeBench: [
-        { number: 16, name: "Liam van Wyk" },
-        { number: 17, name: "Rambo Kubekha" },
-        { number: 18, name: "Simphiwe Ngobese" },
-        { number: 19, name: "Corne Rahl" },
-        { number: 20, name: "Matt Romao" },
-        { number: 21, name: "Ivan van Zyl" },
-        { number: 22, name: "Luan Giliomee" },
-        { number: 23, name: "Ma'a Nonu" },
-      ],
-      awayStarting: [
-        { number: 1, name: "Ethan de Groot" },
-        { number: 2, name: "Asafo Aumua" },
-        { number: 3, name: "Fletcher Newell" },
-        { number: 4, name: "Josh Lord" },
-        { number: 5, name: "Sam Darry" },
-        { number: 6, name: "Tupou Vaa'i" },
-        { number: 7, name: "Luke Jacobson (C)" },
-        { number: 8, name: "Wallace Sititi" },
-        { number: 9, name: "Kyle Preston" },
-        { number: 10, name: "Ruben Love" },
-        { number: 11, name: "Caleb Clarke" },
-        { number: 12, name: "Jordie Barrett" },
-        { number: 13, name: "Quinn Tupaea" },
-        { number: 14, name: "Fehi Fineanganofo" },
-        { number: 15, name: "Damian McKenzie" },
-      ],
-      awayBench: [
-        { number: 16, name: "Bradley Slater" },
-        { number: 17, name: "Ollie Norris" },
-        { number: 18, name: "Pasilio Tosi" },
-        { number: 19, name: "Ethan Blackadder" },
-        { number: 20, name: "Semisi Ta'eiloa" },
-        { number: 21, name: "Cortez Ratima" },
-        { number: 22, name: "Timoci Tavatavanawai" },
-        { number: 23, name: "Emoni Narawa" },
-      ],
-    },
     performances: [
       { category: "Coach", player: "JP Pietersen", value: "Sharks" },
       { category: "Coach", player: "Dave Rennie", value: "New Zealand" },
@@ -646,67 +364,6 @@ export const matchDetailsMen: MatchDetails[] = [
         turnoversWon: 11,
         penaltiesConceded: 8,
       },
-    },
-    timeline: [
-      { minute: "0'", label: "Kick-off — Loftus Versfeld, Pretoria" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
-    lineups: {
-      homeStarting: [
-        { number: 1, name: "Alulutho Tshakweni" },
-        { number: 2, name: "Juann Else" },
-        { number: 3, name: "Francois Klopper" },
-        { number: 4, name: "Ruan Vermaak" },
-        { number: 5, name: "JF van Heerden" },
-        { number: 6, name: "Marcell Coetzee (C)" },
-        { number: 7, name: "Hanro Liebenberg" },
-        { number: 8, name: "Jeandré Rudolph" },
-        { number: 9, name: "Embrose Papier" },
-        { number: 10, name: "Curwin Bosch" },
-        { number: 11, name: "Stravino Jacobs" },
-        { number: 12, name: "Harold Vorster" },
-        { number: 13, name: "Stedman Gans" },
-        { number: 14, name: "Thaakir Abrahams" },
-        { number: 15, name: "Willie le Roux" },
-      ],
-      homeBench: [
-        { number: 16, name: "Johan Grobbelaar" },
-        { number: 17, name: "Sti Sithole" },
-        { number: 18, name: "Khuta Mchunu" },
-        { number: 19, name: "Reinhardt Ludwig" },
-        { number: 20, name: "Elrigh Louw" },
-        { number: 21, name: "Paul de Wet" },
-        { number: 22, name: "Katlego Letebele" },
-        { number: 23, name: "Hakeem Kunene" },
-      ],
-      awayStarting: [
-        { number: 1, name: "Xavier Numia" },
-        { number: 2, name: "Codie Taylor (C)" },
-        { number: 3, name: "Tyrel Lomax" },
-        { number: 4, name: "Fabian Holland" },
-        { number: 5, name: "Patrick Tuipulotu" },
-        { number: 6, name: "Simon Parker" },
-        { number: 7, name: "Anton Segner" },
-        { number: 8, name: "Peter Lakai" },
-        { number: 9, name: "Cortez Ratima" },
-        { number: 10, name: "Josh Jacomb" },
-        { number: 11, name: "Josh Moorby" },
-        { number: 12, name: "Anton Lienert-Brown" },
-        { number: 13, name: "Rieko Ioane" },
-        { number: 14, name: "Leroy Carter" },
-        { number: 15, name: "Beauden Barrett" },
-      ],
-      awayBench: [
-        { number: 16, name: "Samisoni Taukei'aho" },
-        { number: 17, name: "George Bower" },
-        { number: 18, name: "Siale Lauaki" },
-        { number: 19, name: "Josh Lord" },
-        { number: 20, name: "Wallace Sititi" },
-        { number: 21, name: "Kyle Preston" },
-        { number: 22, name: "Timoci Tavatavanawai" },
-        { number: 23, name: "Emoni Narawa" },
-      ],
     },
     performances: [
       { category: "Coach", player: "Johan Ackermann", value: "Bulls" },
@@ -748,78 +405,6 @@ export const matchDetailsMen: MatchDetails[] = [
         penaltiesConceded: 9,
       },
     },
-    timeline: [
-      { minute: "0'", label: "Kick-off — Ellis Park, Johannesburg" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
-    lineups: {
-      homeStarting: [
-        { number: 1, name: "SJ Kotze" },
-        { number: 2, name: "PJ Botha" },
-        { number: 3, name: "Sebastian Lombard" },
-        { number: 4, name: "Etienne Oosthuizen" },
-        { number: 5, name: "Ruan Delport" },
-        { number: 6, name: "Siba Mahashe" },
-        { number: 7, name: "Batho Hlekani" },
-        { number: 8, name: "Francke Horn (C)" },
-        { number: 9, name: "Nico Steyn" },
-        { number: 10, name: "Chris Smith" },
-        { number: 11, name: "Erich Cronje" },
-        { number: 12, name: "Richard Kriel" },
-        { number: 13, name: "Henco van Wyk" },
-        { number: 14, name: "Kelly Mpeku" },
-        { number: 15, name: "Quan Horn" },
-      ],
-      homeBench: [
-        { number: 16, name: "Morne Brandon" },
-        { number: 17, name: "Boan Venter" },
-        { number: 18, name: "RF Schoeman" },
-        { number: 19, name: "Hyron Andrews" },
-        { number: 20, name: "Sikhumbuzo Notshe" },
-        { number: 21, name: "JC Pretorius" },
-        { number: 22, name: "Haashim Pead" },
-        { number: 23, name: "Boeta Chamberlain" },
-      ],
-      awayStarting: [
-        { number: 1, name: "Siale Lauaki" },
-        { number: 2, name: "Samisoni Taukei'aho" },
-        { number: 3, name: "Pasilio Tosi" },
-        { number: 4, name: "Sam Darry" },
-        { number: 5, name: "Patrick Tuipulotu (C)" },
-        { number: 6, name: "Wallace Sititi" },
-        { number: 7, name: "Ethan Blackadder" },
-        { number: 8, name: "Semisi Ta'eiloa" },
-        { number: 9, name: "Noah Hotham" },
-        { number: 10, name: "Richie Mo'unga" },
-        { number: 11, name: "Emoni Narawa" },
-        { number: 12, name: "Timoci Tavatavanawai" },
-        { number: 13, name: "Rieko Ioane" },
-        { number: 14, name: "Fehi Fineanganofo" },
-        { number: 15, name: "Beauden Barrett" },
-      ],
-      awayBench: [
-        { number: 16, name: "Bradley Slater" },
-        { number: 17, name: "Ofa Tu'ungafasi" },
-        { number: 18, name: "Saula Ma'u" },
-        { number: 19, name: "Jamie Hannah" },
-        { number: 20, name: "Peter Lakai" },
-        { number: 21, name: "Kyle Preston" },
-        { number: 22, name: "Josh Jacomb" },
-        { number: 23, name: "Anton Lienert-Brown" },
-      ],
-    },
-    performances: [
-      { category: "Coach", player: "Ivan van Rooyen", value: "Lions" },
-      { category: "Coach", player: "Dave Rennie", value: "New Zealand" },
-      { category: "Captain", player: "Francke Horn", value: "Lions" },
-      { category: "Captain", player: "Patrick Tuipulotu", value: "New Zealand" },
-      { category: "Venue", player: "Ellis Park", value: "Johannesburg" },
-      { category: "Referee", player: "Angus Gardner", value: "RA" },
-      { category: "Assistant Referee 1", player: "Karl Dickson", value: "RFU" },
-      { category: "Assistant Referee 2", player: "Nika Amashukeli", value: "GRU" },
-      { category: "TMO", player: "Brett Cronan", value: "RA" },
-    ],
   },
 
   // ==================================================
@@ -852,67 +437,6 @@ export const matchDetailsMen: MatchDetails[] = [
         turnoversWon: 14,
         penaltiesConceded: 14,
       },
-    },
-    timeline: [
-      { minute: "0'", label: "Kick-off — Ellis Park, Johannesburg" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
-    lineups: {
-      homeStarting: [
-        { number: 1, name: "Ox Nche" },
-        { number: 2, name: "Malcolm Marx" },
-        { number: 3, name: "Wilco Louw" },
-        { number: 4, name: "Eben Etzebeth" },
-        { number: 5, name: "Ruan Nortje" },
-        { number: 6, name: "Paul de Villiers" },
-        { number: 7, name: "Pieter-Steph du Toit (C)" },
-        { number: 8, name: "Jasper Wiese" },
-        { number: 9, name: "Grant Williams" },
-        { number: 10, name: "Sacha Feinberg-Mngomezulu" },
-        { number: 11, name: "Kurt-Lee Arendse" },
-        { number: 12, name: "Damian de Allende" },
-        { number: 13, name: "Jesse Kriel" },
-        { number: 14, name: "Cheslin Kolbe" },
-        { number: 15, name: "Damian Willemse" },
-      ],
-      homeBench: [
-        { number: 16, name: "Jan-Hendrik Wessels" },
-        { number: 17, name: "Gerhard Steenekamp" },
-        { number: 18, name: "Zachary Porthen" },
-        { number: 19, name: "Cobus Wiese" },
-        { number: 20, name: "Andre Esterhuizen" },
-        { number: 21, name: "Marco van Staden" },
-        { number: 22, name: "Cobus Reinach" },
-        { number: 23, name: "Manie Libbok" },
-      ],
-      awayStarting: [
-        { number: 1, name: "Ethan de Groot" },
-        { number: 2, name: "Codie Taylor" },
-        { number: 3, name: "Tyrel Lomax" },
-        { number: 4, name: "Josh Lord" },
-        { number: 5, name: "Fabian Holland" },
-        { number: 6, name: "Tupou Vaa'i" },
-        { number: 7, name: "Luke Jacobson" },
-        { number: 8, name: "Ardie Savea (C)" },
-        { number: 9, name: "Cam Roigard" },
-        { number: 10, name: "Ruben Love" },
-        { number: 11, name: "Josh Moorby" },
-        { number: 12, name: "Jordie Barrett" },
-        { number: 13, name: "Quinn Tupaea" },
-        { number: 14, name: "Will Jordan" },
-        { number: 15, name: "Damian McKenzie" },
-      ],
-      awayBench: [
-        { number: 16, name: "Asafo Aumua" },
-        { number: 17, name: "George Bower" },
-        { number: 18, name: "Fletcher Newell" },
-        { number: 19, name: "Anton Segner" },
-        { number: 20, name: "Peter Lakai" },
-        { number: 21, name: "Kyle Preston" },
-        { number: 22, name: "Anton Lienert-Brown" },
-        { number: 23, name: "Leroy Carter" },
-      ],
     },
     performances: [
       { category: "Coach", player: "Rassie Erasmus", value: "South Africa" },
@@ -954,78 +478,6 @@ export const matchDetailsMen: MatchDetails[] = [
         penaltiesConceded: 12,
       },
     },
-    timeline: [
-      { minute: "0'", label: "Kick-off — DHL Stadium, Cape Town" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
-    lineups: {
-      homeStarting: [
-        { number: 1, name: "Ox Nche" },
-        { number: 2, name: "Malcolm Marx" },
-        { number: 3, name: "Wilco Louw" },
-        { number: 4, name: "Eben Etzebeth" },
-        { number: 5, name: "Ruan Nortje" },
-        { number: 6, name: "Siya Kolisi (C)" },
-        { number: 7, name: "Pieter-Steph du Toit" },
-        { number: 8, name: "Jasper Wiese" },
-        { number: 9, name: "Cobus Reinach" },
-        { number: 10, name: "Sacha Feinberg-Mngomezulu" },
-        { number: 11, name: "Ethan Hooker" },
-        { number: 12, name: "Damian de Allende" },
-        { number: 13, name: "Jesse Kriel" },
-        { number: 14, name: "Kurt-Lee Arendse" },
-        { number: 15, name: "Damian Willemse" },
-      ],
-      homeBench: [
-        { number: 16, name: "Deon Fourie" },
-        { number: 17, name: "Gerhard Steenekamp" },
-        { number: 18, name: "Thomas du Toit" },
-        { number: 19, name: "Lood de Jager" },
-        { number: 20, name: "Andre Esterhuizen" },
-        { number: 21, name: "Cameron Hanekom" },
-        { number: 22, name: "Morne van den Berg" },
-        { number: 23, name: "Manie Libbok" },
-      ],
-      awayStarting: [
-        { number: 1, name: "George Bower" },
-        { number: 2, name: "Codie Taylor" },
-        { number: 3, name: "Tyrel Lomax" },
-        { number: 4, name: "Fabian Holland" },
-        { number: 5, name: "Tupou Vaa'i" },
-        { number: 6, name: "Simon Parker" },
-        { number: 7, name: "Luke Jacobson" },
-        { number: 8, name: "Ardie Savea (C)" },
-        { number: 9, name: "Cam Roigard" },
-        { number: 10, name: "Ruben Love" },
-        { number: 11, name: "Leroy Carter" },
-        { number: 12, name: "Jordie Barrett" },
-        { number: 13, name: "Quinn Tupaea" },
-        { number: 14, name: "Will Jordan" },
-        { number: 15, name: "Damian McKenzie" },
-      ],
-      awayBench: [
-        { number: 16, name: "Asafo Aumua" },
-        { number: 17, name: "Xavier Numia" },
-        { number: 18, name: "Fletcher Newell" },
-        { number: 19, name: "Patrick Tuipulotu" },
-        { number: 20, name: "Peter Lakai" },
-        { number: 21, name: "Kyle Preston" },
-        { number: 22, name: "Anton Lienert-Brown" },
-        { number: 23, name: "Josh Moorby" },
-      ],
-    },
-    performances: [
-      { category: "Coach", player: "Rassie Erasmus", value: "South Africa" },
-      { category: "Coach", player: "Dave Rennie", value: "New Zealand" },
-      { category: "Captain", player: "Siya Kolisi", value: "South Africa" },
-      { category: "Captain", player: "Ardie Savea", value: "New Zealand" },
-      { category: "Venue", player: "DHL Stadium", value: "Cape Town" },
-      { category: "Referee", player: "Angus Gardner", value: "RA" },
-      { category: "Assistant Referee 1", player: "Karl Dickson", value: "RFU" },
-      { category: "Assistant Referee 2", player: "Sam Grove-White", value: "SRU" },
-      { category: "TMO", player: "Brett Cronan", value: "RA" },
-    ],
   },
 
   {
@@ -1055,67 +507,6 @@ matchStats: {
     penaltiesConceded: 12,
   },
 },
-  timeline: [
-    { minute: "0'", label: "Kick-off — FNB Stadium, Johannesburg" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "Ox Nche" },
-      { number: 2, name: "Malcolm Marx" },
-      { number: 3, name: "Wilco Louw" },
-      { number: 4, name: "Eben Etzebeth" },
-      { number: 5, name: "Ruan Nortje" },
-      { number: 6, name: "Siya Kolisi (C)" },
-      { number: 7, name: "Pieter-Steph du Toit" },
-      { number: 8, name: "Jasper Wiese" },
-      { number: 9, name: "Cobus Reinach" },
-      { number: 10, name: "Sacha Feinberg-Mngomezulu" },
-      { number: 11, name: "Ethan Hooker" },
-      { number: 12, name: "Damian de Allende" },
-      { number: 13, name: "Jesse Kriel" },
-      { number: 14, name: "Kurt-Lee Arendse" },
-      { number: 15, name: "Cheslin Kolbe" },
-    ],
-    homeBench: [
-      { number: 16, name: "Deon Fourie" },
-      { number: 17, name: "Gerhard Steenekamp" },
-      { number: 18, name: "Thomas du Toit" },
-      { number: 19, name: "Lood de Jager" },
-      { number: 20, name: "Andre Esterhuizen" },
-      { number: 21, name: "Cameron Hanekom" },
-      { number: 22, name: "Morne van den Berg" },
-      { number: 23, name: "Manie Libbok" },
-    ],
-    awayStarting: [
-      { number: 1, name: "George Bower" },
-      { number: 2, name: "Asafo Aumua" },
-      { number: 3, name: "Tyrel Lomax" },
-      { number: 4, name: "Tupou Vaa'i" },
-      { number: 5, name: "Sam Darry" },
-      { number: 6, name: "Peter Lakai" },
-      { number: 7, name: "Luke Jacobson" },
-      { number: 8, name: "Ardie Savea (C)" },
-      { number: 9, name: "Cam Roigard" },
-      { number: 10, name: "Ruben Love" },
-      { number: 11, name: "Leroy Carter" },
-      { number: 12, name: "Jordie Barrett" },
-      { number: 13, name: "Quinn Tupaea" },
-      { number: 14, name: "Will Jordan" },
-      { number: 15, name: "Damian McKenzie" },
-    ],
-    awayBench: [
-      { number: 16, name: "Samisoni Taukei'aho" },
-      { number: 17, name: "Xavier Numia" },
-      { number: 18, name: "Fletcher Newell" },
-      { number: 19, name: "Fabian Holland" },
-      { number: 20, name: "Wallace Sititi" },
-      { number: 21, name: "Kyle Preston" },
-      { number: 22, name: "Anton Lienert-Brown" },
-      { number: 23, name: "Josh Moorby" },
-    ],
-  },
   performances: [
     { category: "Coach", player: "Rassie Erasmus", value: "South Africa" },
     { category: "Coach", player: "Dave Rennie", value: "New Zealand" },
@@ -1156,67 +547,6 @@ matchStats: {
     penaltiesConceded: 9,
   },
 },
-  timeline: [
-    { minute: "0'", label: "Kick-off — M&T Bank Stadium, Baltimore" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "Ox Nche" },
-      { number: 2, name: "Malcolm Marx" },
-      { number: 3, name: "Wilco Louw" },
-      { number: 4, name: "Eben Etzebeth" },
-      { number: 5, name: "Ruan Nortjé" },
-      { number: 6, name: "Siya Kolisi (C)" },
-      { number: 7, name: "Pieter-Steph du Toit" },
-      { number: 8, name: "Jasper Wiese" },
-      { number: 9, name: "Morné van den Berg" },
-      { number: 10, name: "Sacha Feinberg-Mngomezulu" },
-      { number: 11, name: "Ethan Hooker" },
-      { number: 12, name: "Damian de Allende" },
-      { number: 13, name: "Jesse Kriel" },
-      { number: 14, name: "Kurt-Lee Arendse" },
-      { number: 15, name: "Damian Willemse" },
-    ],
-    homeBench: [
-      { number: 16, name: "Deon Fourie" },
-      { number: 17, name: "Gerhard Steenekamp" },
-      { number: 18, name: "Thomas du Toit" },
-      { number: 19, name: "Lood de Jager" },
-      { number: 20, name: "André Esterhuizen" },
-      { number: 21, name: "Cameron Hanekom" },
-      { number: 22, name: "Cobus Reinach" },
-      { number: 23, name: "Manie Libbok" },
-    ],
-    awayStarting: [
-      { number: 1, name: "Ethan de Groot" },
-      { number: 2, name: "Codie Taylor (C)" },
-      { number: 3, name: "Fletcher Newell" },
-      { number: 4, name: "Patrick Tuipulotu" },
-      { number: 5, name: "Sam Darry" },
-      { number: 6, name: "Tupou Vaa'i" },
-      { number: 7, name: "Ethan Blackadder" },
-      { number: 8, name: "Peter Lakai" },
-      { number: 9, name: "Cam Roigard" },
-      { number: 10, name: "Richie Mo'unga" },
-      { number: 11, name: "Josh Moorby" },
-      { number: 12, name: "Jordie Barrett" },
-      { number: 13, name: "Anton Lienert-Brown" },
-      { number: 14, name: "Will Jordan" },
-      { number: 15, name: "Damian McKenzie" },
-    ],
-    awayBench: [
-      { number: 16, name: "Asafo Aumua" },
-      { number: 17, name: "Xavier Numia" },
-      { number: 18, name: "Tyrel Lomax" },
-      { number: 19, name: "Josh Lord" },
-      { number: 20, name: "Wallace Sititi" },
-      { number: 21, name: "Kyle Preston" },
-      { number: 22, name: "Rieko Ioane" },
-      { number: 23, name: "Beauden Barrett" },
-    ],
-  },
   performances: [
     { category: "Coach", player: "Rassie Erasmus", value: "South Africa" },
     { category: "Coach", player: "Dave Rennie", value: "New Zealand" },
@@ -1237,67 +567,6 @@ matchStats: {
 
   {
     matchKey: "argentina-vs-south-africa",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio José Amalfitani, Buenos Aires" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
-    lineups: {
-      homeStarting: [
-        { number: 1, name: "Mayco Vivas" },
-        { number: 2, name: "Ignacio Ruiz" },
-        { number: 3, name: "Tomás Rapetti" },
-        { number: 4, name: "Efraín Elías" },
-        { number: 5, name: "Guido Petti" },
-        { number: 6, name: "Pablo Matera" },
-        { number: 7, name: "Benjamín Grondona" },
-        { number: 8, name: "Joaquín Moro" },
-        { number: 9, name: "Simón Benítez Cruz" },
-        { number: 10, name: "Gerónimo Prisciantelli" },
-        { number: 11, name: "Ignacio Mendy" },
-        { number: 12, name: "Matías Moroni" },
-        { number: 13, name: "Lucio Cinti" },
-        { number: 14, name: "Rodrigo Isgró" },
-        { number: 15, name: "Santiago Carreras" },
-      ],
-      homeBench: [
-        { number: 16, name: "Leonel Oviedo" },
-        { number: 17, name: "Rodrigo Martínez" },
-        { number: 18, name: "Pedro Delgado" },
-        { number: 19, name: "Tomás Lavanini" },
-        { number: 20, name: "Juan Martín Scelzo" },
-        { number: 21, name: "Gonzalo Bertranou" },
-        { number: 22, name: "Nicolás Roger" },
-        { number: 23, name: "Mateo Soler" },
-      ],
-      awayStarting: [
-        { number: 1, name: "Thomas du Toit" },
-        { number: 2, name: "Johan Grobbelaar" },
-        { number: 3, name: "Wilco Louw" },
-        { number: 4, name: "Eben Etzebeth" },
-        { number: 5, name: "Lood de Jager" },
-        { number: 6, name: "Marco van Staden" },
-        { number: 7, name: "Elrigh Louw" },
-        { number: 8, name: "Cameron Hanekom" },
-        { number: 9, name: "Cobus Reinach" },
-        { number: 10, name: "Handre Pollard" },
-        { number: 11, name: "Canan Moodie" },
-        { number: 12, name: "Andre Esterhuizen" },
-        { number: 13, name: "Ethan Hooker" },
-        { number: 14, name: "Aphelele Fassi" },
-        { number: 15, name: "Sacha Feinberg-Mngomezulu" },
-      ],
-      awayBench: [
-        { number: 16, name: "Jan-Hendrik Wessels" },
-        { number: 17, name: "Gerhard Steenekamp" },
-        { number: 18, name: "Zachary Porthen" },
-        { number: 19, name: "Cobus Wiese" },
-        { number: 20, name: "Ben-Jason Dixon" },
-        { number: 21, name: "Morne van den Berg" },
-        { number: 22, name: "Herchel Jantjies" },
-        { number: 23, name: "Quan Horn" },
-      ],
-    },
     performances: [
       { category: "Coach", player: "Felipe Contepomi", value: "Argentina" },
       { category: "Coach", player: "Rassie Erasmus", value: "South Africa" },
@@ -1314,67 +583,6 @@ matchStats: {
 
   {
     matchKey: "japan-vs-australia",
-    timeline: [
-      { minute: "0'", label: "Kick-off — Hanazono Rugby Stadium, Osaka" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
-    lineups: {
-      homeStarting: [
-        { number: 1, name: "Takato Okabe" },
-        { number: 2, name: "Hayate Era" },
-        { number: 3, name: "Shuhei Takeuchi" },
-        { number: 4, name: "Harry Hockings" },
-        { number: 5, name: "Warner Dearns (C)" },
-        { number: 6, name: "Ben Gunter" },
-        { number: 7, name: "Kanji Shimokawa" },
-        { number: 8, name: "Jack Cornelsen" },
-        { number: 9, name: "Naoto Saito" },
-        { number: 10, name: "Ryunosuke Ito" },
-        { number: 11, name: "Kazuma Ueda" },
-        { number: 12, name: "Samisoni Tua" },
-        { number: 13, name: "Dylan Riley" },
-        { number: 14, name: "Kippei Ishida" },
-        { number: 15, name: "Yoshitaka Yazaki" },
-      ],
-      homeBench: [
-        { number: 16, name: "Kenji Sato" },
-        { number: 17, name: "Sojiro Otsuka" },
-        { number: 18, name: "Keijiro Tamefusa" },
-        { number: 19, name: "Michael Stolberg" },
-        { number: 20, name: "Michael Leitch" },
-        { number: 21, name: "Tiennan Costley" },
-        { number: 22, name: "Itsuki Kamimura" },
-        { number: 23, name: "Shunsuke Uenobo" },
-      ],
-      awayStarting: [
-        { number: 1, name: "Aidan Ross" },
-        { number: 2, name: "Josh Nasser" },
-        { number: 3, name: "Allan Alaalatoa" },
-        { number: 4, name: "Josh Canham" },
-        { number: 5, name: "Miles Amatosero" },
-        { number: 6, name: "Rob Valetini" },
-        { number: 7, name: "Fraser McReight" },
-        { number: 8, name: "Harry Wilson (C)" },
-        { number: 9, name: "Ryan Lonergan" },
-        { number: 10, name: "Declan Meredith" },
-        { number: 11, name: "Harry Potter" },
-        { number: 12, name: "Hunter Paisami" },
-        { number: 13, name: "Joseph-Aukuso Suaalii" },
-        { number: 14, name: "Max Jorgensen" },
-        { number: 15, name: "Tom Wright" },
-      ],
-      awayBench: [
-        { number: 16, name: "Billy Pollard" },
-        { number: 17, name: "Angus Bell" },
-        { number: 18, name: "Taniela Tupou" },
-        { number: 19, name: "Jeremy Williams" },
-        { number: 20, name: "Charlie Cale" },
-        { number: 21, name: "Tate McDermott" },
-        { number: 22, name: "Ben Donaldson" },
-        { number: 23, name: "Isaac Henry" },
-      ],
-    },
     performances: [
       { category: "Coach", player: "Eddie Jones", value: "Japan" },
       { category: "Coach", player: "Les Kiss", value: "Australia" },
@@ -1414,67 +622,6 @@ matchStats: {
         turnoversWon: 10,
         penaltiesConceded: 9,
       },
-    },
-    timeline: [
-      { minute: "0'", label: "Kick-off — Estadio 23 de Agosto, Jujuy" },
-      { minute: "40'", label: "Half Time" },
-      { minute: "80'", label: "Full Time" },
-    ],
-    lineups: {
-      homeStarting: [
-        { number: 1, name: "Boris Wenger" },
-        { number: 2, name: "Ignacio Ruiz" },
-        { number: 3, name: "Francisco Moreno" },
-        { number: 4, name: "Guido Petti" },
-        { number: 5, name: "Tomás Lavanini" },
-        { number: 6, name: "Pablo Matera (C)" },
-        { number: 7, name: "Benjamín Grondona" },
-        { number: 8, name: "Joaquín Moro" },
-        { number: 9, name: "Simón Benítez Cruz" },
-        { number: 10, name: "Santiago Carreras" },
-        { number: 11, name: "Ignacio Mendy" },
-        { number: 12, name: "Faustino Sánchez Valarolo" },
-        { number: 13, name: "Lucio Cinti" },
-        { number: 14, name: "Rodrigo Isgró" },
-        { number: 15, name: "Gerónimo Prisciantelli" },
-      ],
-      homeBench: [
-        { number: 16, name: "Leonel Oviedo" },
-        { number: 17, name: "Rodrigo Martínez" },
-        { number: 18, name: "Tomás Rapetti" },
-        { number: 19, name: "Efraín Elías" },
-        { number: 20, name: "Juan Penoucos" },
-        { number: 21, name: "Agustín Moyano" },
-        { number: 22, name: "Nicolás Roger" },
-        { number: 23, name: "Matías Moroni" },
-      ],
-      awayStarting: [
-        { number: 1, name: "Isaac Kailea" },
-        { number: 2, name: "Brandon Paenga-Amosa" },
-        { number: 3, name: "Allan Alaalatoa (C)" },
-        { number: 4, name: "Josh Canham" },
-        { number: 5, name: "Jeremy Williams" },
-        { number: 6, name: "Tom Hooper" },
-        { number: 7, name: "Fraser McReight" },
-        { number: 8, name: "Rob Valetini" },
-        { number: 9, name: "Ryan Lonergan" },
-        { number: 10, name: "Carter Gordon" },
-        { number: 11, name: "Harry Potter" },
-        { number: 12, name: "Hunter Paisami" },
-        { number: 13, name: "Isaac Henry" },
-        { number: 14, name: "Max Jorgensen" },
-        { number: 15, name: "Tom Wright" },
-      ],
-      awayBench: [
-        { number: 16, name: "Billy Pollard" },
-        { number: 17, name: "Angus Bell" },
-        { number: 18, name: "Massimo de Lutiis" },
-        { number: 19, name: "Lachlan Shaw" },
-        { number: 20, name: "Charlie Cale" },
-        { number: 21, name: "Tate McDermott" },
-        { number: 22, name: "Ben Donaldson" },
-        { number: 23, name: "Joseph-Aukuso Suaalii" },
-      ],
     },
     performances: [
       { category: "Coach", player: "Felipe Contepomi", value: "Argentina" },
@@ -1516,67 +663,6 @@ matchStats: {
     penaltiesConceded: 10,
   },
 },
-  timeline: [
-    { minute: "0'", label: "Kick-off — Estadio Malvinas Argentinas, Mendoza" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "Boris Wenger" },
-      { number: 2, name: "Ignacio Ruiz" },
-      { number: 3, name: "Pedro Delgado" },
-      { number: 4, name: "Efraín Elías" },
-      { number: 5, name: "Franco Molina" },
-      { number: 6, name: "Pablo Matera (C)" },
-      { number: 7, name: "Guido Petti" },
-      { number: 8, name: "Joaquín Moro" },
-      { number: 9, name: "Simón Benítez Cruz" },
-      { number: 10, name: "Nicolás Roger" },
-      { number: 11, name: "Ignacio Mendy" },
-      { number: 12, name: "Faustino Sánchez Valarolo" },
-      { number: 13, name: "Lucio Cinti" },
-      { number: 14, name: "Rodrigo Isgró" },
-      { number: 15, name: "Santiago Carreras" },
-    ],
-    homeBench: [
-      { number: 16, name: "Leonel Oviedo" },
-      { number: 17, name: "Mayco Vivas" },
-      { number: 18, name: "Francisco Moreno" },
-      { number: 19, name: "Tomás Lavanini" },
-      { number: 20, name: "Juan Martín Scelzo" },
-      { number: 21, name: "Facundo Cardozo" },
-      { number: 22, name: "Gonzalo Bertranou" },
-      { number: 23, name: "Mateo Soler" },
-    ],
-    awayStarting: [
-      { number: 1, name: "Angus Bell" },
-      { number: 2, name: "Billy Pollard" },
-      { number: 3, name: "Taniela Tupou" },
-      { number: 4, name: "Josh Canham" },
-      { number: 5, name: "Jeremy Williams" },
-      { number: 6, name: "Rob Valetini" },
-      { number: 7, name: "Fraser McReight" },
-      { number: 8, name: "Harry Wilson (C)" },
-      { number: 9, name: "Ryan Lonergan" },
-      { number: 10, name: "Ben Donaldson" },
-      { number: 11, name: "Filipo Daugunu" },
-      { number: 12, name: "Len Ikitau" },
-      { number: 13, name: "Joseph-Aukuso Suaalii" },
-      { number: 14, name: "Max Jorgensen" },
-      { number: 15, name: "Tom Wright" },
-    ],
-    awayBench: [
-      { number: 16, name: "Josh Nasser" },
-      { number: 17, name: "Aidan Ross" },
-      { number: 18, name: "Massimo de Lutiis" },
-      { number: 19, name: "Lukhan Salakaia-Loto" },
-      { number: 20, name: "Charlie Cale" },
-      { number: 21, name: "Kalani Thomas" },
-      { number: 22, name: "Carter Gordon" },
-      { number: 23, name: "Isaac Henry" },
-    ],
-  },
   performances: [
     { category: "Coach", player: "Felipe Contepomi", value: "Argentina" },
     { category: "Coach", player: "Les Kiss", value: "Australia" },
@@ -1592,11 +678,6 @@ matchStats: {
 
 {
   matchKey: "polska-vs-czechy-2026",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Stadion Miejski, Nowy Sącz" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
   performances: [
     { category: "Competition", player: "Friendly", value: "International Test" },
     { category: "Venue", player: "Stadion Miejski im. Ojca Władysława Augustynka", value: "Nowy Sącz" },
@@ -1606,12 +687,7 @@ matchStats: {
 
 {
   matchKey: "australia-vs-south-africa-2026",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Optus Stadium, Perth" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=v6br3W0tLsA",
   matchStats: {
     home: { // Australia
       metresMade: 0,
@@ -1636,77 +712,6 @@ matchStats: {
       penaltiesConceded: 0,
     },
   },
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "Angus Bell" },
-      { number: 2, name: "Brandon Paenga-Amosa" },
-      { number: 3, name: "Allan Alaalatoa" },
-      { number: 4, name: "Josh Canham" },
-      { number: 5, name: "Jeremy Williams" },
-      { number: 6, name: "Rob Valetini" },
-      { number: 7, name: "Fraser McReight" },
-      { number: 8, name: "Harry Wilson (C)" },
-      { number: 9, name: "Ryan Lonergan" },
-      { number: 10, name: "Ben Donaldson" },
-      { number: 11, name: "Joseph-Aukuso Suaalii" },
-      { number: 12, name: "Hunter Paisami" },
-      { number: 13, name: "Len Ikitau" },
-      { number: 14, name: "Max Jorgensen" },
-      { number: 15, name: "Tom Wright" },
-    ],
-    homeBench: [
-      { number: 16, name: "Billy Pollard" },
-      { number: 17, name: "Aidan Ross" },
-      { number: 18, name: "Taniela Tupou" },
-      { number: 19, name: "Lukhan Salakaia-Loto" },
-      { number: 20, name: "Tom Hooper" },
-      { number: 21, name: "Carlo Tizzano" },
-      { number: 22, name: "Tate McDermott" },
-      { number: 23, name: "Harry Potter" },
-    ],
-    awayStarting: [
-      { number: 1, name: "Jan-Hendrik Wessels" },
-      { number: 2, name: "Johan Grobbelaar" },
-      { number: 3, name: "Zachary Porthen" },
-      { number: 4, name: "Eben Etzebeth" },
-      { number: 5, name: "Franco Mostert" },
-      { number: 6, name: "Paul de Villiers" },
-      { number: 7, name: "Elrigh Louw" },
-      { number: 8, name: "Marco van Staden" },
-      { number: 9, name: "Herschel Jantjies" },
-      { number: 10, name: "Handre Pollard" },
-      { number: 11, name: "Ethan Hooker" },
-      { number: 12, name: "Andre Esterhuizen (C)" },
-      { number: 13, name: "Canan Moodie" },
-      { number: 14, name: "Edwill van der Merwe" },
-      { number: 15, name: "Aphelele Fassi" },
-    ],
-    awayBench: [
-      { number: 16, name: "Malcolm Marx" },
-      { number: 17, name: "Ox Nche" },
-      { number: 18, name: "Wilco Louw" },
-      { number: 19, name: "Lood de Jager" },
-      { number: 20, name: "Jasper Wiese" },
-      { number: 21, name: "Morne van den Berg" },
-      { number: 22, name: "Sacha Feinberg-Mngomezulu" },
-      { number: 23, name: "Quan Horn" },
-    ],
-  },
-  performances: [
-    { category: "Coach", player: "Les Kiss", value: "Australia" },
-    { category: "Coach", player: "Rassie Erasmus", value: "South Africa" },
-    { category: "Captain", player: "Harry Wilson", value: "Australia" },
-    { category: "Captain", player: "Siya Kolisi", value: "South Africa" },
-    { category: "Venue", player: "Optus Stadium", value: "Perth" },
-    { category: "Referee", player: "Andrea Piardi", value: "FIR" },
-    { category: "Assistant Referee 1", player: "Ben O'Keeffe", value: "NZR" },
-    { category: "Assistant Referee 2", player: "James Doleman", value: "NZR" },
-    { category: "TMO", player: "Matteo Liperini", value: "FIR" },
-    { category: "Competition", player: "Flight Centre Series", value: "One-off Test" },
-    { category: "Note", player: "Pieter-Steph du Toit & Damian de Allende", value: "Rested for South Africa" },
-    { category: "Note", player: "Charlie Cale", value: "Out for Australia (shoulder surgery)" },
-    { category: "Note", player: "Jordan Petaia", value: "Returns to Wallabies squad" },
-  ],
 },
 
 // ==================================================
@@ -1740,67 +745,6 @@ matchStats: {
     penaltiesConceded: 10,
   },
 },
-  timeline: [
-    { minute: "0'", label: "Kick-off — Hanazono Rugby Stadium, Osaka" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "Peni Ravai" },
-      { number: 2, name: "Tevita Ikanivere (C)" },
-      { number: 3, name: "Mesake Doge" },
-      { number: 4, name: "Mesake Vocevoce" },
-      { number: 5, name: "Temo Mayanavanua" },
-      { number: 6, name: "Kitione Salawa" },
-      { number: 7, name: "Motikiai Murray" },
-      { number: 8, name: "Isoa Tuwai" },
-      { number: 9, name: "Frank Lomani" },
-      { number: 10, name: "Isaiah Armstrong-Ravula" },
-      { number: 11, name: "Manasa Mataele" },
-      { number: 12, name: "Kalaveti Ravouvou" },
-      { number: 13, name: "Virimi Vakatawa" },
-      { number: 14, name: "Joji Nasova" },
-      { number: 15, name: "Isikeli Rabitu" },
-    ],
-    homeBench: [
-      { number: 16, name: "Penaia Cakobau" },
-      { number: 17, name: "Meli Tuni" },
-      { number: 18, name: "Inoke Ravuiwasa" },
-      { number: 19, name: "Isoa Nasilasila" },
-      { number: 20, name: "Joseva Tamani" },
-      { number: 21, name: "Terio Tamani" },
-      { number: 22, name: "Caleb Muntz" },
-      { number: 23, name: "Tuidraki Samusamuvodre" },
-    ],
-    awayStarting: [
-      { number: 1, name: "Sam Miller" },
-      { number: 2, name: "Dewald Kotze" },
-      { number: 3, name: "Kyle Steeves" },
-      { number: 4, name: "Daragh Doyle" },
-      { number: 5, name: "Izzak Kelly" },
-      { number: 6, name: "Mason Flesch" },
-      { number: 7, name: "Siôn Parry" },
-      { number: 8, name: "Lucas Rumball" },
-      { number: 9, name: "Jason Higgins" },
-      { number: 10, name: "Spencer Jones" },
-      { number: 11, name: "Jamie Armstrong" },
-      { number: 12, name: "Ben LeSage" },
-      { number: 13, name: "Jacob Ince" },
-      { number: 14, name: "Kyle Tremblay" },
-      { number: 15, name: "Takoda McMullin" },
-    ],
-    awayBench: [
-      { number: 16, name: "Austin Creighton" },
-      { number: 17, name: "Emerson Prior" },
-      { number: 18, name: "Bryce Worden" },
-      { number: 19, name: "Barnaby Waddell" },
-      { number: 20, name: "Ethan Fryer" },
-      { number: 21, name: "Stephen Webb" },
-      { number: 22, name: "Cooper Coats" },
-      { number: 23, name: "Josh McIndoe" },
-    ],
-  },
   performances: [
     { category: "Coach", player: "Senirusi Seruvakula", value: "Fiji" },
     { category: "Coach", player: "Stephen Meehan", value: "Canada" },
@@ -1837,67 +781,6 @@ matchStats: {
     penaltiesConceded: 12,
   },
 },
-  timeline: [
-    { minute: "0'", label: "Kick-off — Hanazono Rugby Stadium, Osaka" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "Sojiro Otsuka" },
-      { number: 2, name: "Mamoru Harada" },
-      { number: 3, name: "Shuhei Takeuchi" },
-      { number: 4, name: "Michael Stolberg" },
-      { number: 5, name: "Harry Hockings" },
-      { number: 6, name: "Ben Gunter" },
-      { number: 7, name: "Kanji Shimokawa" },
-      { number: 8, name: "Jack Cornelsen" },
-      { number: 9, name: "Naoto Saito (C)" },
-      { number: 10, name: "Ryunosuke Ito" },
-      { number: 11, name: "Kazuma Ueda" },
-      { number: 12, name: "Yuya Hirose" },
-      { number: 13, name: "Dylan Riley" },
-      { number: 14, name: "Inoke Burua" },
-      { number: 15, name: "Sam Greene" },
-    ],
-    homeBench: [
-      { number: 16, name: "Takato Okabe" },
-      { number: 17, name: "Takumi Inaba" },
-      { number: 18, name: "Keijiro Tamefusa" },
-      { number: 19, name: "Ruan Botha" },
-      { number: 20, name: "Tiennan Costley" },
-      { number: 21, name: "Esei Haangana" },
-      { number: 22, name: "Shinobu Fujiwara" },
-      { number: 23, name: "Tomoki Osada" },
-    ],
-    awayStarting: [
-      { number: 1, name: "TBD" },
-      { number: 2, name: "TBD" },
-      { number: 3, name: "TBD" },
-      { number: 4, name: "TBD" },
-      { number: 5, name: "TBD" },
-      { number: 6, name: "TBD" },
-      { number: 7, name: "TBD" },
-      { number: 8, name: "TBD" },
-      { number: 9, name: "TBD" },
-      { number: 10, name: "TBD" },
-      { number: 11, name: "TBD" },
-      { number: 12, name: "TBD" },
-      { number: 13, name: "TBD" },
-      { number: 14, name: "TBD" },
-      { number: 15, name: "TBD" },
-    ],
-    awayBench: [
-      { number: 16, name: "TBD" },
-      { number: 17, name: "TBD" },
-      { number: 18, name: "TBD" },
-      { number: 19, name: "TBD" },
-      { number: 20, name: "TBD" },
-      { number: 21, name: "TBD" },
-      { number: 22, name: "TBD" },
-      { number: 23, name: "TBD" },
-    ],
-  },
   performances: [
     { category: "Coach", player: "Eddie Jones", value: "Japan" },
     { category: "Coach", player: "TBD", value: "USA" },
@@ -1910,67 +793,6 @@ matchStats: {
 {
   matchKey: "japan-vs-fiji",
   highlightsUrl: "https://www.youtube.com/watch?v=r_Vwr3Gw3lY",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Prince Chichibu Memorial Stadium, Tokyo" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "Sojiro Otsuka" },
-      { number: 2, name: "Mamoru Harada" },
-      { number: 3, name: "Shuhei Takeuchi" },
-      { number: 4, name: "Jack Cornelsen" },
-      { number: 5, name: "Harry Hockings" },
-      { number: 6, name: "Ben Gunter" },
-      { number: 7, name: "Kanji Shimokawa" },
-      { number: 8, name: "Faulua Makisi" },
-      { number: 9, name: "Naoto Saito (C)" },
-      { number: 10, name: "Ryunosuke Ito" },
-      { number: 11, name: "Tomoki Osada" },
-      { number: 12, name: "Yuya Hirose" },
-      { number: 13, name: "Dylan Riley" },
-      { number: 14, name: "Inoke Burua" },
-      { number: 15, name: "Sam Greene" },
-    ],
-    homeBench: [
-      { number: 16, name: "Kenji Sato" },
-      { number: 17, name: "Sena Kimura" },
-      { number: 18, name: "Takumi Inaba" },
-      { number: 19, name: "Michael Stolberg" },
-      { number: 20, name: "Esei Haangana" },
-      { number: 21, name: "Tiennan Costley" },
-      { number: 22, name: "Shinobu Fujiwara" },
-      { number: 23, name: "Samisoni Tua" },
-    ],
-    awayStarting: [
-      { number: 1, name: "Peni Ravai" },
-      { number: 2, name: "Tevita Ikanivere (C)" },
-      { number: 3, name: "Mesake Doge" },
-      { number: 4, name: "Mesake Vocevoce" },
-      { number: 5, name: "Temo Mayanavanua" },
-      { number: 6, name: "Kitione Salawa" },
-      { number: 7, name: "Motikiai Murray" },
-      { number: 8, name: "Isoa Tuwai" },
-      { number: 9, name: "Frank Lomani" },
-      { number: 10, name: "Caleb Muntz" },
-      { number: 11, name: "Manasa Mataele" },
-      { number: 12, name: "Kalaveti Ravouvou" },
-      { number: 13, name: "Virimi Vakatawa" },
-      { number: 14, name: "Joji Nasova" },
-      { number: 15, name: "Isaiah Armstrong-Ravula" },
-    ],
-    awayBench: [
-      { number: 16, name: "Penaia Cakobau" },
-      { number: 17, name: "Meli Tuni" },
-      { number: 18, name: "Inoke Ravuiwasa" },
-      { number: 19, name: "Isoa Nasilasila" },
-      { number: 20, name: "Joseva Tamani" },
-      { number: 21, name: "Terio Tamani" },
-      { number: 22, name: "Vilikesa Nairau" },
-      { number: 23, name: "Isaac Ratumaitavuki-Kneepkens" },
-    ],
-  },
   performances: [
     { category: "Coach", player: "Eddie Jones", value: "Japan" },
     { category: "Coach", player: "Senirusi Seruvakula", value: "Fiji" },
@@ -1983,67 +805,6 @@ matchStats: {
 {
   matchKey: "canada-vs-usa",
   highlightsUrl: "https://www.youtube.com/watch?v=V07GdmaihRo",
-  timeline: [
-    { minute: "0'", label: "Kick-off — Prince Chichibu Memorial Stadium, Tokyo" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
-  ],
-  lineups: {
-    homeStarting: [
-      { number: 1, name: "Sam Miller" },
-      { number: 2, name: "Foster DeWitt" },
-      { number: 3, name: "Kyle Steeves" },
-      { number: 4, name: "Daragh Doyle" },
-      { number: 5, name: "Izzak Kelly" },
-      { number: 6, name: "Mason Flesch" },
-      { number: 7, name: "Ethan Fryer" },
-      { number: 8, name: "Lucas Rumball (C)" },
-      { number: 9, name: "Jesse Kilgour" },
-      { number: 10, name: "Cooper Coats" },
-      { number: 11, name: "Jamie Armstrong" },
-      { number: 12, name: "Ben LeSage" },
-      { number: 13, name: "Jacob Ince" },
-      { number: 14, name: "Kyle Tremblay" },
-      { number: 15, name: "Takoda McMullin" },
-    ],
-    homeBench: [
-      { number: 16, name: "Dewald Kotze" },
-      { number: 17, name: "Emerson Prior" },
-      { number: 18, name: "Bryce Worden" },
-      { number: 19, name: "Barnaby Waddell" },
-      { number: 20, name: "Cody Nhanala" },
-      { number: 21, name: "Stephen Webb" },
-      { number: 22, name: "Spencer Jones" },
-      { number: 23, name: "TBD" },
-    ],
-    awayStarting: [
-      { number: 1, name: "Fakaosifolau Pifeleti" },
-      { number: 2, name: "Shilo Klein" },
-      { number: 3, name: "Tonga Kofe" },
-      { number: 4, name: "Jason Damm (C)" },
-      { number: 5, name: "Nathan Den Hoedt" },
-      { number: 6, name: "Marno Redelinghuys" },
-      { number: 7, name: "Lance Williams" },
-      { number: 8, name: "Makeen Alikhan" },
-      { number: 9, name: "Ruben De Haas" },
-      { number: 10, name: "Luke Carty" },
-      { number: 11, name: "Noah Brown" },
-      { number: 12, name: "Cassh Maluia" },
-      { number: 13, name: "Dominic Besag" },
-      { number: 14, name: "Julian Roberts" },
-      { number: 15, name: "Mitch Wilson" },
-    ],
-    awayBench: [
-      { number: 16, name: "Joe Taufete'e" },
-      { number: 17, name: "Payton Telea-Ilalio" },
-      { number: 18, name: "Mason Pedersen" },
-      { number: 19, name: "Sam Golla" },
-      { number: 20, name: "Benjamin Bonasso" },
-      { number: 21, name: "Michael Baska" },
-      { number: 22, name: "Chris Hilsenbeck" },
-      { number: 23, name: "Tavite Lopeti" },
-    ],
-  },
   performances: [
     { category: "Coach", player: "Stephen Meehan", value: "Canada" },
     { category: "Coach", player: "Scott Lawrence", value: "USA" },

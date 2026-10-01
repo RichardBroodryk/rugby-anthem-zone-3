@@ -507,6 +507,9 @@ console.log("🏉 MATCH DETAILS RESOLVED:", {
   const hasScore =
     hasUsableScore(match);
 
+  const isCompleted =
+    match.state === "final";
+
   /* ==================================================
      COMMENTS
      ================================================== */
@@ -586,6 +589,12 @@ console.log("🏉 MATCH DETAILS RESOLVED:", {
               ? `${match.score.home} - ${match.score.away}`
               : "VS"}
           </div>
+
+          {isCompleted && (
+            <div className={styles.matchStatus}>
+              MATCH COMPLETED
+            </div>
+          )}
 
           <div
             className={styles.heroNation}

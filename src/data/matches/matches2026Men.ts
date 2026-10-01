@@ -389,7 +389,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Optus Stadium, Perth",
   home: { name: "Australia", country: "australia" },
   away: { name: "South Africa", country: "south-africa" },
-  state: "upcoming",
+  score: { home: 42, away: 38 },
+  state: "final",
   startTime: "11:45",
 },
 

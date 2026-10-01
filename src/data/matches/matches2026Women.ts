@@ -567,7 +567,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Dexcom Stadium, Galway",
   home: { name: "Ireland", country: "ireland" },
   away: { name: "Japan", country: "japan" },
-  state: "upcoming",
+  score: { home: 31, away: 24 },
+  state: "final",
   startTime: "13:45",
 },
 

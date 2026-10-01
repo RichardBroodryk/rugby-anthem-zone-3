@@ -449,7 +449,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
 
   {
     matchKey: "leicester-tigers-vs-saracens",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=OeWTSrwDwd8",
     timeline: [
       {
         minute: "0'",
@@ -523,5 +523,114 @@ export const matchDetailsPremMen: MatchDetails[] = [
       },
     ],
   },
+
+ // ==================================================
+  // GALLAGHER PREM 2026/27 — ROUND 2 (SAT/SUN)
+  // ==================================================
+
+{
+  matchKey: "bath-vs-exeter-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Recreation Ground, Bath" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Bath" },
+    { category: "Coach", player: "TBD", value: "Exeter Chiefs" },
+    { category: "Captain", player: "TBD", value: "Bath" },
+    { category: "Captain", player: "TBD", value: "Exeter Chiefs" },
+    { category: "Venue", player: "Recreation Ground", value: "Bath" },
+  ],
+},
+
+{
+  matchKey: "bristol-vs-northampton-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Ashton Gate, Bristol" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Bristol Bears" },
+    { category: "Coach", player: "TBD", value: "Northampton Saints" },
+    { category: "Captain", player: "TBD", value: "Bristol Bears" },
+    { category: "Captain", player: "TBD", value: "Northampton Saints" },
+    { category: "Venue", player: "Ashton Gate", value: "Bristol" },
+  ],
+},
+
+{
+  matchKey: "gloucester-vs-harlequins-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Kingsholm, Gloucester" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Gloucester" },
+    { category: "Coach", player: "TBD", value: "Harlequins" },
+    { category: "Captain", player: "TBD", value: "Gloucester" },
+    { category: "Captain", player: "TBD", value: "Harlequins" },
+    { category: "Venue", player: "Kingsholm", value: "Gloucester" },
+  ],
+},
+
+{
+  matchKey: "newcastle-vs-leicester-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Kingston Park, Newcastle" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Newcastle" },
+    { category: "Coach", player: "TBD", value: "Leicester Tigers" },
+    { category: "Captain", player: "TBD", value: "Newcastle" },
+    { category: "Captain", player: "TBD", value: "Leicester Tigers" },
+    { category: "Venue", player: "Kingston Park", value: "Newcastle" },
+  ],
+},
+
+{
+  matchKey: "saracens-vs-sale-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — StoneX Stadium, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Saracens" },
+    { category: "Coach", player: "TBD", value: "Sale Sharks" },
+    { category: "Captain", player: "TBD", value: "Saracens" },
+    { category: "Captain", player: "TBD", value: "Sale Sharks" },
+    { category: "Venue", player: "StoneX Stadium", value: "London" },
+  ],
+},
 
 ];

@@ -132,7 +132,7 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                The World Fifteen Women Round 3 Eng beat NZ and Sa beat Italy! Then it's Aus vs SA today Sunday! We also have the United Rugby Challenge starting 25 September 2026! First round what a blast!
+                Aus vs SA what a wild ride with Aus taking it by 4! We also have the United Rugby Challenge as well as the Gallagher Premir League Round 2 2026! Checkout all the Highlights for all the games!
                 </span>
             </div>
           </div>
