@@ -132,7 +132,7 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                Aus vs SA what a wild ride with Aus taking it by 4! We also have the United Rugby Challenge as well as the Gallagher Premir League Round 2 2026! Checkout all the Highlights for all the games!
+                Bledisloe this weekend Aus vs NZ! We also have the United Rugby Challenge as well as the Gallagher Premir League Round 3 2026! Checkout all the Highlights for all the games!
                 </span>
             </div>
           </div>

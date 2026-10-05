@@ -533,19 +533,21 @@ export const matchDetailsPremMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Recreation Ground, Bath" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Bath 40–34 Exeter Chiefs" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=BkR4p_Hqp78",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Bath 40–34 Exeter Chiefs", value: "Bath bonus-point win; Exeter 2 bonus points" },
     { category: "Coach", player: "TBD", value: "Bath" },
     { category: "Coach", player: "TBD", value: "Exeter Chiefs" },
     { category: "Captain", player: "TBD", value: "Bath" },
     { category: "Captain", player: "TBD", value: "Exeter Chiefs" },
     { category: "Venue", player: "Recreation Ground", value: "Bath" },
+    { category: "Note", player: "Bath tries: Redpath, van der Linde, du Preez, Russell, Penalty try, Hill", value: "Key scorers" },
   ],
 },
 
@@ -554,19 +556,21 @@ export const matchDetailsPremMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Ashton Gate, Bristol" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Bristol Bears 41–26 Northampton Saints" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=iWZVJnIe2I0",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Bristol Bears 41–26 Northampton Saints", value: "Both teams bonus points" },
     { category: "Coach", player: "TBD", value: "Bristol Bears" },
     { category: "Coach", player: "TBD", value: "Northampton Saints" },
     { category: "Captain", player: "TBD", value: "Bristol Bears" },
     { category: "Captain", player: "TBD", value: "Northampton Saints" },
     { category: "Venue", player: "Ashton Gate", value: "Bristol" },
+    { category: "Note", player: "Bristol tries: Oghre, Rees-Zammit (2), Jordan, Randall, Penalty try", value: "Key scorers" },
   ],
 },
 
@@ -575,19 +579,21 @@ export const matchDetailsPremMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Kingsholm, Gloucester" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Gloucester 48–0 Harlequins" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=ZfVJt2D6TzU",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Gloucester 48–0 Harlequins", value: "Bonus-point win – dominant shutout" },
     { category: "Coach", player: "TBD", value: "Gloucester" },
     { category: "Coach", player: "TBD", value: "Harlequins" },
     { category: "Captain", player: "TBD", value: "Gloucester" },
     { category: "Captain", player: "TBD", value: "Harlequins" },
     { category: "Venue", player: "Kingsholm", value: "Gloucester" },
+    { category: "Note", player: "Gloucester scored 8 tries", value: "Complete performance" },
   ],
 },
 
@@ -596,14 +602,15 @@ export const matchDetailsPremMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Kingston Park, Newcastle" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Newcastle 19–24 Leicester Tigers" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=XIyXu4alW1E",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Newcastle 19–24 Leicester Tigers", value: "Leicester bonus-point win" },
     { category: "Coach", player: "TBD", value: "Newcastle" },
     { category: "Coach", player: "TBD", value: "Leicester Tigers" },
     { category: "Captain", player: "TBD", value: "Newcastle" },
@@ -617,19 +624,21 @@ export const matchDetailsPremMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — StoneX Stadium, London" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Saracens 17–21 Sale Sharks" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=jwtnadfCKR4",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Saracens 17–21 Sale Sharks", value: "Sale first win of the season" },
     { category: "Coach", player: "TBD", value: "Saracens" },
     { category: "Coach", player: "TBD", value: "Sale Sharks" },
     { category: "Captain", player: "TBD", value: "Saracens" },
     { category: "Captain", player: "TBD", value: "Sale Sharks" },
     { category: "Venue", player: "StoneX Stadium", value: "London" },
+    { category: "Note", player: "Sale tries: Jibulu, O'Flaherty, Bamber", value: "Key scorers" },
   ],
 },
 

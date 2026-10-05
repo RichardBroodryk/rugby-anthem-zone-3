@@ -308,20 +308,22 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   matchKey: "cardiff-vs-zebre-urc",
   timeline: [
     { minute: "0'", label: "Kick-off — Cardiff Arms Park, Cardiff" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "40'", label: "Half Time — Cardiff 26–8 Zebre" },
+    { minute: "80'", label: "Full Time — Cardiff 40–27 Zebre" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=f7-X_BAlUlw",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
-    { category: "Coach", player: "TBD", value: "Cardiff Rugby" },
+    { category: "Result", player: "Cardiff 40–27 Zebre", value: "Bonus-point win" },
+    { category: "Coach", player: "Corniel van Zyl", value: "Cardiff Rugby" },
     { category: "Coach", player: "TBD", value: "Zebre" },
     { category: "Captain", player: "TBD", value: "Cardiff Rugby" },
     { category: "Captain", player: "TBD", value: "Zebre" },
     { category: "Venue", player: "Cardiff Arms Park", value: "Cardiff" },
+    { category: "Note", player: "Tom Bowen (2 tries), Teddy Williams, Javan Sebastian, Taine Basham, Alex Mann", value: "Cardiff try scorers" },
   ],
 },
 
@@ -330,14 +332,15 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Stadio Comunale di Monigo, Treviso" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Benetton 19–22 Connacht" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=lPnMMO2qonU",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Benetton 19–22 Connacht", value: "Connacht bonus-point win" },
     { category: "Coach", player: "TBD", value: "Benetton" },
     { category: "Coach", player: "TBD", value: "Connacht" },
     { category: "Captain", player: "TBD", value: "Benetton" },
@@ -351,14 +354,15 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Rodney Parade, Newport" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Dragons 38–26 Scarlets" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=4cagm_V_9Zc",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Dragons 38–26 Scarlets", value: "Both teams scored bonus points" },
     { category: "Coach", player: "TBD", value: "Dragons" },
     { category: "Coach", player: "TBD", value: "Scarlets" },
     { category: "Captain", player: "TBD", value: "Dragons" },
@@ -372,19 +376,21 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Scotstoun Stadium, Glasgow" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Glasgow 33–33 Ulster" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=3k-gB3Ch7To",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Glasgow 33–33 Ulster", value: "10-try draw, both teams bonus points" },
     { category: "Coach", player: "TBD", value: "Glasgow Warriors" },
     { category: "Coach", player: "TBD", value: "Ulster" },
     { category: "Captain", player: "TBD", value: "Glasgow Warriors" },
     { category: "Captain", player: "TBD", value: "Ulster" },
     { category: "Venue", player: "Scotstoun Stadium", value: "Glasgow" },
+    { category: "Note", player: "Kyle Rowe (2 tries for Glasgow)", value: "Key performer" },
   ],
 },
 
@@ -392,20 +398,22 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   matchKey: "lions-vs-ospreys-urc",
   timeline: [
     { minute: "0'", label: "Kick-off — Ellis Park, Johannesburg" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "40'", label: "Half Time — Lions 10–12 Ospreys" },
+    { minute: "80'", label: "Full Time — Lions 35–19 Ospreys" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=lRAHRN9ZYzk",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Lions 35–19 Ospreys", value: "Bonus-point win" },
     { category: "Coach", player: "TBD", value: "Lions" },
     { category: "Coach", player: "TBD", value: "Ospreys" },
-    { category: "Captain", player: "TBD", value: "Lions" },
+    { category: "Captain", player: "Francke Horne", value: "Lions" },
     { category: "Captain", player: "TBD", value: "Ospreys" },
     { category: "Venue", player: "Ellis Park", value: "Johannesburg" },
+    { category: "Note", player: "Kelly Mpeku (2 tries), Erich Cronjé, PJ Botha, Morné Brandon, Boeta Chamberlain", value: "Lions try scorers" },
   ],
 },
 
@@ -413,20 +421,22 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   matchKey: "sharks-vs-leinster-urc",
   timeline: [
     { minute: "0'", label: "Kick-off — Hollywoodbets Kings Park, Durban" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "40'", label: "Half Time — Sharks 14–7 Leinster" },
+    { minute: "80'", label: "Full Time — Sharks 26–20 Leinster" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=zj8dQDMxcwo",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Sharks 26–20 Leinster", value: "Bonus-point win – Sharks top the table" },
     { category: "Coach", player: "TBD", value: "Sharks" },
     { category: "Coach", player: "TBD", value: "Leinster" },
     { category: "Captain", player: "TBD", value: "Sharks" },
     { category: "Captain", player: "TBD", value: "Leinster" },
     { category: "Venue", player: "Hollywoodbets Kings Park", value: "Durban" },
+    { category: "Note", player: "Manu Tshituka, Litelihle Bester, André Esterhuizen, Edwill van der Merwe", value: "Sharks try scorers" },
   ],
 },
 
@@ -434,20 +444,22 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   matchKey: "munster-vs-bulls-urc",
   timeline: [
     { minute: "0'", label: "Kick-off — Thomond Park, Limerick" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "40'", label: "Half Time — Munster 14–14 Bulls" },
+    { minute: "80'", label: "Full Time — Munster 26–22 Bulls" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=O4nTnSGdrvs",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
+    { category: "Result", player: "Munster 26–22 Bulls", value: "Both teams bonus points" },
     { category: "Coach", player: "TBD", value: "Munster" },
-    { category: "Coach", player: "TBD", value: "Bulls" },
+    { category: "Coach", player: "Johan Ackermann", value: "Bulls" },
     { category: "Captain", player: "TBD", value: "Munster" },
     { category: "Captain", player: "TBD", value: "Bulls" },
     { category: "Venue", player: "Thomond Park", value: "Limerick" },
+    { category: "Note", player: "Charlie O’Shea (2 tries) for Munster; Ruan Vermaak, Francois Klopper, Jeandré Rudolph for Bulls", value: "Key try scorers" },
   ],
 },
 
@@ -455,23 +467,23 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   matchKey: "edinburgh-vs-stormers-urc",
   timeline: [
     { minute: "0'", label: "Kick-off — Hive Stadium, Edinburgh" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "40'", label: "Half Time — Edinburgh 3–0 Stormers" },
+    { minute: "80'", label: "Full Time — Edinburgh 17–13 Stormers" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=zi0QDoJhB7Q",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
   },
   performances: [
-    { category: "Coach", player: "TBD", value: "Edinburgh" },
-    { category: "Coach", player: "TBD", value: "Stormers" },
-    { category: "Captain", player: "TBD", value: "Edinburgh" },
-    { category: "Captain", player: "TBD", value: "Stormers" },
+    { category: "Result", player: "Edinburgh 17–13 Stormers", value: "Stormers losing bonus point" },
+    { category: "Coach", player: "Sean Everitt", value: "Edinburgh" },
+    { category: "Coach", player: "John Dobson", value: "Stormers" },
+    { category: "Captain", player: "Matt Currie / Magnus Bradbury", value: "Edinburgh" },
+    { category: "Captain", player: "Ruhan Nel", value: "Stormers" },
     { category: "Venue", player: "Hive Stadium", value: "Edinburgh" },
+    { category: "Note", player: "Hacjivah Dayimani try for Stormers", value: "Key moment" },
   ],
 },
-
-
 
 ];

@@ -274,7 +274,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Cardiff Arms Park, Cardiff",
   home: { name: "Cardiff Rugby", country: "wales" },
   away: { name: "Zebre", country: "italy" },
-  state: "upcoming",
+  score: { home: 40, away: 27 },
+    state: "final",
   startTime: "20:45",
 },
 
@@ -290,7 +291,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Stadio Comunale di Monigo, Treviso",
   home: { name: "Benetton", country: "italy" },
   away: { name: "Connacht", country: "ireland" },
-  state: "upcoming",
+  score: { home: 19, away: 22 },
+    state: "final",
   startTime: "20:45",
 },
 
@@ -306,7 +308,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Rodney Parade, Newport",
   home: { name: "Dragons", country: "wales" },
   away: { name: "Scarlets", country: "wales" },
-  state: "upcoming",
+  score: { home: 38, away: 26 },
+    state: "final",
   startTime: "16:00",
 },
 
@@ -322,7 +325,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Scotstoun Stadium, Glasgow",
   home: { name: "Glasgow Warriors", country: "scotland" },
   away: { name: "Ulster", country: "ireland" },
-  state: "upcoming",
+  score: { home: 33, away: 33 },
+    state: "final",
   startTime: "18:30",
 },
 
@@ -338,7 +342,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Hive Stadium, Edinburgh",
   home: { name: "Edinburgh", country: "scotland" },
   away: { name: "Stormers", country: "south-africa" },
-  state: "upcoming",
+  score: { home: 17, away: 13 },
+    state: "final",
   startTime: "20:45",
 },
 
@@ -354,7 +359,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Ellis Park, Johannesburg",
   home: { name: "Lions", country: "south-africa" },
   away: { name: "Ospreys", country: "wales" },
-  state: "upcoming",
+  score: { home: 35, away: 19 },
+    state: "final",
   startTime: "13:45",
 },
 
@@ -370,7 +376,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Hollywoodbets Kings Park, Durban",
   home: { name: "Sharks", country: "south-africa" },
   away: { name: "Leinster", country: "ireland" },
-  state: "upcoming",
+  score: { home: 26, away: 20 },
+    state: "final",
   startTime: "17:30",
 },
 
@@ -386,7 +393,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Thomond Park, Limerick",
   home: { name: "Munster", country: "ireland" },
   away: { name: "Bulls", country: "south-africa" },
-  state: "upcoming",
+  score: { home: 26, away: 22 },
+    state: "final",
   startTime: "19:45",
 },
 
