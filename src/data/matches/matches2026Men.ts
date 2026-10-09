@@ -1456,21 +1456,6 @@ score: { home: 63, away: 14 },
   state: "upcoming",
   startTime: "TBD",
 },
-  {
-    id: 6003,
-    matchKey: "australia-vs-new-zealand-test-3",
-    competitionId: "bledisloe-cup",
-    tournamentInstanceId: BLEDISLOE_2026,
-    tournament: "Bledisloe Cup 2026",
-    gender: "men",
-    round: "Test 3",
-    date: "2026-10-24",
-    venue: "Optus Stadium, Perth",
-    home: { name: "Australia", country: "australia" },
-    away: { name: "New Zealand", country: "new-zealand" },
-    state: "upcoming",
-    startTime: "TBD",
-  },
 
   // ==================================================
   // THE RIVALRY TOUR 2026

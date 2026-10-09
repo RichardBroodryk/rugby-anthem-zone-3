@@ -293,4 +293,88 @@ export const matches2026PremMen: MatchData[] = [
   startTime: "15:00",
 },
 
+// ==================================================
+  // GALLAGHER PREM 2026/27 — ROUND 3
+// ==================================================
+
+{
+  id: 9011,
+  matchKey: "leicester-vs-gloucester-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 3",
+  date: "2026-10-09",
+  venue: "Mattioli Woods Welford Road, Leicester",
+  home: { name: "Leicester Tigers", country: "england" },
+  away: { name: "Gloucester", country: "england" },
+  state: "upcoming",
+  startTime: "20:45",
+},
+
+{
+  id: 9012,
+  matchKey: "northampton-vs-bath-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 3",
+  date: "2026-10-10",
+  venue: "Franklin’s Gardens, Northampton",
+  home: { name: "Northampton Saints", country: "england" },
+  away: { name: "Bath", country: "england" },
+  state: "upcoming",
+  startTime: "16:05",
+},
+
+{
+  id: 9013,
+  matchKey: "saracens-vs-bristol-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 3",
+  date: "2026-10-10",
+  venue: "StoneX Stadium, London",
+  home: { name: "Saracens", country: "england" },
+  away: { name: "Bristol Bears", country: "england" },
+  state: "upcoming",
+  startTime: "18:30",
+},
+
+{
+  id: 9014,
+  matchKey: "sale-vs-harlequins-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 3",
+  date: "2026-10-11",
+  venue: "CorpAcq Stadium, Salford",
+  home: { name: "Sale Sharks", country: "england" },
+  away: { name: "Harlequins", country: "england" },
+  state: "upcoming",
+  startTime: "16:00",
+},
+
+{
+  id: 9015,
+  matchKey: "exeter-vs-newcastle-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 3",
+  date: "2026-10-11",
+  venue: "Sandy Park, Exeter",
+  home: { name: "Exeter Chiefs", country: "england" },
+  away: { name: "Newcastle", country: "england" },
+  state: "upcoming",
+  startTime: "16:00",
+},
+
 ];

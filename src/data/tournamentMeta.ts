@@ -118,8 +118,8 @@ export const tournaments2026: TournamentMeta[] = [
     heroSubtitle: "Australia · New Zealand",
     route: "/tournaments/men/bledisloe-cup-2026",
     currentRound: 1,
-    matchesPlayed: 1,
-    totalMatches: 3,
+    matchesPlayed: 0,
+    totalMatches: 2,
   },
 
   {

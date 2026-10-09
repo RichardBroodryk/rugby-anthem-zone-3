@@ -642,4 +642,113 @@ export const matchDetailsPremMen: MatchDetails[] = [
   ],
 },
 
+// ==================================================
+  // GALLAGHER PREM 2026/27 — ROUND 3
+// ==================================================
+
+{
+  matchKey: "leicester-vs-gloucester-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Mattioli Woods Welford Road, Leicester" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Leicester Tigers" },
+    { category: "Coach", player: "TBD", value: "Gloucester" },
+    { category: "Captain", player: "TBD", value: "Leicester Tigers" },
+    { category: "Captain", player: "TBD", value: "Gloucester" },
+    { category: "Venue", player: "Mattioli Woods Welford Road", value: "Leicester" },
+  ],
+},
+
+{
+  matchKey: "northampton-vs-bath-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Franklin’s Gardens, Northampton" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Northampton Saints" },
+    { category: "Coach", player: "TBD", value: "Bath" },
+    { category: "Captain", player: "TBD", value: "Northampton Saints" },
+    { category: "Captain", player: "TBD", value: "Bath" },
+    { category: "Venue", player: "Franklin’s Gardens", value: "Northampton" },
+  ],
+},
+
+{
+  matchKey: "saracens-vs-bristol-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — StoneX Stadium, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Saracens" },
+    { category: "Coach", player: "TBD", value: "Bristol Bears" },
+    { category: "Captain", player: "TBD", value: "Saracens" },
+    { category: "Captain", player: "TBD", value: "Bristol Bears" },
+    { category: "Venue", player: "StoneX Stadium", value: "London" },
+  ],
+},
+
+{
+  matchKey: "sale-vs-harlequins-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — CorpAcq Stadium, Salford" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Sale Sharks" },
+    { category: "Coach", player: "TBD", value: "Harlequins" },
+    { category: "Captain", player: "TBD", value: "Sale Sharks" },
+    { category: "Captain", player: "TBD", value: "Harlequins" },
+    { category: "Venue", player: "CorpAcq Stadium", value: "Salford" },
+  ],
+},
+
+{
+  matchKey: "exeter-vs-newcastle-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Sandy Park, Exeter" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Exeter Chiefs" },
+    { category: "Coach", player: "TBD", value: "Newcastle" },
+    { category: "Captain", player: "TBD", value: "Exeter Chiefs" },
+    { category: "Captain", player: "TBD", value: "Newcastle" },
+    { category: "Venue", player: "Sandy Park", value: "Exeter" },
+  ],
+},
+
 ];
