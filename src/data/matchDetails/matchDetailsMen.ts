@@ -820,12 +820,32 @@ matchStats: {
 
 {
   matchKey: "new-zealand-vs-australia-bledisloe-2026",
-  timeline: [
+   timeline: [
     { minute: "0'", label: "Kick-off — Eden Park, Auckland" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "8'", label: "TRY: Australia - Tom Wright" },
+    { minute: "10'", label: "CON: Australia - Ryan Lonergan" },
+    { minute: "12'", label: "TRY: New Zealand - Peter Lakai" },
+    { minute: "14'", label: "CON: New Zealand - Damian McKenzie" },
+    { minute: "16'", label: "TRY: New Zealand - Tupou Vaa'i" },
+    { minute: "18'", label: "CON: New Zealand - Damian McKenzie" },
+    { minute: "33'", label: "PEN: New Zealand - Damian McKenzie" },
+    { minute: "37'", label: "TRY: Australia - Harry Wilson" },
+    { minute: "39'", label: "CON: Australia - Ryan Lonergan" },
+    { minute: "40'", label: "Half Time — New Zealand 17-14 Australia" },
+    { minute: "49'", label: "TRY: New Zealand - Cam Roigard" },
+    { minute: "51'", label: "CON: New Zealand - Damian McKenzie" },
+    { minute: "55'", label: "TRY: New Zealand - Codie Taylor" },
+    { minute: "57'", label: "CON: New Zealand - Damian McKenzie" },
+    { minute: "66'", label: "TRY: New Zealand - Leroy Carter" },
+    { minute: "68'", label: "CON: New Zealand - Damian McKenzie" },
+    { minute: "73'", label: "TRY: New Zealand - Josh Moorby" },
+    { minute: "75'", label: "CON: New Zealand - Damian McKenzie" },
+    { minute: "76'", label: "TRY: Australia - Josh Nasser" },
+    { minute: "78'", label: "CON: Australia - Ryan Lonergan" },
+    { minute: "80'", label: "TRY: New Zealand - Will Jordan" },
+    { minute: "80'", label: "Full Time — New Zealand 50-19 Australia" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=9AmQQqPEFlY",
   matchStats: {
     home: { // New Zealand
       metresMade: 0,
@@ -919,6 +939,10 @@ matchStats: {
     { category: "TMO", player: "Mike Adamson", value: "SRU" },
     { category: "FPRO", player: "Marius van der Westhuizen", value: "SARU" },
     { category: "Kick-off", player: "19:10 NZDT", value: "Saturday 10 October 2026" },
+    { category: "Try Scorers", player: "Peter Lakai, Tupou Vaa'i, Cam Roigard, Codie Taylor, Leroy Carter, Josh Moorby, Will Jordan", value: "New Zealand" },
+    { category: "Try Scorers", player: "Tom Wright, Harry Wilson, Josh Nasser", value: "Australia" },
+    { category: "Note", player: "New Zealand", value: "Retained Bledisloe Cup for 24th consecutive year" },
+    { category: "Note", player: "Eden Park", value: "Extended unbeaten record to 54 Tests" },
   ],
 },
 ];

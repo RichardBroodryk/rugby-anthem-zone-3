@@ -1426,7 +1426,7 @@ score: { home: 63, away: 14 },
   // BLEDISLOE CUP 2026
   // ==================================================
 
-  {
+{
   id: 6001,
   matchKey: "new-zealand-vs-australia-test-1",
   competitionId: "bledisloe-cup",
@@ -1438,8 +1438,9 @@ score: { home: 63, away: 14 },
   venue: "Eden Park, Auckland",
   home: { name: "New Zealand", country: "new-zealand" },
   away: { name: "Australia", country: "australia" },
-  state: "upcoming",
-  startTime: "TBD",
+  score: { home: 50, away: 19 },
+  state: "final",
+  startTime: "19:10",
 },
 {
   id: 6002,

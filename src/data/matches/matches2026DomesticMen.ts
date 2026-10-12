@@ -414,10 +414,10 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Scotstoun Stadium, Glasgow",
   home: { name: "Glasgow Warriors", country: "scotland" },
   away: { name: "Connacht", country: "ireland" },
-  state: "upcoming",
+  score: { home: 39, away: 24 },
+  state: "final",
   startTime: "20:45",
 },
-
 {
   id: 8018,
   matchKey: "dragons-vs-ospreys-urc",
@@ -430,10 +430,10 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Rodney Parade, Newport",
   home: { name: "Dragons", country: "wales" },
   away: { name: "Ospreys", country: "wales" },
-  state: "upcoming",
+  score: { home: 22, away: 38 },
+  state: "final",
   startTime: "20:45",
 },
-
 {
   id: 8019,
   matchKey: "bulls-vs-lions-urc",
@@ -446,7 +446,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Loftus Versfeld, Pretoria",
   home: { name: "Bulls", country: "south-africa" },
   away: { name: "Lions", country: "south-africa" },
-  state: "upcoming",
+  score: { home: 29, away: 24 },
+  state: "final",
   startTime: "13:30",
 },
 
@@ -462,10 +463,10 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "DHL Stadium, Cape Town",
   home: { name: "Stormers", country: "south-africa" },
   away: { name: "Sharks", country: "south-africa" },
-  state: "upcoming",
+  score: { home: 39, away: 22 },
+  state: "final",
   startTime: "16:00",
 },
-
 {
   id: 8021,
   matchKey: "zebre-vs-edinburgh-urc",
@@ -478,10 +479,10 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Stadio Sergio Lanfranchi, Parma",
   home: { name: "Zebre", country: "italy" },
   away: { name: "Edinburgh", country: "scotland" },
-  state: "upcoming",
+  score: { home: 12, away: 29 },
+  state: "final",
   startTime: "16:00",
 },
-
 {
   id: 8022,
   matchKey: "scarlets-vs-benetton-urc",
@@ -494,7 +495,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Parc y Scarlets, Llanelli",
   home: { name: "Scarlets", country: "wales" },
   away: { name: "Benetton", country: "italy" },
-  state: "upcoming",
+  score: { home: 27, away: 26 },
+  state: "final",
   startTime: "18:30",
 },
 
@@ -510,10 +512,10 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Affidea Stadium, Belfast",
   home: { name: "Ulster", country: "ireland" },
   away: { name: "Munster", country: "ireland" },
-  state: "upcoming",
+  score: { home: 26, away: 26 },
+  state: "final",
   startTime: "18:30",
 },
-
 {
   id: 8024,
   matchKey: "leinster-vs-cardiff-urc",
@@ -526,7 +528,8 @@ export const matches2026DomesticMen: MatchData[] = [
   venue: "Laya Arena, Dublin",
   home: { name: "Leinster", country: "ireland" },
   away: { name: "Cardiff", country: "wales" },
-  state: "upcoming",
+  score: { home: 29, away: 5 },
+  state: "final",
   startTime: "20:45",
 },
 

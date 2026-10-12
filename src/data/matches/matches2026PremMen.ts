@@ -309,10 +309,10 @@ export const matches2026PremMen: MatchData[] = [
   venue: "Mattioli Woods Welford Road, Leicester",
   home: { name: "Leicester Tigers", country: "england" },
   away: { name: "Gloucester", country: "england" },
-  state: "upcoming",
+  score: { home: 27, away: 27 },
+  state: "final",
   startTime: "20:45",
 },
-
 {
   id: 9012,
   matchKey: "northampton-vs-bath-premiership",
@@ -325,10 +325,10 @@ export const matches2026PremMen: MatchData[] = [
   venue: "Franklin’s Gardens, Northampton",
   home: { name: "Northampton Saints", country: "england" },
   away: { name: "Bath", country: "england" },
-  state: "upcoming",
+  score: { home: 33, away: 31 },
+  state: "final",
   startTime: "16:05",
 },
-
 {
   id: 9013,
   matchKey: "saracens-vs-bristol-premiership",
@@ -341,10 +341,10 @@ export const matches2026PremMen: MatchData[] = [
   venue: "StoneX Stadium, London",
   home: { name: "Saracens", country: "england" },
   away: { name: "Bristol Bears", country: "england" },
-  state: "upcoming",
+  score: { home: 32, away: 24 },
+  state: "final",
   startTime: "18:30",
 },
-
 {
   id: 9014,
   matchKey: "sale-vs-harlequins-premiership",
@@ -357,10 +357,10 @@ export const matches2026PremMen: MatchData[] = [
   venue: "CorpAcq Stadium, Salford",
   home: { name: "Sale Sharks", country: "england" },
   away: { name: "Harlequins", country: "england" },
-  state: "upcoming",
+  score: { home: 28, away: 25 },
+  state: "final",
   startTime: "16:00",
 },
-
 {
   id: 9015,
   matchKey: "exeter-vs-newcastle-premiership",
@@ -373,7 +373,8 @@ export const matches2026PremMen: MatchData[] = [
   venue: "Sandy Park, Exeter",
   home: { name: "Exeter Chiefs", country: "england" },
   away: { name: "Newcastle", country: "england" },
-  state: "upcoming",
+  score: { home: 36, away: 12 },
+  state: "final",
   startTime: "16:00",
 },
 

@@ -653,7 +653,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=gn3q6d2f6lk",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -674,7 +674,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=r-lJWD4BcT4",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -695,7 +695,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=PPXrdB0z3kU",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -716,7 +716,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=063vlozdlDQ",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -737,7 +737,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=4bPKRD-Zxlw",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
