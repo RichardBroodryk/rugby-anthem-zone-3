@@ -167,6 +167,51 @@ export const tournaments2026: TournamentMeta[] = [
     currentRound: 1,
   },
 
+    {
+    conceptId: "challenge-cup",
+    instanceId: "epcr-challenge-cup-2027",
+    name: "EPCR Challenge Cup",
+    year: 2026,
+    gender: "men",
+    type: "domestic",
+    status: "active",
+    matchKey: "EPCR Challenge Cup 2026/27",
+    heroBadge: "EUROPEAN RUGBY",
+    heroSubtitle: "EPCR Challenge Cup",
+    route: "/tournaments/men/epcr-challenge-cup-2027",
+    currentRound: 1,
+  },
+
+  {
+  conceptId: "champions-cup",
+  instanceId: "champions-cup-2027",
+  name: "Investec Champions Cup",
+  year: 2026,
+  gender: "men",
+  type: "domestic",
+  status: "active",
+  matchKey: "Investec Champions Cup 2026/27",
+  heroBadge: "EUROPEAN RUGBY",
+  heroSubtitle: "Investec Champions Cup",
+  route: "/tournaments/men/champions-cup-2027",
+  currentRound: 1,
+},
+
+{
+  conceptId: "npc",
+  instanceId: "npc-2026",
+  name: "Bunnings NPC",
+  year: 2026,
+  gender: "men",
+  type: "domestic",
+  status: "active",
+  matchKey: "Bunnings NPC 2026",
+  heroBadge: "NEW ZEALAND RUGBY",
+  heroSubtitle: "Bunnings NPC",
+  route: "/tournaments/men/npc-2026",
+  currentRound: 1,
+},
+
   // ================= SVNS (MEN + WOMEN COMBINED) =================
 
   {

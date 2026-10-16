@@ -15,6 +15,9 @@ import type { MatchData } from "./types";
 import { matches2026Men } from "./matches2026Men";
 import { matches2026DomesticMen } from "./matches2026DomesticMen";
 import { matches2026PremMen } from "./matches2026PremMen";
+import { matches2026EPCR } from "./matches2026EPCR";
+import { matches2026Investec } from "./matches2026Investec";
+import { matches2026NPC } from "./matches2026NPC";
 import { matches2026Women } from "./matches2026Women";
 import { svnsMatches2026 } from "./matches2026Svns";
 
@@ -80,6 +83,9 @@ export const matches2026: MatchData[] = [
   ...matches2026Men,
   ...matches2026DomesticMen,
   ...matches2026PremMen,
+  ...matches2026EPCR,
+  ...matches2026Investec,
+  ...matches2026NPC,
   ...matches2026Women,
   ...svnsMatches2026,
 ]
@@ -102,6 +108,15 @@ export const getDomesticMensMatches = (): MatchData[] =>
 
 export const getPremiershipMensMatches = (): MatchData[] =>
   matches2026PremMen.slice().sort(sortByDate);
+
+export const getEPCRMatches = (): MatchData[] =>
+  matches2026EPCR.slice().sort(sortByDate);
+
+export const getInvestecMatches = (): MatchData[] =>
+  matches2026Investec.slice().sort(sortByDate);
+
+export const getNPCMatches = (): MatchData[] =>
+  matches2026NPC.slice().sort(sortByDate);
 
 export const getWomensMatches = (): MatchData[] =>
   matches2026Women.slice().sort(sortByDate);

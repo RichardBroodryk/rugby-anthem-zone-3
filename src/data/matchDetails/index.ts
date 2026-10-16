@@ -3,10 +3,15 @@
    ================================================== */
 
 import type { MatchDetails } from "./types";
+
 import { matchDetailsMen } from "./matchDetailsMen";
 import { matchDetailsDomesticMen } from "./matchDetailsDomesticMen";
 import { matchDetailsPremMen } from "./matchDetailsPremMen";
 import { matchDetailsWomen } from "./matchDetailsWomen";
+import { matchDetailsEPCR } from "./matchDetailsEPCR";
+import { matchDetailsInvestec } from "./matchDetailsInvestec";
+import { matchDetailsNPC } from "./matchDetailsNPC";
+
 import { getCompetition } from "../../contracts/competitionRegistry";
 
 // ==================================================
@@ -17,6 +22,9 @@ export const matchDetails2026: MatchDetails[] = [
   ...matchDetailsMen,
   ...matchDetailsDomesticMen,
   ...matchDetailsPremMen,
+  ...matchDetailsEPCR,
+  ...matchDetailsInvestec,
+  ...matchDetailsNPC,
   ...matchDetailsWomen,
 ];
 
@@ -27,6 +35,9 @@ export const matchDetails2026: MatchDetails[] = [
 export const matchDetailsMen2026 = matchDetailsMen;
 export const matchDetailsDomesticMen2026 = matchDetailsDomesticMen;
 export const matchDetailsPremMen2026 = matchDetailsPremMen;
+export const matchDetailsEPCR2026 = matchDetailsEPCR;
+export const matchDetailsInvestec2026 = matchDetailsInvestec;
+export const matchDetailsNPC2026 = matchDetailsNPC;
 export const matchDetailsWomen2026 = matchDetailsWomen;
 
 // ==================================================
@@ -39,10 +50,19 @@ export const getMatchDetails = (
 ): MatchDetails | undefined => {
   if (!match) return undefined;
 
-  let home = (match.home?.name || "").toLowerCase().replace(/\s+/g, "-");
-  let away = (match.away?.name || "").toLowerCase().replace(/\s+/g, "-");
+  let home = (match.home?.name || "")
+    .toLowerCase()
+    .replace(/\s+/g, "-");
+
+  let away = (match.away?.name || "")
+    .toLowerCase()
+    .replace(/\s+/g, "-");
 
   const targetGender = gender || match.gender || "men";
+
+  // ==================================================
+  // WOMEN
+  // ==================================================
 
   if (targetGender === "women") {
     if (!home.endsWith("-w")) home = `${home}-w`;
@@ -68,6 +88,36 @@ export const getMatchDetails = (
       (d) => d.matchKey === expectedKey
     );
   }
+
+  // ==================================================
+  // EPCR CHALLENGE CUP — MEN
+  // ==================================================
+
+  if (match.competitionId === "challenge-cup") {
+    return matchDetailsEPCR.find(
+      (d) => d.matchKey === expectedKey
+    );
+  }
+
+  // ==================================================
+// INVESTEC CHAMPIONS CUP — MEN
+// ==================================================
+
+if (match.competitionId === "champions-cup") {
+  return matchDetailsInvestec.find(
+    (d) => d.matchKey === expectedKey
+  );
+}
+
+// ==================================================
+// BUNNINGS NPC — MEN
+// ==================================================
+
+if (match.competitionId === "npc") {
+  return matchDetailsNPC.find(
+    (d) => d.matchKey === expectedKey
+  );
+}
 
   // ==================================================
   // OTHER DOMESTIC MEN

@@ -1,0 +1,156 @@
+import type { MatchData } from "./types";
+
+// ==================================================
+// MEN'S DOMESTIC MATCHES 2026/27
+// EPCR CHALLENGE CUP
+// ==================================================
+
+export const matches2026EPCR: MatchData[] = [
+  // ==================================================
+  // EPCR CHALLENGE CUP 2026/27 — ROUND 1
+  // ==================================================
+
+  {
+    id: 9001,
+    matchKey: "dragons-vs-usap-epcr",
+    competitionId: "challenge-cup",
+    tournamentInstanceId: "epcr-challenge-cup-2027",
+    tournament: "EPCR Challenge Cup 2026/27",
+    gender: "men",
+    round: "Round 1",
+    date: "2026-10-16",
+    venue: "Rodney Parade, Newport",
+    home: { name: "Dragons RFC", country: "epcr-dragons" },
+    away: { name: "USAP", country: "epcr-usap" },
+    state: "upcoming",
+    startTime: "19:00",
+  },
+
+  {
+    id: 9002,
+    matchKey: "edinburgh-vs-toulon-epcr",
+    competitionId: "challenge-cup",
+    tournamentInstanceId: "epcr-challenge-cup-2027",
+    tournament: "EPCR Challenge Cup 2026/27",
+    gender: "men",
+    round: "Round 1",
+    date: "2026-10-16",
+    venue: "Hive Stadium, Edinburgh",
+    home: { name: "Edinburgh Rugby", country: "epcr-edinburgh" },
+    away: { name: "RC Toulon", country: "epcr-toulon" },
+    state: "upcoming",
+    startTime: "19:00",
+  },
+
+  {
+    id: 9003,
+    matchKey: "lou-vs-sharks-epcr",
+    competitionId: "challenge-cup",
+    tournamentInstanceId: "epcr-challenge-cup-2027",
+    tournament: "EPCR Challenge Cup 2026/27",
+    gender: "men",
+    round: "Round 1",
+    date: "2026-10-17",
+    venue: "Matmut Stadium, Lyon",
+    home: { name: "LOU Rugby", country: "epcr-lou" },
+    away: { name: "Hollywoodbets Sharks", country: "epcr-sharks" },
+    state: "upcoming",
+    startTime: "12:00",
+  },
+
+  {
+    id: 9004,
+    matchKey: "black-lion-vs-ospreys-epcr",
+    competitionId: "challenge-cup",
+    tournamentInstanceId: "epcr-challenge-cup-2027",
+    tournament: "EPCR Challenge Cup 2026/27",
+    gender: "men",
+    round: "Round 1",
+    date: "2026-10-17",
+    venue: "Avchala Stadium, Tbilisi",
+    home: { name: "Black Lion", country: "epcr-black-lion" },
+    away: { name: "Ospreys", country: "epcr-ospreys" },
+    state: "upcoming",
+    startTime: "12:00",
+  },
+
+  {
+    id: 9005,
+    matchKey: "zebre-vs-ulster-epcr",
+    competitionId: "challenge-cup",
+    tournamentInstanceId: "epcr-challenge-cup-2027",
+    tournament: "EPCR Challenge Cup 2026/27",
+    gender: "men",
+    round: "Round 1",
+    date: "2026-10-17",
+    venue: "Stadio Sergio Lanfranchi, Parma",
+    home: { name: "Zebre Parma", country: "epcr-zebre" },
+    away: { name: "Ulster Rugby", country: "epcr-ulster" },
+    state: "upcoming",
+    startTime: "14:15",
+  },
+
+  {
+    id: 9006,
+    matchKey: "scarlets-vs-newcastle-epcr",
+    competitionId: "challenge-cup",
+    tournamentInstanceId: "epcr-challenge-cup-2027",
+    tournament: "EPCR Challenge Cup 2026/27",
+    gender: "men",
+    round: "Round 1",
+    date: "2026-10-17",
+    venue: "Parc y Scarlets, Llanelli",
+    home: { name: "Scarlets", country: "epcr-scarlets" },
+    away: { name: "Newcastle Red Bulls", country: "epcr-newcastle" },
+    state: "upcoming",
+    startTime: "19:00",
+  },
+
+  {
+    id: 9007,
+    matchKey: "bayonne-vs-cheetahs-epcr",
+    competitionId: "challenge-cup",
+    tournamentInstanceId: "epcr-challenge-cup-2027",
+    tournament: "EPCR Challenge Cup 2026/27",
+    gender: "men",
+    round: "Round 1",
+    date: "2026-10-18",
+    venue: "Stade Jean Dauger, Bayonne",
+    home: { name: "Aviron Bayonnais", country: "epcr-bayonne" },
+    away: { name: "Toyota Cheetahs", country: "epcr-cheetahs" },
+    state: "upcoming",
+    startTime: "12:00",
+  },
+
+  {
+    id: 9008,
+    matchKey: "harlequins-vs-vannes-epcr",
+    competitionId: "challenge-cup",
+    tournamentInstanceId: "epcr-challenge-cup-2027",
+    tournament: "EPCR Challenge Cup 2026/27",
+    gender: "men",
+    round: "Round 1",
+    date: "2026-10-18",
+    venue: "Twickenham Stoop, London",
+    home: { name: "Harlequins", country: "epcr-harlequins" },
+    away: { name: "RC Vannes", country: "epcr-vannes" },
+    state: "upcoming",
+    startTime: "12:00",
+  },
+
+  {
+    id: 9009,
+    matchKey: "castres-vs-benetton-epcr",
+    competitionId: "challenge-cup",
+    tournamentInstanceId: "epcr-challenge-cup-2027",
+    tournament: "EPCR Challenge Cup 2026/27",
+    gender: "men",
+    round: "Round 1",
+    date: "2026-10-18",
+    venue: "Stade Pierre-Fabre, Castres",
+    home: { name: "Castres Olympique", country: "epcr-castres" },
+    away: { name: "Benetton Rugby", country: "epcr-benetton" },
+    state: "upcoming",
+    startTime: "16:30",
+  },
+];

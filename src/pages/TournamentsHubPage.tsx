@@ -6,7 +6,7 @@ import PageWrapper from "../components/layout/PageWrapper";
 import razLight from "../assets/images/raz/razlight2.png";
 
 /* ================= HERO ================= */
-import tournamentHero from "../assets/images/raz/tournament-hub-page.png";
+import tournamentHero from "../assets/images/raz/tournamenthub-hero2.png";
 import defaultTournamentHero from "../assets/images/tournaments/default-tournament.jpg";
 
 /* ================= DATA ================= */

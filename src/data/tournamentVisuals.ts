@@ -28,6 +28,12 @@ import urcHero from "../assets/images/domestic/urc-rugby.jpg";
 
 import premiershipHero from "../assets/images/domestic/premier-league.jpg";
 
+import epcrChallengeCupHero from "../assets/images/domestic/epcr-challengecup.jpg";
+
+import investecCupHero from "../assets/images/domestic/investec-cup.jpg";
+
+import npcHero from "../assets/images/domestic/npc.jpg";
+
 /* 🔥 WXV (INTENTIONAL REUSE — LOCKED) */
 
 import wxvHero from "../assets/images/tournaments/nations-championship-2026.jpg";
@@ -160,6 +166,32 @@ export const tournamentVisuals: TournamentVisual[] = [
     heroLayout: "contained",
     anthemMode: "global",
   },
+
+  // ================= EPCR CHALLENGE CUP =================
+
+  {
+    conceptId: "challenge-cup",
+    heroImageMen: epcrChallengeCupHero,
+    logo: epcrChallengeCupHero,
+    heroLayout: "contained",
+    anthemMode: "global",
+  },
+
+  {
+  conceptId: "champions-cup",
+  heroImageMen: investecCupHero,
+  logo: investecCupHero,
+  heroLayout: "contained",
+  anthemMode: "global",
+},
+
+{
+  conceptId: "npc",
+  heroImageMen: npcHero,
+  logo: npcHero,
+  heroLayout: "contained",
+  anthemMode: "global",
+},
 
   // ================= WXV 1 =================
 

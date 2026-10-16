@@ -7,6 +7,7 @@
 }
 
 /* ================= HERO ================= */
+
 .hero {
   height: 320px;
   margin-top: 28px;
@@ -14,32 +15,72 @@
   overflow: hidden;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  background-color: #e5e7eb;
+
   position: relative;
+  isolation: isolate;
 }
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.06);
+  z-index: -1;
+}
+
+/* ================= HERO CONTENT ================= */
 
 .heroContent {
   color: white;
-  padding: 36px 24px 0;
+
+  /*
+   * Small, very transparent charcoal glass panel.
+   * The artwork remains the dominant visual.
+   */
+  background: rgba(15, 23, 42, 0.34);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  padding: 12px 24px;
+  margin-top: 24px;
+
+  border-radius: 12px;
+
   text-align: center;
-  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.45);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+
+  max-width: calc(100% - 48px);
 }
 
 .heroContent h1 {
-  font-size: 2.4rem;
+  margin: 0;
+  font-size: 1.85rem;
   font-weight: 700;
+  line-height: 1.15;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .heroContent p {
-  font-size: 1.05rem;
-  opacity: 0.9;
-  margin-top: 8px;
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: white;
+  opacity: 0.94;
+  text-shadow: 0 2px 7px rgba(0, 0, 0, 0.35);
 }
 
 /* ================= BACK BUTTON ================= */
+
 .backNav {
   max-width: 1200px;
   margin: 18px auto 0;
@@ -64,7 +105,8 @@
   color: #111827;
 }
 
-/* ================= STATUS BAR (NEW) ================= */
+/* ================= STATUS BAR ================= */
+
 .statusBar {
   display: flex;
   justify-content: space-between;
@@ -125,7 +167,8 @@
   font-size: 0.85rem;
 }
 
-/* ================= LOADING/EMPTY CARDS (NEW) ================= */
+/* ================= LOADING / EMPTY CARDS ================= */
+
 .loadingCard {
   padding: 40px;
   text-align: center;
@@ -142,7 +185,8 @@
   border-radius: 8px;
 }
 
-/* ================= ERROR CARD (NEW) ================= */
+/* ================= ERROR CARD ================= */
+
 .errorCard {
   padding: 60px 40px;
   text-align: center;
@@ -179,6 +223,7 @@
 }
 
 /* ================= SECTIONS ================= */
+
 .section {
   max-width: 1200px;
   margin: 40px auto 0;
@@ -199,6 +244,7 @@
 }
 
 /* ================= ANTHEMS ================= */
+
 .flagsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -209,6 +255,7 @@
 }
 
 /* ================= STANDINGS TABLE ================= */
+
 .standingsTable {
   width: 100%;
   border-collapse: collapse;
@@ -238,12 +285,14 @@
 }
 
 .standingsTable th:nth-child(1),
-.standingsTable td:nth-child(1) { width: 50px; }
+.standingsTable td:nth-child(1) {
+  width: 50px;
+}
 
 .standingsTable th:nth-child(2),
-.standingsTable td:nth-child(2) { 
-  text-align: left; 
-  width: 260px; 
+.standingsTable td:nth-child(2) {
+  text-align: left;
+  width: 260px;
 }
 
 .standingsTable th:nth-child(3),
@@ -253,18 +302,29 @@
 .standingsTable th:nth-child(5),
 .standingsTable td:nth-child(5),
 .standingsTable th:nth-child(6),
-.standingsTable td:nth-child(6) { width: 55px; }
+.standingsTable td:nth-child(6) {
+  width: 55px;
+}
 
 .standingsTable th:nth-child(7),
-.standingsTable td:nth-child(7) { width: 70px; }
+.standingsTable td:nth-child(7) {
+  width: 70px;
+}
 
 .standingsTable th:nth-child(8),
-.standingsTable td:nth-child(8) { width: 65px; font-weight: 700; color: #0f172a; }
+.standingsTable td:nth-child(8) {
+  width: 65px;
+  font-weight: 700;
+  color: #0f172a;
+}
 
 .standingsTable th:nth-child(9),
-.standingsTable td:nth-child(9) { width: 140px; }
+.standingsTable td:nth-child(9) {
+  width: 140px;
+}
 
 /* ================= TEAM CELL ================= */
+
 .teamCell {
   display: flex;
   align-items: center;
@@ -279,24 +339,25 @@
 }
 
 /* ================= FORM ================= */
+
 .form {
   display: flex;
   gap: 6px;
   justify-content: center;
 }
 
-.win { 
-  color: #22c55e; 
-  font-weight: 700; 
+.win {
+  color: #22c55e;
+  font-weight: 700;
 }
 
-.loss { 
-  color: #ef4444; 
-  font-weight: 700; 
+.loss {
+  color: #ef4444;
+  font-weight: 700;
 }
 
-.draw { 
-  color: #64748b; 
+.draw {
+  color: #64748b;
 }
 
 .points {
@@ -305,6 +366,7 @@
 }
 
 /* ================= MATCHES ================= */
+
 .matches {
   display: flex;
   flex-direction: column;
@@ -312,6 +374,7 @@
 }
 
 /* ================= RESPONSIVE ================= */
+
 @media (max-width: 900px) {
   .hero {
     height: 260px;
@@ -319,12 +382,17 @@
     border-radius: 18px;
   }
 
+  .heroContent {
+    padding: 10px 20px;
+    margin-top: 18px;
+  }
+
   .heroContent h1 {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 
   .heroContent p {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
 
   .section {
@@ -351,13 +419,28 @@
 }
 
 @media (max-width: 768px) {
-  .hero { 
-    height: 220px; 
+  .hero {
+    height: 220px;
   }
 
-  .flag { 
-    width: 24px; 
-    height: 16px; 
+  .heroContent {
+    padding: 9px 18px;
+    margin-top: 14px;
+    max-width: calc(100% - 32px);
+    border-radius: 10px;
+  }
+
+  .heroContent h1 {
+    font-size: 1.4rem;
+  }
+
+  .heroContent p {
+    font-size: 0.8rem;
+  }
+
+  .flag {
+    width: 24px;
+    height: 16px;
   }
 
   .standingsTable th,
@@ -367,12 +450,12 @@
   }
 
   .standingsTable th:nth-child(2),
-  .standingsTable td:nth-child(2) { 
-    width: 180px; 
+  .standingsTable td:nth-child(2) {
+    width: 180px;
   }
 
-  .form { 
-    gap: 4px; 
+  .form {
+    gap: 4px;
   }
 
   .flagsGrid {
@@ -400,8 +483,20 @@
     height: 200px;
   }
 
+  .heroContent {
+    padding: 8px 14px;
+    margin-top: 12px;
+    max-width: calc(100% - 24px);
+    border-radius: 9px;
+  }
+
   .heroContent h1 {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
+  }
+
+  .heroContent p {
+    font-size: 0.75rem;
+    margin-top: 4px;
   }
 
   .standingsTable th,
@@ -411,8 +506,8 @@
   }
 
   .standingsTable th:nth-child(2),
-  .standingsTable td:nth-child(2) { 
-    width: 120px; 
+  .standingsTable td:nth-child(2) {
+    width: 120px;
   }
 
   .flag {
