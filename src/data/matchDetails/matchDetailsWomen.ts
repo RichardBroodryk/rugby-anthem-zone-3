@@ -1116,6 +1116,213 @@ matchStats: {
   ],
 },
 
+// ==================================================
+// WXV GLOBAL SERIES 2026 (WXV 1) — ROUND 4
+// ==================================================
+
+{
+  matchKey: "canada-w-vs-england-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — BMO Field, Toronto" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time — Canada 24–21 England" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=x4r7Cp9EE-4",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Kevin Rouet", value: "Canada" },
+    { category: "Coach", player: "John Mitchell", value: "England" },
+    { category: "Captain", player: "Sophie de Goede", value: "Canada" },
+    { category: "Captain", player: "TBD", value: "England" },
+    { category: "Venue", player: "BMO Field", value: "Toronto" },
+    { category: "Note", player: "Canada", value: "Ended England’s 41-match unbeaten run" },
+  ],
+},
+
+{
+  matchKey: "australia-w-vs-scotland-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Stadium Australia, Sydney" },
+    { minute: "40'", label: "Half Time — Australia 35–5 Scotland" },
+    { minute: "80'", label: "Full Time — Australia 56–12 Scotland" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=VPra6F2uFMc",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Australia" },
+    { category: "Coach", player: "TBD", value: "Scotland" },
+    { category: "Captain", player: "TBD", value: "Australia" },
+    { category: "Captain", player: "Rachel Malcolm", value: "Scotland" },
+    { category: "Venue", player: "Stadium Australia", value: "Sydney" },
+  ],
+},
+
+{
+  matchKey: "new-zealand-w-vs-france-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — FMG Stadium Waikato, Hamilton" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time — New Zealand 81–12 France" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=8s8ssvpJ40A",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Whitney Hansen", value: "New Zealand" },
+    { category: "Coach", player: "François Ratier", value: "France" },
+    { category: "Captain", player: "Georgia Ponsonby", value: "New Zealand" },
+    { category: "Captain", player: "TBD", value: "France" },
+    { category: "Venue", player: "FMG Stadium Waikato", value: "Hamilton" },
+  ],
+},
+
+{
+  matchKey: "usa-w-vs-italy-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Texas Health Mansfield Stadium, Mansfield" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time — USA 36–27 Italy" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=tGVrRVXqYhE",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "USA" },
+    { category: "Coach", player: "TBD", value: "Italy" },
+    { category: "Captain", player: "TBD", value: "USA" },
+    { category: "Captain", player: "TBD", value: "Italy" },
+    { category: "Venue", player: "Mansfield Stadium", value: "Texas" },
+  ],
+},
+
+// ==================================================
+// WXV GLOBAL SERIES 2026 (WXV 1) — ROUND 5
+// ==================================================
+
+{
+  matchKey: "australia-w-vs-scotland-w-r5",
+  timeline: [
+    { minute: "0'", label: "Kick-off — GIO Stadium, Canberra" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Australia" },
+    { category: "Coach", player: "TBD", value: "Scotland" },
+    { category: "Venue", player: "GIO Stadium", value: "Canberra" },
+  ],
+},
+
+{
+  matchKey: "canada-w-vs-england-w-r5",
+  timeline: [
+    { minute: "0'", label: "Kick-off — TD Place Stadium, Ottawa" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Kevin Rouet", value: "Canada" },
+    { category: "Coach", player: "John Mitchell", value: "England" },
+    { category: "Venue", player: "TD Place Stadium", value: "Ottawa" },
+  ],
+},
+
+{
+  matchKey: "new-zealand-w-vs-france-w-r5",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Whangārei" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Whitney Hansen", value: "New Zealand" },
+    { category: "Coach", player: "François Ratier", value: "France" },
+    { category: "Venue", player: "Whangārei", value: "New Zealand" },
+  ],
+},
+
+{
+  matchKey: "japan-w-vs-wales-w-r5",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Prince Chichibu Memorial Stadium, Tokyo" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Japan" },
+    { category: "Coach", player: "TBD", value: "Wales" },
+    { category: "Venue", player: "Prince Chichibu Memorial Stadium", value: "Tokyo" },
+  ],
+},
+
+{
+  matchKey: "south-africa-w-vs-ireland-w-r5",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Athlone Stadium, Cape Town" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "South Africa" },
+    { category: "Coach", player: "Scott Bemand", value: "Ireland" },
+    { category: "Venue", player: "Athlone Stadium", value: "Cape Town" },
+  ],
+},
+
+{
+  matchKey: "usa-w-vs-italy-w-r5",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Geodis Park, Nashville" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "USA" },
+    { category: "Coach", player: "TBD", value: "Italy" },
+    { category: "Venue", player: "Geodis Park", value: "Nashville" },
+  ],
+},
+
   // ==================================================
 // WXV GLOBAL SERIES CHALLENGER 2026 — ROUND 1
 // ==================================================
@@ -1638,6 +1845,50 @@ lineups: {
     { category: "Captain", player: "Lourdes Alameda", value: "Spain W" },
     { category: "Captain", player: "TBD", value: "Brazil W" },
     { category: "Venue", player: "Kai Tak Youth Sports Ground", value: "Hong Kong" },
+  ],
+},
+
+ // ==================================================
+  // WOMEN'S INTERNATIONAL TESTS - Stand Alone
+  // ==================================================
+
+  {
+  matchKey: "ireland-w-vs-japan-w-standalone",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Virgin Media Park, Cork" },
+    { minute: "40'", label: "Half Time — Ireland 22–7 Japan" },
+    { minute: "80'", label: "Full Time — Ireland 43–19 Japan" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=kPBxy_-5Mq4",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Scott Bemand", value: "Ireland" },
+    { category: "Coach", player: "TBD", value: "Japan" },
+    { category: "Venue", player: "Virgin Media Park", value: "Cork" },
+    { category: "Note", player: "Ireland", value: "Seven tries; second win over Japan in consecutive weeks" },
+  ],
+},
+
+{
+  matchKey: "spain-w-vs-south-africa-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — La Cartuja, Seville" },
+    { minute: "40'", label: "Half Time — Spain 0–10 South Africa" },
+    { minute: "80'", label: "Full Time — Spain 0–20 South Africa" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=Pw1jDh8CIxc",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Spain" },
+    { category: "Coach", player: "TBD", value: "South Africa" },
+    { category: "Venue", player: "La Cartuja", value: "Seville" },
+    { category: "Note", player: "South Africa", value: "Clean sheet win; 7th consecutive victory over Spain" },
   ],
 },
 

@@ -132,8 +132,8 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                Bledisloe! The Cup stays in NZ! We also have the United Rugby Challenge as well as the Gallagher Premir League Round 3 2026! Checkout all the Highlights for all the games!
-                </span>
+                Bledisloe! NZ 2 - Aus 0! The United Rugby Challenge as well as the Gallagher Premier League Rounds continue 2026! Checkout all the Highlights for all the games!
+Ladies your games are here as well!                </span>
             </div>
           </div>
 

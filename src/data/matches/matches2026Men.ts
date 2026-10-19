@@ -394,6 +394,22 @@ export const matches2026Men: MatchData[] = [
   startTime: "11:45",
 },
 
+{
+  id: 3011,
+  matchKey: "japan-vs-fiji-2026",
+  competitionId: "international-tests",
+  tournamentInstanceId: INTERNATIONAL_TESTS_2026,
+  tournament: "Men's International Tests 2026",
+  gender: "men",
+  round: "Test Match",
+  date: "2026-10-24",
+  venue: "Prince Chichibu Memorial Stadium, Tokyo",
+  home: { name: "Japan", country: "japan" },
+  away: { name: "Fiji", country: "fiji" },
+  state: "upcoming",
+  startTime: "14:50",
+},
+
   // ==================================================
   // NATIONS CHAMPIONSHIP 2026
   // ==================================================
@@ -1454,8 +1470,9 @@ score: { home: 63, away: 14 },
   venue: "Accor Stadium, Sydney",
   home: { name: "Australia", country: "australia" },
   away: { name: "New Zealand", country: "new-zealand" },
-  state: "upcoming",
-  startTime: "TBD",
+  score: { home: 21, away: 43 },
+  state: "final",
+  startTime: "06:45",
 },
 
   // ==================================================

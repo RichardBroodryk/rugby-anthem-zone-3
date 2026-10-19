@@ -8,7 +8,7 @@ import type { MatchDetails } from "./types";
 export const matchDetailsInvestec: MatchDetails[] = [
   {
     matchKey: "gloucester-vs-bordeaux-begles-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=duSrL7wTogQ",
     timeline: [
       { minute: "0'", label: "Kick-off — Kingsholm Stadium, Gloucester" },
       { minute: "40'", label: "Half Time" },
@@ -20,7 +20,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "sale-vs-glasgow-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=wvKxWbgRcAc",
     timeline: [
       { minute: "0'", label: "Kick-off — CorpAcq Stadium, Salford" },
       { minute: "40'", label: "Half Time" },
@@ -32,7 +32,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "bulls-vs-stade-francais-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=yga00uKwenw",
     timeline: [
       { minute: "0'", label: "Kick-off — Loftus Versfeld, Pretoria" },
       { minute: "40'", label: "Half Time" },
@@ -44,7 +44,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "clermont-vs-leinster-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=T7sH3LBlrwk",
     timeline: [
       { minute: "0'", label: "Kick-off — Stade Marcel-Michelin, Clermont-Ferrand" },
       { minute: "40'", label: "Half Time" },
@@ -60,7 +60,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "stormers-vs-bristol-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=ZB2gkZlSDiM",
     timeline: [
       { minute: "0'", label: "Kick-off — DHL Stadium, Cape Town" },
       { minute: "40'", label: "Half Time" },
@@ -72,7 +72,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "connacht-vs-saracens-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=Lb7-NU5fvGc",
     timeline: [
       { minute: "0'", label: "Kick-off — Dexcom Stadium, Galway" },
       { minute: "40'", label: "Half Time" },
@@ -84,7 +84,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "la-rochelle-vs-lions-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=fUEp-KURar8",
     timeline: [
       { minute: "0'", label: "Kick-off — Stade Marcel Deflandre, La Rochelle" },
       { minute: "40'", label: "Half Time" },
@@ -100,7 +100,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "munster-vs-racing-92-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=ZBJN1-KBDq8",
     timeline: [
       { minute: "0'", label: "Kick-off — SuperValu Páirc Uí Chaoimh, Cork" },
       { minute: "40'", label: "Half Time" },
@@ -116,7 +116,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "bath-vs-montpellier-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=CAilYQpDIsM",
     timeline: [
       { minute: "0'", label: "Kick-off — The Rec, Bath" },
       { minute: "40'", label: "Half Time" },
@@ -128,7 +128,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "pau-vs-leicester-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=uWfXiXADzsI",
     timeline: [
       { minute: "0'", label: "Kick-off — Stade du Hameau, Pau" },
       { minute: "40'", label: "Half Time" },
@@ -140,7 +140,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "toulouse-vs-exeter-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=wgoUKxsGRj8",
     timeline: [
       { minute: "0'", label: "Kick-off — Stadium de Toulouse, Toulouse" },
       { minute: "40'", label: "Half Time" },
@@ -152,7 +152,7 @@ export const matchDetailsInvestec: MatchDetails[] = [
   },
   {
     matchKey: "northampton-vs-cardiff-investec",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=dZ5oiunc71g",
     timeline: [
       {
         minute: "0'",

@@ -13,7 +13,7 @@ export const matchDetailsEPCR: MatchDetails[] = [
 
   {
     matchKey: "dragons-vs-usap-epcr",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=CTzZ-MeApJg",
     timeline: [
       { minute: "0'", label: "Kick-off — Rodney Parade, Newport" },
       { minute: "40'", label: "Half Time" },
@@ -26,7 +26,7 @@ export const matchDetailsEPCR: MatchDetails[] = [
 
   {
     matchKey: "edinburgh-vs-toulon-epcr",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=0Or-r0epQcI",
     timeline: [
       { minute: "0'", label: "Kick-off — Hive Stadium, Edinburgh" },
       { minute: "40'", label: "Half Time" },
@@ -39,7 +39,7 @@ export const matchDetailsEPCR: MatchDetails[] = [
 
   {
     matchKey: "lou-vs-sharks-epcr",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=QdJZWtbmfIQ",
     timeline: [
       { minute: "0'", label: "Kick-off — Matmut Stadium, Lyon" },
       { minute: "40'", label: "Half Time" },
@@ -52,7 +52,7 @@ export const matchDetailsEPCR: MatchDetails[] = [
 
   {
     matchKey: "black-lion-vs-ospreys-epcr",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=AdZGghabcm0",
     timeline: [
       { minute: "0'", label: "Kick-off — Avchala Stadium, Tbilisi" },
       { minute: "40'", label: "Half Time" },
@@ -65,7 +65,7 @@ export const matchDetailsEPCR: MatchDetails[] = [
 
   {
     matchKey: "zebre-vs-ulster-epcr",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=WhWE5dSbBdM",
     timeline: [
       { minute: "0'", label: "Kick-off — Stadio Sergio Lanfranchi, Parma" },
       { minute: "40'", label: "Half Time" },
@@ -78,7 +78,7 @@ export const matchDetailsEPCR: MatchDetails[] = [
 
   {
     matchKey: "scarlets-vs-newcastle-epcr",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=bs2kobj9U1E",
     timeline: [
       { minute: "0'", label: "Kick-off — Parc y Scarlets, Llanelli" },
       { minute: "40'", label: "Half Time" },
@@ -91,7 +91,7 @@ export const matchDetailsEPCR: MatchDetails[] = [
 
   {
     matchKey: "bayonne-vs-cheetahs-epcr",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=_pOeDC4sv3Y",
     timeline: [
       { minute: "0'", label: "Kick-off — Stade Jean Dauger, Bayonne" },
       { minute: "40'", label: "Half Time" },
@@ -104,7 +104,7 @@ export const matchDetailsEPCR: MatchDetails[] = [
 
   {
     matchKey: "harlequins-vs-vannes-epcr",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=ddG2UJPzMGg",
     timeline: [
       { minute: "0'", label: "Kick-off — Twickenham Stoop, London" },
       { minute: "40'", label: "Half Time" },
@@ -117,7 +117,7 @@ export const matchDetailsEPCR: MatchDetails[] = [
 
   {
     matchKey: "castres-vs-benetton-epcr",
-    highlightsUrl: "",
+    highlightsUrl: "https://www.youtube.com/watch?v=nYe4VWpLhxo",
     timeline: [
       { minute: "0'", label: "Kick-off — Stade Pierre-Fabre, Castres" },
       { minute: "40'", label: "Half Time" },

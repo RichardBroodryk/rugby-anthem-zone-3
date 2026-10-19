@@ -378,4 +378,88 @@ export const matches2026PremMen: MatchData[] = [
   startTime: "16:00",
 },
 
+// ==================================================
+  // GALLAGHER PREM 2026/27 — ROUND 4
+// ==================================================
+
+{
+  id: 9016,
+  matchKey: "gloucester-vs-bath-premiership",
+ competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 4",
+  date: "2026-10-23",
+  venue: "Kingsholm, Gloucester",
+  home: { name: "Gloucester", country: "england" },
+  away: { name: "Bath", country: "england" },
+  state: "upcoming",
+  startTime: "19:45",
+},
+
+{
+  id: 9017,
+  matchKey: "newcastle-vs-sale-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 4",
+  date: "2026-10-23",
+  venue: "Kingston Park, Newcastle",
+  home: { name: "Newcastle Red Bulls", country: "england" },
+  away: { name: "Sale Sharks", country: "england" },
+  state: "upcoming",
+  startTime: "19:45",
+},
+
+{
+  id: 9018,
+  matchKey: "leicester-vs-northampton-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 4",
+  date: "2026-10-24",
+  venue: "Mattioli Woods Welford Road, Leicester",
+  home: { name: "Leicester Tigers", country: "england" },
+  away: { name: "Northampton Saints", country: "england" },
+  state: "upcoming",
+  startTime: "15:05",
+},
+
+{
+  id: 9019,
+  matchKey: "bristol-vs-exeter-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 4",
+  date: "2026-10-24",
+  venue: "Ashton Gate, Bristol",
+  home: { name: "Bristol Bears", country: "england" },
+  away: { name: "Exeter Chiefs", country: "england" },
+  state: "upcoming",
+  startTime: "17:30",
+},
+
+{
+  id: 9020,
+  matchKey: "harlequins-vs-saracens-premiership",
+ competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 4",
+  date: "2026-10-25",
+  venue: "Twickenham Stoop, London",
+  home: { name: "Harlequins", country: "england" },
+  away: { name: "Saracens", country: "england" },
+  state: "upcoming",
+  startTime: "15:00",
+},
+
 ];

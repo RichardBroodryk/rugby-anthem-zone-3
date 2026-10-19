@@ -22,8 +22,9 @@ export const matches2026EPCR: MatchData[] = [
     venue: "Rodney Parade, Newport",
     home: { name: "Dragons RFC", country: "epcr-dragons" },
     away: { name: "USAP", country: "epcr-usap" },
-    state: "upcoming",
-    startTime: "19:00",
+    score: { home: 29, away: 14 },
+  state: "final",
+  startTime: "21:00",
   },
 
   {
@@ -38,8 +39,9 @@ export const matches2026EPCR: MatchData[] = [
     venue: "Hive Stadium, Edinburgh",
     home: { name: "Edinburgh Rugby", country: "epcr-edinburgh" },
     away: { name: "RC Toulon", country: "epcr-toulon" },
-    state: "upcoming",
-    startTime: "19:00",
+    score: { home: 17, away: 27 },
+  state: "final",
+  startTime: "21:00",
   },
 
   {
@@ -54,8 +56,9 @@ export const matches2026EPCR: MatchData[] = [
     venue: "Matmut Stadium, Lyon",
     home: { name: "LOU Rugby", country: "epcr-lou" },
     away: { name: "Hollywoodbets Sharks", country: "epcr-sharks" },
-    state: "upcoming",
-    startTime: "12:00",
+    score: { home: 33, away: 40 },
+  state: "final",
+  startTime: "14:00",
   },
 
   {
@@ -70,8 +73,9 @@ export const matches2026EPCR: MatchData[] = [
     venue: "Avchala Stadium, Tbilisi",
     home: { name: "Black Lion", country: "epcr-black-lion" },
     away: { name: "Ospreys", country: "epcr-ospreys" },
-    state: "upcoming",
-    startTime: "12:00",
+    score: { home: 14, away: 39 },
+  state: "final",
+  startTime: "14:00",
   },
 
   {
@@ -86,8 +90,9 @@ export const matches2026EPCR: MatchData[] = [
     venue: "Stadio Sergio Lanfranchi, Parma",
     home: { name: "Zebre Parma", country: "epcr-zebre" },
     away: { name: "Ulster Rugby", country: "epcr-ulster" },
-    state: "upcoming",
-    startTime: "14:15",
+    score: { home: 21, away: 40 },
+  state: "final",
+  startTime: "16:15",
   },
 
   {
@@ -102,8 +107,9 @@ export const matches2026EPCR: MatchData[] = [
     venue: "Parc y Scarlets, Llanelli",
     home: { name: "Scarlets", country: "epcr-scarlets" },
     away: { name: "Newcastle Red Bulls", country: "epcr-newcastle" },
-    state: "upcoming",
-    startTime: "19:00",
+    score: { home: 47, away: 14 },
+  state: "final",
+  startTime: "21:00",
   },
 
   {
@@ -118,8 +124,9 @@ export const matches2026EPCR: MatchData[] = [
     venue: "Stade Jean Dauger, Bayonne",
     home: { name: "Aviron Bayonnais", country: "epcr-bayonne" },
     away: { name: "Toyota Cheetahs", country: "epcr-cheetahs" },
-    state: "upcoming",
-    startTime: "12:00",
+    score: { home: 29, away: 27 },
+  state: "final",
+  startTime: "14:00",
   },
 
   {
@@ -134,8 +141,9 @@ export const matches2026EPCR: MatchData[] = [
     venue: "Twickenham Stoop, London",
     home: { name: "Harlequins", country: "epcr-harlequins" },
     away: { name: "RC Vannes", country: "epcr-vannes" },
-    state: "upcoming",
-    startTime: "12:00",
+    score: { home: 57, away: 19 },
+  state: "final",
+  startTime: "14:00",
   },
 
   {
@@ -150,7 +158,8 @@ export const matches2026EPCR: MatchData[] = [
     venue: "Stade Pierre-Fabre, Castres",
     home: { name: "Castres Olympique", country: "epcr-castres" },
     away: { name: "Benetton Rugby", country: "epcr-benetton" },
-    state: "upcoming",
-    startTime: "16:30",
+    score: { home: 18, away: 9 },
+  state: "final",
+  startTime: "18:30",
   },
 ];

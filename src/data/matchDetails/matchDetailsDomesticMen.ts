@@ -658,4 +658,161 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   ],
 },
 
+// ==================================================
+  // URC 2026/27 — ROUND 4
+  // ==================================================
+
+  {
+  matchKey: "cardiff-vs-sharks-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Cardiff Arms Park, Cardiff" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Cardiff" },
+    { category: "Coach", player: "TBD", value: "Sharks" },
+    { category: "Venue", player: "Cardiff Arms Park", value: "Cardiff" },
+  ],
+},
+
+{
+  matchKey: "connacht-vs-zebre-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Dexcom Stadium, Galway" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Connacht" },
+    { category: "Coach", player: "TBD", value: "Zebre" },
+    { category: "Venue", player: "Dexcom Stadium", value: "Galway" },
+  ],
+},
+
+{
+  matchKey: "edinburgh-vs-lions-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Hive Stadium, Edinburgh" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Sean Everitt", value: "Edinburgh" },
+    { category: "Coach", player: "TBD", value: "Lions" },
+    { category: "Venue", player: "Hive Stadium", value: "Edinburgh" },
+  ],
+},
+
+{
+  matchKey: "bulls-vs-ulster-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Loftus Versfeld, Pretoria" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Johan Ackermann", value: "Bulls" },
+    { category: "Coach", player: "TBD", value: "Ulster" },
+    { category: "Venue", player: "Loftus Versfeld", value: "Pretoria" },
+  ],
+},
+
+{
+  matchKey: "stormers-vs-scarlets-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — DHL Stadium, Cape Town" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "John Dobson", value: "Stormers" },
+    { category: "Coach", player: "TBD", value: "Scarlets" },
+    { category: "Venue", player: "DHL Stadium", value: "Cape Town" },
+  ],
+},
+
+{
+  matchKey: "benetton-vs-glasgow-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Stadio Comunale di Monigo, Treviso" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Benetton" },
+    { category: "Coach", player: "TBD", value: "Glasgow Warriors" },
+    { category: "Venue", player: "Stadio Comunale di Monigo", value: "Treviso" },
+  ],
+},
+
+{
+  matchKey: "leinster-vs-munster-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Aviva Stadium, Dublin" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Leo Cullen", value: "Leinster" },
+    { category: "Coach", player: "TBD", value: "Munster" },
+    { category: "Venue", player: "Aviva Stadium", value: "Dublin" },
+    { category: "Note", player: "Interprovincial derby", value: "Leinster vs Munster" },
+  ],
+},
+
+{
+  matchKey: "ospreys-vs-dragons-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — St Helen's, Swansea" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Ospreys" },
+    { category: "Coach", player: "TBD", value: "Dragons" },
+    { category: "Venue", player: "St Helen's", value: "Swansea" },
+  ],
+},
+
 ];

@@ -751,4 +751,106 @@ export const matchDetailsPremMen: MatchDetails[] = [
   ],
 },
 
+// ==================================================
+  // GALLAGHER PREM 2026/27 — ROUND 4
+// ==================================================
+
+{
+  matchKey: "gloucester-vs-bath-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Kingsholm, Gloucester" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Gloucester" },
+    { category: "Coach", player: "TBD", value: "Bath" },
+    { category: "Venue", player: "Kingsholm", value: "Gloucester" },
+    { category: "Note", player: "West Country Derby", value: "Gloucester vs Bath" },
+  ],
+},
+
+{
+  matchKey: "newcastle-vs-sale-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Kingston Park, Newcastle" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Newcastle Red Bulls" },
+    { category: "Coach", player: "TBD", value: "Sale Sharks" },
+    { category: "Venue", player: "Kingston Park", value: "Newcastle" },
+  ],
+},
+
+{
+  matchKey: "leicester-vs-northampton-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Welford Road, Leicester" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Leicester Tigers" },
+    { category: "Coach", player: "TBD", value: "Northampton Saints" },
+    { category: "Venue", player: "Welford Road", value: "Leicester" },
+    { category: "Note", player: "East Midlands Derby", value: "Leicester vs Northampton" },
+  ],
+},
+
+{
+  matchKey: "bristol-vs-exeter-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Ashton Gate, Bristol" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Bristol Bears" },
+    { category: "Coach", player: "TBD", value: "Exeter Chiefs" },
+    { category: "Venue", player: "Ashton Gate", value: "Bristol" },
+  ],
+},
+
+{
+  matchKey: "harlequins-vs-saracens-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Twickenham Stoop, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Harlequins" },
+    { category: "Coach", player: "TBD", value: "Saracens" },
+    { category: "Venue", player: "Twickenham Stoop", value: "London" },
+    { category: "Note", player: "London Derby", value: "Harlequins vs Saracens" },
+  ],
+},
+
 ];

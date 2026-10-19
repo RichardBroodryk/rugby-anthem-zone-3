@@ -714,6 +714,25 @@ matchStats: {
   },
 },
 
+{
+  matchKey: "japan-vs-fiji-2026",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Prince Chichibu Memorial Stadium, Tokyo" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Japan" },
+    { category: "Coach", player: "TBD", value: "Fiji" },
+    { category: "Venue", player: "Prince Chichibu Memorial Stadium", value: "Tokyo" },
+  ],
+},
+
 // ==================================================
   // PACIFIC NATIONS CUP 2026
   // ==================================================
@@ -953,7 +972,7 @@ matchStats: {
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=5xZtI5pUl-o",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
