@@ -132,8 +132,8 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                Bledisloe! NZ 2 - Aus 0! The United Rugby Challenge as well as the Gallagher Premier League Rounds continue 2026! Checkout all the Highlights for all the games!
-Ladies your games are here as well!                </span>
+                The United Rugby Challenge as well as the Gallagher Premier League Rounds continue 2026! Checkout all the Highlights for all the games!
+Women WXV Round 6 games are here as well!                </span>
             </div>
           </div>
 

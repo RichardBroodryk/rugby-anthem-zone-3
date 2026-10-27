@@ -1216,7 +1216,7 @@ matchStats: {
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=VPra6F2uFMc",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -1235,7 +1235,7 @@ matchStats: {
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=bXTc5sgDRlc",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -1254,7 +1254,7 @@ matchStats: {
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=4QkQTkTvaxQ",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -1273,7 +1273,7 @@ matchStats: {
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=74avqhmewhA",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -1292,7 +1292,7 @@ matchStats: {
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=ogVSgw7AiVE&t=7742s",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -1320,6 +1320,94 @@ matchStats: {
     { category: "Coach", player: "TBD", value: "USA" },
     { category: "Coach", player: "TBD", value: "Italy" },
     { category: "Venue", player: "Geodis Park", value: "Nashville" },
+  ],
+},
+
+// ==================================================
+// WXV GLOBAL SERIES 2026 – ROUND 6
+// ==================================================
+
+{
+  matchKey: "usa-w-vs-england-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Sports Illustrated Stadium, Harrison" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "USA" },
+    { category: "Coach", player: "John Mitchell", value: "England" },
+    { category: "Captain", player: "TBD", value: "USA" },
+    { category: "Captain", player: "TBD", value: "England" },
+    { category: "Venue", player: "Sports Illustrated Stadium", value: "Harrison, New Jersey" },
+  ],
+},
+
+{
+  matchKey: "new-zealand-w-vs-france-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — One New Zealand Stadium, Christchurch" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Whitney Hansen", value: "New Zealand" },
+    { category: "Coach", player: "François Ratier", value: "France" },
+    { category: "Captain", player: "Georgia Ponsonby", value: "New Zealand" },
+    { category: "Captain", player: "Pauline Bourdon Sansus", value: "France" },
+    { category: "Venue", player: "One New Zealand Stadium", value: "Christchurch" },
+  ],
+},
+
+{
+  matchKey: "japan-w-vs-wales-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Kumagaya Rugby Stadium, Kumagaya" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Japan" },
+    { category: "Coach", player: "TBD", value: "Wales" },
+    { category: "Captain", player: "TBD", value: "Japan" },
+    { category: "Captain", player: "TBD", value: "Wales" },
+    { category: "Venue", player: "Kumagaya Rugby Stadium", value: "Kumagaya" },
+  ],
+},
+
+{
+  matchKey: "south-africa-w-vs-ireland-w",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Athlone Stadium, Cape Town" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "South Africa" },
+    { category: "Coach", player: "Scott Bemand", value: "Ireland" },
+    { category: "Captain", player: "TBD", value: "South Africa" },
+    { category: "Captain", player: "TBD", value: "Ireland" },
+    { category: "Venue", player: "Athlone Stadium", value: "Cape Town" },
   ],
 },
 

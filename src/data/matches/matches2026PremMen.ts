@@ -394,7 +394,8 @@ export const matches2026PremMen: MatchData[] = [
   venue: "Kingsholm, Gloucester",
   home: { name: "Gloucester", country: "england" },
   away: { name: "Bath", country: "england" },
-  state: "upcoming",
+  score: { home: 23, away: 5 },
+  state: "final",
   startTime: "19:45",
 },
 
@@ -410,7 +411,8 @@ export const matches2026PremMen: MatchData[] = [
   venue: "Kingston Park, Newcastle",
   home: { name: "Newcastle Red Bulls", country: "england" },
   away: { name: "Sale Sharks", country: "england" },
-  state: "upcoming",
+  score: { home: 17, away: 3 },
+  state: "final",
   startTime: "19:45",
 },
 
@@ -426,7 +428,8 @@ export const matches2026PremMen: MatchData[] = [
   venue: "Mattioli Woods Welford Road, Leicester",
   home: { name: "Leicester Tigers", country: "england" },
   away: { name: "Northampton Saints", country: "england" },
-  state: "upcoming",
+ score: { home: 28, away: 7 },
+  state: "final",
   startTime: "15:05",
 },
 
@@ -442,7 +445,8 @@ export const matches2026PremMen: MatchData[] = [
   venue: "Ashton Gate, Bristol",
   home: { name: "Bristol Bears", country: "england" },
   away: { name: "Exeter Chiefs", country: "england" },
-  state: "upcoming",
+  score: { home: 20, away: 7 },
+  state: "final",
   startTime: "17:30",
 },
 
@@ -458,8 +462,95 @@ export const matches2026PremMen: MatchData[] = [
   venue: "Twickenham Stoop, London",
   home: { name: "Harlequins", country: "england" },
   away: { name: "Saracens", country: "england" },
+  score: { home: 33, away: 15 },
+  state: "final",
+  startTime: "15:00",
+},
+
+// ==================================================
+// GALLAGHER PREMIERSHIP 2026/27 – ROUND 5
+// ==================================================
+
+{
+  id: 9021,
+  matchKey: "bristol-vs-leicester-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 5",
+  date: "2026-10-30",
+  venue: "Ashton Gate, Bristol",
+  home: { name: "Bristol Bears", country: "prem-bristol" },
+  away: { name: "Leicester Tigers", country: "prem-leicester" },
+  state: "upcoming",
+  startTime: "19:45",
+},
+
+{
+  id: 9022,
+  matchKey: "exeter-vs-harlequins-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 5",
+  date: "2026-10-31",
+  venue: "Sandy Park, Exeter",
+  home: { name: "Exeter Chiefs", country: "prem-exeter" },
+  away: { name: "Harlequins", country: "prem-harlequins" },
   state: "upcoming",
   startTime: "15:00",
 },
+
+{
+  id: 9023,
+  matchKey: "saracens-vs-newcastle-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 5",
+  date: "2026-10-31",
+  venue: "StoneX Stadium, London",
+  home: { name: "Saracens", country: "prem-saracens" },
+  away: { name: "Newcastle", country: "prem-newcastle" },
+  state: "upcoming",
+  startTime: "15:00",
+},
+
+{
+  id: 9024,
+  matchKey: "bath-vs-sale-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 5",
+  date: "2026-10-31",
+  venue: "Recreation Ground, Bath",
+  home: { name: "Bath", country: "prem-bath" },
+  away: { name: "Sale Sharks", country: "prem-sale" },
+  state: "upcoming",
+  startTime: "15:05",
+},
+
+{
+  id: 9025,
+  matchKey: "northampton-vs-gloucester-premiership",
+  competitionId: "premiership",
+  tournamentInstanceId: "premiership-2027",
+  tournament: "Gallagher Premiership 2026/27",
+  gender: "men",
+  round: "Round 5",
+  date: "2026-10-31",
+  venue: "Franklin's Gardens, Northampton",
+  home: { name: "Northampton Saints", country: "prem-northampton" },
+  away: { name: "Gloucester", country: "prem-gloucester" },
+  state: "upcoming",
+  startTime: "17:30",
+},
+
+
 
 ];

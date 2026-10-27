@@ -762,7 +762,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=FVO6gR1cjoE",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -782,7 +782,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=xPkI44DUdlk",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -801,7 +801,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=dvWT9BcgXVQ",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -821,7 +821,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=VLcs8NlfBqk",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -840,7 +840,7 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=GlsDxVciEI4",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -850,6 +850,115 @@ export const matchDetailsPremMen: MatchDetails[] = [
     { category: "Coach", player: "TBD", value: "Saracens" },
     { category: "Venue", player: "Twickenham Stoop", value: "London" },
     { category: "Note", player: "London Derby", value: "Harlequins vs Saracens" },
+  ],
+},
+
+// ==================================================
+// GALLAGHER PREMIERSHIP 2026/27 – ROUND 5
+// ==================================================
+
+{
+  matchKey: "bristol-vs-leicester-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Ashton Gate, Bristol" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Pat Lam", value: "Bristol Bears" },
+    { category: "Coach", player: "Michael Cheika", value: "Leicester Tigers" },
+    { category: "Captain", player: "TBD", value: "Bristol Bears" },
+    { category: "Captain", player: "TBD", value: "Leicester Tigers" },
+    { category: "Venue", player: "Ashton Gate", value: "Bristol" },
+  ],
+},
+
+{
+  matchKey: "exeter-vs-harlequins-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Sandy Park, Exeter" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Rob Baxter", value: "Exeter Chiefs" },
+    { category: "Coach", player: "Danny Wilson", value: "Harlequins" },
+    { category: "Captain", player: "TBD", value: "Exeter Chiefs" },
+    { category: "Captain", player: "TBD", value: "Harlequins" },
+    { category: "Venue", player: "Sandy Park", value: "Exeter" },
+  ],
+},
+
+{
+  matchKey: "saracens-vs-newcastle-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — StoneX Stadium, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Mark McCall", value: "Saracens" },
+    { category: "Coach", player: "TBD", value: "Newcastle" },
+    { category: "Captain", player: "TBD", value: "Saracens" },
+    { category: "Captain", player: "TBD", value: "Newcastle" },
+    { category: "Venue", player: "StoneX Stadium", value: "London" },
+  ],
+},
+
+{
+  matchKey: "bath-vs-sale-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Recreation Ground, Bath" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Johann van Graan", value: "Bath" },
+    { category: "Coach", player: "Alex Sanderson", value: "Sale Sharks" },
+    { category: "Captain", player: "TBD", value: "Bath" },
+    { category: "Captain", player: "TBD", value: "Sale Sharks" },
+    { category: "Venue", player: "Recreation Ground", value: "Bath" },
+  ],
+},
+
+{
+  matchKey: "northampton-vs-gloucester-premiership",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Franklin's Gardens, Northampton" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Phil Dowson", value: "Northampton Saints" },
+    { category: "Coach", player: "George Skivington", value: "Gloucester" },
+    { category: "Captain", player: "TBD", value: "Northampton Saints" },
+    { category: "Captain", player: "TBD", value: "Gloucester" },
+    { category: "Venue", player: "Franklin's Gardens", value: "Northampton" },
   ],
 },
 

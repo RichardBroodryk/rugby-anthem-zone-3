@@ -656,7 +656,8 @@ export const matches2026Women: MatchData[] = [
   venue: "GIO Stadium, Canberra",
   home: { name: "Australia", country: "australia" },
   away: { name: "Scotland", country: "scotland" },
-  state: "upcoming",
+  score: { home: 38, away: 31 },
+  state: "final",
   startTime: "09:45",
 },
 
@@ -672,7 +673,8 @@ export const matches2026Women: MatchData[] = [
   venue: "TD Place Stadium, Ottawa",
   home: { name: "Canada", country: "canada" },
   away: { name: "England", country: "england" },
-  state: "upcoming",
+  score: { home: 31, away: 22 },
+  state: "final",
   startTime: "00:00",
 },
 
@@ -688,7 +690,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Okara Park / Semenoff Stadium, Whangārei",
   home: { name: "New Zealand", country: "new-zealand" },
   away: { name: "France", country: "france" },
-  state: "upcoming",
+ score: { home: 31, away: 12 },
+  state: "final",
   startTime: "03:05",
 },
 
@@ -704,7 +707,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Prince Chichibu Memorial Stadium, Tokyo",
   home: { name: "Japan", country: "japan" },
   away: { name: "Wales", country: "wales" },
-  state: "upcoming",
+  score: { home: 0, away: 17 },
+  state: "final",
   startTime: "10:30",
 },
 
@@ -720,7 +724,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Athlone Stadium, Cape Town",
   home: { name: "South Africa", country: "south-africa" },
   away: { name: "Ireland", country: "ireland" },
-  state: "upcoming",
+  score: { home: 27, away: 40 },
+  state: "final",
   startTime: "14:00",
 },
 
@@ -736,8 +741,77 @@ export const matches2026Women: MatchData[] = [
   venue: "Geodis Park, Nashville",
   home: { name: "USA", country: "usa" },
   away: { name: "Italy", country: "italy" },
-  state: "upcoming",
+  score: { home: 54, away: 24 },
+  state: "final",
   startTime: "21:15",
+},
+
+// ==================================================
+// WXV GLOBAL SERIES 2026 – ROUND 6
+// ==================================================
+
+{
+  id: 224,
+  matchKey: "usa-w-vs-england-w",
+  competitionId: "wxv1",
+  tournamentInstanceId: WXV1_2026,
+  tournament: "WXV Global Series 2026",
+  gender: "women",
+  round: "Round 6",
+  date: "2026-10-30",
+  venue: "Sports Illustrated Stadium, Harrison, New Jersey",
+  home: { name: "USA", country: "usa" },
+  away: { name: "England", country: "england" },
+  state: "upcoming",
+  startTime: "17:15",
+},
+
+{
+  id: 225,
+  matchKey: "new-zealand-w-vs-france-w",
+  competitionId: "wxv1",
+  tournamentInstanceId: WXV1_2026,
+  tournament: "WXV Global Series 2026",
+  gender: "women",
+  round: "Round 6",
+  date: "2026-10-31",
+  venue: "One New Zealand Stadium, Christchurch",
+  home: { name: "New Zealand", country: "new-zealand" },
+  away: { name: "France", country: "france" },
+  state: "upcoming",
+  startTime: "19:10",
+},
+
+{
+  id: 226,
+  matchKey: "japan-w-vs-wales-w",
+  competitionId: "wxv1",
+  tournamentInstanceId: WXV1_2026,
+  tournament: "WXV Global Series 2026",
+  gender: "women",
+  round: "Round 6",
+  date: "2026-10-31",
+  venue: "Kumagaya Rugby Stadium, Kumagaya",
+  home: { name: "Japan", country: "japan" },
+  away: { name: "Wales", country: "wales" },
+  state: "upcoming",
+  startTime: "16:00",
+},
+
+{
+  id: 227,
+  matchKey: "south-africa-w-vs-ireland-w",
+  competitionId: "wxv1",
+  tournamentInstanceId: WXV1_2026,
+  tournament: "WXV Global Series 2026",
+  gender: "women",
+  round: "Round 6",
+  date: "2026-10-31",
+  venue: "Athlone Stadium, Cape Town",
+  home: { name: "South Africa", country: "south-africa" },
+  away: { name: "Ireland", country: "ireland" },
+  state: "upcoming",
+  startTime: "15:00",
 },
 
   // ==================================================

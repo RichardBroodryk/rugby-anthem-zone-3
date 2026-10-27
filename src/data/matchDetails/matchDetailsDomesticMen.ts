@@ -669,7 +669,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=xor5l6fGNDY&t=2s",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -688,7 +688,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=d59KuARQSBM",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -707,7 +707,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=0PLH3wG1b-A",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -726,7 +726,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=IiFwENVnbgk",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -745,7 +745,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=LewmCoxjVsc",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -764,7 +764,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=iEl15YCykYo",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -783,7 +783,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=Tq8Tmoim49E",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -803,7 +803,7 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=TkffVcXVHd8",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -812,6 +812,178 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
     { category: "Coach", player: "TBD", value: "Ospreys" },
     { category: "Coach", player: "TBD", value: "Dragons" },
     { category: "Venue", player: "St Helen's", value: "Swansea" },
+  ],
+},
+
+// ==================================================
+// URC 2026/27 – ROUND 5
+// ==================================================
+
+{
+  matchKey: "connacht-vs-leinster-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Dexcom Stadium, Galway" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Connacht" },
+    { category: "Coach", player: "Leo Cullen", value: "Leinster" },
+    { category: "Captain", player: "TBD", value: "Connacht" },
+    { category: "Captain", player: "TBD", value: "Leinster" },
+    { category: "Venue", player: "Dexcom Stadium", value: "Galway" },
+  ],
+},
+
+{
+  matchKey: "glasgow-vs-lions-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Scotstoun Stadium, Glasgow" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Franco Smith", value: "Glasgow Warriors" },
+    { category: "Coach", player: "TBD", value: "Lions" },
+    { category: "Captain", player: "TBD", value: "Glasgow Warriors" },
+    { category: "Captain", player: "TBD", value: "Lions" },
+    { category: "Venue", player: "Scotstoun Stadium", value: "Glasgow" },
+  ],
+},
+
+{
+  matchKey: "stormers-vs-ulster-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — DHL Stadium, Cape Town" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "John Dobson", value: "Stormers" },
+    { category: "Coach", player: "TBD", value: "Ulster" },
+    { category: "Captain", player: "TBD", value: "Stormers" },
+    { category: "Captain", player: "TBD", value: "Ulster" },
+    { category: "Venue", player: "DHL Stadium", value: "Cape Town" },
+  ],
+},
+
+{
+  matchKey: "bulls-vs-scarlets-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Loftus Versfeld, Pretoria" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Johan Ackermann", value: "Bulls" },
+    { category: "Coach", player: "TBD", value: "Scarlets" },
+    { category: "Captain", player: "TBD", value: "Bulls" },
+    { category: "Captain", player: "TBD", value: "Scarlets" },
+    { category: "Venue", player: "Loftus Versfeld", value: "Pretoria" },
+  ],
+},
+
+{
+  matchKey: "benetton-vs-edinburgh-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Stadio Comunale di Monigo, Treviso" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Benetton" },
+    { category: "Coach", player: "Sean Everitt", value: "Edinburgh" },
+    { category: "Captain", player: "TBD", value: "Benetton" },
+    { category: "Captain", player: "TBD", value: "Edinburgh" },
+    { category: "Venue", player: "Stadio Comunale di Monigo", value: "Treviso" },
+  ],
+},
+
+{
+  matchKey: "munster-vs-sharks-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Thomond Park, Limerick" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Graham Rowntree", value: "Munster" },
+    { category: "Coach", player: "John Plumtree", value: "Sharks" },
+    { category: "Captain", player: "TBD", value: "Munster" },
+    { category: "Captain", player: "TBD", value: "Sharks" },
+    { category: "Venue", player: "Thomond Park", value: "Limerick" },
+  ],
+},
+
+{
+  matchKey: "dragons-vs-zebre-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Rodney Parade, Newport" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Dragons" },
+    { category: "Coach", player: "TBD", value: "Zebre" },
+    { category: "Captain", player: "TBD", value: "Dragons" },
+    { category: "Captain", player: "TBD", value: "Zebre" },
+    { category: "Venue", player: "Rodney Parade", value: "Newport" },
+  ],
+},
+
+{
+  matchKey: "ospreys-vs-cardiff-urc",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Swansea.com Stadium, Swansea" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Ospreys" },
+    { category: "Coach", player: "TBD", value: "Cardiff" },
+    { category: "Captain", player: "TBD", value: "Ospreys" },
+    { category: "Captain", player: "TBD", value: "Cardiff" },
+    { category: "Venue", player: "Swansea.com Stadium", value: "Swansea" },
   ],
 },
 

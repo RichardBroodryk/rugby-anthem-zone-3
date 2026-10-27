@@ -406,7 +406,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Prince Chichibu Memorial Stadium, Tokyo",
   home: { name: "Japan", country: "japan" },
   away: { name: "Fiji", country: "fiji" },
-  state: "upcoming",
+  score: { home: 28, away: 34 },
+  state: "final",
   startTime: "14:50",
 },
 

@@ -69,7 +69,8 @@ export const matches2026NPC: MatchData[] = [
     name: "Northland",
     country: "npc-northland",
   },
-  state: "upcoming",
+  score: { home: 43, away: 24 },
+  state: "final",
   startTime: "14:05",
 },
 ];
