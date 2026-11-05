@@ -862,9 +862,9 @@ export const matchDetailsPremMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Ashton Gate, Bristol" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Bristol 16–22 Leicester" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=mKVg9wuEtZg",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -883,9 +883,9 @@ export const matchDetailsPremMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Sandy Park, Exeter" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Exeter 28–31 Harlequins" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=-swLMUt2VZY",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -904,9 +904,9 @@ export const matchDetailsPremMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — StoneX Stadium, London" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Saracens 39–31 Newcastle" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=eHZqK7K8Av4",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -925,9 +925,9 @@ export const matchDetailsPremMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Recreation Ground, Bath" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Bath 36–28 Sale" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=e769r7nowi0",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -946,9 +946,9 @@ export const matchDetailsPremMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Franklin's Gardens, Northampton" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Northampton 28–14 Gloucester" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=eHZqK7K8Av4",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },

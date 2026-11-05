@@ -132,7 +132,7 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                The United Rugby Challenge as well as the Gallagher Premier League Rounds continue 2026! Checkout all the Highlights for all the games!
+                The Nations Cup Internationals Round 4 continues 2026! Checkout all the Highlights for all the games!
 Women WXV Round 6 games are here as well!                </span>
             </div>
           </div>

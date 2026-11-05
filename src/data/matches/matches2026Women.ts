@@ -762,7 +762,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Sports Illustrated Stadium, Harrison, New Jersey",
   home: { name: "USA", country: "usa" },
   away: { name: "England", country: "england" },
-  state: "upcoming",
+  score: { home: 12, away: 55 },
+  state: "final",
   startTime: "17:15",
 },
 
@@ -778,7 +779,8 @@ export const matches2026Women: MatchData[] = [
   venue: "One New Zealand Stadium, Christchurch",
   home: { name: "New Zealand", country: "new-zealand" },
   away: { name: "France", country: "france" },
-  state: "upcoming",
+  score: { home: 36, away: 7 },
+  state: "final",
   startTime: "19:10",
 },
 
@@ -794,7 +796,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Kumagaya Rugby Stadium, Kumagaya",
   home: { name: "Japan", country: "japan" },
   away: { name: "Wales", country: "wales" },
-  state: "upcoming",
+  score: { home: 5, away: 29 },
+  state: "final",
   startTime: "16:00",
 },
 
@@ -810,7 +813,8 @@ export const matches2026Women: MatchData[] = [
   venue: "Athlone Stadium, Cape Town",
   home: { name: "South Africa", country: "south-africa" },
   away: { name: "Ireland", country: "ireland" },
-  state: "upcoming",
+  score: { home: 17, away: 38 },
+  state: "final",
   startTime: "15:00",
 },
 

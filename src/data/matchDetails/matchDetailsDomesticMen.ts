@@ -824,9 +824,9 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Dexcom Stadium, Galway" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Connacht 5–50 Leinster" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=e769r7nowi0",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -845,9 +845,9 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Scotstoun Stadium, Glasgow" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Glasgow 29–20 Lions" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=r4M4XMBRoCY",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -865,10 +865,10 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   matchKey: "stormers-vs-ulster-urc",
   timeline: [
     { minute: "0'", label: "Kick-off — DHL Stadium, Cape Town" },
-    { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "40'", label: "Half Time — Stormers 12–7 Ulster" },
+    { minute: "80'", label: "Full Time — Stormers 33–7 Ulster" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=H6Jqj-K6QYI",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -887,9 +887,9 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Loftus Versfeld, Pretoria" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Bulls 54–26 Scarlets" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=ChMOsG6DV1M",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -908,9 +908,9 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Stadio Comunale di Monigo, Treviso" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Benetton 31–12 Edinburgh" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=e769r7nowi0",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -929,9 +929,9 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Thomond Park, Limerick" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Munster 3–15 Sharks" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=XFHzIhP3rb4",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -950,9 +950,9 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Rodney Parade, Newport" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Dragons 35–14 Zebre" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=VkTBtZiA_So",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -971,9 +971,9 @@ export const matchDetailsDomesticMen: MatchDetails[] = [
   timeline: [
     { minute: "0'", label: "Kick-off — Swansea.com Stadium, Swansea" },
     { minute: "40'", label: "Half Time" },
-    { minute: "80'", label: "Full Time" },
+    { minute: "80'", label: "Full Time — Ospreys 0–26 Cardiff" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=oXy0VJh-cgQ",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
