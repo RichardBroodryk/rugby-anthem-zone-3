@@ -704,8 +704,9 @@ export const matches2026Men: MatchData[] = [
     venue: "Aviva Stadium, Dublin",
     home: { name: "Ireland", country: "ireland" },
     away: { name: "Argentina", country: "argentina" },
-    state: "upcoming",
-    startTime: "TBD",
+    score: { home: 42, away: 12 },
+    state: "final",
+    startTime: "20:10",
   },
   {
     id: 3031,
@@ -719,8 +720,9 @@ export const matches2026Men: MatchData[] = [
     venue: "Juventus Stadium, Turin",
     home: { name: "Italy", country: "italy" },
     away: { name: "South Africa", country: "south-africa" },
-    state: "upcoming",
-    startTime: "TBD",
+    score: { home: 7, away: 66 },
+    state: "final",
+    startTime: "11:40",
   },
   {
     id: 3032,
@@ -734,8 +736,9 @@ export const matches2026Men: MatchData[] = [
     venue: "Murrayfield, Edinburgh",
     home: { name: "Scotland", country: "scotland" },
     away: { name: "New Zealand", country: "new-zealand" },
-    state: "upcoming",
-    startTime: "TBD",
+    score: { home: 21, away: 43 },
+    state: "final",
+    startTime: "14:10",
   },
   {
     id: 3033,
@@ -749,8 +752,9 @@ export const matches2026Men: MatchData[] = [
     venue: "Principality Stadium, Cardiff",
     home: { name: "Wales", country: "wales" },
     away: { name: "Japan", country: "japan" },
-    state: "upcoming",
-    startTime: "TBD",
+    score: { home: 28, away: 21 },
+    state: "final",
+    startTime: "16:40",
   },
   {
     id: 3034,
@@ -764,8 +768,9 @@ export const matches2026Men: MatchData[] = [
     venue: "Groupama Stadium, Lyon",
     home: { name: "France", country: "france" },
     away: { name: "Fiji", country: "fiji" },
-    state: "upcoming",
-    startTime: "TBD",
+    score: { home: 54, away: 17 },
+    state: "final",
+    startTime: "20:10",
   },
   {
     id: 3035,
@@ -779,8 +784,9 @@ export const matches2026Men: MatchData[] = [
     venue: "Twickenham, London",
     home: { name: "England", country: "england" },
     away: { name: "Australia", country: "australia" },
-    state: "upcoming",
-    startTime: "TBD",
+    score: { home: 45, away: 22 },
+    state: "final",
+    startTime: "15:10",
   },
 
   // ----- ROUND 5 (UPCOMING) -----
@@ -1384,7 +1390,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Stadionul National Arcul de Triumf, Bucharest",
   home: { name: "Romania", country: "romania" },
   away: { name: "Tonga", country: "tonga" },
-  state: "upcoming",
+  score: { home: 38, away: 43 },
+  state: "final",
 },
 
 {
@@ -1400,7 +1407,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Avchala Stadium, Tbilisi",
   home: { name: "Georgia", country: "georgia" },
   away: { name: "Canada", country: "canada" },
-  state: "upcoming",
+  score: { home: 59, away: 14 },
+  state: "final",
 },
 
 {
@@ -1416,7 +1424,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Estadio Nacional Complutense, Madrid",
   home: { name: "Spain", country: "spain" },
   away: { name: "Uruguay", country: "uruguay" },
-  state: "upcoming",
+  score: { home: 18, away: 12 },
+  state: "final",
 },
 
 {
@@ -1432,7 +1441,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Estádio Nacional, Lisbon",
   home: { name: "Portugal", country: "portugal" },
   away: { name: "Chile", country: "chile" },
-  state: "upcoming",
+  score: { home: 36, away: 15 },
+  state: "final",
 },
 
 {
@@ -1448,7 +1458,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Belle Vue, Wakefield",
   home: { name: "Zimbabwe", country: "zimbabwe" },
   away: { name: "Samoa", country: "samoa" },
-  state: "upcoming",
+  score: { home: 7, away: 43 },
+  state: "final",
 },
 
 {
@@ -1464,7 +1475,8 @@ export const matches2026Men: MatchData[] = [
   venue: "Stade Marcel-Verchère, Bourg-en-Bresse",
   home: { name: "Hong Kong", country: "hong-kong" },
   away: { name: "USA", country: "usa" },
-  state: "upcoming",
+  score: { home: 26, away: 28 },
+  state: "final",
 },
 
   // ==================================================
