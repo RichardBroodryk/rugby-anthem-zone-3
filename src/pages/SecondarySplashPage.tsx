@@ -132,7 +132,7 @@ const SecondarySplashPage = () => {
             <div className={styles.alertContent}>
               <span className={styles.alertPulse}></span>
               <span className={styles.alertText}>
-                The Nations Cup Internationals Round 5 continues 2026! Checkout all the Highlights for all the games!
+                The Nations Cup Internationals Round 6 continues 2026 and it's crunch time! Checkout all the Highlights for all the games!
 Women WXV Round 6 games are here as well!                </span>
             </div>
           </div>
