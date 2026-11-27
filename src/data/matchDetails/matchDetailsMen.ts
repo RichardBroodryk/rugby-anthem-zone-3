@@ -482,7 +482,7 @@ export const matchDetailsMen: MatchDetails[] = [
     { minute: "40'", label: "Half Time" },
     { minute: "80'", label: "Full Time" },
   ],
-  highlightsUrl: "",
+  highlightsUrl: "https://www.youtube.com/watch?v=7WnjxK1curE",
   matchStats: {
     home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
     away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
@@ -580,6 +580,269 @@ export const matchDetailsMen: MatchDetails[] = [
   ],
 },
 
+// ==================================================
+  // NATIONS CHAMPIONSHIP 2026 — ROUND 6
+  // ================================================
+
+{
+  matchKey: "england-vs-new-zealand",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Allianz Stadium, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=wfN1BKFhUY4",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Steve Borthwick", value: "England" },
+    { category: "Coach", player: "Dave Rennie", value: "New Zealand" },
+    { category: "Captain", player: "Maro Itoje", value: "England" },
+    { category: "Captain", player: "Codie Taylor", value: "New Zealand" },
+    { category: "Venue", player: "Allianz Stadium", value: "London" },
+  ],
+},
+
+{
+  matchKey: "scotland-vs-japan",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Scottish Gas Murrayfield, Edinburgh" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=9fFtcwA_WJo",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Gregor Townsend", value: "Scotland" },
+    { category: "Coach", player: "Eddie Jones", value: "Japan" },
+    { category: "Captain", player: "Finn Russell", value: "Scotland" },
+    { category: "Captain", player: "TBD", value: "Japan" },
+    { category: "Venue", player: "Scottish Gas Murrayfield", value: "Edinburgh" },
+  ],
+},
+
+{
+  matchKey: "ireland-vs-south-africa",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Aviva Stadium, Dublin" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=dLaDrujKkjY",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Andy Farrell", value: "Ireland" },
+    { category: "Coach", player: "Rassie Erasmus", value: "South Africa" },
+    { category: "Captain", player: "Caelan Doris", value: "Ireland" },
+    { category: "Captain", player: "Siya Kolisi", value: "South Africa" },
+    { category: "Venue", player: "Aviva Stadium", value: "Dublin" },
+  ],
+},
+
+{
+  matchKey: "italy-vs-fiji",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Bluenergy Stadium, Udine" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=f-9PzIE9Edg",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Gonzalo Quesada", value: "Italy" },
+    { category: "Coach", player: "Jake White", value: "Fiji" },
+    { category: "Captain", player: "TBD", value: "Italy" },
+    { category: "Captain", player: "Tevita Ikanivere", value: "Fiji" },
+    { category: "Venue", player: "Bluenergy Stadium", value: "Udine" },
+  ],
+},
+
+{
+  matchKey: "wales-vs-australia",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Principality Stadium, Cardiff" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=rwr976eOEZU",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Steve Tandy", value: "Wales" },
+    { category: "Coach", player: "Les Kiss", value: "Australia" },
+    { category: "Captain", player: "Dewi Lake", value: "Wales" },
+    { category: "Captain", player: "Harry Wilson", value: "Australia" },
+    { category: "Venue", player: "Principality Stadium", value: "Cardiff" },
+  ],
+},
+
+{
+  matchKey: "france-vs-argentina",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Stade de France, Paris" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "https://www.youtube.com/watch?v=q7jVulBZKRw",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Fabien Galthié", value: "France" },
+    { category: "Coach", player: "Felipe Contepomi", value: "Argentina" },
+    { category: "Captain", player: "Antoine Dupont", value: "France" },
+    { category: "Captain", player: "Julián Montoya", value: "Argentina" },
+    { category: "Venue", player: "Stade de France", value: "Paris" },
+  ],
+},
+
+// ===================== FINALS WEEKEND – MATCH DETAILS =====================
+
+{
+  matchKey: "italy-vs-fiji-11th-place",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Allianz Stadium, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Gonzalo Quesada", value: "Italy" },
+    { category: "Coach", player: "Jake White", value: "Fiji" },
+    { category: "Captain", player: "TBD", value: "Italy" },
+    { category: "Captain", player: "Tevita Ikanivere", value: "Fiji" },
+    { category: "Venue", player: "Allianz Stadium", value: "London" },
+    { category: "Placement", player: "11th Place Playoff", value: "Northern 6th vs Southern 6th" },
+  ],
+},
+
+{
+  matchKey: "ireland-vs-australia-5th-place",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Allianz Stadium, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Andy Farrell", value: "Ireland" },
+    { category: "Coach", player: "Les Kiss", value: "Australia" },
+    { category: "Captain", player: "Caelan Doris", value: "Ireland" },
+    { category: "Captain", player: "Harry Wilson", value: "Australia" },
+    { category: "Venue", player: "Allianz Stadium", value: "London" },
+    { category: "Placement", player: "5th Place Playoff", value: "Northern 3rd vs Southern 3rd" },
+  ],
+},
+
+{
+  matchKey: "wales-vs-japan-9th-place",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Allianz Stadium, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Steve Tandy", value: "Wales" },
+    { category: "Coach", player: "Eddie Jones", value: "Japan" },
+    { category: "Captain", player: "Dewi Lake", value: "Wales" },
+    { category: "Captain", player: "TBD", value: "Japan" },
+    { category: "Venue", player: "Allianz Stadium", value: "London" },
+    { category: "Placement", player: "9th Place Playoff", value: "Northern 5th vs Southern 5th" },
+  ],
+},
+
+{
+  matchKey: "england-vs-new-zealand-3rd-place",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Allianz Stadium, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Steve Borthwick", value: "England" },
+    { category: "Coach", player: "Dave Rennie", value: "New Zealand" },
+    { category: "Captain", player: "Maro Itoje", value: "England" },
+    { category: "Captain", player: "Geordie Barrett", value: "New Zealand" },
+    { category: "Venue", player: "Allianz Stadium", value: "London" },
+    { category: "Placement", player: "3rd Place Playoff", value: "Northern 2nd vs Southern 2nd" },
+  ],
+},
+
+{
+  matchKey: "scotland-vs-argentina-7th-place",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Allianz Stadium, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Gregor Townsend", value: "Scotland" },
+    { category: "Coach", player: "Felipe Contepomi", value: "Argentina" },
+    { category: "Captain", player: "Finn Russell", value: "Scotland" },
+    { category: "Captain", player: "Julián Montoya", value: "Argentina" },
+    { category: "Venue", player: "Allianz Stadium", value: "London" },
+    { category: "Placement", player: "7th Place Playoff", value: "Northern 4th vs Southern 4th" },
+  ],
+},
+
+{
+  matchKey: "france-vs-south-africa-final",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Allianz Stadium, London" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "Fabien Galthié", value: "France" },
+    { category: "Coach", player: "Rassie Erasmus", value: "South Africa" },
+    { category: "Captain", player: "Antoine Dupont", value: "France" },
+    { category: "Captain", player: "Siya Kolisi", value: "South Africa" },
+    { category: "Venue", player: "Allianz Stadium", value: "London" },
+    { category: "Placement", player: "Championship Final", value: "Northern 1st vs Southern 1st" },
+  ],
+},
   // ==================================================
   // WORLD RUGBY NATIONS CUP 2026 — ROUND 2
   // ==================================================
@@ -999,6 +1262,130 @@ export const matchDetailsMen: MatchDetails[] = [
   ],
 },
 
+// ==================================================
+  // WORLD RUGBY NATIONS CUP 2026 — ROUND 6
+  // ================================================
+
+{
+  matchKey: "romania-vs-canada",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Stadionul Național Arcul de Triumf, Bucharest" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "David Gerard", value: "Romania" },
+    { category: "Coach", player: "TBD", value: "Canada" },
+    { category: "Captain", player: "Cristi Boboc", value: "Romania" },
+    { category: "Captain", player: "Ben LeSage", value: "Canada" },
+    { category: "Venue", player: "Stadionul Național Arcul de Triumf", value: "Bucharest" },
+  ],
+},
+
+{
+  matchKey: "hong-kong-vs-tonga",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Kai Tak Youth Sports Ground, Hong Kong" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Hong Kong" },
+    { category: "Coach", player: "TBD", value: "Tonga" },
+    { category: "Captain", player: "TBD", value: "Hong Kong" },
+    { category: "Captain", player: "TBD", value: "Tonga" },
+    { category: "Venue", player: "Kai Tak Youth Sports Ground", value: "Hong Kong" },
+  ],
+},
+
+{
+  matchKey: "georgia-vs-usa",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Mikheil Meskhi Stadium, Tbilisi" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Georgia" },
+    { category: "Coach", player: "Scott Lawrence", value: "USA" },
+    { category: "Captain", player: "Davit Niniashvili", value: "Georgia" },
+    { category: "Captain", player: "TBD", value: "USA" },
+    { category: "Venue", player: "Mikheil Meskhi Stadium", value: "Tbilisi" },
+  ],
+},
+
+{
+  matchKey: "portugal-vs-uruguay",
+  timeline: [
+    { minute: "0'", label: "Match cancelled — waterlogged pitch at Estádio do Restelo, Lisbon" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Note", player: "Match cancelled", value: "Waterlogged pitch – awarded as 0-0 draw" },
+    { category: "Venue", player: "Estádio do Restelo", value: "Lisbon" },
+  ],
+},
+
+{
+  matchKey: "spain-vs-samoa",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Estadio Ciudad de Málaga, Málaga" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Spain" },
+    { category: "Coach", player: "TBD", value: "Samoa" },
+    { category: "Captain", player: "TBD", value: "Spain" },
+    { category: "Captain", player: "TBD", value: "Samoa" },
+    { category: "Venue", player: "Estadio Ciudad de Málaga", value: "Málaga" },
+  ],
+},
+
+{
+  matchKey: "zimbabwe-vs-chile",
+  timeline: [
+    { minute: "0'", label: "Kick-off — Stade Chanzy, Angoulême" },
+    { minute: "40'", label: "Half Time" },
+    { minute: "80'", label: "Full Time" },
+  ],
+  highlightsUrl: "",
+  matchStats: {
+    home: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+    away: { metresMade: 0, carries: 0, defendersBeaten: 0, cleanBreaks: 0, offloads: 0, tacklesMade: 0, tacklesMissed: 0, turnoversWon: 0, penaltiesConceded: 0 },
+  },
+  performances: [
+    { category: "Coach", player: "TBD", value: "Zimbabwe" },
+    { category: "Coach", player: "TBD", value: "Chile" },
+    { category: "Captain", player: "TBD", value: "Zimbabwe" },
+    { category: "Captain", player: "TBD", value: "Chile" },
+    { category: "Venue", player: "Stade Chanzy", value: "Angoulême" },
+  ],
+},
   // ==================================================
   // THE RIVALRY TOUR 2026 — MIDWEEK MATCHES
   // ==================================================
